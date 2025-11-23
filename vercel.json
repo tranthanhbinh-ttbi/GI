@@ -5,7 +5,10 @@
       "src": "api/index.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["src/views/**"] 
+        "includeFiles": [
+          "src/views/**",
+          "node_modules/sodium-native/**"
+        ]
       }
     }
   ],
