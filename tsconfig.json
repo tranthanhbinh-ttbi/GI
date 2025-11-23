@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "target": "es2017",
+    "moduleResolution": "node"
+  },
+  "exclude": [
+    "node_modules",
+    "public/**/*", 
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
+}
