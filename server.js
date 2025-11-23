@@ -90,7 +90,7 @@ configurePassport(app)
 // })
 
 app.register(require('@fastify/static'), {
-    root: path.join(__dirname, 'src', 'public'),
+    root: path.join(__dirname, 'public'),
     setHeaders: (res, path, stat) => {
         res.setHeader('Cache-Control', 'public, max-age=31536000');
     }
@@ -167,4 +167,11 @@ const start = async () => {
   }
 };
 
-start();
+// Logic kiểm tra môi trường:
+if (require.main === module) {
+    // Trường hợp 1: Chạy trực tiếp bằng lệnh "node server.js"
+    start();
+} else {
+    // Trường hợp 2: Được import bởi file khác (Vercel) -> Chỉ export app
+    module.exports = app;
+}
