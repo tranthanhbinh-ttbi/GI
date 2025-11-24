@@ -1,5 +1,12 @@
 {
   "version": 2,
+  "functions": {
+    "api/index.js": {
+      "includeFiles": [
+        "../node_modules/sodium-native/**"
+      ]
+    }
+  },
   "routes": [
     {
       "src": "/(.*)",
