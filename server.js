@@ -6,7 +6,7 @@ const crypto = require('node:crypto')
 
 const app = fastify({ trustProxy: true, logger: false })
 
-// Security: cookies, JWT, CSRF, rate limit, and strict headers
+// --- 1. Cấu hình Cookie (Bắt buộc phải đăng ký trước Session) ---
 app.register(require('@fastify/cookie'), {
   parseOptions: {
     httpOnly: true,
@@ -15,20 +15,8 @@ app.register(require('@fastify/cookie'), {
     path: '/',
   },
 })
-// app.register(require('@fastify/jwt'), {
-//   secret: process.env.JWT_SECRET || 'change-me',
-//   cookie: {
-//     cookieName: 'jwt',
-//     signed: false,
-//   },
-// })
-// app.decorate('authenticate', async function (request, reply) {
-//   try {
-//     await request.jwtVerify({ onlyCookie: true })
-//   } catch (err) {
-//     return reply.code(401).send({ ok: false })
-//   }
-// })
+
+// Các plugin bảo mật khác
 app.register(require('@fastify/csrf-protection'))
 app.register(require('@fastify/rate-limit'), {
   max: 200,
@@ -36,58 +24,50 @@ app.register(require('@fastify/rate-limit'), {
   cache: 10000,
 })
 
-const fastifySecureSession = require('@fastify/secure-session')
+// --- 2. Thay thế Secure Session bằng Fastify Session ---
+const fastifySession = require('@fastify/session')
 const fastifyPassport = require('@fastify/passport')
 
-const sessionSecretBase64 = process.env.SESSION_SECRET || ''
-let sessionKey = null
-try {
-  const keyCandidate = Buffer.from(sessionSecretBase64, 'base64')
-  if (keyCandidate.length === 32) {
-    sessionKey = keyCandidate
-  } else {
-    sessionKey = crypto.randomBytes(32)
-    console.warn('SESSION_SECRET is missing or invalid. Using a random ephemeral 32-byte key.')
-  }
-} catch (_) {
-  sessionKey = crypto.randomBytes(32)
-  console.warn('SESSION_SECRET is invalid base64. Using a random ephemeral 32-byte key.')
-}
+// Tạo secret dạng chuỗi (String) thay vì Buffer
+const sessionSecret = process.env.SESSION_SECRET || 'a-very-long-secret-key-change-me-in-production-please'
 
-app.register(fastifySecureSession, {
-  key: sessionKey,
+app.register(fastifySession, {
+  secret: sessionSecret,
   cookieName: 'session',
   cookie: {
     path: '/',
     sameSite: 'lax',
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
+    maxAge: 1000 * 60 * 60 * 24 // 1 ngày (tùy chỉnh thời gian sống)
   },
+  saveUninitialized: false,
+  // LƯU Ý QUAN TRỌNG: Mặc định đang dùng MemoryStore.
+  // Nếu deploy lên Vercel hoặc chạy nhiều process, bạn CẦN dùng Redis (connect-redis).
+  // store: new RedisStore({ ... }) 
 })
+
+// --- 3. Khởi tạo Passport với Session mới ---
 app.register(fastifyPassport.initialize())
-app.register(fastifyPassport.secureSession())
+app.register(fastifyPassport.session()) // Đổi từ .secureSession() thành .session()
 
 const configurePassport = require('./src/config/oauth-config')
 configurePassport(app)
 
-// Basic security headers and CSP
-// app.addHook('onRequest', async (request, reply) => {
-//   reply.header('X-Frame-Options', 'DENY')
-//   reply.header('X-Content-Type-Options', 'nosniff')
-//   reply.header('Referrer-Policy', 'strict-origin-when-cross-origin')
-//   reply.header('Permissions-Policy', 'geolocation=(), camera=(), microphone=(self)')
-//   const csp = [
-//     "default-src 'self'",
-//     "img-src 'self' data: lh3.googleusercontent.com platform-lookaside.fbsbx.com",
-//     "style-src 'self' 'unsafe-inline'",
-//     'connect-src \u0027self\u0027',
-//     'font-src \u0027self\u0027 data:',
-//     'object-src \u0027none\u0027',
-//     'base-uri \u0027self\u0027',
-//     'form-action \u0027self\u0027',
-//   ].join('; ')
-//   reply.header('Content-Security-Policy', csp)
-// })
+// --- Thêm Decorator authenticate (Sửa lỗi cho follow-routes.js) ---
+// File follow-routes.js của bạn gọi fastify.authenticate nhưng trong server.js cũ đang bị comment.
+// Ta sử dụng passport để authenticate session.
+app.decorate('authenticate', async function (request, reply) {
+    try {
+        // Kiểm tra xem session passport có tồn tại user không
+        if (!request.isAuthenticated()) {
+             return reply.code(401).send({ ok: false, message: 'Unauthorized' })
+        }
+    } catch (err) {
+        return reply.code(401).send({ ok: false })
+    }
+})
+
 
 app.register(require('@fastify/static'), {
     root: path.join(__dirname, 'src', 'public'),
@@ -128,13 +108,13 @@ app.register(require('@fastify/view'), {
     }
 })
 
-// WebSocket for real-time follower count
+// WebSocket
 app.register(require('@fastify/websocket'))
 app.get('/ws', { websocket: true }, (connection /* SocketStream */, req) => {
   require('./src/controllers/realtime').registerSocket(connection)
 })
 
-// DB migration once on start
+// DB migration
 const { migrate } = require('./src/models')
 
 app.register(require('./src/routes/pages-routes'))
@@ -154,7 +134,6 @@ const start = async () => {
     const host = process.env.HOST || '0.0.0.0'
     await app.listen({ port, host })
 
-    // Extend timeouts to reduce spurious connection drops
     if (app.server) {
       app.server.keepAliveTimeout = 65_000
       app.server.headersTimeout = 66_000
@@ -163,7 +142,7 @@ const start = async () => {
 
     console.log(`Server listening on http://${host === '0.0.0.0' ? 'localhost' : host}:${port}`)
   } catch (error) {
-    console.error("LỖI KHỞI TẠO:", error); // Dòng này sẽ hiện trong log Vercel
+    console.error("LỖI KHỞI TẠO:", error); 
     throw error;
   }
 };
@@ -172,5 +151,4 @@ if (require.main === module) {
   start();
 }
 
-// Xuất app ra để Vercel (thông qua file api/index.js) có thể import và xử lý request
 module.exports = app;
