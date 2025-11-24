@@ -1,19 +1,30 @@
 // import { appDown } from "./module/components/app-addons.js";
 // Đợi DOM sẵn sàng trước khi chạy
 document.addEventListener('DOMContentLoaded', async () => {
+    // --- PHẦN QUAN TRỌNG: Dùng Dynamic Import để bắt lỗi ---
     try {
-        // Import file module động
+        console.log("Đang thử load module app-addons.js...");
+        
+        // Dùng await import() để load file. Nếu file lỗi, nó sẽ nhảy xuống catch
         const module = await import("./module/components/app-addons.js");
-        // Lấy hàm appDown từ module và chạy
+        
+        console.log("Module load thành công:", module);
+
+        // Chạy hàm appDown từ module
         if (module.appDown) {
-            module.appDown();
+            // Bọc việc chạy hàm trong try-catch riêng để bắt lỗi logic (như preferredTheme)
+            try {
+                module.appDown(); 
+            } catch (runError) {
+                console.error("Lỗi khi CHẠY hàm appDown:", runError);
+            }
         }
-    } catch (error) {
-        console.error("Lỗi khi load module app-addons:", error);
-        // Tại đây bạn có thể xem chi tiết lỗi trong console
-        // Nếu lỗi là "require is not defined", nó sẽ hiện rõ ở đây
+    } catch (loadError) {
+        // Đây là nơi bắt lỗi "require is not defined" hoặc lỗi không tìm thấy file
+        console.error("🔴 LỖI NGHIÊM TRỌNG KHI IMPORT:", loadError);
+        alert("Không thể load file script phụ. Xem console (F12) để biết chi tiết.");
     }
-    // --- KẾT THÚC SỬA ĐỔI ---
+    // -------------------------------------------------------
     const MOBILE_BREAKPOINT = 768; // Khớp với media query trong CSS
     let isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
     let sidebarOpen = false;
