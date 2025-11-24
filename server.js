@@ -49,7 +49,7 @@ app.register(fastifySession, {
 
 // --- 3. Khởi tạo Passport với Session mới ---
 app.register(fastifyPassport.initialize())
-app.register(fastifyPassport.session()) // Đổi từ .secureSession() thành .session()
+app.register(fastifyPassport.secureSession()) // Đổi từ .secureSession() thành .session()
 
 const configurePassport = require('./src/config/oauth-config')
 configurePassport(app)

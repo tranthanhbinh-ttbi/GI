@@ -4,7 +4,6 @@ const { broadcast } = require('../controllers/realtime')
 
 async function oauthRoutes(fastify) {
   function ensureLoggedIn(request, reply, done) {
-    // isAuthenticated() được cung cấp bởi passport
     if (request.isAuthenticated && request.isAuthenticated()) return done()
     reply.code(401).send({ ok: false })
   }
@@ -29,12 +28,10 @@ async function oauthRoutes(fastify) {
     }
   }
 
-  // Các route Google/Facebook giữ nguyên
-  fastify.get('/auth/google', { 
+	fastify.get('/auth/google', { 
     preValidation: FPassport.authenticate('google', { scope: ['profile', 'email'] }) 
   }, async (request, reply) => {})
-  
-  fastify.get('/auth/google/callback', { 
+	fastify.get('/auth/google/callback', { 
     preValidation: FPassport.authenticate('google', { failureRedirect: '/' }) 
   }, async (request, reply) => {
     await ensureFollowerRecord(request.user)
@@ -42,11 +39,10 @@ async function oauthRoutes(fastify) {
     return reply.redirect('/') 
   })
 
-  fastify.get('/auth/facebook', { 
+	fastify.get('/auth/facebook', { 
     preValidation: FPassport.authenticate('facebook', { scope: ['public_profile', 'email'] }) 
   }, async (request, reply) => {})
-  
-  fastify.get('/auth/facebook/callback', { 
+	fastify.get('/auth/facebook/callback', { 
     preValidation: FPassport.authenticate('facebook', { failureRedirect: '/' }) 
   }, async (request, reply) => {
     await ensureFollowerRecord(request.user)
@@ -54,12 +50,7 @@ async function oauthRoutes(fastify) {
     return reply.redirect('/') 
   })
 
-  // Route lấy thông tin user
-  fastify.get('/api/me', { 
-    // Sử dụng session thay vì secure-session
-    preHandler: [ensureLoggedIn], 
-    credentials: 'include' 
-  },
+  fastify.get('/api/me', { preHandler: [FPassport.authenticate('session'), ensureLoggedIn], credentials: 'include' },
     async (request) => {
       const { id, name, email, avatarUrl } = request.user
       const isFollowing = !!(await Follower.findOne({ where: { userId: id } }))
@@ -68,20 +59,8 @@ async function oauthRoutes(fastify) {
     }
   )
 
-  // --- CẬP NHẬT ROUTE LOGOUT ---
   fastify.post('/api/logout', async (request, reply) => {
-    if (request.session) {
-        // Hủy session phía server
-        await new Promise((resolve, reject) => {
-            request.session.destroy((err) => {
-                if (err) reject(err)
-                else resolve()
-            })
-        })
-    }
-    // Logout khỏi passport
-    await request.logout() 
-    // Xóa cookie phía client
+    await request.logout()
     reply.clearCookie('session', { path: '/' })
     return { ok: true }
   })
