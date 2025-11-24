@@ -1,7 +1,19 @@
-import { appDown } from "./module/components/app-addons.js";
+// import { appDown } from "./module/components/app-addons.js";
 // Đợi DOM sẵn sàng trước khi chạy
-document.addEventListener('DOMContentLoaded', () => {
-    appDown();
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // Import file module động
+        const module = await import("./module/components/app-addons.js");
+        // Lấy hàm appDown từ module và chạy
+        if (module.appDown) {
+            module.appDown();
+        }
+    } catch (error) {
+        console.error("Lỗi khi load module app-addons:", error);
+        // Tại đây bạn có thể xem chi tiết lỗi trong console
+        // Nếu lỗi là "require is not defined", nó sẽ hiện rõ ở đây
+    }
+    // --- KẾT THÚC SỬA ĐỔI ---
     const MOBILE_BREAKPOINT = 768; // Khớp với media query trong CSS
     let isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
     let sidebarOpen = false;
