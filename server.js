@@ -38,6 +38,7 @@ app.register(require('@fastify/rate-limit'), {
 
 const fastifySecureSession = require('@fastify/secure-session')
 const fastifyPassport = require('@fastify/passport')
+const sodium = require('sodium-javascript')
 
 const sessionSecretBase64 = process.env.SESSION_SECRET || ''
 let sessionKey = null
@@ -55,6 +56,7 @@ try {
 }
 
 app.register(fastifySecureSession, {
+  sodium,
   key: sessionKey,
   cookieName: 'session',
   cookie: {
