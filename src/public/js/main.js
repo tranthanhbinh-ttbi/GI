@@ -1,4 +1,4 @@
-import { appDown } from "js/module/components/app-addons.js";
+import { appDown } from "./module/components/app-addons.js";
 document.addEventListener("DOMContentLoaded", () => {
     appDown();
 })
