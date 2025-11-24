@@ -167,4 +167,9 @@ const start = async () => {
   }
 };
 
-start();
+if (require.main === module) {
+  start();
+}
+
+// Xuất app ra để Vercel (thông qua file api/index.js) có thể import và xử lý request
+module.exports = app;
