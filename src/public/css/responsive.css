@@ -1,0 +1,14 @@
+/* @media (max-width: 425px) {
+    header, #hero, #c-act, footer {
+        display: none;
+    }
+    #achv {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    #purp {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
+} */
