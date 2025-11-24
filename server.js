@@ -83,7 +83,7 @@ configurePassport(app)
 // })
 
 app.register(require('@fastify/static'), {
-    root: path.join(__dirname, 'src', 'public'),
+    root: path.join(__dirname, 'public'),
     setHeaders: (res, path, stat) => {
         res.setHeader('Cache-Control', 'public, max-age=31536000');
     }
