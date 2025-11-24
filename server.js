@@ -163,7 +163,8 @@ const start = async () => {
 
     console.log(`Server listening on http://${host === '0.0.0.0' ? 'localhost' : host}:${port}`)
   } catch (error) {
-    console.log(error);
+    console.error("LỖI KHỞI TẠO:", error); // Dòng này sẽ hiện trong log Vercel
+    throw error;
   }
 };
 
