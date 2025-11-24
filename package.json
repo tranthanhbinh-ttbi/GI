@@ -28,12 +28,14 @@
     "pg": "^8.16.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.7",
-    "sequelize-cockroachdb": "^6.0.5"
+    "sequelize-cockroachdb": "^6.0.5",
+    "sodium-native": "^5.0.10"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
   },
   "scripts": {
-    "postinstall": "npm rebuild sodium-native"
+    "start": "node api/index.js",
+    "postinstall": "npm install sodium-native --force"
   }
 }

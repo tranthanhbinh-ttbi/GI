@@ -1,18 +1,15 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/index.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "node_modules/sodium-native/**",
-          "node_modules/sodium-native/index.js",
-          "node_modules/sodium-native/prebuilds/**"
-        ]
-      }
+  "functions": {
+    "api/index.js": {
+      "includeFiles": [
+        "node_modules/sodium-native/**",
+        "node_modules/sodium-native/index.js",
+        "node_modules/sodium-native/prebuilds/**",
+        "node_modules/sodium-native/build/**"
+      ]
     }
-  ],
+  },
   "routes": [
     {
       "src": "/(.*)",
