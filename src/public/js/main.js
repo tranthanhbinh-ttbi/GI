@@ -1,6 +1,6 @@
-import { app } from "./module/components/app-addons.js";
+import { appDown } from "js/module/components/app-addons.js";
 document.addEventListener("DOMContentLoaded", () => {
-    app();
+    appDown();
 })
 
 // Đợi DOM sẵn sàng trước khi chạy

@@ -1,4 +1,4 @@
-export function app() {
+export const appDown = () => {
     const theme_Switch = document.querySelector('#dl-swi');
     const header = document.querySelector('header');
     const progressBar = document.querySelector('.prog');
