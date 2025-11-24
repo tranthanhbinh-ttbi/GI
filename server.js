@@ -36,28 +36,19 @@ app.register(require('@fastify/rate-limit'), {
   cache: 10000,
 })
 
-const fastifySecureSession = require('@fastify/secure-session')
-const fastifyPassport = require('@fastify/passport')
-const sodium = require('sodium-javascript')
+const fastifySession = require('@fastify/session');
+const fastifyPassport = require('@fastify/passport');
 
-const sessionSecretBase64 = process.env.SESSION_SECRET || ''
-let sessionKey = null
-try {
-  const keyCandidate = Buffer.from(sessionSecretBase64, 'base64')
-  if (keyCandidate.length === 32) {
-    sessionKey = keyCandidate
-  } else {
-    sessionKey = crypto.randomBytes(32)
-    console.warn('SESSION_SECRET is missing or invalid. Using a random ephemeral 32-byte key.')
-  }
-} catch (_) {
-  sessionKey = crypto.randomBytes(32)
-  console.warn('SESSION_SECRET is invalid base64. Using a random ephemeral 32-byte key.')
+// A session secret must be a string with a length of 32 or more
+const sessionSecret = process.env.SESSION_SECRET;
+if (!sessionSecret || sessionSecret.length < 32) {
+  console.warn(
+    'SESSION_SECRET is missing or too short (must be 32+ characters). Using a random ephemeral key. THIS IS NOT SAFE FOR PRODUCTION.'
+  );
 }
 
-app.register(fastifySecureSession, {
-  sodium,
-  key: sessionKey,
+app.register(fastifySession, {
+  secret: sessionSecret || crypto.randomBytes(32).toString('hex'),
   cookieName: 'session',
   cookie: {
     path: '/',
@@ -65,9 +56,9 @@ app.register(fastifySecureSession, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
   },
-})
-app.register(fastifyPassport.initialize())
-app.register(fastifyPassport.secureSession())
+});
+app.register(fastifyPassport.initialize());
+app.register(fastifyPassport.secureSession());
 
 const configurePassport = require('./src/config/oauth-config')
 configurePassport(app)
