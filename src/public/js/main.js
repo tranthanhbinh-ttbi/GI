@@ -1,11 +1,7 @@
 import { appDown } from "./module/components/app-addons.js";
-document.addEventListener("DOMContentLoaded", () => {
-    appDown();
-})
-
 // Đợi DOM sẵn sàng trước khi chạy
 document.addEventListener('DOMContentLoaded', () => {
-
+    appDown();
     const MOBILE_BREAKPOINT = 768; // Khớp với media query trong CSS
     let isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
     let sidebarOpen = false;
