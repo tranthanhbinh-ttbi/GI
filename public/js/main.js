@@ -11,13 +11,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log("Module load thành công:", module);
 
         // Chạy hàm appDown từ module
-        if (module.appDown) {
-            // Bọc việc chạy hàm trong try-catch riêng để bắt lỗi logic (như preferredTheme)
-            try {
-                module.appDown(); 
-            } catch (runError) {
-                console.error("Lỗi khi CHẠY hàm appDown:", runError);
-            }
+        if (typeof window.appDown === 'function') {
+            console.log("Tìm thấy window.appDown, đang chạy...");
+            window.appDown(); 
+        } else {
+            throw new Error("Không tìm thấy hàm appDown trong window sau khi load file.");
         }
     } catch (loadError) {
         // Đây là nơi bắt lỗi "require is not defined" hoặc lỗi không tìm thấy file
