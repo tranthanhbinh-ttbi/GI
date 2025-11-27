@@ -1152,7 +1152,7 @@ body.sidebar-open {
     display: flex;
     flex-direction: column;
     gap: 32px;
-    padding: 2rem 5px;
+    padding: 2rem 5px 20rem;
     border-top: 1px solid var(--gen-border);
 }
 #gen-mobile-sidebar .ms-body .ms-nav-area {
@@ -1161,7 +1161,7 @@ body.sidebar-open {
 /* Menu Styles - Căn giữa & Dấu chấm */
 #gen-mobile-sidebar .ms-nav-area ul {
     display: flex !important; flex-direction: column;
-    gap: 22px;
+    gap: 32px;
 }
 #gen-mobile-sidebar .ms-nav-area li { width: 100%; }
 #gen-mobile-sidebar .ms-nav-area li a {
