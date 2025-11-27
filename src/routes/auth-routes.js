@@ -1,8 +1,14 @@
 const { Follower } = require('../models')
 const FPassport = require('@fastify/passport')
 const { broadcast } = require('../controllers/realtime')
+const AsyncAuthHandler = require('../utils/async-auth-handler')
+const AuthHandshakeManager = require('../utils/auth-handshake-manager')
 
 async function oauthRoutes(fastify) {
+  // Initialize handlers
+  const authHandler = new AsyncAuthHandler({ sessionTimeout: 5000 })
+  const handshakeManager = new AuthHandshakeManager({ tokenTTL: 30000 })
+
   function ensureLoggedIn(request, reply, done) {
     if (request.isAuthenticated && request.isAuthenticated()) return done()
     reply.code(401).send({ ok: false })
@@ -28,26 +34,66 @@ async function oauthRoutes(fastify) {
     }
   }
 
-	fastify.get('/auth/google', { 
+  fastify.get('/auth/google', { 
     preValidation: FPassport.authenticate('google', { scope: ['profile', 'email'] }) 
   }, async (request, reply) => {})
-	fastify.get('/auth/google/callback', { 
+
+  fastify.get('/auth/google/callback', { 
     preValidation: FPassport.authenticate('google', { failureRedirect: '/' }) 
   }, async (request, reply) => {
-    await ensureFollowerRecord(request.user)
-    await emitFollowersSnapshot()
-    return reply.redirect('/') 
+    try {
+      // Use AsyncAuthHandler để xử lý post-auth flow
+      const result = await authHandler.handlePostAuth(request, request.user, {
+        ensureFollowerRecord,
+        emitFollowersSnapshot,
+        handshakeManager
+      })
+      
+      // Trả về handshake token để client xác nhận
+      return reply.redirect(`/?handshake=${result.handshakeToken}`)
+    } catch (error) {
+      console.error('[AUTH] Google callback error:', error)
+      return reply.redirect('/?auth_error=callback_failed')
+    }
   })
 
-	fastify.get('/auth/facebook', { 
+  fastify.get('/auth/facebook', { 
     preValidation: FPassport.authenticate('facebook', { scope: ['public_profile', 'email'] }) 
   }, async (request, reply) => {})
-	fastify.get('/auth/facebook/callback', { 
+
+  fastify.get('/auth/facebook/callback', { 
     preValidation: FPassport.authenticate('facebook', { failureRedirect: '/' }) 
   }, async (request, reply) => {
-    await ensureFollowerRecord(request.user)
-    await emitFollowersSnapshot()
-    return reply.redirect('/') 
+    try {
+      const result = await authHandler.handlePostAuth(request, request.user, {
+        ensureFollowerRecord,
+        emitFollowersSnapshot,
+        handshakeManager
+      })
+      
+      return reply.redirect(`/?handshake=${result.handshakeToken}`)
+    } catch (error) {
+      console.error('[AUTH] Facebook callback error:', error)
+      return reply.redirect('/?auth_error=callback_failed')
+    }
+  })
+
+  // NEW: Endpoint để confirm handshake
+  fastify.post('/api/auth/confirm-handshake', { 
+    preHandler: [FPassport.authenticate('session')] 
+  }, async (request) => {
+    const { handshakeToken } = request.body
+    
+    try {
+      const result = await authHandler.confirmHandshake(
+        request,
+        handshakeToken,
+        handshakeManager
+      )
+      return result
+    } catch (error) {
+      return reply.code(401).send({ ok: false, error: error.message })
+    }
   })
 
   fastify.get('/api/me', { preHandler: [FPassport.authenticate('session'), ensureLoggedIn], credentials: 'include' },

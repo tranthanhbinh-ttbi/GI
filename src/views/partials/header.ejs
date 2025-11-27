@@ -15,7 +15,7 @@
             </a>
 		</div>
 		<div id="gen-brand">
-			<img src="photos/brands/gender-insights.svg" class="gen-brands" width="145" height="100" alt="Gender Insights"/>
+			<img src="/photos/brands/gender-insights.svg" class="gen-brands" width="145" height="100" alt="Gender Insights"/>
         </div>
 		<div class="dfx-alc-jcb dl-log">
 			<div id="dl">
@@ -93,7 +93,7 @@
                 <li class="<%= Pages === 'trang-chu' ? 'active' : '' %>">
                     <a href="/" class="h-hov">Trang Chủ</a>
                 </li>
-                <li class="<%= Pages === 'series' ? 'active' : '' %>">
+                <li class="<%= Pages.startsWith('series') ? 'active' : '' %>">
                     <a href="/series" class="t-hov">Series</a>
                 </li>
                 <li class="<%= Pages === 'kham-pha' ? 'active' : '' %>">

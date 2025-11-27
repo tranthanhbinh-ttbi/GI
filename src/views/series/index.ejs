@@ -11,15 +11,15 @@
     <meta property="og:description" content="Khám phá các series video, podcast và bài viết về giáo dục giới tính."/>
     <meta property="og:image" content="photos/brands/gender-insights.svg"/>
     <meta property="og:image:alt" content="Gender Insights"/>
-    <title>Series | Gender Insights</title> 
+    <title>Gender Insights | Series</title> 
     <link rel="shortcut icon" href="photos/brands/gender-insights.ico" type="image/x-icon"/>
     <link rel="preload" href="/css/main.css" as="style"/>
     <link rel="preload" href="/css/bases.css" as="style"/>
     <link rel="preload" href="/fonts/Montserrat/Montserrat.woff2" as="font" type="font/woff2" crossorigin/>
     <link rel="preload" href="/fonts/Montserrat/Montserrat.woff" as="font" type="font/woff" crossorigin/>
     
-    <!-- <link rel="stylesheet" href="/js/module/splide-4.1.3/dist/css/splide.min.css"/> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" integrity="sha256-5uKiXEwbaQh9cgd2/5Vp6WmMnsUr3VZZw0a8rKnOKNU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="/js/module/splide-4.1.3/dist/css/splide.min.css"/>
+    
     <link rel="stylesheet" href="/css/main.css"/>
     <link rel="stylesheet" href="/css/bases.css"/>
     <link rel="stylesheet" href="/css/responsive.css"/>
@@ -48,6 +48,96 @@
             -ms-overflow-style: none;
             scrollbar-width: none; 
         }
+
+        /* CSS cho bài viết lớn (Hero Slide) */
+        .slide-item {
+            position: relative; /* Đảm bảo các phần tử con được định vị tương đối */
+        }
+
+        .hero-slide-top-tags {
+            position: absolute;
+            top: 1.5rem; /* Căn lề trên */
+            left: 2rem; /* Căn lề trái */
+            right: 2rem; /* Căn lề phải */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: calc(100% - 4rem); /* Chiều rộng trừ đi padding trái phải */
+        }
+
+        .hero-slide-category-container {
+            display: flex;
+            gap: 0.5rem; /* Khoảng cách giữa các thẻ */
+        }
+
+        .hero-slide-category-tag {
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .hero-slide-category-tag--purple {
+            background-color: #8e44ad; /* Màu tím */
+        }
+
+        .hero-slide-category-tag--violet {
+            background-color: #9b59b6; /* Màu violet */
+        }
+
+        .hero-slide-date-tag {
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 0.3rem 0.8rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .hero-slide-body {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            color: white;
+            text-align: left;
+        }
+
+        .hero-slide-stats {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .hero-slide-separator {
+            margin: 0 0.25rem;
+        }
+
+        .hero-slide-rating {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.25rem;
+        }
+
+        .hero-slide-stars {
+            color: #f0ad4e; /* Màu vàng */
+        }
+
+        .hero-slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .hero-slide-description {
+            font-size: 1rem;
+            max-width: 80%; /* Giới hạn chiều rộng để dễ đọc */
+        }
     </style>
     
     <script>
@@ -67,106 +157,94 @@
                 <div class="splide__track">
                     <ul class="splide__list">
                        
+
                         <li class="splide__slide">
                             <div class="slide-item">
-                                <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=800" class="slide-image">
-                                <div class="slide-gradient"></div>
-  
-                                
-                                <div class="card-image-container">
-                                    <!-- <a href="#" class="block"><img class="card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề video"> </a> -->
-                                    <span class="card-category-badge bg-red-600">Video</span> 
-                                    <span class="slide-date-badge">15/9/2024</span>
-                                </div>
+                            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=800" class="slide-image">
+                            <div class="slide-gradient"></div>
 
-                                <div class="slide-content">
-                                  
-                                    
-                                    <div class="slide-stats">
-                                        <div class="stat-item" title="Lượt xem">
-                    
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>
-                                   
-                                            <span>2100</span>
-                                        </div>
-                                        <div class="stat-item" title="Đánh giá (98)">
-       
-                                            <div class="flex items-center">
-                                                <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                                <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-               
-                                                <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                          
-                                                <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                                <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            </div>
-                                            <span>(98)</span>
-        
-                                        </div>
+                            <div class="hero-slide-top-tags">
+                                <div class="hero-slide-category-container">
+                                        <span class="hero-slide-category-tag hero-slide-category-tag--violet">Video</span>
                                     </div>
-                                    <h1 class="slide-title">
-                                        Hiểu Biết Về Tuổi Dậy Thì
-                                    </h1>
-                                    <p class="slide-description">
-                                        Tìm hiểu về những thay đổi tự nhiên của cơ thể và tâm lý trong giai đoạn này.
-                                    </p>
+                                <span class="hero-slide-date-tag">15 tháng 9, 2024</span>
+                            </div>
+
+                            <div class="hero-slide-body">
+                                <div class="hero-slide-stats">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"></path><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"></path></svg>
+                                    </span>
+                                    <span class="hero-slide-views">2100 views</span>
+                                    <span class="hero-slide-separator">/</span>
+                                    <div class="hero-slide-rating">
+                                        <div class="flex items-center">
+                        
+                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                            <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                        </div>
+                                        <span class="hero-slide-rating-count">(98)</span>
+                                    </div>
                                 </div>
-                                <button class="slide-share-button" title="Chia sẻ">
+                                <h1 class="hero-slide-title">Hiểu Biết Về Tuổi Dậy Thì</h1>
+                                <p class="hero-slide-description">Tìm hiểu về những thay đổi tự nhiên của cơ thể và tâm lý trong giai đoạn này.</p>
+                            </div>
+                            <button class="slide-share-button" title="Chia sẻ">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
                                 </button>
-                            
-                            </div>
+                                </div>
                         </li>
                         <li class="splide__slide">
                             <div class="slide-item">
-                      
                                 <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800" class="slide-image">
                                 <div class="slide-gradient"></div>
-                                
 
-                                <div class="card-image-container">
-                                    <!-- <a href="#" class="block"><img class="card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề video"> </a> -->
-                                    <span class="card-category-badge bg-purple">Video</span>
-                                    <span class="slide-category-badge bg-purple">Podcast</span>
-                                    <span class="slide-date-badge">10/9/2024</span>
+                                <div class="hero-slide-top-tags">
+                                    <div class="hero-slide-category-container">
+                                        <span class="hero-slide-category-tag hero-slide-category-tag--purple">Podcast</span>
+                                    </div>
+                                    <span class="hero-slide-date-tag">10 tháng 9, 2024</span>
                                 </div>
-                    
-                                <div class="slide-content">
-                                    <div class="slide-stats">
-                                        <div class="stat-item" title="Lượt xem">
-                    
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>
-                                   
-                                            <span>654</span>
-                                        </div>
-                                        <div class="stat-item" title="Đánh giá (32)">
-       
+
+                                <div class="hero-slide-body">
+                                    <div class="hero-slide-stats">
+                                        <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"></path><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"></path></svg>
+                                    </span>
+                                        <span class="hero-slide-views">654 views</span>
+                                        <span class="hero-slide-separator">/</span>
+                                        <div class="hero-slide-rating">
                                             <div class="flex items-center">
-                                                <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                                <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-               
-                                                <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54h-4182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                          
-                                                <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                                <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            </div>
-                                            <span>(32)</span>
-        
+                        
+                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                            <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                        </div>
+                                            <span class="hero-slide-rating-count">(32)</span>
                                         </div>
                                     </div>
-                                    <h1 class="slide-title">
-            
-                                        Phá Vỡ Định Kiến Giới Tính
-                                    </h1>
-                               
-                                    <p class="slide-description">
-                                        Cuộc trò chuyện thẳng thắn về những quan niệm sai lầm phổ biến.
-                                    </p>
+                                    <h1 class="hero-slide-title">Phá Vỡ Định Kiến Giới Tính</h1>
+                                    <p class="hero-slide-description">Cuộc trò chuyện thẳng thắn về những quan niệm sai lầm phổ biến.</p>
                                 </div>
+
                                 <button class="slide-share-button" title="Chia sẻ">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
                                 </button>
-                            
                             </div>
                         </li>
                     </ul>
@@ -243,197 +321,119 @@
                                 </select>
                       
                             </div>
-                            <div class="form-group">
+                            <div>
                                 <label for="sort-by-mobile" class="form-label">Sắp xếp</label>
                               
                                 <select id="sort-by-mobile" name="sort-by" class="form-input">
                                     <option value="newest">Mới nhất</option>
                                     <option value="oldest">Cũ nhất</option>
-                   
-                                    <option value="popular">Phổ biến nhất</option>
+                                    <option value="most-viewed">Xem nhiều nhất</option>
                                 </select>
                             </div>
-                    
-                            <button type="submit" class="submit-button">
-                                Áp Dụng Lọc
-                            </button>
                         </form>
     
                     </div>
 
                     <div class="card-grid">
                         
-                        <div class="series-card">
-              
-                            <div class="card-image-container">
-                                <a href="#" class="block">
-                                    <img class="card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề video">
-          
-                                </a>
-                                <span class="card-category-badge bg-red-600">Video</span>
-                                <span class="slide-date-badge">12/9/2024</span>
-         
-                            </div>
-                            <div class="card-content">
-                                <h3 class="card-title">
-                   
-                                    <a href="#">Giao Tiếp Hiệu Quả Về Giới Tính</a>
-                                </h3>
-                                <p class="card-description">
-           
-                                    Hướng dẫn cách mở cuộc trò chuyện khó khăn với gia đình về các vấn đề giới tính...
-                                </p>
-                          
-                            </div>
-                            <div class="card-footer">
-                                <div class="card-stats">
-                                    
-                                    <div class="stat-item" title="Lượt xem">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>
-         
-                                        <span>890</span>
-                                    </div>
-                                 
-                                    <div class="stat-item" title="Đánh giá (45)">
-                                        <div class="flex items-center">
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-             
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-      
-                                        </div>
-                                        <span>(45)</span>
-                          
-                                    </div>
-                                </div>
-                                <button class="card-share-button" title="Chia sẻ">
-                       
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
-                                </button>
-    
-                            </div>
-                        </div>
+                                                <% if (typeof posts !== 'undefined' && posts.length > 0) { %>
                         
-                        <div class="series-card">
-   
-                            <div class="card-image-container">
-                                <a href="#" class="block">
-                                    <img class="card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề podcast">
-                                </a>
-                                <span class="card-category-badge bg-purple-600">Podcast</span>
-                                <span class="slide-date-badge">10/9/2024</span>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="card-title">
-        
-                                    <a href="#">Phá Vỡ Định Kiến Giới Tính</a>
-                                </h3>
-                                <p class="card-description">
- 
-                                    Cuộc trò chuyện thẳng thắn về những quan niệm sai lầm phổ biến...
-                                </p>
-                     
-                            </div>
-                            <div class="card-footer">
-                                <div class="card-stats">
-                               
-                                    <div class="stat-item" title="Lượt xem">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>
-    
-                                        <span>654</span>
-                                    </div>
-                            
-                                    <div class="stat-item" title="Đánh giá (32)">
-                                        <div class="flex items-center">
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-        
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                       
-                                            <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
- 
-                                        </div>
-                                        <span>(32)</span>
-                     
-                                    </div>
-                                </div>
-                                <button class="card-share-button" title="Chia sẻ">
-                  
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
-                               
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="series-card">
-                      
-                            <div class="card-image-container">
-                                <a href="#" class="block">
-                                    <img class="card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
-                 
-                                </a>
-                                <span class="card-category-badge bg-blue-600">Bài Viết</span>
-                                <span class="slide-date-badge">15/9/2024</span>
-               
-                            </div>
-                            <div class="card-content">
-                                <h3 class="card-title">
-                         
-                                    <a href="#">Nhận Biết Và Phòng Chống Xâm Hại</a>
-                                </h3>
-                                <p class="card-description">
-                 
-                                    Kiến thức quan trọng giúp bảo vệ bản thân và người xung quanh khỏi các nguy cơ xâm hại.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="card-stats">
-          
-                                    <div class="stat-item" title="Lượt xem">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>
-                                        <span>2100</span>
-                                    </div>
-              
-                                    <div class="stat-item" title="Đánh giá (98)">
-                                        <div class="flex items-center">
-                                
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                         
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                        </div>
-                                        <span>(98)</span>
-       
-                                    </div>
-                                </div>
-                                <button class="card-share-button" title="Chia sẻ">
-    
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
-                 
-                                </button>
-                            </div>
-                        </div>
+                                                    <% posts.forEach(post => { %>
+                        
+                                                        <div class="series-card">
+                        
+                                                            <div class="card-image-container">
+                        
+                                                                <a href="/series/post/<%= post.slug %>" class="block">
+                        
+                                                                    <img class="card-image" src="/photos/placeholder-m6a0q.png" alt="<%= post.title %>">
+                        
+                                                                </a>
+                        
+                                                                <span class="card-category-badge bg-red-600"><%= post.category %></span>
+                        
+                                                                <span class="slide-date-badge"><%= post.date %></span>
+                        
+                                                            </div>
+                        
+                                                            <div class="card-content">
+                        
+                                                                <h3 class="card-title">
+                        
+                                                                    <a href="/series/post/<%= post.slug %>"><%= post.title %></a>
+                        
+                                                                </h3>
+                        
+                                                                <p class="card-description">
+                        
+                                                                    <%= post.description %>
+                        
+                                                                </p>
+                        
+                                                            </div>
+                        
+                                                            <div class="card-footer">
+                        
+                                                                <div class="card-stats">
+                        
+                                                                    <div class="stat-item" title="Lượt xem">
+                        
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>
+                        
+                                                                        <span>890</span>
+                        
+                                                                    </div>
+                        
+                                                                    <div class="stat-item" title="Đánh giá (45)">
+                        
+                                                                        <div class="flex items-center">
+                        
+                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                            <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                        
+                                                                        </div>
+                        
+                                                                        <span>(45)</span>
+                        
+                                                                    </div>
+                        
+                                                                </div>
+                        
+                                                                <button class="card-share-button" title="Chia sẻ">
+                        
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
+                        
+                                                                </button>
+                        
+                                                            </div>
+                        
+                                                        </div>
+                        
+                                                    <% }) %>
+                        
+                                                <% } %>
 
                         <div class="series-card">
         
                             <div class="card-image-container">
-                                <a href="#" class="block">
+                                <a href="/series/post" class="block">
                                     <img class="card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề podcast">
     
                                 </a>
                                 <span class="card-category-badge bg-purple-600">Podcast</span>
-                                <span class="slide-date-badge">10/9/2024</span>
+                                <span class="slide-date-badge">10 tháng 9, 2024</span>
                             </div>
                             <div class="card-content">
                                 <h3 class="card-title">
           
-                                    <a href="#">Phá Vỡ Định Kiến Giới Tính</a>
+                                    <a href="/series/post">Phá Vỡ Định Kiến Giới Tính</a>
                                 </h3>
                                 <p class="card-description">
    
@@ -474,17 +474,17 @@
                         <div class="series-card">
                             <div class="card-image-container">
   
-                                <a href="#" class="block">
+                                <a href="/series/post" class="block">
                                     <img class="card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
                           
                                 </a>
                                 <span class="card-category-badge bg-blue-600">Bài Viết</span>
-                                <span class="slide-date-badge">15/9/2024</span>
+                                <span class="slide-date-badge">15 tháng 9, 2024</span>
                             </div>
                             <div class="card-content">
                                 <h3 class="card-title">
           
-                                    <a href="#">Nhận Biết Và Phòng Chống Xâm Hại</a>
+                                    <a href="/series/post">Nhận Biết Và Phòng Chống Xâm Hại</a>
                                 </h3>
                                 <p class="card-description">
   
@@ -524,17 +524,17 @@
                         <div class="series-card">
         
                             <div class="card-image-container">
-                                <a href="#" class="block">
+                                <a href="/series/post" class="block">
                                     <img class="card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
    
                                 </a>
                                 <span class="card-category-badge bg-blue-600">Bài Viết</span>
-                                <span class="slide-date-badge">15/9/2024</span>
+                                <span class="slide-date-badge">15 tháng 9, 2024</span>
                             </div>
                             <div class="card-content">
                                 <h3 class="card-title">
           
-                                    <a href="#">Nhận Biết Và Phòng Chống Xâm Hại</a>
+                                    <a href="/series/post">Nhận Biết Và Phòng Chống Xâm Hại</a>
                                 </h3>
                                 <p class="card-description">
   
@@ -623,20 +623,15 @@
                                 </select>
                        
                             </div>
-                            <div class="form-group">
+                            <div>
                                 <label for="sort-by" class="form-label">Sắp xếp</label>
                                
                                 <select id="sort-by" name="sort-by" class="form-input">
                                     <option value="newest">Mới nhất</option>
                                     <option value="oldest">Cũ nhất</option>
-                    
-                                    <option value="popular">Phổ biến nhất</option>
+                                    <option value="most-viewed">Xem nhiều nhất</option>
                                 </select>
                             </div>
-                     
-                            <button type="submit" class="submit-button">
-                                Áp Dụng Lọc
-                            </button>
                         </form>
      
                     </div>
@@ -650,9 +645,10 @@
                             <div class="popular-post-card">
                                 <div class="popular-card-image-container">
                                     <a href="#">
-                                        <img class="popular-card-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200" alt="Tiêu đề bài viết">
+                                        <img class="popular-card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
                                     </a>
-                                    <span class="popular-card-category-badge">Lifestyle</span>
+                                    <!-- <span class="popular-card-category-badge">Lifestyle</span> -->
+                                    <span class="card-category-badge bg-red-600">Bài Viết</span>
                                     <span class="popular-card-read-time-badge">
                                         <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                         <span>5 Mins Read</span>
@@ -660,7 +656,7 @@
                                 </div>
                                 <div class="popular-card-content">
                                     <div class="popular-card-meta">
-                                        <span>29/10/2025</span>
+                                        <span>29 tháng 10, 2025</span>
                                     </div>
                                     <h4 class="popular-card-title">
                                         <a href="#">3 Cách Đơn Giản Để Hiểu Bản Thân Hơn</a>
@@ -671,9 +667,10 @@
                             <div class="popular-post-card">
                                 <div class="popular-card-image-container">
                                     <a href="#">
-                                        <img class="popular-card-image" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200" alt="Tiêu đề bài viết">
+                                        <img class="popular-card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
                                     </a>
-                                    <span class="popular-card-category-badge">Productivity</span>
+                                    <!-- <span class="popular-card-category-badge">Productivity</span> -->
+                                    <span class="card-category-badge bg-red-600">Bài Viết</span>
                                     <span class="popular-card-read-time-badge">
                                         <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                         <span>4 Mins Read</span>
@@ -681,7 +678,7 @@
                                 </div>
                                 <div class="popular-card-content">
                                     <div class="popular-card-meta">
-                                        <span>28/10/2025</span>
+                                        <span>28 tháng 10, 2025</span>
                                     </div>
                                     <h4 class="popular-card-title">
                                         <a href="#">Phương Pháp Cực Dễ Hiểu Về Mọi Người</a>
@@ -692,9 +689,10 @@
                             <div class="popular-post-card">
                                 <div class="popular-card-image-container">
                                     <a href="#">
-                                        <img class="popular-card-image" src="https://images.unsplash.com/photo-1521119989659-a83eee488004?w=200" alt="Tiêu đề bài viết">
+                                        <img class="popular-card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
                                     </a>
-                                    <span class="popular-card-category-badge">Tips</span>
+                                    <!-- <span class="popular-card-category-badge">Tips</span> -->
+                                    <span class="card-category-badge bg-red-600">Bài Viết</span>
                                     <span class="popular-card-read-time-badge">
                                         <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                         <span>3 Mins Read</span>
@@ -702,7 +700,7 @@
                                 </div>
                                 <div class="popular-card-content">
                                     <div class="popular-card-meta">
-                                        <span>27/10/2025</span>
+                                        <span>27 tháng 10, 2025</span>
                                     </div>
                                     <h4 class="popular-card-title">
                                         <a href="#">10 Điều Cần Làm Ngay Lập Tức</a>
@@ -713,9 +711,10 @@
                             <div class="popular-post-card">
                                 <div class="popular-card-image-container">
                                     <a href="#">
-                                        <img class="popular-card-image" src="https://images.unsplash.com/photo-1521119989659-a83eee488004?w=200" alt="Tiêu đề bài viết">
+                                        <img class="popular-card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
                                     </a>
-                                    <span class="popular-card-category-badge">Tips</span>
+                                    <!-- <span class="popular-card-category-badge">Tips</span> -->
+                                    <span class="card-category-badge bg-red-600">Bài Viết</span>
                                     <span class="popular-card-read-time-badge">
                                         <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                         <span>3 Mins Read</span>
@@ -723,7 +722,7 @@
                                 </div>
                                 <div class="popular-card-content">
                                     <div class="popular-card-meta">
-                                        <span>27/10/2025</span>
+                                        <span>27 tháng 10, 2025</span>
                                     </div>
                                     <h4 class="popular-card-title">
                                         <a href="#">10 Điều Cần Làm Ngay Lập Tức</a>
@@ -734,9 +733,10 @@
                             <div class="popular-post-card">
                                 <div class="popular-card-image-container">
                                     <a href="#">
-                                        <img class="popular-card-image" src="https://images.unsplash.com/photo-1521119989659-a83eee488004?w=200" alt="Tiêu đề bài viết">
+                                        <img class="popular-card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
                                     </a>
-                                    <span class="popular-card-category-badge">Tips</span>
+                                    <!-- <span class="popular-card-category-badge">Tips</span> -->
+                                    <span class="card-category-badge bg-red-600">Bài Viết</span>
                                     <span class="popular-card-read-time-badge">
                                         <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                         <span>3 Mins Read</span>
@@ -744,7 +744,7 @@
                                 </div>
                                 <div class="popular-card-content">
                                     <div class="popular-card-meta">
-                                        <span>27/10/2025</span>
+                                        <span>27 tháng 10, 2025</span>
                                     </div>
                                     <h4 class="popular-card-title">
                                         <a href="#">10 Điều Cần Làm Ngay Lập Tức</a>
@@ -764,7 +764,6 @@
 
    
     <script src="/js/module/splide-4.1.3/dist/js/splide.min.js" defer></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js" integrity="sha256-FZsW7H2V5X9TGinSjjwYJ419Xka27I8XPDmWryGlWtw=" crossorigin="anonymous" defer></script>
     <script type="module" src="/js/main.js" defer></script>
     <script src="/js/auth.js" defer></script>
 

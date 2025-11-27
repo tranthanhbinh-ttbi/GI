@@ -2,28 +2,35 @@
 <html lang="vi-VN" data-gen-themes=light>
 <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-fit=no"/>
-    <meta name="description" content="Khám phá các series video, podcast và bài viết về giáo dục giới tính."/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+    <meta name="description" content="Gender Insights là dự án giáo dục giới tính cho thanh thiếu niên, đồng thời nâng cao nhận thức cộng đồng về phòng chống xâm hại tình dục trẻ em."/>
     <meta name="author" content="Gender Insights"/>
     <meta property="og:type" content="website"/>
     <meta property="og:locale" content="vi_VN"/>
-    <meta property="og:title" content="Series | Gender Insights"/>
-    <meta property="og:description" content="Khám phá các series video, podcast và bài viết về giáo dục giới tính."/>
+    <meta property="og:title" content="Gender Insights | Hiểu Biết - Đối Thoại - Kết Nối"/>
+    <meta property="og:description" content="Gender Insights là dự án giáo dục giới tính cho thanh thiếu niên, đồng thời nâng cao nhận thức cộng đồng về phòng chống xâm hại tình dục trẻ em."/>
     <meta property="og:image" content="photos/brands/gender-insights.svg"/>
     <meta property="og:image:alt" content="Gender Insights"/>
-    <title>Su kien | Gender Insights</title>
+    <title>Gender Insights | Hiểu Biết - Đối Thoại - Kết Nối</title>
     <link rel="shortcut icon" href="photos/brands/gender-insights.ico" type="image/x-icon"/>
     <link rel="preload" href="/css/main.css" as="style"/>
     <link rel="preload" href="/css/bases.css" as="style"/>
     <link rel="preload" href="/fonts/Montserrat/Montserrat.woff2" as="font" type="font/woff2" crossorigin/>
     <link rel="preload" href="/fonts/Montserrat/Montserrat.woff" as="font" type="font/woff" crossorigin/>
+    <link rel="prefetch" href="/series"/>
+    <link rel="prefetch" href="/kham-pha"/>
+    <link rel="prefetch" href="/tin-tuc"/>
+    <link rel="prefetch" href="/su-kien"/>
+    <link rel="prefetch" href="/dien-dan"/>
+    <link rel="stylesheet" href="/js/module/splide-4.1.3/dist/css/splide.min.css"/>
     <link rel="stylesheet" href="/css/main.css"/>
     <link rel="stylesheet" href="/css/bases.css"/>
-    <link rel="stylesheet" href="/css/tin-tuc.css"/>
+    <link rel="stylesheet" href="/css/responsive.css"/>
+    <link rel="stylesheet" href="/css/trang-chu/index.css"/>
     <link rel="stylesheet" href="/fonts/index.css"/>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+	<link rel="alternate" href="https://gender-insights.vercel.app" hreflang="vi-VN"/>
+	<link rel="canonical" href="https://gender-insights.vercel.app"/>
+    <link rel="stylesheet" href="/css/tin-tuc.css"/>
     <style>
         * {
             margin: 0;
@@ -36,163 +43,301 @@
         }
     </style>
     <script>
-        const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ?
-        localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ? localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-gen-themes', preferredTheme);
     </script>
 </head>
 <body>
-    <%- include('../partials/header') %>
-    
-    <main class="news-page">
-        <div class="news-shell">
-            <section class="news-hero">
-                <div class="news-hero__ticker">
-                    <article class="ticker-card">
-                        <div class="ticker-card__meta">
-                            <span class="badge badge--soft">Sống khỏe</span>
-                            <span>12 Thg 2, 2025 • 6 phút đọc</span>
-                        </div>
-                        <h4>10 thói quen nhỏ giúp cân bằng cảm xúc mỗi sáng</h4>
-                        <p>Chuyên gia wellness chia sẻ các nghi thức giúp ngày mới tỉnh táo, vững chãi.</p>
-                    </article>
-                    <article class="ticker-card">
-                        <div class="ticker-card__meta">
-                            <span class="badge badge--soft">Kinh nghiệm</span>
-                            <span>05 Thg 3, 2025 • Podcast</span>
-                        </div>
-                        <h4>3 xu hướng make-up chạm ngưỡng bền vững năm nay</h4>
-                        <p>Cuộc trò chuyện với các beauty editor về góc nhìn thân thiện môi trường.</p>
-                    </article>
-                    <article class="ticker-card">
-                        <div class="ticker-card__meta">
-                            <span class="badge badge--soft">Truyền thông</span>
-                            <span>21 Thg 4, 2025 • 4 phút đọc</span>
-                        </div>
-                        <h4>Sáng - tối: khi nào nên chăm da chuyên sâu?</h4>
-                        <p>So sánh hai routine phổ biến giúp bạn chọn lựa phù hợp với nhịp sống.</p>
-                    </article>
-                    <article class="ticker-card">
-                        <div class="ticker-card__meta">
-                            <span class="badge badge--soft">Đối tác</span>
-                            <span>28 Thg 1, 2025 • 5 phút đọc</span>
-                        </div>
-                        <h4>5 sản phẩm bản địa được báo chí quốc tế chú ý</h4>
-                        <p>Điểm lại các dự án hợp tác thành công của Gender Insights trong quý vừa qua.</p>
-                    </article>
-                </div>
-
-                <div class="news-hero__spotlight">
-                    <div class="spotlight-media">
-                        <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1200&q=80" alt="Bàn ăn phong cách tối giản với trái cây tươi"/>
-                        <button class="spotlight-media__action" aria-label="Xem nhanh tin nổi bật">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </button>
-                    </div>
-                    <div class="spotlight-content">
-                        <div class="spotlight-meta">
-                            <span class="badge badge--primary">FURNITURE</span>
-                            <span>12 Thg 2, 2025</span>
-                            <span>200 lượt xem</span>
-                            <span>12 bình luận</span>
-                        </div>
-                        <h1>Chủ nghĩa tối giản đang định nghĩa lại thói quen sống hiện đại</h1>
-                        <p>Từ cách chọn nội thất đến hành vi tiêu dùng, làn sóng tối giản đang giúp các gia đình ưu tiên những gì quan trọng nhất và giảm tải các quyết định mệt mỏi mỗi ngày.</p>
-                        <div class="spotlight-actions">
-                            <button class="btn btn--fill">Đọc bài viết</button>
-                            <button class="btn btn--ghost">
-                                <i class="fa-regular fa-bookmark"></i>
-                                Lưu lại
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="news-section news-section--carousel">
-                <!-- <header class="section-heading">
-                    <div>
-                        <p class="eyebrow">Most Popular</p>
-                        <h2>Những câu chuyện được đọc nhiều nhất tuần này</h2>
-                    </div>
-                    <div class="carousel-actions" aria-label="Điều hướng danh sách tin phổ biến">
-                        <button class="carousel-btn" data-direction="prev">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </button>
-                        <button class="carousel-btn" data-direction="next">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </header> -->
-                <div class="news-carousel" data-carousel>
-                    <article class="news-card">
-                        <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80" alt="Bàn trang điểm với gương tròn" loading="lazy"/>
-                        <div class="news-card__body">
-                            <span class="badge badge--primary">LIFESTYLE</span>
-                            <h3>Làm thế nào để khởi động tạp chí nội bộ cho doanh nghiệp?</h3>
-                            <p>Case-study từ đội ngũ nội dung giúp rút ngắn 40% thời gian triển khai.</p>
-                        </div>
-                    </article>
-                    <article class="news-card">
-                        <img src="https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=600&q=80" alt="Bản đồ và máy ảnh du lịch" loading="lazy"/>
-                        <div class="news-card__body">
-                            <span class="badge badge--primary">TRAVEL</span>
-                            <h3>7 thành phố châu Âu đáng ghé thăm khi ngân sách hạn chế</h3>
-                            <p>Lịch trình 5 ngày tập trung vào cộng đồng bản địa và trải nghiệm văn hóa.</p>
-                        </div>
-                    </article>
-                    <article class="news-card">
-                        <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=600&q=80" alt="Bàn ăn tối giản với trái cây" loading="lazy"/>
-                        <div class="news-card__body">
-                            <span class="badge badge--primary">FOOD</span>
-                            <h3>4 thực đơn one-pot giúp buổi tối nhẹ nhàng mà vẫn đủ chất</h3>
-                            <p>Thử thách 10 ngày ăn sạch với các nguyên liệu mùa hè.</p>
-                        </div>
-                    </article>
-                    <article class="news-card">
-                        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="Người pha chế mỹ phẩm" loading="lazy"/>
-                        <div class="news-card__body">
-                            <span class="badge badge--primary">WELLNESS</span>
-                            <h3>5 bước skin cycling hỗ trợ phục hồi da mỗi cuối tuần</h3>
-                            <p>Checklist sản phẩm và thời điểm sử dụng do các chuyên gia khuyến nghị.</p>
-                        </div>
-                    </article>
-                    <article class="news-card">
-                        <img src="https://images.unsplash.com/photo-1470165525439-3cf9e1d402d1?auto=format&fit=crop&w=600&q=80" alt="Xưởng gốm thủ công" loading="lazy"/>
-                        <div class="news-card__body">
-                            <span class="badge badge--primary">HANDCRAFT</span>
-                            <h3>Gốm địa phương lên ngôi trong các dự án khách sạn boutique</h3>
-                            <p>Những hợp tác gần đây giữa nghệ nhân và nhãn hàng để nâng tầm trải nghiệm.</p>
-                        </div>
-                    </article>
-                </div>
-            </section>
+<%- include('../partials/header', { Current_Page: 'tin-tuc' }) %>
+<main>
+    <!-- Top Section - 4 Small Cards -->
+    <section class="top-cards-section">
+        <div class="top-cards-grid">
+            <div class="top-card">
+                <div class="top-card-category">SỐNG KHỎE</div>
+                <div class="top-card-meta">12 Thg 3, 2025 • 8 phút đọc</div>
+                <h3 class="top-card-title">Bí quyết sống khỏe mỗi ngày</h3>
+                <p class="top-card-description">Khám phá những thói quen đơn giản giúp cải thiện sức khỏe tinh thần và thể chất của bạn.</p>
+            </div>
+            <div class="top-card">
+                <div class="top-card-category">KINH NGHIỆM</div>
+                <div class="top-card-meta">15 Thg 3, 2025 • 6 phút đọc</div>
+                <h3 class="top-card-title">Kinh nghiệm làm việc hiệu quả</h3>
+                <p class="top-card-description">Học hỏi từ chuyên gia về cách tối ưu hóa năng suất và cân bằng công việc - cuộc sống.</p>
+            </div>
+            <div class="top-card">
+                <div class="top-card-category">TRUYỀN THỐNG</div>
+                <div class="top-card-meta">18 Thg 3, 2025 • 10 phút đọc</div>
+                <h3 class="top-card-title">Giá trị văn hóa truyền thống</h3>
+                <p class="top-card-description">Tìm hiểu về những giá trị cốt lõi của văn hóa Việt Nam trong bối cảnh hiện đại.</p>
+            </div>
+            <div class="top-card">
+                <div class="top-card-category">ĐỐI TÁC</div>
+                <div class="top-card-meta">20 Thg 3, 2025 • 5 phút đọc</div>
+                <h3 class="top-card-title">Mạng lưới đối tác chiến lược</h3>
+                <p class="top-card-description">Giới thiệu các đối tác đồng hành trong hành trình phát triển bền vững.</p>
+            </div>
         </div>
-    </main>
-    
-    <%- include('../partials/footer') %>
-    <script type="module" src="/js/main.js" defer></script>
-    <script src="/js/auth.js" defer></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const carousel = document.querySelector('[data-carousel]');
-            if (!carousel) return;
+    </section>
 
-            const scrollByCard = () => {
-                const card = carousel.querySelector('.news-card');
-                return card ? card.offsetWidth + 20 : 280;
-            };
+    <!-- Featured Article Section -->
+    <section class="featured-article-section">
+        <div class="featured-article-container">
+            <div class="featured-image-container">
+                <div class="featured-image-placeholder">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#ccc" viewBox="0 0 16 16">
+                        <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="featured-content">
+                <div class="featured-category">FURNITURE</div>
+                <div class="featured-meta">
+                    <span class="featured-date">17 Thg 3, 2025</span>
+                    <span class="featured-views">200 lượt xem</span>
+                    <span class="featured-comments">12 Bình luận</span>
+                </div>
+                <h1 class="featured-title">Chủ nghĩa tối giản đang định nghĩa lại thói quen sống hiện đại</h1>
+                <p class="featured-description">Từ cách chọn nội thất đến thói quen tiêu dùng, lối sống tối giản đang giúp các gia đình ưu tiên những gì quan trọng nhất và giảm tải các quyết định mỗi ngày.</p>
+                <div class="featured-actions">
+                    <button class="btn-read-more">Đọc bài viết</button>
+                    <button class="btn-save">Lưu lại</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            document.querySelectorAll('.carousel-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const direction = btn.dataset.direction === 'next' ? 1 : -1;
-                    carousel.scrollBy({
-                        left: scrollByCard() * direction,
-                        behavior: 'smooth'
-                    });
-                });
-            });
+    <!-- Main Content Area -->
+    <div class="main-content-wrapper">
+        <!-- Article Grid -->
+        <section class="article-grid-section">
+            <div class="article-grid">
+                <article class="article-card">
+                    <div class="article-category lifestyle">LIFESTYLE</div>
+                    <div class="article-date">15 Thg 2, 2025</div>
+                    <div class="article-image-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#ddd" viewBox="0 0 16 16">
+                            <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                        </svg>
+                    </div>
+                    <h3 class="article-title">5 bước skin cycling hỗ trợ phục hồi da mới cuối tuần</h3>
+                    <p class="article-description">Phương pháp skin cycling giúp làn da phục hồi và tái tạo hiệu quả vào cuối tuần sau một tuần làm việc mệt mỏi.</p>
+                    <div class="article-footer">
+                        <span class="article-views">1456</span>
+                        <div class="article-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(45)</span>
+                        </div>
+                        <button class="article-share">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5"/>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-category food">FOOD</div>
+                    <div class="article-date">14 Thg 2, 2025</div>
+                    <div class="article-image-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#ddd" viewBox="0 0 16 16">
+                            <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                        </svg>
+                    </div>
+                    <h3 class="article-title">Món ngon mùa xuân: Bánh chưng xanh truyền thống</h3>
+                    <p class="article-description">Khám phá cách làm bánh chưng xanh lá cây, món ăn đặc trưng ngày Tết với hương vị truyền thống.</p>
+                    <div class="article-footer">
+                        <span class="article-views">892</span>
+                        <div class="article-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(67)</span>
+                        </div>
+                        <button class="article-share">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5"/>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-category travel">TRAVEL</div>
+                    <div class="article-date">13 Thg 2, 2025</div>
+                    <div class="article-image-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#ddd" viewBox="0 0 16 16">
+                            <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                        </svg>
+                    </div>
+                    <h3 class="article-title">Điểm đến du lịch xuân 2025: Hà Giang mùa hoa cải</h3>
+                    <p class="article-description">Cùng khám phá vẻ đẹp của Hà Giang mùa hoa cải vàng, trải nghiệm văn hóa địa phương độc đáo.</p>
+                    <div class="article-footer">
+                        <span class="article-views">2341</span>
+                        <div class="article-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(89)</span>
+                        </div>
+                        <button class="article-share">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5"/>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-category lifestyle">LIFESTYLE</div>
+                    <div class="article-date">12 Thg 2, 2025</div>
+                    <div class="article-image-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#ddd" viewBox="0 0 16 16">
+                            <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                        </svg>
+                    </div>
+                    <h3 class="article-title">Thời trang công sở: Mix & match đơn giản</h3>
+                    <p class="article-description">Gợi ý cách phối đồ công sở thanh lịch, hiện đại giúp bạn tự tin trong mọi tình huống.</p>
+                    <div class="article-footer">
+                        <span class="article-views">1567</span>
+                        <div class="article-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(52)</span>
+                        </div>
+                        <button class="article-share">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5"/>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more-container">
+                <button class="btn-load-more">Xem Thêm</button>
+            </div>
+        </section>
+
+        <!-- Search Filter Sidebar -->
+        <aside class="search-filter-sidebar">
+            <div class="filter-container">
+                <h2 class="filter-title">Bộ Lọc Tìm Kiếm</h2>
+                
+                <div class="filter-group">
+                    <label for="source-filter">Nguồn tin / Dự án</label>
+                    <select id="source-filter" class="filter-select">
+                        <option value="all">Tất cả nguồn</option>
+                        <option value="gender-insights">Gender Insights</option>
+                        <option value="partners">Đối tác</option>
+                        <option value="community">Cộng đồng</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="time-filter">Thời gian</label>
+                    <select id="time-filter" class="filter-select">
+                        <option value="all">Tất cả thời gian</option>
+                        <option value="today">Hôm nay</option>
+                        <option value="week">Tuần này</option>
+                        <option value="month">Tháng này</option>
+                        <option value="year">Năm nay</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="sort-filter">Sắp xếp</label>
+                    <select id="sort-filter" class="filter-select">
+                        <option value="newest">Mới nhất</option>
+                        <option value="oldest">Cũ nhất</option>
+                        <option value="popular">Phổ biến nhất</option>
+                        <option value="most-viewed">Xem nhiều nhất</option>
+                    </select>
+                </div>
+
+                <button class="btn-apply-filter">Áp Dụng Lọc</button>
+            </div>
+        </aside>
+    </div>
+</main>
+<%- include('../partials/footer') %>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Filter functionality
+    const applyFilterBtn = document.querySelector('.btn-apply-filter');
+    const sourceFilter = document.getElementById('source-filter');
+    const timeFilter = document.getElementById('time-filter');
+    const sortFilter = document.getElementById('sort-filter');
+
+    applyFilterBtn.addEventListener('click', function() {
+        const filters = {
+            source: sourceFilter.value,
+            time: timeFilter.value,
+            sort: sortFilter.value
+        };
+        
+        console.log('Applying filters:', filters);
+        // Here you would typically make an API call or reload the page with filter parameters
+        showToast('Đã áp dụng bộ lọc', 'success');
+    });
+
+    // Load more functionality
+    const loadMoreBtn = document.querySelector('.btn-load-more');
+    let currentArticles = 4;
+
+    loadMoreBtn.addEventListener('click', function() {
+        // Simulate loading more articles
+        loadMoreBtn.textContent = 'Đang tải...';
+        loadMoreBtn.disabled = true;
+        
+        setTimeout(() => {
+            currentArticles += 4;
+            console.log('Loading more articles. Total:', currentArticles);
+            loadMoreBtn.textContent = 'Xem Thêm';
+            loadMoreBtn.disabled = false;
+            showToast(`Đã tải thêm 4 bài viết`, 'success');
+        }, 1000);
+    });
+
+    // Share functionality
+    const shareButtons = document.querySelectorAll('.article-share');
+    shareButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const articleTitle = this.closest('.article-card').querySelector('.article-title').textContent;
+            console.log('Sharing article:', articleTitle);
+            showToast('Đã sao chép liên kết bài viết', 'success');
         });
-    </script>
+    });
+
+    // Save article functionality
+    const saveBtn = document.querySelector('.btn-save');
+    saveBtn.addEventListener('click', function() {
+        this.classList.toggle('saved');
+        const isSaved = this.classList.contains('saved');
+        this.textContent = isSaved ? 'Đã Lưu' : 'Lưu lại';
+        showToast(isSaved ? 'Đã lưu bài viết' : 'Đã bỏ lưu bài viết', 'success');
+    });
+
+    // Toast notification helper
+    function showToast(message, type = 'info') {
+        const toastContainer = document.getElementById('toast-container');
+        if (!toastContainer) return;
+        
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.textContent = message;
+        
+        toastContainer.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
+    }
+});
+</script>
 </body>
 </html>

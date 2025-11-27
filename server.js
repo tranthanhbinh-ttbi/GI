@@ -36,19 +36,27 @@ app.register(require('@fastify/rate-limit'), {
   cache: 10000,
 })
 
-const fastifySession = require('@fastify/session');
-const fastifyPassport = require('@fastify/passport');
+const fastifySecureSession = require('@fastify/secure-session')
+const fastifyPassport = require('@fastify/passport')
 
-// A session secret must be a string with a length of 32 or more
-const sessionSecret = process.env.SESSION_SECRET;
-if (!sessionSecret || sessionSecret.length < 32) {
-  console.warn(
-    'SESSION_SECRET is missing or too short (must be 32+ characters). Using a random ephemeral key. THIS IS NOT SAFE FOR PRODUCTION.'
-  );
+const sessionSecretBase64 = process.env.SESSION_SECRET || ''
+let sessionKey = null
+try {
+  const keyCandidate = Buffer.from(sessionSecretBase64, 'base64')
+  if (keyCandidate.length === 32) {
+    sessionKey = keyCandidate
+  } else {
+    sessionKey = crypto.randomBytes(32)
+    console.warn('SESSION_SECRET is missing or invalid. Using a random ephemeral 32-byte key.')
+  }
+} catch (_) {
+  sessionKey = crypto.randomBytes(32)
+  console.warn('SESSION_SECRET is invalid base64. Using a random ephemeral 32-byte key.')
 }
 
-app.register(fastifySession, {
-  secret: sessionSecret || crypto.randomBytes(32).toString('hex'),
+app.register(fastifySecureSession, {
+  key: sessionKey,
+  sodium: require('sodium-javascript'), 
   cookieName: 'session',
   cookie: {
     path: '/',
@@ -56,9 +64,9 @@ app.register(fastifySession, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
   },
-});
-app.register(fastifyPassport.initialize());
-app.register(fastifyPassport.secureSession());
+})
+app.register(fastifyPassport.initialize())
+app.register(fastifyPassport.secureSession())
 
 const configurePassport = require('./src/config/oauth-config')
 configurePassport(app)
@@ -83,7 +91,7 @@ configurePassport(app)
 // })
 
 app.register(require('@fastify/static'), {
-    root: path.join(__dirname, 'public'),
+    root: path.join(__dirname, 'src', 'public'),
     setHeaders: (res, path, stat) => {
         res.setHeader('Cache-Control', 'public, max-age=31536000');
     }

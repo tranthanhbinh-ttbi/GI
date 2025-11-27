@@ -1,0 +1,43 @@
+<% 
+// Dynamic breadcrumb component
+// Usage: include('breadcrumbs', { 
+//   currentPage: 'series', 
+//   postTitle: post.title,
+//   category: post.category (optional)
+// })
+const breadcrumbConfig = {
+    series: {
+        label: 'Series',
+        url: '/series'
+    },
+    'tin-tuc': {
+        label: 'Tin Tức', 
+        url: '/tin-tuc'
+    },
+    'kham-pha': {
+        label: 'Khám Phá',
+        url: '/kham-pha'
+    },
+    'su-kien': {
+        label: 'Sự Kiện',
+        url: '/su-kien'
+    },
+    'dien-dan': {
+        label: 'Diễn Đàn',
+        url: '/dien-dan'
+    }
+};
+
+// Only show breadcrumbs on individual post/detail pages, not index pages
+if (postTitle) { 
+%>
+<nav class="post-breadcrumbs">
+    <a href="/">Trang chủ</a>
+    <span class="separator">/</span>
+    <% if (breadcrumbConfig[currentPage]) { %>
+        <a href="<%= breadcrumbConfig[currentPage].url %>"><%= breadcrumbConfig[currentPage].label %></a>
+        <span class="separator">/</span>
+    <% } %>
+    <span class="current-post"><%= postTitle %></span>
+</nav>
+<% } %>

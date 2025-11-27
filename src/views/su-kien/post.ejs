@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi-VN" data-gen-themes="light">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+    <meta name="description" content="Chi tiết sự kiện."/>
+    <meta name="author" content="Gender Insights"/>
+    <title>Chi tiết sự kiện | Gender Insights</title> 
+    
+    <link rel="shortcut icon" href="/photos/brands/gender-insights.ico" type="image/x-icon"/>
+    
+    <link rel="preload" href="/css/main.css" as="style"/>
+    <link rel="preload" href="/css/bases.css" as="style"/>
+    <link rel="preload" href="/css/series/post.css" as="style"/>
+
+    <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="/css/bases.css"/>
+    <link rel="stylesheet" href="/css/responsive.css"/>
+    <link rel="stylesheet" href="../fonts/index.css"/>
+    <link rel="stylesheet" href="/css/series/post.css"/>
+    
+    <script>
+        const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ?
+        localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); 
+        document.documentElement.setAttribute('data-gen-themes', preferredTheme);
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0; 
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        html, body, input, select, button {
+            font-family: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="body-styles">
+
+    <%- include('../partials/header') %>
+
+    <main class="post-container">
+        <div class="post-main">
+            <%- include('../partials/breadcrumbs', { currentPage: 'su-kien', postTitle: post.title }) %>
+            
+            <h1 class="post-title"><%= post.title %></h1>
+            <!-- Badges and date -->
+            <div class="post-meta-top">
+                <span class="category-badge"><%= post.category %></span>
+                <span class="post-date"><%= post.date %></span>
+            </div>
+
+            <article>
+                <div class="post-content">
+                    <div class="main-image-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                        </svg>
+                    </div>
+
+                    <div class="highlighted-content">
+                        <p>| Thông tin chi tiết về sự kiện sắp diễn ra.</p>
+                    </div>
+
+                    <%- post.content %>
+                    
+                    <div class="content-image-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                        </svg>
+                    </div>
+                    <p class="image-caption">Hình ảnh minh họa cho sự kiện</p>
+
+                    <p>Thông tin chi tiết về sự kiện...</p>
+                </div>
+            </article>
+        </div>
+
+        <aside class="post-sidebar">
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Sự Kiện Sắp Diễn Ra</h3>
+                <span class="widget-decorator"></span>
+                <div class="popular-posts-list">
+                    <% 
+                    const otherPosts = typeof posts !== 'undefined' ? posts.filter(p => p.id !== post.id) : [];
+                    const upcomingEvents = otherPosts.slice(0, 3);
+                    %>
+                    <% if (upcomingEvents.length > 0) { %>
+                        <% upcomingEvents.forEach((event, index) => { %>
+                            <div class="post-item">
+                                <span class="rank"><%= index + 1 %></span>
+                                <a href="/su-kien/post/<%= event.slug %>"><img src="/photos/placeholder-m6a0q.png" alt="<%= event.title %>"></a>
+                                <div class="post-item-info">
+                                    <a href="/su-kien/post/<%= event.slug %>"><h4 class="post-title"><%= event.title %></h4></a>
+                                    <div class="post-date"><%= event.date %></div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <%- include('../partials/footer') %>
+    
+    <script type="module" src="/js/main.js" defer></script>
+    <script src="/js/auth.js" defer></script>
+    <script src="/js/post.js" defer></script>
+</body>
+</html>
