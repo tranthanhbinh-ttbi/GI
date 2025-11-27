@@ -191,7 +191,7 @@ button.splide__arrow {
     display: flex;
     align-items: center;
     background-color: rgb(30 41 59); /* bg-slate-800 */
-    border-radius: 9999px; /* rounded-full */
+    border-radius: 0.5rem; /* rounded-full */
     overflow-x: auto;
 }
 .filter-bar > :not([hidden]) ~ :not([hidden]) {
