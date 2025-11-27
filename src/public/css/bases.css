@@ -1115,7 +1115,8 @@ body.sidebar-open {
     padding: 24px 16px;
     box-shadow: -5px 0 25px rgba(0,0,0,0.15);
     transition: left 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 #gen-mobile-sidebar.active { left: 0; }
 
