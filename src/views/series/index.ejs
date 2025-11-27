@@ -57,14 +57,12 @@
 .slide-item {
     position: relative;
     width: 100%;
-    /* Chiều cao linh hoạt theo thiết bị: Mobile thấp hơn, PC cao hơn */
-    height: 280px; 
-    border-radius: 16px; /* Bo góc tròn như ảnh mẫu */
-    overflow: hidden; /* Ẩn phần ảnh thừa ra ngoài góc bo */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Đổ bóng nhẹ cho đẹp */
+    height: 280px; /* Mobile height */
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-/* Responsive: Tăng chiều cao trên màn hình lớn */
 @media (min-width: 768px) {
     .slide-item {
         height: 450px;
@@ -75,45 +73,44 @@
 .slide-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Đảm bảo ảnh lấp đầy khung mà không méo */
-    transition: transform 0.5s ease; /* Hiệu ứng zoom nhẹ khi hover */
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
 .slide-item:hover .slide-image {
-    transform: scale(1.05); /* Zoom ảnh nhẹ khi di chuột vào */
+    transform: scale(1.05);
 }
 
-/* 3. Lớp phủ Gradient (Quan trọng để đọc được chữ) */
+/* 3. Lớp phủ Gradient */
 .slide-gradient {
     position: absolute;
-    inset: 0; /* Tràn viền: top=0, right=0, bottom=0, left=0 */
+    inset: 0;
     background: linear-gradient(
         to bottom, 
-        rgba(0,0,0,0) 40%,        /* Phần trên trong suốt để thấy ảnh */
-        rgba(0,0,0,0.6) 70%,      /* Bắt đầu tối dần */
-        rgba(0,0,0,0.9) 100%      /* Phần dưới tối hẳn để chữ trắng nổi bật */
+        rgba(0,0,0,0) 40%,
+        rgba(0,0,0,0.6) 70%,
+        rgba(0,0,0,0.9) 100%
     );
     z-index: 1;
 }
 
-/* 4. Khu vực Tags ở trên cùng (Ngày + Danh mục) */
+/* 4. Khu vực Tags ở trên cùng */
 .hero-slide-top-tags {
     position: absolute;
     top: 1rem;
     left: 1rem;
     right: 1rem;
     display: flex;
-    justify-content: space-between; /* Đẩy 2 tag ra 2 góc trái/phải */
+    justify-content: space-between;
     align-items: flex-start;
-    z-index: 2; /* Nằm trên lớp gradient */
+    z-index: 2;
 }
 
-/* Tag danh mục (Ví dụ: Đời sống - Màu tím) */
 .hero-slide-category-tag {
     display: inline-block;
     color: white;
     padding: 6px 12px;
-    border-radius: 8px; /* Bo góc tag */
+    border-radius: 8px;
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -123,27 +120,29 @@
 
 .hero-slide-category-tag--purple, 
 .hero-slide-category-tag--violet {
-    background: linear-gradient(135deg, #9b59b6, #8e44ad); /* Gradient tím */
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
 }
 
-/* Tag ngày tháng (Góc phải) */
 .hero-slide-date-tag {
     color: #e5e7eb;
-    background-color: rgba(0, 0, 0, 0.6); /* Nền đen bán trong suốt */
-    backdrop-filter: blur(4px); /* Làm mờ nền phía sau (hiệu ứng kính) */
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
     padding: 6px 12px;
-    border-radius: 20px; /* Bo tròn kiểu viên thuốc */
+    border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 500;
 }
 
-/* 5. Nội dung chính ở dưới (Tiêu đề, view, sao) */
+/* --- 5. NỘI DUNG CHÍNH (Đã sửa đổi logic) --- */
 .hero-slide-body {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 1.5rem; /* Khoảng cách lề */
+    
+    /* Logic mới: Giữ padding chuẩn, KHÔNG ép phải hay ép dưới ở khung cha */
+    padding: 1.5rem; 
+    
     color: white;
     text-align: left;
     z-index: 2;
@@ -158,15 +157,17 @@
     align-items: center;
     gap: 12px;
     font-size: 0.8rem;
-    color: #d1d5db; /* Màu xám nhạt */
+    color: #d1d5db;
     margin-bottom: 4px;
+    
+    /* QUAN TRỌNG: Cho phép dòng này dùng 100% chiều rộng, không né nút Share */
+    width: 100%; 
 }
 
 .hero-slide-stats svg {
     margin-right: 4px;
 }
 
-/* Rating stars */
 .hero-slide-rating {
     display: flex;
     align-items: center;
@@ -175,17 +176,19 @@
 
 /* Tiêu đề bài viết */
 .hero-slide-title {
-    font-size: 1.25rem; /* Mobile font size */
-    font-weight: 800; /* In đậm */
+    font-size: 1.25rem;
+    font-weight: 800;
     line-height: 1.3;
     margin: 0;
     
-    /* Giới hạn số dòng hiển thị (tối đa 2 dòng, còn lại là ...) */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Bóng chữ để dễ đọc hơn */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+
+    /* QUAN TRỌNG: Né nút Share bằng padding bên phải */
+    padding-right: 50px; 
 }
 
 /* Mô tả ngắn */
@@ -194,15 +197,17 @@
     color: #e5e7eb;
     margin: 0;
     
-    /* Giới hạn 1 dòng trên mobile */
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     opacity: 0.9;
+
+    /* QUAN TRỌNG: Né nút Share bằng padding bên phải */
+    padding-right: 50px;
 }
 
-/* Responsive cho màn hình lớn (Tablet & PC) */
+/* Responsive cho PC */
 @media (min-width: 768px) {
     .hero-slide-top-tags {
         top: 1.5rem; left: 2rem; right: 2rem;
@@ -210,26 +215,31 @@
     
     .hero-slide-body {
         padding: 2rem;
-        padding-right: 80px; /* Chừa chỗ cho nút Share */
+        padding-right: 80px; /* Trên PC màn to nên padding tổng thể vẫn ổn */
     }
 
     .hero-slide-title {
-        font-size: 2rem; /* Font to hơn trên PC */
+        font-size: 2rem;
         margin-bottom: 8px;
+        padding-right: 0; /* Reset lại padding né nút vì trên PC đã có padding cha */
     }
 
     .hero-slide-description {
-        -webkit-line-clamp: 2; /* Hiển thị 2 dòng mô tả trên PC */
+        -webkit-line-clamp: 2;
         font-size: 1rem;
         max-width: 85%;
+        padding-right: 0; /* Reset lại padding */
     }
 }
 
-/* 6. Nút Share (Chia sẻ) */
+/* 6. Nút Share */
 .slide-share-button {
     position: absolute;
-    bottom: 1.5rem;
+    
+    /* Vị trí nằm gọn ở góc dưới cùng */
+    bottom: 1.5rem; 
     right: 1.5rem;
+    
     background: rgba(255, 255, 255, 0.2);
     border: none;
     color: white;
@@ -417,7 +427,7 @@
                                 </select>
                             </div>
                             <div id="custom-date-range-mobile" class="custom-date-range-container" style="display: none;">
-                                <div class="form-group">
+                                <div class="marg-b0">
                                     <label for="start-date-mobile" class="form-label">Từ ngày</label>
                                     <input type="date" id="start-date-mobile" name="start-date" class="form-input">
                                 </div>
@@ -720,7 +730,7 @@
                                 </select>
                             </div>
                             <div id="custom-date-range-desktop" class="custom-date-range-container" style="display: none;">
-                                <div class="form-group">
+                                <div class="marg-b0">
                                     <label for="start-date" class="form-label">Từ ngày</label>
                                     <input type="date" id="start-date" name="start-date" class="form-input">
                                 </div>

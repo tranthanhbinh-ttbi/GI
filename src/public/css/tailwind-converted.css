@@ -14,6 +14,10 @@
     padding-top: 5.5rem;
 }
 
+.marg-b0 {
+    margin-bottom: 0;
+}
+
 button.splide__arrow {
     margin-top: 0;
 }
@@ -569,9 +573,9 @@ button.splide__arrow {
     margin-top: 1rem; /* mt-4 */
 }
 /* Khi ở dạng grid, các form-group con không cần margin-bottom */
-.custom-date-range-container .form-group {
+/* .custom-date-range-container .form-group {
     margin-bottom: 0;
-}
+} */
 /* ===== KẾT THÚC CSS MỚI ===== */
 
 
