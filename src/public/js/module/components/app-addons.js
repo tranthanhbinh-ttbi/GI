@@ -12,6 +12,10 @@ window.appAddons = () => {
     let currentBackToTopVisible;
     let currentProgress = -1;
     (() => {
+        // Initialize theme from localStorage or system preference
+        const preferredTheme = localStorage.getItem('theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
         function updateBrandImages(mode) {
             const newSrc = mode === 'dark' ? '/photos/brands/gender-insights-w.png' : '/photos/brands/gender-insights.svg';
             brandImages.forEach((brandImage) => {
@@ -221,4 +225,138 @@ window.appAddons = () => {
             ticking = true;
         }
     })();
+    // Thêm function này vào bên trong window.appAddons hoặc chạy nó trong main.js
+function initMobileSidebar() {
+    // 1. Kiểm tra nếu sidebar đã tồn tại thì không tạo lại
+    if (document.getElementById('gen-mobile-sidebar')) return;
+
+    // 2. Các phần tử nguồn cần sao chép
+    const originalLogo = document.querySelector('#gen-brand');
+    const originalMenu = document.querySelector('.main-mn > ul');
+    const originalSearch = document.querySelector('#search-form');
+    const originalSocial = document.querySelector('.link-social');
+    const originalDL = document.querySelector('#dl');
+    const sidebarTrigger = document.querySelector('#sbar'); // Nút hamburger
+
+    if (!originalMenu || !sidebarTrigger) return;
+
+    // 3. Tạo cấu trúc HTML cho Sidebar
+    const sidebarHTML = `
+        <div id="gen-mobile-overlay"></div>
+        <div id="gen-mobile-sidebar">
+            <div class="ms-header">
+                <div class="ms-logo-area"></div>
+                <button id="ms-close-btn" aria-label="Close Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="ms-body">
+                <nav class="ms-nav-area"></nav>
+                <div class="ms-search-area"></div>
+            </div>
+            <div class="ms-footer">
+                <div class="ms-social-area"></div>
+                <div class="ms-dl-area"></div>
+            </div>
+        </div>
+    `;
+
+    // Chèn Sidebar vào cuối body
+    document.body.insertAdjacentHTML('beforeend', sidebarHTML);
+
+    // 4. Lấy các vùng chứa trong Sidebar mới
+    const sidebar = document.getElementById('gen-mobile-sidebar');
+    const overlay = document.getElementById('gen-mobile-overlay');
+    const closeBtn = document.getElementById('ms-close-btn');
+    
+    // 5. Clone và đưa nội dung vào
+    // Logo
+    if(originalLogo) {
+        document.querySelector('.ms-logo-area').appendChild(originalLogo.cloneNode(true));
+    }
+    
+    // Menu
+    if(originalMenu) {
+        const clonedMenu = originalMenu.cloneNode(true);
+        // Xóa class style ngang của desktop nếu cần, hoặc xử lý bằng CSS
+        document.querySelector('.ms-nav-area').appendChild(clonedMenu);
+    }
+
+    // Search
+    if(originalSearch) {
+        document.querySelector('.ms-search-area').appendChild(originalSearch.cloneNode(true));
+    }
+
+    // Social Icons
+    if(originalSocial) {
+        document.querySelector('.ms-social-area').appendChild(originalSocial.cloneNode(true));
+    }
+
+    // Dark/Light Toggle (Cần xử lý logic đồng bộ)
+    if(originalDL) {
+        const clonedDL = originalDL.cloneNode(true);
+        const input = clonedDL.querySelector('input');
+        const originalInput = originalDL.querySelector('input');
+        
+        // Đổi ID để tránh trùng lặp DOM
+        if (input) {
+            input.id = 'dl-swi-mobile'; 
+            // Khi click bản mobile -> kích hoạt bản desktop (để chạy logic gốc)
+            input.addEventListener('change', (e) => {
+                if(originalInput) {
+                    originalInput.click();
+                    // Cập nhật ngay lập tức logo trong sidebar
+                    const isDark = input.checked;
+                    const mobileLogo = sidebar.querySelector('.gen-brands');
+                    if(mobileLogo) {
+                        const newSrc = isDark ? '/photos/brands/gender-insights-w.png' : '/photos/brands/gender-insights.svg';
+                        mobileLogo.src = newSrc;
+                    }
+                }
+            });
+            // Đồng bộ trạng thái ban đầu
+            if(originalInput) input.checked = originalInput.checked;
+        }
+        document.querySelector('.ms-dl-area').appendChild(clonedDL);
+    }
+
+    // 6. Xử lý sự kiện Đóng/Mở
+    function toggleSidebar(show) {
+        if (show) {
+            sidebar.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Khóa cuộn trang
+            
+            // Cập nhật lại trạng thái darkmode và logo mỗi khi mở phòng trường hợp thay đổi ở nơi khác
+            const originalInput = originalDL.querySelector('input');
+            const mobileInput = sidebar.querySelector('#dl-swi-mobile');
+            if(originalInput && mobileInput) {
+                mobileInput.checked = originalInput.checked;
+                // Cập nhật logo trong sidebar ngay lập tức
+                const mobileLogo = sidebar.querySelector('.gen-brands');
+                if(mobileLogo) {
+                    const isDark = originalInput.checked;
+                    const newSrc = isDark ? '/photos/brands/gender-insights-w.png' : '/photos/brands/gender-insights.svg';
+                    mobileLogo.src = newSrc;
+                }
+            }
+
+        } else {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    sidebarTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleSidebar(true);
+    });
+
+    closeBtn.addEventListener('click', () => toggleSidebar(false));
+    overlay.addEventListener('click', () => toggleSidebar(false));
+}
+
+// Gọi hàm khởi tạo
+initMobileSidebar();
 }
