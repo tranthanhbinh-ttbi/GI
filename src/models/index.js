@@ -27,7 +27,6 @@ Follower.belongsTo(User, { foreignKey: 'userId' })
 
 async function migrate() {
   await sequelize.authenticate()
-  await sequelize.sync({ alter: true })
 }
 
 module.exports = { sequelize, User, Follower, migrate }

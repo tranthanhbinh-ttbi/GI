@@ -35,7 +35,7 @@ async function oauthPassport(fastify) {
             await user.save()
           } else user = await User.create({ provider: 'google', providerId, name: displayName, email, avatarUrl })
           return done(null, user)
-    } catch (error) {
+    } catch (err) {
       return done(err)
     }
   }))

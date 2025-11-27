@@ -8,11 +8,9 @@ html, body {
     align-items: center; 
     justify-content: space-between;
 }
-.dfx-alc {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    align-items: center;
-    justify-items: center;
+.gap-r05 {
+    display: inline-flex;
+    gap: 0.5rem;
 }
 .social-media {
     width: 32px;
