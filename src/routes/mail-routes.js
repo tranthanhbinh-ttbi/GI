@@ -60,7 +60,7 @@ async function MailRoutes(fastify) {
 			const safeMessage = sanitizeInput(message)
 
 			// Recipient fixed per requirement
-			const toAddress = 'tranbinh081007@gmail.com'
+			const toAddress = 'genderinsights2024@gmail.com'
 			const fromAddress = process.env.MAIL_FROM
 
 			const transporter = await transporterPromise
@@ -69,7 +69,12 @@ async function MailRoutes(fastify) {
 				to: toAddress,
 				subject: `Phản hồi từ mail - ${safeEmail}`,
 				text: safeMessage,
-				html: `<p>${safeMessage.replace(/</g, '&lt;')}</p>`
+				html: `<p>${safeMessage.replace(/</g, '&lt;')}</p>`,
+				headers: {
+					'x-priority': '1',
+					'x-msmail-priority': 'High',
+					'importance': 'high'
+				}
 			})
 			return reply.send({ ok: true })
 		} catch (err) {
