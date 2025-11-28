@@ -95,6 +95,7 @@
 }
 
 .featured-category {
+    width: max-content;
     background: #ea580c;
     color: white;
     font-size: 12px;

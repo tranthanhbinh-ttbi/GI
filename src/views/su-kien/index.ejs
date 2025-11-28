@@ -19,6 +19,7 @@
     <link rel="preload" href="/fonts/Montserrat/Montserrat.woff" as="font" type="font/woff" crossorigin/>
     <link rel="stylesheet" href="/css/main.css"/>
     <link rel="stylesheet" href="/css/bases.css"/>
+    <link rel="stylesheet" href="/css/trang-chu/index.css"/>
     <link rel="stylesheet" href="/css/su-kien/index.css"/>
     <link rel="stylesheet" href="/fonts/index.css"/>
 
@@ -41,10 +42,7 @@
 
         /* -- Container chính -- */
         .event-page-container {
-            max-width: 1200px;
             padding-top: 5.5rem;
-            padding-left: 1rem; 
-            padding-right: 1rem; 
         }
 
         /* -- Bộ lọc -- */
@@ -262,7 +260,7 @@
             color: white;
             text-decoration: none;
             padding: 0.75rem 1.5rem;
-            border-radius: 20px; /* CẬP NHẬT: Bo tròn nhiều */
+            border-radius: 0.5rem; /* CẬP NHẬT: Bo tròn nhiều */
             font-weight: 600;
             font-size: 0.9rem;
             transition: background-color 0.3s ease;
@@ -303,6 +301,12 @@
         @media (min-width: 768px) {
             .event-filters {
                 flex-wrap: nowrap;
+            }
+        }
+        @media (max-width: 768px) {
+            .event-card__info-grid {
+                flex-direction: column;
+                gap: 1.25rem;
             }
         }
 
@@ -400,7 +404,6 @@
                                 <span class="progress-text">45/60 người</span>
                             </div>
                             <div class="event-card__reg-actions">
-                                <span class="event-card__price">Miễn phí</span>
                                 <a href="#" class="event-card__register-btn">Đăng ký</a>
                             </div>
                         </div>
@@ -444,7 +447,6 @@
                                 <span class="progress-text">28/40 người</span>
                             </div>
                             <div class="event-card__reg-actions">
-                                <span class="event-card__price">Miễn phí</span>
                                 <a href="#" class="event-card__register-btn">Đăng ký</a>
                             </div>
                         </div>
