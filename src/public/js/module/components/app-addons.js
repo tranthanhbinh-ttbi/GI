@@ -278,7 +278,6 @@ function initMobileSidebar() {
     // Menu
     if(originalMenu) {
         const clonedMenu = originalMenu.cloneNode(true);
-        // Xóa class style ngang của desktop nếu cần, hoặc xử lý bằng CSS
         document.querySelector('.ms-nav-area').appendChild(clonedMenu);
     }
 
@@ -292,7 +291,7 @@ function initMobileSidebar() {
         document.querySelector('.ms-social-area').appendChild(originalSocial.cloneNode(true));
     }
 
-    // Dark/Light Toggle (Cần xử lý logic đồng bộ)
+    // Dark/Light Toggle
     if(originalDL) {
         const clonedDL = originalDL.cloneNode(true);
         const input = clonedDL.querySelector('input');
@@ -320,19 +319,18 @@ function initMobileSidebar() {
         document.querySelector('.ms-dl-area').appendChild(clonedDL);
     }
 
-    // 6. Xử lý sự kiện Đóng/Mở
+    // 6. Xử lý sự kiện Đóng/Mở Sidebar
     function toggleSidebar(show) {
         if (show) {
             sidebar.classList.add('active');
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden'; // Khóa cuộn trang
             
-            // Cập nhật lại trạng thái darkmode và logo mỗi khi mở phòng trường hợp thay đổi ở nơi khác
+            // Cập nhật lại trạng thái darkmode và logo mỗi khi mở
             const originalInput = originalDL.querySelector('input');
             const mobileInput = sidebar.querySelector('#dl-swi-mobile');
             if(originalInput && mobileInput) {
                 mobileInput.checked = originalInput.checked;
-                // Cập nhật logo trong sidebar ngay lập tức
                 const mobileLogo = sidebar.querySelector('.gen-brands');
                 if(mobileLogo) {
                     const isDark = originalInput.checked;
@@ -347,6 +345,33 @@ function initMobileSidebar() {
             document.body.style.overflow = '';
         }
     }
+
+    // --- BẮT ĐẦU: Code Mới Để Xử Lý Click "Liên Hệ" ---
+    // Tìm các link có data-scrolling trong sidebar mới tạo
+    const mobileScrollLinks = sidebar.querySelectorAll('[data-scrolling]');
+    
+    mobileScrollLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); // Ngăn chặn hành vi nhảy link mặc định
+
+            // 1. Đóng Sidebar trước
+            toggleSidebar(false);
+
+            // 2. Lấy đích đến (footer)
+            const targetSelector = link.getAttribute('data-scrolling');
+            const targetBlock = link.getAttribute('data-block') || 'start';
+            const targetElement = document.querySelector(targetSelector);
+
+            // 3. Thực hiện cuộn mượt
+            if (targetElement) {
+                // Thêm setTimeout nhỏ để sidebar kịp đóng (tùy chọn, giúp hiệu ứng mượt hơn)
+                setTimeout(() => {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: targetBlock });
+                }, 100); 
+            }
+        });
+    });
+    // --- KẾT THÚC: Code Mới ---
 
     sidebarTrigger.addEventListener('click', (e) => {
         e.preventDefault();
