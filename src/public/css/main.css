@@ -157,7 +157,7 @@ button.splide__pagination__page.is-active {
     background: linear-gradient(315deg, #e4b8bf, #ff25ff);
 }
 main {
-    margin: 9.5rem 3rem 0;
+    margin: 9.5rem 3rem auto;
     /* padding-top: 16px; */
 }
 @keyframes typing {

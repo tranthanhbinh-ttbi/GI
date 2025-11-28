@@ -349,7 +349,7 @@ main {
 /* ------------------------------------------- */
 @media (max-width: 768px) {
     main {
-        margin: 9.5rem 0;
+        margin: 9.5rem 0 auto;
         & #achv {
             grid-template-columns: repeat(2, 1fr);
         }
