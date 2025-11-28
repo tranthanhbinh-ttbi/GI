@@ -1,6 +1,6 @@
 /* General Post Layout */
 .post-container {
-    max-width: 1200px;
+    /* max-width: 1200px; */
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
