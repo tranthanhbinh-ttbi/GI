@@ -86,7 +86,7 @@ async function Pages (fastify, options) {
 
     // 2. Route Series (Danh sách)
     fastify.get('/series', async (request, reply) => {
-        reply.header('Cache-Control', 'public, max-age=60');
+        reply.header('Cache-Control', 'public, max-age=0, s-maxage=60');
         const posts = getPosts('series'); // Đọc từ file
         return reply.viewAsync('series/index', { Current_Page: 'series', posts: posts });
     });
@@ -104,7 +104,7 @@ async function Pages (fastify, options) {
 
     // 4. Route Tin tức
     fastify.get('/tin-tuc', async (request, reply) => {
-        reply.header('Cache-Control', 'public, max-age=60');
+        reply.header('Cache-Control', 'public, max-age=0, s-maxage=60');
         const posts = getPosts('news');
         return reply.viewAsync('tin-tuc/index', { Current_Page: 'tin-tuc', posts: posts });
     });
