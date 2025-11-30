@@ -4,42 +4,37 @@ backend:
   branch: main
   base_url: https://genderinsights.vercel.app
 
-media_folder: "src/public/uploads" # Nơi lưu ảnh tải lên
-public_folder: "/uploads" # Đường dẫn ảnh hiển thị trên web
+media_folder: "src/public/uploads"
+public_folder: "/uploads"
 
-# Cấu hình Slug tự động từ tiêu đề
 slug:
   encoding: "ascii"
   clean_accents: true
   sanitize_replacement: "-"
 
 collections:
-  # 1. Cấu hình cho SERIES (Dựa trên hình ảnh 1)
   - name: "series"
-    label: "Series & Bài viết"
-    folder: "src/content/series" # Nơi lưu file data
+    label: "Trang Series"
+    folder: "src/content/series"
     create: true
-    slug: "{{slug}}" # Tự động tạo slug từ title
+    slug: "{{slug}}"
     fields:
       - { label: "Tiêu đề", name: "title", widget: "string" }
-      - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm" } # Dùng để hẹn giờ
-      - { label: "Tác giả", name: "author", widget: "string", default: "Gender Insights" }
+      - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm" }
       - { label: "Mô tả ngắn", name: "description", widget: "text" }
-      - { label: "Danh mục", name: "category", widget: "select", options: ["Sống khỏe", "Video", "Podcast", "Bài Viết"] }
+      - { label: "Danh mục", name: "category", widget: "select", options: ["Bài Viết", "Video", "Podcast"] }
       - { label: "Ảnh bìa", name: "thumbnail", widget: "image" }
       - { label: "Nội dung", name: "body", widget: "markdown" }
 
-  # 2. Cấu hình cho TIN TỨC (Dựa trên hình ảnh 2)
   - name: "news"
-    label: "Tin tức"
+    label: "Trang Tin Tức"
     folder: "src/content/news"
     create: true
     slug: "{{slug}}"
     fields:
       - { label: "Tiêu đề", name: "title", widget: "string" }
       - { label: "Ngày đăng", name: "date", widget: "datetime" }
-      - { label: "Danh mục", name: "category", widget: "select", options: ["Food", "Lifestyle", "Travel", "Sống khỏe", "Kinh nghiệm", "Truyền thống"] }
+      - { label: "Danh mục", name: "category", widget: "select", options: ["Gender Insights", "Đối tác", "Truyền thông"] }
       - { label: "Ảnh đại diện", name: "thumbnail", widget: "image" }
       - { label: "Mô tả ngắn", name: "description", widget: "text" }
-      - { label: "Lượt xem (Giả lập)", name: "views", widget: "number", default: 0, required: false }
       - { label: "Nội dung chi tiết", name: "body", widget: "markdown" }
