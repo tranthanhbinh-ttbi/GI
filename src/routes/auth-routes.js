@@ -3,6 +3,7 @@ const FPassport = require('@fastify/passport')
 const { broadcast } = require('../controllers/realtime')
 const AsyncAuthHandler = require('../utils/async-auth-handler')
 const AuthHandshakeManager = require('../utils/auth-handshake-manager')
+const crypto = require('node:crypto')
 
 async function oauthRoutes(fastify) {
   // Initialize handlers
@@ -13,6 +14,83 @@ async function oauthRoutes(fastify) {
     if (request.isAuthenticated && request.isAuthenticated()) return done()
     reply.code(401).send({ ok: false })
   }
+
+  // --- [PHẦN MỚI] LOGIN GITHUB CHO DECAP CMS (BẮT ĐẦU) ---
+  
+  // 1. Route: /auth - Chuyển hướng sang GitHub
+  fastify.get('/auth', async (request, reply) => {
+    const { provider } = request.query;
+    
+    // Nếu provider là github (từ CMS gọi lên)
+    if (provider === 'github') {
+        const client_id = process.env.OAUTH_CLIENT_ID;
+        const redirect_uri = `https://${request.hostname}/callback`;
+        const scope = 'repo,user';
+        const state = crypto.randomUUID();
+
+        const authorizationUri = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope}&state=${state}`;
+        
+        return reply.redirect(authorizationUri);
+    }
+    
+    // Nếu không phải github, trả về lỗi
+    return reply.code(400).send('Unsupported provider');
+  });
+
+  // 2. Route: /callback - Nhận code từ GitHub và đổi lấy Token
+  fastify.get('/callback', async (request, reply) => {
+    const { code } = request.query;
+
+    if (!code) {
+        // Nếu là callback của Google/Facebook passport thì bỏ qua, để các route dưới xử lý
+        // Nhưng route này thường dành riêng cho CMS OAuth flow thủ công
+        return reply.code(400).send('Missing code');
+    }
+
+    try {
+        // Gọi API GitHub đổi code lấy token
+        const response = await fetch('https://github.com/login/oauth/access_token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                client_id: process.env.OAUTH_CLIENT_ID,
+                client_secret: process.env.OAUTH_CLIENT_SECRET,
+                code: code,
+                redirect_uri: `https://${request.hostname}/callback`
+            })
+        });
+
+        const data = await response.json();
+        const token = data.access_token;
+
+        // Trả về Script để Decap CMS đóng cửa sổ popup và đăng nhập
+        const script = `
+        <script>
+            (function() {
+            function receiveMessage(e) {
+                window.opener.postMessage(
+                'authorization:github:success:{"token":"${token}","provider":"github"}', 
+                e.origin
+                );
+            }
+            window.addEventListener("message", receiveMessage, false);
+            window.opener.postMessage("authorizing:github", "*");
+            })()
+        </script>
+        `;
+
+        reply.type('text/html').send(script);
+
+    } catch (error) {
+        console.error('GitHub Auth Error:', error);
+        return reply.code(500).send('Authentication failed');
+    }
+  });
+
+  // --- [PHẦN MỚI] LOGIN GITHUB CHO DECAP CMS (KẾT THÚC) ---
 
   async function ensureFollowerRecord(user) {
     if (!user || !user.id) return
