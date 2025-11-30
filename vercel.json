@@ -5,10 +5,5 @@
       "src": "/(.*)",
       "dest": "/api/index.js"
     }
-  ],
-  "functions": [
-    "server.js": {
-      "includeFiles": "src/content/**"
-    }
   ]
 }
