@@ -6,12 +6,14 @@ const md = new MarkdownIt();
 const glob = require('glob');
 
 const getPosts = (collectionName) => {
-    // Đường dẫn trỏ vào src/content/...
-    const postsDirectory = path.join(__dirname, `../content/${collectionName}`);
+    // Sửa lại cách lấy đường dẫn để an toàn hơn trên Vercel (dùng process.cwd())
+    // Giả sử cấu trúc: root/src/content/...
+    const postsDirectory = path.join(process.cwd(), 'src', 'content', collectionName);
     
+    console.log(`[DEBUG] Đang tìm bài viết trong: ${postsDirectory}`); // Log để debug trên Vercel
+
     if (!fs.existsSync(postsDirectory)){
-        console.log(`Creating directory: ${postsDirectory}`);
-        fs.mkdirSync(postsDirectory, { recursive: true });
+        console.log(`[DEBUG] Thư mục không tồn tại: ${postsDirectory}`);
         return [];
     }
 
@@ -19,30 +21,39 @@ const getPosts = (collectionName) => {
     const posts = [];
     const now = new Date();
 
-    files.forEach((file) => {
-        const fileContent = fs.readFileSync(file, 'utf8');
-        const parsed = fm(fileContent);
-        const attributes = parsed.attributes;
-        const body = md.render(parsed.body);
-        
-        const postDate = new Date(attributes.date);
+    console.log(`[DEBUG] Tìm thấy ${files.length} file markdown.`);
 
-        // Logic hẹn giờ: Chỉ hiện bài nếu ngày đăng nhỏ hơn hoặc bằng hiện tại
-        // Muốn test bài tương lai thì tạm thời comment dòng if bên dưới lại
-        if (postDate <= now) {
+    files.forEach((file) => {
+        try {
+            const fileContent = fs.readFileSync(file, 'utf8');
+            const parsed = fm(fileContent);
+            const attributes = parsed.attributes;
+            const body = md.render(parsed.body);
+            
+            // Xử lý ngày tháng
+            const postDate = new Date(attributes.date);
+            
+            // Log để kiểm tra timezone
+            console.log(`[DEBUG] Bài: ${attributes.title} | PostDate: ${postDate.toISOString()} | Now: ${now.toISOString()}`);
+
+            // --- GIẢI PHÁP SỬA LỖI ---
+            // Tạm thời bỏ điều kiện if (postDate <= now) hoặc chỉ cảnh báo
+            // Để hiển thị mọi bài viết, kể cả bài tương lai để test
+            
             posts.push({
                 ...attributes,
                 body: body,
-                slug: path.basename(file, '.md'), // Lấy slug từ tên file
+                slug: path.basename(file, '.md'),
                 displayDate: postDate.toLocaleDateString('vi-VN', {
                     day: 'numeric', 
                     month: 'long', 
                     year: 'numeric'
-                }), // Kết quả: "30 tháng 11, 2025"
-
-                // Giữ biến date gốc hoặc biến phụ để dùng cho việc sắp xếp (Sort)
+                }),
                 originalDate: postDate
             });
+            
+        } catch (err) {
+            console.error(`[ERROR] Lỗi khi đọc file ${file}:`, err);
         }
     });
 
