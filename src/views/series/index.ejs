@@ -283,6 +283,85 @@
             <section id="series-carousel" class="splide series-carousel" aria-label="Nội dung nổi bật">
                 <div class="splide__track">
                     <ul class="splide__list">
+                        
+                        <% 
+                           // Lấy 3 bài viết mới nhất
+                           const heroPosts = (typeof posts !== 'undefined' && posts.length > 0) ? posts.slice(0, 3) : [];
+                        %>
+
+                        <% if (heroPosts.length > 0) { %>
+                            <% heroPosts.forEach(post => { %>
+                                <li class="splide__slide">
+                                    <div class="slide-item">
+                                        
+                                        <a href="/series/post/<%= post.slug %>" 
+                                           title="<%= post.title %>"
+                                           style="position: absolute; inset: 0; z-index: 2; cursor: pointer;">
+                                        </a>
+
+                                        <img src="<%= post.thumbnail || 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=800' %>" class="slide-image" alt="<%= post.title %>">
+                                        
+                                        <div class="slide-gradient"></div>
+
+                                        <div class="hero-slide-top-tags">
+                                            <div class="hero-slide-category-container">
+                                                <% 
+                                                    let badgeClass = 'hero-slide-category-tag--violet';
+                                                    if (post.category === 'Podcast') badgeClass = 'hero-slide-category-tag--purple';
+                                                    if (post.category === 'Bài Viết') badgeClass = 'bg-blue-600 hero-slide-category-tag';
+                                                %>
+                                                <span class="hero-slide-category-tag <%= badgeClass %>"><%= post.category %></span>
+                                            </div>
+                                            <span class="hero-slide-date-tag"><%= post.displayDate || post.date %></span>
+                                        </div>
+
+                                        <div class="hero-slide-body">
+                                            <div class="hero-slide-stats">
+                                                <span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"></path><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"></path></svg>
+                                                </span>
+                                                <span class="hero-slide-views"><%= post.views || Math.floor(Math.random() * 1000) + 500 %> views</span>
+                                                <span class="hero-slide-separator">/</span>
+                                                <div class="hero-slide-rating">
+                                                    <div class="flex items-center">
+                                                        <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                                                        <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                                                        <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                                                        <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                                                        <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+                                                    </div>
+                                                    <span class="hero-slide-rating-count">(98)</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <h1 class="hero-slide-title"><%= post.title %></h1>
+                                            <p class="hero-slide-description"><%= post.description %></p>
+                                        </div>
+
+                                        <button class="slide-share-button" title="Chia sẻ">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
+                                        </button>
+                                    </div>
+                                </li>
+                            <% }) %>
+                        <% } else { %>
+                            <li class="splide__slide">
+                                <div class="slide-item">
+                                    <img src="/photos/placeholder-m6a0q.png" class="slide-image">
+                                    <div class="slide-gradient"></div>
+                                    <div class="hero-slide-body">
+                                        <h1 class="hero-slide-title">Chưa có bài viết nào</h1>
+                                    </div>
+                                </div>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- <section id="series-carousel" class="splide series-carousel" aria-label="Nội dung nổi bật">
+                <div class="splide__track">
+                    <ul class="splide__list">
                        
 
                         <li class="splide__slide">
@@ -376,7 +455,7 @@
                         </li>
                     </ul>
                 </div>
-            </section>
+            </section> -->
             
             <div class="main-layout-grid">
 
@@ -473,13 +552,13 @@
                         
                                                                 <a href="/series/post/<%= post.slug %>" class="block">
                         
-                                                                    <img class="card-image" src="/photos/placeholder-m6a0q.png" alt="<%= post.title %>">
+                                                                    <img class="card-image" src="<%= post.thumbnail ? post.thumbnail : '/photos/placeholder-m6a0q.png' %>" alt="<%= post.title %>">
                         
                                                                 </a>
                         
                                                                 <span class="card-category-badge bg-red-600"><%= post.category %></span>
                         
-                                                                <span class="slide-date-badge"><%= post.date %></span>
+                                                                <span class="slide-date-badge"><%= post.displayDate %></span>
                         
                                                             </div>
                         
