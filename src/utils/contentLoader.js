@@ -6,20 +6,16 @@ const md = new MarkdownIt();
 const glob = require('glob');
 
 const getPosts = (collectionName) => {
-    // SỬA ĐỔI QUAN TRỌNG: Dùng process.cwd() để lấy đúng đường dẫn gốc trên Vercel
-    const postsDirectory = path.join(process.cwd(), 'src', 'content', collectionName);
+    // Đường dẫn trỏ vào src/content/...
+    const postsDirectory = path.join(__dirname, `../content/${collectionName}`);
     
-    console.log('Đang đọc file từ:', postsDirectory); // Log để debug trên Vercel
-
     if (!fs.existsSync(postsDirectory)){
-        console.log(`Thư mục không tồn tại: ${postsDirectory}`);
+        console.log(`Creating directory: ${postsDirectory}`);
+        fs.mkdirSync(postsDirectory, { recursive: true });
         return [];
     }
 
-    // Dùng path.join để glob hoạt động đúng trên mọi hệ điều hành
-    const pattern = path.join(postsDirectory, '*.md');
-    const files = glob.sync(pattern);
-    
+    const files = glob.sync(`${postsDirectory}/*.md`);
     const posts = [];
     const now = new Date();
 
@@ -31,21 +27,20 @@ const getPosts = (collectionName) => {
         
         const postDate = new Date(attributes.date);
 
-        // Tạm thời bỏ qua check ngày tháng để đảm bảo bài viết hiện lên
+        // Logic hẹn giờ: Chỉ hiện bài nếu ngày đăng nhỏ hơn hoặc bằng hiện tại
+        // Muốn test bài tương lai thì tạm thời comment dòng if bên dưới lại
         if (postDate <= now) {
             posts.push({
                 ...attributes,
                 body: body,
-                slug: path.basename(file, '.md'),
-                date: postDate.toLocaleDateString('vi-VN'),
-                // Thêm thuộc tính gốc để sort
-                originalDate: postDate 
+                slug: path.basename(file, '.md'), // Lấy slug từ tên file
+                date: postDate.toLocaleDateString('vi-VN') // Format ngày
             });
         }
     });
 
     // Sắp xếp bài mới nhất lên đầu
-    return posts.sort((a, b) => b.originalDate - a.originalDate);
+    return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 };
 
 module.exports = { getPosts };
