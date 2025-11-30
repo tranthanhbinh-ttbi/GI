@@ -5,8 +5,8 @@ backend:
 
 local_backend: true
 
-media_folder: "src/public/uploads" # Nơi lưu ảnh tải lên
-public_folder: "/uploads" # Đường dẫn ảnh hiển thị trên web
+media_folder: "src/public/photos/uploads" # Nơi lưu ảnh tải lên
+public_folder: "/photos/uploads" # Đường dẫn ảnh hiển thị trên web
 
 # Cấu hình Slug tự động từ tiêu đề
 slug:
