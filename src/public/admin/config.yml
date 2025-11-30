@@ -2,8 +2,7 @@ backend:
   name: github
   repo: tranthanhbinh-ttbi/tequa
   branch: main
-
-local_backend: true
+  base_url: https://genderinsights.vercel.app
 
 media_folder: "src/public/photos/uploads" # Nơi lưu ảnh tải lên
 public_folder: "/photos/uploads" # Đường dẫn ảnh hiển thị trên web
