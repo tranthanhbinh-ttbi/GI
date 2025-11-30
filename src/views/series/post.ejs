@@ -49,7 +49,7 @@
             <!-- Badges and date -->
             <div class="post-meta-top">
                 <span class="category-badge"><%= post.category %></span>
-                <span class="post-date"><%= post.date %></span>
+                <span class="post-date"><%= post.displayDate %></span>
             </div>
 
             <!-- Title -->
@@ -57,26 +57,29 @@
             <article>
                 
                 <div class="post-content">
-                    <div class="main-image-placeholder">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                        </svg>
-                    </div>
-
-                    <div class="highlighted-content">
-                        <p>| Phương pháp mới giúp thanh niên tự tin hơn khi tiếp xúc với người khác, tạo nền tảng vững chắc cho sự phát triển cá nhân và xã hội.</p>
-                    </div>
-
-                    <%- post.content %>
                     
-                    <div class="content-image-placeholder">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                        </svg>
-                    </div>
-                    <p class="image-caption">Hình ảnh minh họa cho bài viết</p>
+                    <% if (post.thumbnail) { %>
+                        <div class="main-image-container" style="margin-bottom: 2rem;">
+                            <img src="<%= post.thumbnail %>" alt="<%= post.title %>" style="width: 100%; height: auto; border-radius: 16px; object-fit: cover;">
+                        </div>
+                    <% } else { %>
+                        <div class="main-image-placeholder">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                            </svg>
+                        </div>
+                    <% } %>
 
-                    <p>Tôi rất hạnh phúc, người bạn thân yêu của tôi, bị cuốn hút hoàn toàn vào cảm giác tinh tế về sự tồn tại yên bình thuần túy, đến nỗi tôi lơ là tài năng của mình. Lúc này tôi không thể vẽ một nét nào; nhưng tôi cảm thấy mình là một nghệ sĩ vĩ đại hơn bao giờ hết.</p>
+                    <!-- <% if (post.description) { %>
+                        <div class="highlighted-content">
+                            <p><strong>tóm tắt:</strong> <%= post.description %></p>
+                        </div>
+                    <% } %> -->
+
+                    <div class="markdown-body-content">
+                        <%- post.body %>
+                    </div>
+                    
                 </div>
 
                 <div class="rating-widget sidebar-widget sidebar-widget-alt">
@@ -291,9 +294,7 @@
     </main>
 
     <%- include('../partials/footer') %>
-    
-    <script type="module" src="/js/main.js" defer></script>
-    <script src="/js/auth.js" defer></script>
+
     <script src="/js/post.js" defer></script>
 </body>
 </html>
