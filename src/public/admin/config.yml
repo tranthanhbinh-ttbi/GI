@@ -1,0 +1,39 @@
+backend:
+  name: github
+  repo: tranthanhbinh-ttbi/GI
+  branch: main
+  base_url: https://auth.decapcms.org
+
+media_folder: "src/public/photos/uploads"
+public_folder: "/photos/uploads"
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  - name: "series"
+    label: "Trang Series"
+    folder: "src/content/series"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Tiêu đề", name: "title", widget: "string" }
+      - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm" } # Dùng để hẹn giờ
+      - { label: "Mô tả ngắn", name: "description", widget: "text" }
+      - { label: "Danh mục", name: "category", widget: "select", options: ["Bài Viết", "Video", "Podcast"] }
+      - { label: "Ảnh bìa", name: "thumbnail", widget: "image" }
+      - { label: "Nội dung", name: "body", widget: "markdown" }
+  - name: "news"
+    label: "Trang Tin Tức"
+    folder: "src/content/news"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Tiêu đề", name: "title", widget: "string" }
+      - { label: "Ngày đăng", name: "date", widget: "datetime" }
+      - { label: "Danh mục", name: "category", widget: "select", options: ["Food", "Lifestyle", "Travel", "Sống khỏe", "Kinh nghiệm", "Truyền thống"] }
+      - { label: "Ảnh đại diện", name: "thumbnail", widget: "image" }
+      - { label: "Mô tả ngắn", name: "description", widget: "text" }
+      - { label: "Nội dung chi tiết", name: "body", widget: "markdown" }
