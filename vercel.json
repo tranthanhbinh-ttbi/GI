@@ -6,9 +6,9 @@
       "dest": "/api/index.js"
     }
   ],
-  "functions": {
+  "functions": [
     "server.js": {
       "includeFiles": "src/content/**"
     }
-  }
+  ]
 }
