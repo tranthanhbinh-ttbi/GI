@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: tranthanhbinh-ttbi/tequa
+  repo: tranthanhbinh-ttbi/GI
   branch: main
   base_url: https://genderinsights.vercel.app
 
