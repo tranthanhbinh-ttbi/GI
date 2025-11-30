@@ -34,7 +34,14 @@ const getPosts = (collectionName) => {
                 ...attributes,
                 body: body,
                 slug: path.basename(file, '.md'), // Lấy slug từ tên file
-                date: postDate.toLocaleDateString('vi-VN') // Format ngày
+                displayDate: postDate.toLocaleDateString('vi-VN', {
+                    day: 'numeric', 
+                    month: 'long', 
+                    year: 'numeric'
+                }), // Kết quả: "30 tháng 11, 2025"
+
+                // Giữ biến date gốc hoặc biến phụ để dùng cho việc sắp xếp (Sort)
+                originalDate: postDate
             });
         }
     });
