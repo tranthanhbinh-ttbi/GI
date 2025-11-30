@@ -5,7 +5,7 @@ backend:
   base_url: https://genderinsights.vercel.app
 
 media_folder: "src/public/photos/uploads"
-public_folder: "/photos/uploads"
+public_folder: "photos/uploads"
 
 slug:
   encoding: "ascii"
