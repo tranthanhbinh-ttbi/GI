@@ -29,14 +29,14 @@ const getPosts = (collectionName) => {
 
         // Logic hẹn giờ: Chỉ hiện bài nếu ngày đăng nhỏ hơn hoặc bằng hiện tại
         // Muốn test bài tương lai thì tạm thời comment dòng if bên dưới lại
-        // if (postDate <= now) {
-        //     posts.push({
-        //         ...attributes,
-        //         body: body,
-        //         slug: path.basename(file, '.md'), // Lấy slug từ tên file
-        //         date: postDate.toLocaleDateString('vi-VN') // Format ngày
-        //     });
-        // }
+        if (postDate <= now) {
+            posts.push({
+                ...attributes,
+                body: body,
+                slug: path.basename(file, '.md'), // Lấy slug từ tên file
+                date: postDate.toLocaleDateString('vi-VN') // Format ngày
+            });
+        }
     });
 
     // Sắp xếp bài mới nhất lên đầu
