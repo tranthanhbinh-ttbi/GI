@@ -6,22 +6,21 @@ const md = new MarkdownIt();
 const glob = require('glob');
 
 const getPosts = (collectionName) => {
-    // Sửa lại cách lấy đường dẫn để an toàn hơn trên Vercel (dùng process.cwd())
-    // Giả sử cấu trúc: root/src/content/...
     const postsDirectory = path.join(process.cwd(), 'src', 'content', collectionName);
     
-    console.log(`[DEBUG] Đang tìm bài viết trong: ${postsDirectory}`); // Log để debug trên Vercel
-
     if (!fs.existsSync(postsDirectory)){
-        console.log(`[DEBUG] Thư mục không tồn tại: ${postsDirectory}`);
         return [];
     }
 
     const files = glob.sync(`${postsDirectory}/*.md`);
     const posts = [];
-    const now = new Date();
 
-    console.log(`[DEBUG] Tìm thấy ${files.length} file markdown.`);
+    // --- XỬ LÝ GIỜ VIỆT NAM (Quan trọng) ---
+    // 1. Lấy giờ UTC hiện tại của server
+    const nowUTC = new Date(); 
+    // 2. Cộng thêm 7 tiếng (7 * 60 phút * 60 giây * 1000 mili giây)
+    const nowVietnam = new Date(nowUTC.getTime() + (7 * 60 * 60 * 1000));
+    // ----------------------------------------
 
     files.forEach((file) => {
         try {
@@ -30,30 +29,32 @@ const getPosts = (collectionName) => {
             const attributes = parsed.attributes;
             const body = md.render(parsed.body);
             
-            // Xử lý ngày tháng
             const postDate = new Date(attributes.date);
-            
-            // Log để kiểm tra timezone
-            console.log(`[DEBUG] Bài: ${attributes.title} | PostDate: ${postDate.toISOString()} | Now: ${now.toISOString()}`);
 
-            // --- GIẢI PHÁP SỬA LỖI ---
-            // Tạm thời bỏ điều kiện if (postDate <= now) hoặc chỉ cảnh báo
-            // Để hiển thị mọi bài viết, kể cả bài tương lai để test
+            // LOGIC HẸN GIỜ:
+            // So sánh giờ bài viết với giờ Việt Nam hiện tại
+            // Nếu bài viết có giờ <= giờ hiện tại -> HIỆN
+            // Nếu bài viết có giờ > giờ hiện tại -> ẨN (tự động hiện khi đến giờ)
             
-            posts.push({
-                ...attributes,
-                body: body,
-                slug: path.basename(file, '.md'),
-                displayDate: postDate.toLocaleDateString('vi-VN', {
-                    day: 'numeric', 
-                    month: 'long', 
-                    year: 'numeric'
-                }),
-                originalDate: postDate
-            });
-            
+            if (postDate <= nowVietnam) {
+                posts.push({
+                    ...attributes,
+                    body: body,
+                    slug: path.basename(file, '.md'),
+                    displayDate: postDate.toLocaleDateString('vi-VN', {
+                        day: 'numeric', 
+                        month: 'long', 
+                        year: 'numeric'
+                    }),
+                    originalDate: postDate
+                });
+            } else {
+                // (Tùy chọn) Log ra những bài chưa đến giờ đăng để debug
+                 console.log(`[SCHEDULED] Bài "${attributes.title}" sẽ đăng lúc ${postDate.toISOString()}`);
+            }
+
         } catch (err) {
-            console.error(`[ERROR] Lỗi khi đọc file ${file}:`, err);
+            console.error(`Lỗi đọc file ${file}:`, err);
         }
     });
 
