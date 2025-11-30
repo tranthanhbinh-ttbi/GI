@@ -1,32 +1,38 @@
 backend:
   name: github
-  repo: tranthanhbinh-ttbi/GI
+  repo: tranthanhbinh-ttbi/tequa
   branch: main
-  base_url: https://genderinsights.vercel.app
 
-media_folder: "src/public/photos/uploads"
-public_folder: "photos/uploads"
+local_backend: true
 
+media_folder: "src/public/uploads" # Nơi lưu ảnh tải lên
+public_folder: "/uploads" # Đường dẫn ảnh hiển thị trên web
+
+# Cấu hình Slug tự động từ tiêu đề
 slug:
   encoding: "ascii"
   clean_accents: true
   sanitize_replacement: "-"
 
 collections:
+  # 1. Cấu hình cho SERIES (Dựa trên hình ảnh 1)
   - name: "series"
-    label: "Trang Series"
-    folder: "src/content/series"
+    label: "Series & Bài viết"
+    folder: "src/content/series" # Nơi lưu file data
     create: true
-    slug: "{{slug}}"
+    slug: "{{slug}}" # Tự động tạo slug từ title
     fields:
       - { label: "Tiêu đề", name: "title", widget: "string" }
       - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm" } # Dùng để hẹn giờ
+      - { label: "Tác giả", name: "author", widget: "string", default: "Gender Insights" }
       - { label: "Mô tả ngắn", name: "description", widget: "text" }
-      - { label: "Danh mục", name: "category", widget: "select", options: ["Bài Viết", "Video", "Podcast"] }
+      - { label: "Danh mục", name: "category", widget: "select", options: ["Sống khỏe", "Video", "Podcast", "Bài Viết"] }
       - { label: "Ảnh bìa", name: "thumbnail", widget: "image" }
       - { label: "Nội dung", name: "body", widget: "markdown" }
+
+  # 2. Cấu hình cho TIN TỨC (Dựa trên hình ảnh 2)
   - name: "news"
-    label: "Trang Tin Tức"
+    label: "Tin tức"
     folder: "src/content/news"
     create: true
     slug: "{{slug}}"
@@ -36,4 +42,5 @@ collections:
       - { label: "Danh mục", name: "category", widget: "select", options: ["Food", "Lifestyle", "Travel", "Sống khỏe", "Kinh nghiệm", "Truyền thống"] }
       - { label: "Ảnh đại diện", name: "thumbnail", widget: "image" }
       - { label: "Mô tả ngắn", name: "description", widget: "text" }
+      - { label: "Lượt xem (Giả lập)", name: "views", widget: "number", default: 0, required: false }
       - { label: "Nội dung chi tiết", name: "body", widget: "markdown" }
