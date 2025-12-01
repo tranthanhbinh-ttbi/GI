@@ -1,5 +1,5 @@
 ---
-title: "Tập 1: Ngôi Đền Thiêng Của Con [Series Mẹ và Con gái]"
+title: "Tập 1: Ngôi Đền Thiêng Của Con [Series Mẹ Và Con gái]"
 date: 2025-11-30 21:00
 author: Gender Insights
 description: Hành trình của người mẹ dạy con gái nhận diện ranh giới cơ thể, xây
