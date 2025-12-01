@@ -73,11 +73,23 @@
     max-width: 100%;
     height: auto;
     object-fit: cover;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: high-quality;
-    transform: translateZ(0);
-    backface-visibility: hidden;
     transition: transform 0.5s ease;
+}
+
+/* Thêm vào phần <style> */
+.super-sharp {
+    /* 1. Tối ưu render cho màn hình hiện đại */
+    image-rendering: -webkit-optimize-contrast; /* Cực tốt cho Chrome/Safari */
+    image-rendering: crisp-edges;
+    
+    /* 2. Hack tăng độ nét thị giác (Visual Sharpness) */
+    /* Tăng tương phản nhẹ và độ sáng để ảnh trông 'trong' hơn */
+    filter: contrast(1.05) brightness(1.02) saturate(1.05);
+    
+    /* 3. Đảm bảo ảnh không bị mờ do biến đổi 3D */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 .slide-item:hover .slide-image {
@@ -302,7 +314,7 @@
                                            style="position: absolute; inset: 0; z-index: 2; cursor: pointer;">
                                         </a>
 
-                                        <img src="<%= post.thumbnail || 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=1920&q=100' %>" class="slide-image" alt="<%= post.title %>" loading="eager" decoding="async">
+                                        <img src="<%= post.thumbnail || 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=2400&q=100&fm=webp' %>" class="slide-image" alt="<%= post.title %>" loading="eager" decoding="async">
                                         
                                         <div class="slide-gradient"></div>
 
