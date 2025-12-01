@@ -29,11 +29,11 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.9rem;
-    color: #6c757d;
+    color: var(--gen-body-color);
     margin-bottom: 1.5rem;
 }
 .post-breadcrumbs a {
-    color: #6c757d;
+    color: var(--gen-body-color);
     text-decoration: none;
 }
 .post-breadcrumbs a:hover {
@@ -43,7 +43,7 @@
     font-size: 0.7rem;
 }
 .post-breadcrumbs .current {
-    color: #333;
+    color: #6c757d;
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
@@ -51,7 +51,7 @@
     max-width: 200px; /* Adjust as needed */
 }
 .post-breadcrumbs .current-post {
-    color: #333;
+    color: #6c757d;
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
@@ -98,7 +98,7 @@
 }
 .post-meta-top .post-date {
     font-size: 0.9rem;
-    color: #6c757d;
+    color: var(--gen-body-color);
 }
 
 .post-title {
@@ -106,7 +106,7 @@
     font-weight: 700;
     line-height: 1.2;
     margin: 1.5rem 0;
-    color: #1a202c;
+    color: var(--gen-body-color);
 }
 
 .post-divider {
@@ -121,7 +121,7 @@
     margin-top: 2rem;
     font-size: 1.1rem;
     line-height: 1.8;
-    color: #4a5568;
+    color: var(--gen-body-color);
 }
 .post-content h2, .post-content h3 {
     font-weight: 700;
