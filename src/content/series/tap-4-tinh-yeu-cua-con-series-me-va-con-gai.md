@@ -1,7 +1,9 @@
 ---
 title: "Tập 4: Tình Yêu Của Con [Series Mẹ Và Con Gái]"
 date: 2025-12-02 22:27
-description: Câu chuyện ngắn của mẹ và con
+description: Hành trình của người mẹ dạy con gái nhận diện ranh giới cơ thể, xây
+  dựng vòng tròn tin tưởng và tự bảo vệ bản thân trước những nguy cơ tại nhà,
+  trường học và nơi công cộng.
 category: Bài Viết
 thumbnail: /uploads/z7281806157133_e159933a9b7342ceeb62d27b647f0176.jpg
 ---
