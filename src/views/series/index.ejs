@@ -75,6 +75,9 @@
     height: auto;
     object-fit: cover;
     transition: transform 0.5s ease;
+    image-rendering: -webkit-optimize-contrast; /* Giúp ảnh trong trẻo hơn trên Chrome/Safari */
+    transform: translateZ(0); /* Kích hoạt GPU để ảnh không bị mờ/rung khi chạy hiệu ứng */
+    backface-visibility: hidden; /* Fix lỗi mờ viền khi scale */
 }
 
 .slide-item:hover .slide-image {
