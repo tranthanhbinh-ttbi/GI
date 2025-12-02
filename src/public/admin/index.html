@@ -9,5 +9,38 @@
 <body>
     <script src="https://unpkg.com/decap-cms@3.9.0/dist/decap-cms.js"></script>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <script>
+        // Đăng ký sự kiện chạy trước khi lưu bài (preSave)
+        CMS.registerEventListener({
+            name: 'preSave',
+            handler: ({ entry }) => {
+                // Lấy toàn bộ dữ liệu đang nhập
+                const data = entry.get('data');
+                
+                // Kiểm tra xem field chứa nội dung chính có tên là 'body' hay không.
+                // Nếu trong config.yml bạn đặt tên khác (ví dụ: 'content'), hãy sửa chữ 'body' dưới đây thành tên đó.
+                if (data.has('body')) {
+                    let body = data.get('body');
+
+                    // Regex 1: Tìm [Dấu sao] + [Khoảng trắng] + [Ngoặc kép] => Thay bằng [Dấu sao][Ngoặc kép]
+                    // Ví dụ: * "Có chứ -> *"Có chứ
+                    // Điều này giúp Markdown hiểu đây là in nghiêng chứ không phải gạch đầu dòng lỗi.
+                    if (body) {
+                         body = body.replace(/\*\s+"/g, '*"');
+                         
+                         // Regex 2: Tìm [Ngoặc kép] + [Khoảng trắng] + [Dấu sao] => Thay bằng [Ngoặc kép][Dấu sao]
+                         // Ví dụ: của con." * -> của con."*
+                         body = body.replace(/"\s+\*/g, '"*');
+
+                         // Cập nhật lại nội dung đã sửa vào dữ liệu chuẩn bị lưu
+                         return data.set('body', body);
+                    }
+                }
+                
+                return data;
+            },
+        });
+    </script>
 </body>
 </html>
