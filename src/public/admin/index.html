@@ -22,13 +22,26 @@
                     let originalBody = body;
 
                     if (body) {
+                        // BƯỚC 1: Xóa khoảng trắng thừa (Fix lỗi cách dòng)
+                        // Ví dụ: * "Text" -> *"Text"
                         body = body.replace(/\*\s+([\"“”])/g, '*$1');
                         body = body.replace(/([\"“”])\s+\*/g, '$1*');
-                        body = body.replace(/([“"'])\*/g, '*$1');
-                        body = body.replace(/\*([”"'])/g, '$1*');
+
+                        // BƯỚC 2: Sửa lỗi lồng ghép (Fix lỗi cái thẳng cái nghiêng)
+                        // Mục tiêu: Đưa dấu sao ra NGOÀI CÙNG để in nghiêng toàn bộ câu thoại
                         
+                        // Case A: Tìm [Ngoặc kép][Sao] -> Đổi thành [Sao][Ngoặc kép]
+                        // Ví dụ: “*Cháu -> *“Cháu
+                        body = body.replace(/([“"'])\*/g, '*$1');
+                        
+                        // Case B: Tìm [Sao][Ngoặc kép] (ở cuối câu) -> Đổi thành [Ngoặc kép][Sao]
+                        // Lưu ý: Logic này giúp đảm bảo dấu sao luôn bao ngoài cùng.
+                        // Ví dụ: Text*” -> Text”*
+                        body = body.replace(/\*([”"'])/g, '$1*');
+
+                        // Kiểm tra xem có thay đổi gì không để báo log
                         if (body !== originalBody) {
-                            console.log("-> Đã chuẩn hóa nội dung (Fix khoảng trắng & Fix lồng ghép)");
+                            console.log("-> Đã chuẩn hóa: Fix khoảng trắng & Đẩy dấu * ra ngoài ngoặc kép.");
                             return data.set('body', body);
                         }
                     }
