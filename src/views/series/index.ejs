@@ -348,8 +348,10 @@
                                                     <span class="hero-slide-rating-count">(98)</span>
                                                 </div>
                                             </div>
-                                            
-                                            <h1 class="hero-slide-title"><%= post.title %></h1>
+                                            <a href="/series/<%= post.slug %>" 
+                                           title="<%= post.title %>">
+                                           <h1 class="hero-slide-title"><%= post.title %></h1>
+                                        </a>
                                             <p class="hero-slide-description"><%= post.description %></p>
                                         </div>
 
