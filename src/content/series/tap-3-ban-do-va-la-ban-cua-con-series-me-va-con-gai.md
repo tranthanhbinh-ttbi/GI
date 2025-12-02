@@ -15,7 +15,7 @@ Mẹ dắt Hạ đi chậm lại, dừng ở một ngã ba giữa hai dãy hàng
 
 Hạ mở to mắt, mái tóc khẽ bay trong gió. *“Có kho báu hả mẹ?”* Con hỏi, giọng háo hức như một chú chim sẻ sắp sà xuống bãi đất lạ.
 
-Mẹ mỉm cười*,  "Có chứ. Nhưng kho báu hôm nay không nằm trong một chiếc rương vàng. Kho báu chính là Sự An Toàn của con.”*
+Mẹ mỉm cười*,"*Có chứ. Nhưng kho báu hôm nay không nằm trong một chiếc rương vàng. Kho báu chính là Sự An Toàn của con.”
 
 Hạ hơi ngạc nhiên. Sự an toàn? Là thứ mà con thường nghĩ là vô hình, sao lại trở thành kho báu được?
 
