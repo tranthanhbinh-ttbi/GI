@@ -275,13 +275,13 @@ button.splide__arrow {
     text-transform: uppercase;
 }
 .card-category-badge.bg-red-600 {
-    background-color: rgb(220 38 38);
+    background-color: #758694;
 }
 .card-category-badge.bg-purple-600 {
-    background-color: rgb(147 51 234);
+    background-color: #777c6d;
 }
 .card-category-badge.bg-blue-600 {
-    background-color: rgb(37 99 235);
+    background-color: #c96868;
 }
 
 .card-content {

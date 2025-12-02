@@ -133,6 +133,13 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
+.article-tag {
+    background: #c96868;
+}
+.postcard-tag {
+    background: #777c6d;
+}
+
 .hero-slide-category-tag--purple, 
 .hero-slide-category-tag--violet {
     background: linear-gradient(135deg, #9b59b6, #8e44ad);
@@ -322,8 +329,8 @@
                                             <div class="hero-slide-category-container">
                                                 <% 
                                                     let badgeClass = 'hero-slide-category-tag--violet';
-                                                    if (post.category === 'Podcast') badgeClass = 'hero-slide-category-tag--purple';
-                                                    if (post.category === 'Bài Viết') badgeClass = 'bg-blue-600 hero-slide-category-tag';
+                                                    if (post.category === 'Podcast') badgeClass = 'postcard-tag';
+                                                    if (post.category === 'Bài Viết') badgeClass = 'article-tag';
                                                 %>
                                                 <span class="hero-slide-category-tag <%= badgeClass %>"><%= post.category %></span>
                                             </div>
