@@ -13,7 +13,7 @@ Mẹ dắt Hạ đi chậm lại, dừng ở một ngã ba giữa hai dãy hàng
 
 *“Hạ, hôm nay mẹ con mình sẽ chơi một trò chơi. Tên của nó là “Bản Đồ và La Bàn.””*
 
-Hạ mở to mắt, mái tóc khẽ bay trong gió. * “Có kho báu hả mẹ?”* Con hỏi, giọng háo hức như một chú chim sẻ sắp sà xuống bãi đất lạ.
+Hạ mở to mắt, mái tóc khẽ bay trong gió. *“Có kho báu hả mẹ?”* Con hỏi, giọng háo hức như một chú chim sẻ sắp sà xuống bãi đất lạ.
 
 Mẹ mỉm cười*, "Có chứ. Nhưng kho báu hôm nay không nằm trong một chiếc rương vàng. Kho báu chính là Sự An Toàn của con.”*
 
@@ -43,7 +43,7 @@ Con ngẩng đầu lên, giọng nhỏ nhưng rõ*, “Cháu… cháu không th�
 
 Người đàn ông vẫn giữ nụ cười, *“Đi một chút thôi mà. Mẹ cháu đang bận mua đồ. Chú sẽ đưa cháu về ngay.”*
 
-Hạ cảm thấy một nhịp đập mạnh trong ngực như một đèn đỏ vừa bật sáng. Con không lùi vào góc tối như một chú thỏ nhỏ. Con làm điều mẹ vẫn luôn dạy *“CHÁU KHÔNG ĐI! MẸ ƠI! MẸ CỦA CON ĐANG Ở ĐÂY!”*Giọng con vang lên, tròn và vang như tiếng chuông gõ vào kim loại.
+Hạ cảm thấy một nhịp đập mạnh trong ngực như một đèn đỏ vừa bật sáng. Con không lùi vào góc tối như một chú thỏ nhỏ. Con làm điều mẹ vẫn luôn dạy *“CHÁU KHÔNG ĐI! MẸ ƠI! MẸ CỦA CON ĐANG Ở ĐÂY! ”*Giọng con vang lên, tròn và vang như tiếng chuông gõ vào kim loại.
 
 Mẹ nhanh chóng bước tới, đặt tay lên vai Hạ. Khi thấy mẹ xuất hiện, người đàn ông gật đầu, thì thầm *“Con bé làm rất tốt”*, rồi rẽ vào ngã chợ khác để tránh gây chú ý.
 
