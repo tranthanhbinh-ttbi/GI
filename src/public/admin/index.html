@@ -15,20 +15,21 @@
             name: 'preSave',
             handler: ({ entry }) => {
                 const data = entry.get('data');
-                console.log("--- BẮT ĐẦU CHẠY SCRIPT FIX LỖI ---");
+                console.log("--- CHẠY SCRIPT CHUẨN HÓA MARKDOWN V3 ---");
 
                 if (data.has('body')) {
                     let body = data.get('body');
-                    let originalBody = body; // Lưu bản gốc để so sánh
+                    let originalBody = body;
 
                     if (body) {
                         body = body.replace(/\*\s+([\"“”])/g, '*$1');
                         body = body.replace(/([\"“”])\s+\*/g, '$1*');
+                        body = body.replace(/([“"'])\*/g, '*$1');
+                        body = body.replace(/\*([”"'])/g, '$1*');
+                        
                         if (body !== originalBody) {
-                            console.log("-> Đã phát hiện lỗi và sửa nội dung!");
+                            console.log("-> Đã chuẩn hóa nội dung (Fix khoảng trắng & Fix lồng ghép)");
                             return data.set('body', body);
-                        } else {
-                            console.log("-> Nội dung sạch, không cần sửa.");
                         }
                     }
                 }

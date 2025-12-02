@@ -39,7 +39,7 @@ Mẹ để Hạ đi tự do trong một khoảng không gian vài mét. Con bé 
 
 Hạ không hề biết người chú ấy đã được mẹ nhờ giúp trước. Đây là phần quan trọng nhất của bài học: thực hành trong môi trường thật.
 
-Người đàn ông cúi xuống, giọng ấm áp, “*Cháu bé xinh quá! Cháu có muốn ăn một cây kẹo bông gòn không? Chú vừa mua. Cháu giúp chú tìm chú chó nhỏ bị lạc nhé, xong chú mua cho cháu cả đồ chơi nữa!”*
+Người đàn ông cúi xuống, giọng ấm áp, *“Cháu bé xinh quá! Cháu có muốn ăn một cây kẹo bông gòn không? Chú vừa mua. Cháu giúp chú tìm chú chó nhỏ bị lạc nhé, xong chú mua cho cháu cả đồ chơi nữa!”*
 
 Hạ khựng lại. Con bé nhớ những lời mẹ dặn: *“Bất kỳ ai dùng quà để đổi lấy sự giúp đỡ bất thường, đều không đáng tin.”*
 
