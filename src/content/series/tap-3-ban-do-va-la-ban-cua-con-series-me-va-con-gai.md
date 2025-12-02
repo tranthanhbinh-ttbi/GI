@@ -43,7 +43,7 @@ Người đàn ông cúi xuống, giọng ấm áp, *“Cháu bé xinh quá! Ch�
 
 Hạ khựng lại. Con bé nhớ những lời mẹ dặn: *“Bất kỳ ai dùng quà để đổi lấy sự giúp đỡ bất thường, đều không đáng tin.”*
 
-Con ngẩng đầu lên, giọng nhỏ nhưng rõ*, “Cháu… cháu không thể đi theo chú. Cháu đang đi với mẹ cháu.”*
+Con ngẩng đầu lên, giọng nhỏ nhưng rõ, *“Cháu… cháu không thể đi theo chú. Cháu đang đi với mẹ cháu.”*
 
 Người đàn ông vẫn giữ nụ cười, *“Đi một chút thôi mà. Mẹ cháu đang bận mua đồ. Chú sẽ đưa cháu về ngay.”*
 
