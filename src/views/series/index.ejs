@@ -539,251 +539,16 @@
                         </form>
     
                     </div>
-                    <div class="card-grid">
-                        
-                                                <% if (typeof posts !== 'undefined' && posts.length > 0) { %>
-                        
-                                                    <% posts.forEach(post => { %>
-                        
-                                                        <div class="series-card">
-                        
-                                                            <div class="card-image-container">
-                        
-                                                                <a href="/series/post/<%= post.slug %>" class="block">
-                        
-                                                                    <img class="card-image" src="<%= post.thumbnail ? post.thumbnail : '/photos/placeholder-m6a0q.png' %>" alt="<%= post.title %>">
-                        
-                                                                </a>
-                        
-                                                                <span class="card-category-badge bg-red-600"><%= post.category %></span>
-                        
-                                                                <span class="slide-date-badge"><%= post.displayDate %></span>
-                        
-                                                            </div>
-                        
-                                                            <div class="card-content">
-                        
-                                                                <h3 class="card-title">
-                        
-                                                                    <a href="/series/post/<%= post.slug %>"><%= post.title %></a>
-                        
-                                                                </h3>
-                        
-                                                                <p class="card-description">
-                        
-                                                                    <%= post.description %>
-                        
-                                                                </p>
-                        
-                                                            </div>
-                        
-                                                            <div class="card-footer">
-                        
-                                                                <div class="card-stats">
-                        
-                                                                    <div class="stat-item" title="Lượt xem">
-                        
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>
-                        
-                                                                        <span>890</span>
-                        
-                                                                    </div>
-                        
-                                                                    <div class="stat-item" title="Đánh giá (45)">
-                        
-                                                                        <div class="flex items-center">
-                        
-                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                            <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                        </div>
-                        
-                                                                        <span>(45)</span>
-                        
-                                                                    </div>
-                        
-                                                                </div>
-                        
-                                                                <button class="card-share-button" title="Chia sẻ">
-                        
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
-                        
-                                                                </button>
-                        
-                                                            </div>
-                        
-                                                        </div>
-                        
-                                                    <% }) %>
-                        
-                                                <% } %>
+                    <div class="card-grid" id="series-grid-container">
+    <%- include('../partials/card-series', { posts: posts }) %>
+</div>
 
-                        <div class="series-card">
-        
-                            <div class="card-image-container">
-                                <a href="/series/post" class="block">
-                                    <img class="card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề podcast">
-    
-                                </a>
-                                <span class="card-category-badge bg-purple-600">Podcast</span>
-                                <span class="slide-date-badge">10 tháng 9, 2024</span>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="card-title">
-          
-                                    <a href="/series/post">Phá Vỡ Định Kiến Giới Tính</a>
-                                </h3>
-                                <p class="card-description">
-   
-                                    Cuộc trò chuyện thẳng thắn về những quan niệm sai lầm phổ biến...
-                                </p>
-                       
-                            </div>
-                            <div class="card-footer">
-                                <div class="card-stats">
-                                 
-                                    <div class="stat-item" title="Lượt xem">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>
-             
-                                        <span>654</span>
-                                    </div>
-                                    <div class="stat-item" title="Đánh giá (32)">
-                                        <div class="flex items-center">
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                 
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-          
-                                        </div>
-                                        <span>(32)</span>
-                              
-                                    </div>
-                                </div>
-                                <button class="card-share-button" title="Chia sẻ">
-                           
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
-                                </button>
-        
-                            </div>
-                        </div>
-
-                        <div class="series-card">
-                            <div class="card-image-container">
-  
-                                <a href="/series/post" class="block">
-                                    <img class="card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
-                          
-                                </a>
-                                <span class="card-category-badge bg-blue-600">Bài Viết</span>
-                                <span class="slide-date-badge">15 tháng 9, 2024</span>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="card-title">
-          
-                                    <a href="/series/post">Nhận Biết Và Phòng Chống Xâm Hại</a>
-                                </h3>
-                                <p class="card-description">
-  
-                                    Kiến thức quan trọng giúp bảo vệ bản thân và người xung quanh khỏi các nguy cơ xâm hại.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="card-stats">
-          
-                                    <div class="stat-item" title="Lượt xem">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>
-                                        <span>2100</span>
-                                    </div>
-              
-                                    <div class="stat-item" title="Đánh giá (98)">
-                                        <div class="flex items-center">
-                                
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                         
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                        </div>
-                                        <span>(98)</span>
-       
-                                    </div>
-                                </div>
-                                <button class="card-share-button" title="Chia sẻ">
-    
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
-                 
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="series-card">
-        
-                            <div class="card-image-container">
-                                <a href="/series/post" class="block">
-                                    <img class="card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
-   
-                                </a>
-                                <span class="card-category-badge bg-blue-600">Bài Viết</span>
-                                <span class="slide-date-badge">15 tháng 9, 2024</span>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="card-title">
-          
-                                    <a href="/series/post">Nhận Biết Và Phòng Chống Xâm Hại</a>
-                                </h3>
-                                <p class="card-description">
-  
-                                    Kiến thức quan trọng giúp bảo vệ bản thân và người xung quanh khỏi các nguy cơ xâm hại.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="card-stats">
-          
-                                    <div class="stat-item" title="Lượt xem">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>
-                                        <span>2100</span>
-                                    </div>
-              
-                                    <div class="stat-item" title="Đánh giá (98)">
-                                        <div class="flex items-center">
-                                
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                         
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                        </div>
-                                        <span>(98)</span>
-       
-                                    </div>
-                                </div>
-                                <button class="card-share-button" title="Chia sẻ">
-    
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
-                 
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-             
-        
-                    <div class="load-more-container">
-                        <button class="load-more-button">
-                            Xem Thêm
-                        </button>
-                    </div>
+<div class="load-more-container">
+    <button id="btn-load-more-series" class="load-more-button" data-type="series" data-page="2" 
+            style="padding: 10px 24px; background: var(--primary-color, #6C5DD3); color: white; border-radius: 8px; border: none; cursor: pointer; font-weight: 600;">
+        Xem Thêm
+    </button>
+</div>
 
                 </section>
 
@@ -970,89 +735,195 @@
    
     <script type="module" src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js" integrity="sha256-FZsW7H2V5X9TGinSjjwYJ419Xka27I8XPDmWryGlWtw=" crossorigin="anonymous" defer></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Khởi tạo Splide Carousel
-            if (typeof Splide !== 'undefined') { 
-                const seriesCarousel = document.getElementById('series-carousel');
-                if (seriesCarousel) { 
-                    new Splide(seriesCarousel, {
-                        type      : 'loop',
-                        perPage   : 1,
-                        autoplay  : true,
-                        interval  : 5000,
-                        pauseOnHover: true,
-                        arrows    : true,
-                        pagination: false,
-                        breakpoints: {
-                        768: {
-                            pagination: true,
-                            arrows: false,
-                        },
-                        597: {
-                            pagination: true,
-                            arrows: false,
-                        }
-                    }
-                    }).mount();
-                }
-            } else {
-                console.error('Splide JS chưa được tải.');
+document.addEventListener('DOMContentLoaded', () => {
+    // === KHỞI TẠO BIẾN ===
+    const gridContainer = document.getElementById('series-grid-container');
+    const loadMoreBtn = document.getElementById('btn-load-more-series');
+    
+    // Quản lý trạng thái bộ lọc
+    let currentFilter = {
+        type: 'series',
+        page: 1,
+        limit: 6,
+        category: 'Tất Cả',
+        dateRange: 'all',
+        startDate: '',
+        endDate: '',
+        rating: '',
+        sort: 'newest'
+    };
+
+    // === HÀM GỌI API ===
+    async function fetchSeries(isLoadMore = false) {
+        if (!isLoadMore) {
+            // Nếu là lọc mới -> Reset về trang 1 và xóa nội dung cũ
+            currentFilter.page = 1;
+            gridContainer.innerHTML = '<div style="width:100%; text-align:center; padding: 40px; color: #666;">Đang tìm kiếm...</div>';
+            if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+        } else {
+            // Nếu là xem thêm -> UI Loading button
+            if (loadMoreBtn) {
+                loadMoreBtn.innerHTML = 'Đang tải...';
+                loadMoreBtn.disabled = true;
             }
+        }
 
-            // Logic cho thanh filter
-            const filterButtons = document.querySelectorAll('.filter-bar button');
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    filterButtons.forEach(btn => {
-                        btn.classList.remove('filter-button-active');
-                        btn.classList.add('filter-button-inactive');
-                    });
-                    button.classList.add('filter-button-active');
-                    button.classList.remove('filter-button-inactive');
-                    // Thêm logic filter của bạn ở đây...
-                });
-            });
-
-            // --- ===== BẮT ĐẦU JAVASCRIPT MỚI CHO BỘ LỌC NGÀY ===== ---
-            
-            // Hàm xử lý logic ẩn/hiện chung
-            function handleDateRangeChange(selectElement, targetContainer) {
-                if (selectElement.value === 'custom') {
-                    targetContainer.style.display = 'grid'; // Hiển thị dạng lưới (grid)
-                } else {
-                    targetContainer.style.display = 'none';
-                }
-            }
-
-            // Lấy các phần tử DOM cho bộ lọc MOBILE
-            const postDateSelectMobile = document.getElementById('post-date-mobile');
-            const customRangeMobile = document.getElementById('custom-date-range-mobile');
-            
-            // Lấy các phần tử DOM cho bộ lọc DESKTOP
-            const postDateSelectDesktop = document.getElementById('post-date');
-            const customRangeDesktop = document.getElementById('custom-date-range-desktop');
-
-            // Gán sự kiện cho bản MOBILE
-            if (postDateSelectMobile && customRangeMobile) {
-                // Đặt trạng thái ban đầu khi tải trang
-                handleDateRangeChange(postDateSelectMobile, customRangeMobile); 
-                // Gán sự kiện 'change'
-                postDateSelectMobile.addEventListener('change', () => {
-                    handleDateRangeChange(postDateSelectMobile, customRangeMobile);
-                });
-            }
-
-            // Gán sự kiện cho bản DESKTOP
-            if (postDateSelectDesktop && customRangeDesktop) {
-                // Đặt trạng thái ban đầu khi tải trang
-                handleDateRangeChange(postDateSelectDesktop, customRangeDesktop);
-                // Gán sự kiện 'change'
-                postDateSelectDesktop.addEventListener('change', () => {
-                    handleDateRangeChange(postDateSelectDesktop, customRangeDesktop);
-                });
-            }
-            // --- ===== KẾT THÚC JAVASCRIPT MỚI ===== ---
+        // Tạo Query String
+        const params = new URLSearchParams({
+            type: currentFilter.type,
+            page: currentFilter.page,
+            limit: currentFilter.limit,
+            category: currentFilter.category,
+            dateRange: currentFilter.dateRange,
+            rating: currentFilter.rating,
+            sort: currentFilter.sort,
+            startDate: currentFilter.startDate,
+            endDate: currentFilter.endDate
         });
-    </script>
+
+        try {
+            const response = await fetch(`/api/posts?${params.toString()}`);
+            const data = await response.json();
+
+            if (data.success) {
+                // Xử lý hiển thị
+                if (!isLoadMore) {
+                    gridContainer.innerHTML = ''; // Xóa loading text
+                    if (data.total === 0) {
+                        gridContainer.innerHTML = '<div style="width:100%; text-align:center; padding: 40px;">Không tìm thấy bài viết nào phù hợp.</div>';
+                    }
+                }
+
+                // Chèn HTML mới vào
+                gridContainer.insertAdjacentHTML('beforeend', data.html);
+
+                // Xử lý nút Load More
+                if (loadMoreBtn) {
+                    if (data.hasMore) {
+                        loadMoreBtn.style.display = 'block';
+                        loadMoreBtn.innerHTML = 'Xem Thêm';
+                        loadMoreBtn.disabled = false;
+                        // Cập nhật page cho lần click tiếp theo
+                        if (isLoadMore) currentFilter.page++;
+                        else currentFilter.page = 2; 
+                    } else {
+                        loadMoreBtn.style.display = 'none';
+                    }
+                }
+                
+                // Cập nhật page state nếu là load more
+                if(isLoadMore) currentFilter.page;
+            }
+        } catch (error) {
+            console.error(error);
+            if(!isLoadMore) gridContainer.innerHTML = '<div style="text-align:center;">Có lỗi xảy ra. Vui lòng thử lại.</div>';
+        }
+    }
+
+    // === BẮT SỰ KIỆN (EVENT LISTENERS) ===
+
+    // 1. Bộ lọc Category (Các nút bấm ngang)
+    const categoryBtns = document.querySelectorAll('.filter-button');
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Xử lý visual active
+            categoryBtns.forEach(b => {
+                b.classList.remove('filter-button-active');
+                b.classList.add('filter-button-inactive');
+            });
+            this.classList.add('filter-button-active');
+            this.classList.remove('filter-button-inactive');
+
+            // Cập nhật filter và gọi API
+            // Lấy text thuần (bỏ qua icon svg nếu có)
+            const spanText = this.querySelector('span') ? this.querySelector('span').innerText : this.innerText;
+            currentFilter.category = spanText.trim();
+            fetchSeries(false);
+        });
+    });
+
+    // 2. Bộ lọc Dropdown (Ngày, Rating, Sort)
+    // Map ID của các element Desktop và Mobile
+    const filterMaps = [
+        { key: 'dateRange', ids: ['post-date', 'post-date-mobile'] },
+        { key: 'rating', ids: ['rating', 'rating-mobile'] },
+        { key: 'sort', ids: ['sort-by', 'sort-by-mobile'] }
+    ];
+
+    filterMaps.forEach(map => {
+        map.ids.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('change', (e) => {
+                    const val = e.target.value;
+                    currentFilter[map.key] = val;
+                    
+                    // Đồng bộ giá trị giữa Desktop và Mobile
+                    map.ids.forEach(syncId => {
+                        const syncEl = document.getElementById(syncId);
+                        if(syncEl) syncEl.value = val;
+                    });
+
+                    // Nếu chọn Custom Date thì chưa fetch vội, đợi nhập ngày
+                    if (map.key === 'dateRange' && val === 'custom') {
+                        const customDivs = document.querySelectorAll('.custom-date-range-container');
+                        customDivs.forEach(div => div.style.display = 'block');
+                        return; 
+                    } else {
+                         const customDivs = document.querySelectorAll('.custom-date-range-container');
+                        customDivs.forEach(div => div.style.display = 'none');
+                    }
+
+                    fetchSeries(false);
+                });
+            }
+        });
+    });
+
+    // 3. Xử lý Custom Date
+    const startInputs = document.querySelectorAll('input[name="start-date"]');
+    const endInputs = document.querySelectorAll('input[name="end-date"]');
+    
+    function handleCustomDate() {
+        // Lấy giá trị từ bất kỳ input nào có dữ liệu
+        let startVal = '';
+        let endVal = '';
+        startInputs.forEach(input => { if(input.value) startVal = input.value; });
+        endInputs.forEach(input => { if(input.value) endVal = input.value; });
+
+        if (startVal && endVal) {
+            currentFilter.startDate = startVal;
+            currentFilter.endDate = endVal;
+            fetchSeries(false);
+        }
+    }
+
+    [...startInputs, ...endInputs].forEach(input => {
+        input.addEventListener('change', handleCustomDate);
+    });
+
+    // 4. Sự kiện nút Xem Thêm
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            fetchSeries(true);
+        });
+    }
+
+    // === LOGIC SPLIDE CAROUSEL (GIỮ NGUYÊN) ===
+    if (typeof Splide !== 'undefined') {
+        const seriesCarousel = document.getElementById('series-carousel');
+        if (seriesCarousel) {
+            new Splide(seriesCarousel, {
+                type: 'loop', perPage: 1, autoplay: true, interval: 5000,
+                pauseOnHover: true, arrows: true, pagination: false,
+                breakpoints: {
+                    768: { pagination: true, arrows: false },
+                    597: { pagination: true, arrows: false }
+                }
+            }).mount();
+        }
+    }
+});
+</script>
 </body>
 </html>

@@ -139,6 +139,7 @@ app.get('/ws', { websocket: true }, (connection /* SocketStream */, req) => {
 const { migrate } = require('./src/models')
 
 app.register(require('./src/routes/pages-routes'))
+app.register(require('./src/routes/api-routes'))
 app.register(require('./src/routes/auth-routes'))
 app.register(require('./src/routes/mail-routes'))
 app.register(require('./src/routes/follow-routes'))

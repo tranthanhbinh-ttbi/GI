@@ -352,8 +352,11 @@ button.splide__arrow {
 }
 
 .load-more-container {
-    text-align: center;
-    margin-top: 3rem; /* mt-12 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 3rem;
 }
 
 .load-more-button {
