@@ -15,11 +15,7 @@ Mẹ dắt Hạ đi chậm lại, dừng ở một ngã ba giữa hai dãy hàng
 
 Hạ mở to mắt, mái tóc khẽ bay trong gió. *“Có kho báu hả mẹ?”* Con hỏi, giọng háo hức như một chú chim sẻ sắp sà xuống bãi đất lạ.
 
-<<<<<<< HEAD
-Mẹ mỉm cười, *"Có chứ. Nhưng kho báu hôm nay không nằm trong một chiếc rương vàng. Kho báu chính là Sự An Toàn của con.”*
-=======
 Mẹ mỉm cười*,  "Có chứ. Nhưng kho báu hôm nay không nằm trong một chiếc rương vàng. Kho báu chính là Sự An Toàn của con.”*
->>>>>>> f68e58b33f6d90b0dab10224f42a0af65c564159
 
 Hạ hơi ngạc nhiên. Sự an toàn? Là thứ mà con thường nghĩ là vô hình, sao lại trở thành kho báu được?
 
@@ -59,9 +55,7 @@ Hạ dựa đầu vào mẹ, thấy tim mình đập theo nhịp bình yên.
 
 Hai mẹ con tiếp tục đi sâu vào khu chợ đông đúc hơn. Nhiều vai người chạm vào nhau trong những đợt xô, đẩy. Tiếng bước chân nện xuống mặt đất như một vũ điệu hỗn loạn.
 
-Mẹ cúi xuống thì thầm, *“Hạ, khi con cảm thấy ai đó chạm vào con một cách lạ lùng trong đám đông mà không phải là vô tình, hãy ngay lập tức tạo ra một Sóng Vòng Cung.”*
-
-“Sóng Vòng Cung là gì hả mẹ?” Hạ tỏ mò.
+Mẹ cúi xuống thì thầm, *“Hạ, khi con cảm thấy ai đó chạm vào con một cách lạ lùng trong đám đông mà không phải là vô tình, hãy ngay lập tức tạo ra một Sóng Vòng Cung.”*“Sóng Vòng Cung là gì hả mẹ?” Hạ tỏ mò.
 
 *“Đó là một chuyển động nhỏ nhưng quyết đoán của con, là khi con lùi lại một bước, xoay người sang bên, hoặc hét to: “Xin lỗi, đừng chạm vào cháu.” Sự chú ý của những người xung quanh là ánh sáng và ánh sáng sẽ khiến bóng tối không dám tới gần.”*
 
