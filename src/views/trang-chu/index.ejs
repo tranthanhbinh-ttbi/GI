@@ -17,21 +17,7 @@
     <link rel="canonical" href="https://genderinsights.vercel.app"/>
 	<link rel="alternate" href="https://genderinsights.vercel.app" hreflang="vi-VN"/>
     <link rel="preload" href="photos/placeholder-m6a0q.png" as="image" fetchpriority="high"/>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net"/>
-    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="/fonts/index.css"/>
-    <link rel="stylesheet" href="/css/bases.css"/>
-    <link rel="stylesheet" href="/css/main.css"/>
-    <link rel="stylesheet" href="/css/trang-chu/index.css"/>
-    <link rel="stylesheet" href="/css/responsive.css"/> 
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
-    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"/></noscript>
-    <link rel="prefetch" href="/series"/>
-    <link rel="prefetch" href="/kham-pha"/>
-    <link rel="prefetch" href="/tin-tuc"/>
-    <link rel="prefetch" href="/su-kien"/>
-    <link rel="prefetch" href="/dien-dan"/>
+    <link rel="preconnect" href="https://genderinsights.vercel.app" crossorigin>
     <style>
         * {
             margin: 0;
@@ -43,6 +29,35 @@
             font-family: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
         }
     </style>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net"/>
+    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
+    
+    <!-- <link rel="stylesheet" href="/fonts/index.css"/>
+    <link rel="stylesheet" href="/css/bases.css"/>
+    <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="/css/trang-chu/index.css"/>
+    <link rel="stylesheet" href="/css/responsive.css"/>  -->
+    <link rel="stylesheet" href="/css/bases.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/css/main.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/trang-chu/index.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/css/responsive.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/fonts/index.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="/css/bases.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/trang-chu/index.css">
+        <link rel="stylesheet" href="/css/responsive.css">
+        <link rel="stylesheet" href="/fonts/index.css">
+    </noscript>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"/></noscript>
+    <link rel="prefetch" href="/series"/>
+    <link rel="prefetch" href="/kham-pha"/>
+    <link rel="prefetch" href="/tin-tuc"/>
+    <link rel="prefetch" href="/su-kien"/>
+    <link rel="prefetch" href="/dien-dan"/>
     <script>
         const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ? localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-gen-themes', preferredTheme);
