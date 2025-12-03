@@ -13,20 +13,20 @@
     <meta property="og:image:alt" content="Gender Insights"/>
     <meta name="google-site-verification" content="WYtNJAPGpG3GU15m7LDN27dg87rSi9SSYkL4o1Oc3LQ"/>
     <title>Gender Insights | Hiểu Biết - Đối Thoại - Kết Nối</title>
+    <link rel="preload" as="image" href="photos/placeholder-m6a0q.png" fetchpriority="high"/>
     <link rel="shortcut icon" href="photos/brands/gender-insights.ico" type="image/x-icon"/>
     <link rel="canonical" href="https://genderinsights.vercel.app"/>
 	<link rel="alternate" href="https://genderinsights.vercel.app" hreflang="vi-VN"/>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net"/>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net"/>
-    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff2" as="font" type="font/woff2" crossorigin/>
-    <link rel="preload" href="/css/bases.css" as="style"/>
-    <link rel="preload" href="/css/main.css" as="style"/>
+    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
     <link rel="stylesheet" href="/fonts/index.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" integrity="sha256-5uKiXEwbaQh9cgd2/5Vp6WmMnsUr3VZZw0a8rKnOKNU=" crossorigin="anonymous"/>
     <link rel="stylesheet" href="/css/bases.css"/>
     <link rel="stylesheet" href="/css/main.css"/>
     <link rel="stylesheet" href="/css/trang-chu/index.css"/>
-    <link rel="stylesheet" href="/css/responsive.css"/>
+    <link rel="stylesheet" href="/css/responsive.css"/> 
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"/></noscript>
     <link rel="prefetch" href="/series"/>
     <link rel="prefetch" href="/kham-pha"/>
     <link rel="prefetch" href="/tin-tuc"/>
@@ -63,7 +63,7 @@
                     </button>
                 </div>
                 <div id="hro-media">
-                    <img src="photos/placeholder-m6a0q.png" width="140" height="140" alt="Gender Insights Workshop" loading="lazy" fetchpriority="high"/>
+                    <img src="photos/placeholder-m6a0q.png" width="140" height="140" alt="Gender Insights Workshop" fetchpriority="high" decoding="async"/>
                 </div>
             </div>
         </section>
@@ -398,33 +398,26 @@
     <%- include('../partials/footer') %>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js" integrity="sha256-FZsW7H2V5X9TGinSjjwYJ419Xka27I8XPDmWryGlWtw=" crossorigin="anonymous" defer></script>
     <script type="module">
+        import Splide from 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js';
         document.addEventListener("DOMContentLoaded", () => {
-            ["#teams.splide", "#partners.splide"].forEach((selector) => {
-                new Splide(document.querySelector(selector), {
-                    type: 'loop',
-                    perPage: 3,
-                    gap: '32px',
-                    arrows: true,
-                    lazyLoad: true,
-                    wheel: {
-                        releaseWheel: false,
-                        waitForTransition: true,
-                        wheelMinThreshold: 150,
-                        wheelSleep: 150,
-                    },
-                    breakpoints: {
-                        768: {
-                            perPage: 2,
-                            arrows: false,
-                        },
-                        597: {
-                            perPage: 1,
-                            arrows: false,
+            const sliders = ["#teams.splide", "#partners.splide"];
+            sliders.forEach((selector) => {
+                const el = document.querySelector(selector);
+                if (el) {
+                    new Splide(el, {
+                        type: 'loop',
+                        perPage: 3,
+                        gap: '32px',
+                        arrows: true,
+                        lazyLoad: 'nearby',
+                        breakpoints: {
+                            768: { perPage: 2, arrows: false },
+                            597: { perPage: 1, arrows: false }
                         }
-                    }
-                }).mount();
+                    }).mount();
+                }
             });
-        })
+        });
     </script>
 </body>
 </html>
