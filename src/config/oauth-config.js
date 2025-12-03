@@ -5,7 +5,7 @@ const FacebookStrategy = require('passport-facebook').Strategy
 const { User } = require('../models')
 
 async function oauthPassport(fastify) {
-  const baseUrl = process.env.CLIENT_URL || 'http://localhost:3000/'
+  const baseUrl = process.env.CLIENT_URL
   
   FPassport.registerUserSerializer(async (user, request) => { return user.id })
   FPassport.registerUserDeserializer(async (id, request) => {
@@ -16,7 +16,7 @@ async function oauthPassport(fastify) {
   FPassport.use('google', new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'https://genderinsights.vercel.app/auth/google/callback',
+    callbackURL: new URL('/auth/google/callback', baseUrl).toString(),
   }, async(accessToken, refreshToken, profile, done) => {
     try {
       const email = Array.isArray(profile.emails) && profile.emails[0] ? profile.emails[0].value : null
@@ -43,7 +43,7 @@ async function oauthPassport(fastify) {
   FPassport.use('facebook', new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: 'https://genderinsights.vercel.app/auth/facebook/callback',
+    callbackURL: new URL('/auth/facebook/callback', baseUrl).toString(),
     profileFields: ['id', 'displayName', 'emails', 'photos'],
   }, async (accessToken, refreshToken, profile, done) => {
         try {

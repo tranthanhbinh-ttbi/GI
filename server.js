@@ -169,7 +169,7 @@ const start = async () => {
   }
 };
 
-if (require.main === module) {
+if (require.main === module && !process.env.VERCEL) {
   start();
 }
 
