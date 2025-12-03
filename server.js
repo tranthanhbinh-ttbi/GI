@@ -3,28 +3,10 @@ const fastify = require('fastify')
 const minifier = require('html-minifier-terser')
 const path = require('node:path')
 const crypto = require('node:crypto')
+const FPassport = require('@fastify/passport')
 
-const app = fastify({ trustProxy: true, logger: false, connectionTimeout: 5000 })
-
-// Security: cookies, JWT, CSRF, rate limit, and strict headers
-app.register(require('@fastify/cookie'), {
-  parseOptions: {
-    httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-    path: '/',
-  },
-})
-
-app.register(require('@fastify/csrf-protection'))
-app.register(require('@fastify/rate-limit'), {
-  max: 500,
-  timeWindow: '1 minute',
-  cache: 10000,
-})
-
-const fastifySecureSession = require('@fastify/secure-session')
-const fastifyPassport = require('@fastify/passport')
+const { migrate } = require('./src/models')
+const configurePassport = require('./src/config/oauth-config')
 
 const sessionSecretBase64 = process.env.SESSION_SECRET || ''
 let sessionKey = null
@@ -41,23 +23,25 @@ try {
   console.warn('SESSION_SECRET is invalid base64. Using a random ephemeral 32-byte key.')
 }
 
-app.register(fastifySecureSession, {
-  key: sessionKey,
-  sodium: require('sodium-javascript'), 
-  cookieName: 'session',
-  cookie: {
-    path: '/',
-    sameSite: 'lax',
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-  },
+const app = fastify({ trustProxy: true, logger: false, connectionTimeout: 5000, bodyLimit: 1048576 * 2 })
+
+app.register(require('@fastify/compress'), {
+    global: true,
+    threshold: 2048,
+    encodings: ['br', 'gzip', 'deflate']
 })
-app.register(fastifyPassport.initialize())
-app.register(fastifyPassport.secureSession())
+app.register(require('@fastify/static'), {
+    root: path.join(__dirname, 'src', 'public'),
+    setHeaders: (res, path, stat) => {
+        res.setHeader('Cache-Control', 'public, max-age=31536000');
+    }
+})
 
-const configurePassport = require('./src/config/oauth-config')
-configurePassport(app)
-
+app.register(require('@fastify/rate-limit'), {
+  max: 500,
+  timeWindow: '1 minute',
+  cache: 10000,
+})
 // Basic security headers and CSP
 // app.addHook('onRequest', async (request, reply) => {
 //   reply.header('X-Frame-Options', 'DENY')
@@ -77,20 +61,38 @@ configurePassport(app)
 //   reply.header('Content-Security-Policy', csp)
 // })
 
-app.register(require('@fastify/static'), {
-    root: path.join(__dirname, 'src', 'public'),
-    setHeaders: (res, path, stat) => {
-        res.setHeader('Cache-Control', 'public, max-age=31536000');
-    }
+app.register(require('@fastify/cookie'), {
+  parseOptions: {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+  },
 })
+app.register(require('@fastify/secure-session'), {
+  key: sessionKey,
+  sodium: require('sodium-javascript'), 
+  cookieName: 'session',
+  cookie: {
+    path: '/',
+    sameSite: 'lax',
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 86400 * 30
+  },
+})
+app.register(require('@fastify/csrf-protection'), {
+  sessionPlugin: '@fastify/secure-session'
+})
+
+configurePassport(app)
+app.register(FPassport.initialize())
+app.register(FPassport.secureSession())
+
 app.register(require('@fastify/caching'), {
     privacy: 'public',
     ttl: 900000
 });
-app.register(require('@fastify/compress'), {
-    threshold: 2048,
-    encodings: ['br', 'gzip']
-})
 app.register(require('@fastify/view'), {
     engine: {
         ejs: require('ejs')
@@ -102,28 +104,17 @@ app.register(require('@fastify/view'), {
         useHtmlMinifier: minifier,
         htmlMinifierOptions: {
             collapseWhitespace: true,
-            removeEmptyAttributes: true,
             removeComments: true,
-            removeOptionalTags: true,
-            removeRedundantAttributes: true,
-            removeScriptTypeAttributes: true,
-            removeStyleLinkTypeAttributes: true,
             minifyCSS: true,
             minifyJS: true,
-            useShortDoctype: true,
-            removeAttributeQuotes: true,
         }
     }
 })
 
-// WebSocket for real-time follower count
 app.register(require('@fastify/websocket'))
 app.get('/ws', { websocket: true }, (connection /* SocketStream */, req) => {
   require('./src/controllers/realtime').registerSocket(connection)
 })
-
-// DB migration once on start
-const { migrate } = require('./src/models')
 
 app.register(require('./src/routes/pages-routes'))
 app.register(require('./src/routes/api-routes'))
