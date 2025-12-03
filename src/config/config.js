@@ -7,8 +7,8 @@ module.exports = {
     pool: {
         max: 1,
         min: 0,
-        acquire: 30000,
-        idle: 0
+        idle: 10000,
+        acquire: 30000
     },
     dialectOptions: {
       ssl: {
@@ -24,7 +24,7 @@ module.exports = {
     pool: {
         max: 1,
         min: 0,
-        idle: 0,
+        idle: 10000,
         acquire: 30000
     },
     dialectOptions: {

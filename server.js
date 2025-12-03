@@ -4,7 +4,7 @@ const minifier = require('html-minifier-terser')
 const path = require('node:path')
 const crypto = require('node:crypto')
 
-const app = fastify({ trustProxy: true, logger: false })
+const app = fastify({ trustProxy: true, logger: false, connectionTimeout: 5000 })
 
 // Security: cookies, JWT, CSRF, rate limit, and strict headers
 app.register(require('@fastify/cookie'), {
@@ -15,23 +15,10 @@ app.register(require('@fastify/cookie'), {
     path: '/',
   },
 })
-// app.register(require('@fastify/jwt'), {
-//   secret: process.env.JWT_SECRET || 'change-me',
-//   cookie: {
-//     cookieName: 'jwt',
-//     signed: false,
-//   },
-// })
-// app.decorate('authenticate', async function (request, reply) {
-//   try {
-//     await request.jwtVerify({ onlyCookie: true })
-//   } catch (err) {
-//     return reply.code(401).send({ ok: false })
-//   }
-// })
+
 app.register(require('@fastify/csrf-protection'))
 app.register(require('@fastify/rate-limit'), {
-  max: 200,
+  max: 500,
   timeWindow: '1 minute',
   cache: 10000,
 })

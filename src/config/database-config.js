@@ -7,7 +7,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
     pool: {
         max: 1,
         min: 0,
-        idle: 0,
+        idle: 10000,
         acquire: 30000
     },
     dialectOptions: {
