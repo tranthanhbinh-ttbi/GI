@@ -1,5 +1,5 @@
 ---
-title: "Tập 8: Chuyến Đi Biển Của Con"
+title: "Tập 8: Chuyến Đi Biển Của Con [Series Mẹ Và Con Gái]"
 date: 2025-12-04 14:37
 description: Hành trình của người mẹ dạy con gái nhận diện ranh giới cơ thể, xây
   dựng vòng tròn tin tưởng và tự bảo vệ bản thân trước những nguy cơ tại nhà,
