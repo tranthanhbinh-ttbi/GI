@@ -779,9 +779,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === HÀM GỌI API ===
     async function fetchSeries(isLoadMore = false) {
+        
+        // 1. Xác định trang cần tải (Page Logic)
+        // Nếu là Load More -> Lấy trang hiện tại + 1
+        // Nếu là Lọc (Filter) -> Reset về trang 1
+        const pageToFetch = isLoadMore ? currentFilter.page + 1 : 1;
+
         if (!isLoadMore) {
-            // Nếu là lọc mới -> Reset về trang 1 và xóa nội dung cũ
-            currentFilter.page = 1;
+            // Nếu là lọc mới -> Reset về trang 1 và hiển thị loading
             gridContainer.innerHTML = '<div style="width:100%; text-align:center; padding: 40px; color: #666;">Đang tìm kiếm...</div>';
             if (loadMoreBtn) loadMoreBtn.style.display = 'none';
         } else {
@@ -792,10 +797,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Tạo Query String
+        // Tạo Query String với số trang mới (pageToFetch)
         const params = new URLSearchParams({
             type: currentFilter.type,
-            page: currentFilter.page,
+            page: pageToFetch, // SỬ DỤNG BIẾN ĐÃ TÍNH TOÁN
             limit: currentFilter.limit,
             category: currentFilter.category,
             dateRange: currentFilter.dateRange,
@@ -812,7 +817,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.success) {
                 // Xử lý hiển thị
                 if (!isLoadMore) {
-                    gridContainer.innerHTML = ''; // Xóa loading text
+                    gridContainer.innerHTML = ''; // Xóa loading text hoặc nội dung cũ
                     if (data.total === 0) {
                         gridContainer.innerHTML = '<div style="width:100%; text-align:center; padding: 40px;">Không tìm thấy bài viết nào phù hợp.</div>';
                     }
@@ -821,26 +826,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Chèn HTML mới vào
                 gridContainer.insertAdjacentHTML('beforeend', data.html);
 
+                // CẬP NHẬT TRẠNG THÁI PAGE SAU KHI THÀNH CÔNG
+                currentFilter.page = pageToFetch;
+
                 // Xử lý nút Load More
                 if (loadMoreBtn) {
                     if (data.hasMore) {
                         loadMoreBtn.style.display = 'block';
                         loadMoreBtn.innerHTML = 'Xem Thêm';
                         loadMoreBtn.disabled = false;
-                        // Cập nhật page cho lần click tiếp theo
-                        if (isLoadMore) currentFilter.page++;
-                        else currentFilter.page = 2; 
                     } else {
                         loadMoreBtn.style.display = 'none';
                     }
                 }
-                
-                // Cập nhật page state nếu là load more
-                if(isLoadMore) currentFilter.page;
             }
         } catch (error) {
             console.error(error);
             if(!isLoadMore) gridContainer.innerHTML = '<div style="text-align:center;">Có lỗi xảy ra. Vui lòng thử lại.</div>';
+            if(isLoadMore && loadMoreBtn) {
+                loadMoreBtn.innerHTML = 'Thử lại';
+                loadMoreBtn.disabled = false;
+            }
         }
     }
 

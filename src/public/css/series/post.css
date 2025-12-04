@@ -141,6 +141,7 @@
 }
 .post-content p {
     margin-bottom: 1.5rem;
+    text-align: justify;
 }
 .post-content a {
     color: #3182ce;
