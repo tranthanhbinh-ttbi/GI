@@ -1,37 +1,25 @@
 require('dotenv').config();
 
-module.exports = {
-  development: {
-    use_env_variable: 'DATABASE_URL',
-    dialect: 'postgres',
-    pool: {
-        max: 1,
-        min: 0,
-        idle: 10000,
-        acquire: 30000
-    },
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    }
+const Connect_DB_Config = {
+  use_env_variable: 'DATABASE_URL',
+  dialect: 'postgres',
+  logging: false,
+  pool: {
+    max: 60,
+    min: 5,
+    idle: 10000,
+    acquire: 5000
   },
-
-  production: {
-    use_env_variable: 'DATABASE_URL',
-    dialect: 'postgres',
-    pool: {
-        max: 1,
-        min: 0,
-        idle: 10000,
-        acquire: 30000
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
     },
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    }
+    keepAlive: true
   }
+};
+
+module.exports = {
+  development: Connect_DB_Config,
+  production: Connect_DB_Config,
 };

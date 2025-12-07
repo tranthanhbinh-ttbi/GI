@@ -394,6 +394,7 @@ main {
 }
 :root, [data-gen-themes=light] {
     --gen-white: #ffffff;
+    --gen-terracotta: #9a3737;
     --gen-pink-500: #ec4899;
     --gen-blue-400: #60a5fa;
     --gen-body-bg: #fdfafa;

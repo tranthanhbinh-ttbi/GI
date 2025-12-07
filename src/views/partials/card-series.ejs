@@ -5,9 +5,9 @@
                 <a href="/series/<%= post.slug %>" class="block">
                     <img class="card-image" src="<%= post.thumbnail || '/photos/placeholder-m6a0q.png' %>" alt="<%= post.title %>">
                 </a>
-                <% let badgeClass = 'bg-blue-600'; %>
+                <% let badgeClass = 'article-tag'; %>
                 <% if (post.category === 'Podcast') badgeClass = 'bg-purple-600'; %>
-                <% if (post.category === 'Video') badgeClass = 'bg-red-600'; %>
+                <% if (post.category === 'Video') badgeClass = 'article-tag'; %>
                 
                 <span class="card-category-badge <%= badgeClass %>"><%= post.category %></span>
                 <span class="slide-date-badge"><%= post.displayDate || post.date %></span>
