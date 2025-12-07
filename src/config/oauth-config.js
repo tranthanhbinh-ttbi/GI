@@ -2,15 +2,27 @@ require('dotenv').config();
 const FPassport = require('@fastify/passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
+
 const { User } = require('../models')
+const { userCache } = require('../utils/cache-manager')
 
 async function oauthPassport(fastify) {
   const baseUrl = process.env.CLIENT_URL
   
   FPassport.registerUserSerializer(async (user, request) => { return user.id })
   FPassport.registerUserDeserializer(async (id, request) => {
-    const user = await User.findByPk(id)
-    return user || null
+    const cachedUser = userCache.get(id)
+    if (cachedUser) return cachedUser
+    const user = await User.findByPk(id, {
+      raw: true,
+      nest: true,
+      attributes: ['id', 'name', 'email', 'avatarUrl', 'provider']
+    })
+    if (user) {
+        userCache.set(id, user)
+        return user
+    }
+    return null
   })
 
   FPassport.use('google', new GoogleStrategy({
@@ -25,16 +37,18 @@ async function oauthPassport(fastify) {
       const providerId = profile.id
       
       let user = await User.findOne({ where: { provider: 'google', providerId } })
-          if (!user && email) user = await User.findOne({ where: { email } })
-          if (user) {
-            user.provider = 'google'
-            user.providerId = providerId
-            user.name = user.name || displayName
-            user.avatarUrl = avatarUrl || user.avatarUrl
-            if (!user.email && email) user.email = email
-            await user.save()
-          } else user = await User.create({ provider: 'google', providerId, name: displayName, email, avatarUrl })
-          return done(null, user)
+      if (!user && email) user = await User.findOne({ where: { email } })
+      if (user) {
+        user.provider = 'google'
+        user.providerId = providerId
+        user.name = user.name || displayName
+        user.avatarUrl = avatarUrl || user.avatarUrl
+        if (!user.email && email) user.email = email
+        await user.save()
+      } else user = await User.create({ provider: 'google', providerId, name: displayName, email, avatarUrl })
+      const plainUser = user.get({ plain: true })
+      userCache.set(user.id, plainUser)
+      return done(null, plainUser);
     } catch (err) {
       return done(err)
     }
@@ -49,7 +63,7 @@ async function oauthPassport(fastify) {
         try {
           const email = Array.isArray(profile.emails) && profile.emails[0] ? profile.emails[0].value : null
           const avatarUrl = Array.isArray(profile.photos) && profile.photos[0] ? profile.photos[0].value : null
-          const displayName = profile.displayName || 'User'
+          const displayName = profile.displayName || (profile.name && (profile.name.givenName + ' ' + profile.name.familyName)) || 'User'
           const providerId = profile.id
 
           let user = await User.findOne({ where: { provider: 'facebook', providerId } })
@@ -62,7 +76,9 @@ async function oauthPassport(fastify) {
             if (!user.email && email) user.email = email
             await user.save()
           } else user = await User.create({ provider: 'facebook', providerId, name: displayName, email, avatarUrl })
-          return done(null, user)
+          const plainUser = user.get({ plain: true })
+          userCache.set(user.id, plainUser)
+          return done(null, plainUser);
         } catch (err) {
           return done(err)
         }

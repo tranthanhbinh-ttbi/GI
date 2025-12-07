@@ -5,15 +5,15 @@ const Connect_DB_Config = {
   dialect: 'postgres',
   logging: false,
   pool: {
-    max: 60,
-    min: 5,
+    max: 1,
+    min: 0,
     idle: 10000,
     acquire: 5000
   },
   dialectOptions: {
     ssl: {
       require: true,
-      rejectUnauthorized: false
+      rejectUnauthorized: true
     },
     keepAlive: true
   }
