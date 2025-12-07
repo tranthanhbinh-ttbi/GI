@@ -162,21 +162,24 @@ main {
 }
 @keyframes typing {
     0% {
-        width: 8%;
+        transform: translateX(10%);
     }
-    50% {
-        width: 100%;
+    35% {
+        transform: translateX(calc(100% - 10px));
+    }
+    60% {
+        transform: translateX(calc(100% - 10px));
     }
     100% {
-        width: 8%;
+        transform: translateX(10%);
     }
 }
 @keyframes blink {
     from, to { 
-        border-color: transparent 
+        border-color: transparent;
     }
     50% { 
-        border-color: var(--gen-mouse); 
+        border-color: var(--gen-mouse);
     }
 }
 #toast-container {

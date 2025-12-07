@@ -33,16 +33,39 @@ main {
                 margin: 16px 0 32px 0;
             }
             > h1 {
-                max-width: 24.5rem;
+                position: relative;
+                max-width: 25rem;
                 margin: 16px 0;
                 line-height: 4rem;
                 font-size: 3rem;
                 font-weight: 900;
-                border-right: 5px solid var(--gen-mouse);
+                /* border-right: 5px solid var(--gen-mouse); */
                 white-space: nowrap;
                 overflow: hidden;
-                animation: typing 12s steps(50) infinite, blink .75s step-end infinite;
+                /* padding-right: 10px; */
+                /* animation: typing 12s steps(50) infinite, blink .75s step-end infinite; */
                 text-shadow: var(--gen-text-shadow) 0px 3px 2px;
+            }
+            > h1::after {
+                content: "";
+                position: absolute;
+                top: 0; left: 0; bottom: 0; right: 0;
+                
+                /* Màu nền rèm */
+                background-color: var(--gen-body-bg); 
+                
+                /* Con trỏ (Cursor) */
+                border-left: 5px solid var(--gen-mouse); 
+                
+                /* Tối ưu hiệu năng */
+                will-change: transform;
+                
+                /* --- KẾT HỢP 2 ANIMATION --- */
+                /* 1. typing: Chạy 12s, dùng steps(50) để giật cục giống gõ phím */
+                /* 2. blink: Chạy 0.75s, lặp lại vô tận (infinite) để nhấp nháy */
+                animation: 
+                    typing 12s steps(50) infinite, 
+                    blink 0.75s step-end infinite;
             }
         }
         #hro-media {
