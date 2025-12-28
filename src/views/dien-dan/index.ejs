@@ -1,85 +1,840 @@
 <!DOCTYPE html>
-<html lang="vi-VN" data-gen-themes=light>
+<html lang="vi">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
-    <title>Gender Insights | Hiểu Biết - Đối Thoại - Kết Nối</title>
-    <meta name="description" content="Gender Insights là một dự án thành lập nhằm nâng cao nhận thức về giới tính của độ tuổi vị thành niên"/>
-    <!-- <link rel="preload" href="/css/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
-    <link rel="preload" href="/fonts/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/> -->
-    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff2" as="font" type="font/woff2" crossorigin/>
-    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff" as="font" type="font/woff" crossorigin/>
-    <link rel="stylesheet" href="/module/splide-4.1.3/dist/css/splide.min.css"/>
-    <!-- <noscript><link rel="stylesheet" href="/css/main.css"/></noscript>
-    <noscript><link rel="stylesheet" href="/fonts/index.css"/></noscript> -->
-    <link rel="stylesheet" href="/css/main.css"/>
-    <link rel="stylesheet" href="/css/bases.css"/>
-    <link rel="stylesheet" href="/fonts/index.css"/>
-	<link rel="alternate" href="https://gender-insights.vercel.app" hreflang="vi-VN"/>
-	<link rel="canonical" href="https://gender-insights.vercel.app"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diễn Đàn</title>
+    <link rel="stylesheet" href="/fonts/index.css" />
+    <link rel="stylesheet" href="/css/components/bases.css" />
+    <link rel="stylesheet" href="/css/components/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
-        html, body, input, select, button {
+
+        html,
+        body,
+        input,
+        select,
+        button {
             font-family: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        :root {
+            --primary-color: #1877f2;
+            --secondary-color: #42b72a;
+            --bg-color: #f0f2f5;
+            --card-color: #ffffff;
+            --text-color: #050505;
+            --text-secondary: #65676b;
+            --border-color: #dddfe2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin-top: 13.5rem;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background-color: var(--card-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .filter-section {
+            margin-bottom: 30px;
+        }
+
+        .filter-section h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .filter-item:hover {
+            background-color: var(--bg-color);
+        }
+
+        .filter-item.active {
+            background-color: #e7f3ff;
+            color: var(--primary-color);
+        }
+
+        .filter-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .post-form {
+            background-color: var(--card-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-form-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .post-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 16px;
+            resize: none;
+            min-height: 80px;
+            margin-bottom: 15px;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .post-actions button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .post {
+            background-color: var(--card-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .post-author-info h4 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        .post-time {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .post-content h3 {
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .post-content p {
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .post-stats {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            margin: 15px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .post-actions-bar {
+            display: flex;
+            gap: 10px;
+        }
+
+        .post-action-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            border: none;
+            background-color: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: background-color 0.2s;
+        }
+
+        .post-action-btn:hover {
+            background-color: var(--bg-color);
+        }
+
+        .comments-section {
+            margin-top: 20px;
+        }
+
+        .comment-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .comment-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .comment {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comment:last-child {
+            border-bottom: none;
+        }
+
+        .comment-content {
+            flex-grow: 1;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .comment-text {
+            color: var(--text-color);
+            margin-bottom: 8px;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .comment-action {
+            cursor: pointer;
+        }
+
+        .comment-action:hover {
+            text-decoration: underline;
+        }
+
+        .right-sidebar {
+            background-color: var(--card-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .trending-section h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: var(--text-color);
+        }
+
+        .trending-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background-color: var(--bg-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .tag:hover {
+            background-color: #e4e6e9;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar,
+            .right-sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-container {
+                width: 100%;
+                margin: 0;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-color);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
         }
     </style>
 </head>
+
 <body>
     <%- include('../partials/header') %>
-    <main class="forum-page">
-        <div class="forum-header">
-            <div class="forum-title">
-                <div class="forum-logo">Forum</div>
-            </div>
-            <div class="forum-controls">
-                <div class="forum-search">
-                    <input id="forum-search" placeholder="Search" aria-label="Search" />
+        <div class="container">
+            <div class="sidebar">
+                <div class="filter-section">
+                    <h3><i class="fas fa-filter"></i> Bộ lọc tìm kiếm</h3>
+                    <div class="filter-options">
+                        <div class="filter-item active">
+                            <input type="checkbox" id="filter-all" checked>
+                            <label for="filter-all">Tất cả</label>
+                        </div>
+                        <div class="filter-item">
+                            <input type="checkbox" id="filter-male">
+                            <label for="filter-male">Nam</label>
+                        </div>
+                        <div class="filter-item">
+                            <input type="checkbox" id="filter-female">
+                            <label for="filter-female">Nữ</label>
+                        </div>
+                        <div class="filter-item">
+                            <input type="checkbox" id="filter-trend">
+                            <label for="filter-trend">Xu hướng tính dục</label>
+                        </div>
+                    </div>
                 </div>
-                <button id="create-thread" class="btn-primary">Tạo chủ đề</button>
-                <div class="user-avatar">👤</div>
+
+                <div class="filter-section">
+                    <h3><i class="fas fa-fire"></i> Bài viết nổi bật</h3>
+                    <div class="filter-options">
+                        <div class="filter-item">Tuần này</div>
+                        <div class="filter-item">Tháng này</div>
+                        <div class="filter-item">Mọi thời đại</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="post-form">
+                    <div class="post-form-header">
+                        <div class="user-avatar">ND</div>
+                        <div>
+                            <h4>Người Dùng</h4>
+                            <div class="post-time">Hôm nay</div>
+                        </div>
+                    </div>
+                    <textarea class="post-input" placeholder="Bạn đang nghĩ gì?"></textarea>
+                    <div class="post-actions">
+                        <div>
+                            <i class="fas fa-image" style="color: #45bd62; margin-right: 10px;"></i>
+                            <i class="fas fa-video" style="color: #f5533d; margin-right: 10px;"></i>
+                            <i class="fas fa-smile" style="color: #ffba00;"></i>
+                        </div>
+                        <button id="submitPost">Đăng</button>
+                    </div>
+                </div>
+
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="user-avatar" style="background-color: #e4405f;">TL</div>
+                            <div class="post-author-info">
+                                <h4>Trần Long</h4>
+                                <div class="post-time">2 giờ trước</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-ellipsis-h" style="color: var(--text-secondary); cursor: pointer;"></i>
+                    </div>
+
+                    <div class="post-content">
+                        <h3>Tiêu đề bài viết 1</h3>
+                        <p>Tìm hiểu về bài viết liên quan đến trải nghiệm đặc biệt của cộng đồng. Đây là một chủ đề rất
+                            thú vị và nhận được nhiều sự quan tâm từ mọi người trong thời gian gần đây.</p>
+                    </div>
+
+                    <div class="post-stats">
+                        <div><i class="fas fa-thumbs-up" style="color: var(--primary-color);"></i> 42</div>
+                        <div>15 bình luận • 8 chia sẻ</div>
+                    </div>
+
+                    <div class="post-actions-bar">
+                        <button class="post-action-btn">
+                            <i class="fas fa-thumbs-up"></i> Thích
+                        </button>
+                        <button class="post-action-btn">
+                            <i class="fas fa-comment"></i> Bình luận
+                        </button>
+                        <button class="post-action-btn">
+                            <i class="fas fa-share"></i> Chia sẻ
+                        </button>
+                    </div>
+
+                    <div class="comments-section">
+                        <div class="comment-form">
+                            <div class="user-avatar" style="width: 32px; height: 32px; font-size: 14px;">ND</div>
+                            <input type="text" class="comment-input" placeholder="Nhập bình luận...">
+                        </div>
+
+                        <div class="comment">
+                            <div class="user-avatar"
+                                style="width: 32px; height: 32px; font-size: 14px; background-color: #8a2be2;">MH</div>
+                            <div class="comment-content">
+                                <div class="comment-author">Minh Hằng</div>
+                                <div class="comment-text">Bài viết rất hay và ý nghĩa. Cảm ơn tác giả đã chia sẻ!</div>
+                                <div class="comment-actions">
+                                    <span class="comment-action">Thích</span>
+                                    <span class="comment-action">Phản hồi</span>
+                                    <span class="post-time">1 giờ trước</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment">
+                            <div class="user-avatar"
+                                style="width: 32px; height: 32px; font-size: 14px; background-color: #00a8ff;">VT</div>
+                            <div class="comment-content">
+                                <div class="comment-author">Văn Tú</div>
+                                <div class="comment-text">Mình cũng có trải nghiệm tương tự. Có ai muốn trao đổi thêm
+                                    không?</div>
+                                <div class="comment-actions">
+                                    <span class="comment-action">Thích</span>
+                                    <span class="comment-action">Phản hồi</span>
+                                    <span class="post-time">30 phút trước</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="user-avatar" style="background-color: #00a8ff;">AT</div>
+                            <div class="post-author-info">
+                                <h4>Anh Thư</h4>
+                                <div class="post-time">5 giờ trước</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-ellipsis-h" style="color: var(--text-secondary); cursor: pointer;"></i>
+                    </div>
+
+                    <div class="post-content">
+                        <h3>Tiêu đề bài viết 2</h3>
+                        <p>Tìm hiểu về bài viết liên quan đến trải nghiệm đặc biệt của cộng đồng với nhiều góc nhìn đa
+                            chiều và thú vị.</p>
+                    </div>
+
+                    <div class="post-stats">
+                        <div><i class="fas fa-thumbs-up" style="color: var(--primary-color);"></i> 28</div>
+                        <div>7 bình luận • 3 chia sẻ</div>
+                    </div>
+
+                    <div class="post-actions-bar">
+                        <button class="post-action-btn">
+                            <i class="fas fa-thumbs-up"></i> Thích
+                        </button>
+                        <button class="post-action-btn">
+                            <i class="fas fa-comment"></i> Bình luận
+                        </button>
+                        <button class="post-action-btn">
+                            <i class="fas fa-share"></i> Chia sẻ
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-sidebar">
+                <div class="trending-section">
+                    <h3><i class="fas fa-hashtag"></i> Chủ đề thịnh hành</h3>
+                    <div class="trending-tags">
+                        <div class="tag">#CộngĐồng</div>
+                        <div class="tag">#TrảiNghiệm</div>
+                        <div class="tag">#ChiaSẻ</div>
+                        <div class="tag">#TâmSự</div>
+                        <div class="tag">#HỗTrợ</div>
+                        <div class="tag">#KếtNối</div>
+                    </div>
+                </div>
+
+                <div class="trending-section" style="margin-top: 30px;">
+                    <h3><i class="fas fa-users"></i> Thành viên tích cực</h3>
+                    <div class="filter-options">
+                        <div class="filter-item">
+                            <div class="user-avatar" style="width: 32px; height: 32px; font-size: 14px;">TL</div>
+                            <span>Trần Long</span>
+                        </div>
+                        <div class="filter-item">
+                            <div class="user-avatar"
+                                style="width: 32px; height: 32px; font-size: 14px; background-color: #e4405f;">AT</div>
+                            <span>Anh Thư</span>
+                        </div>
+                        <div class="filter-item">
+                            <div class="user-avatar"
+                                style="width: 32px; height: 32px; font-size: 14px; background-color: #8a2be2;">MH</div>
+                            <span>Minh Hằng</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="forum-container">
-            <section class="forum-list">
-                <h2>Danh sách chủ đề</h2>
-                <div id="threads" class="threads"></div>
-
-                <div class="pagination" id="forum-pagination">
-                    <!-- pagination rendered by JS -->
-                </div>
-            </section>
-
-            <aside class="forum-sidebar">
-                <div id="thread-preview" class="thread-preview empty">
-                    <div class="placeholder">Chọn một chủ đề để xem chi tiết</div>
-                </div>
-            </aside>
-        </div>
-
-        <!-- Modal: Create Thread (frontend-only) -->
-        <div id="create-modal" class="modal hidden" role="dialog" aria-modal="true">
+        <div class="modal" id="newPostModal">
             <div class="modal-content">
-                <h3>Tạo chủ đề mới</h3>
-                <label>Tiêu đề</label>
-                <input id="new-title" />
-                <label>Nội dung</label>
-                <textarea id="new-body"></textarea>
-                <div class="modal-actions">
-                    <button id="cancel-create">Hủy</button>
-                    <button id="submit-create" class="btn-primary">Tạo</button>
+                <div class="modal-header">
+                    <h2>Tạo bài viết mới</h2>
+                    <button class="close-modal" id="closeModal">&times;</button>
+                </div>
+
+                <div class="post-form-header">
+                    <div class="user-avatar">ND</div>
+                    <div>
+                        <h4>Người Dùng</h4>
+                        <div class="post-time">Đăng với tư cách công khai</div>
+                    </div>
+                </div>
+
+                <textarea class="post-input" placeholder="Bạn đang nghĩ gì?" id="modalPostInput"
+                    style="min-height: 150px;"></textarea>
+
+                <div style="margin: 20px 0;">
+                    <h4>Thêm vào bài viết của bạn</h4>
+                    <div style="display: flex; gap: 15px; margin-top: 10px;">
+                        <button
+                            style="padding: 10px 15px; border: 1px solid var(--border-color); background: white; border-radius: 8px; cursor: pointer;">
+                            <i class="fas fa-image" style="color: #45bd62;"></i> Ảnh/Video
+                        </button>
+                        <button
+                            style="padding: 10px 15px; border: 1px solid var(--border-color); background: white; border-radius: 8px; cursor: pointer;">
+                            <i class="fas fa-user-tag" style="color: #1877f2;"></i> Gắn thẻ
+                        </button>
+                        <button
+                            style="padding: 10px 15px; border: 1px solid var(--border-color); background: white; border-radius: 8px; cursor: pointer;">
+                            <i class="fas fa-smile" style="color: #ffba00;"></i> Cảm xúc
+                        </button>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button
+                        style="padding: 10px 20px; border: 1px solid var(--border-color); background: white; border-radius: 6px; cursor: pointer;">Hủy</button>
+                    <button id="submitModalPost"
+                        style="padding: 10px 20px; background-color: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer;">Đăng</button>
                 </div>
             </div>
         </div>
-    </main>
-    <%- include('../partials/footer') %>
-    <link rel="stylesheet" href="/css/dien-dan/forum.css" />
-    <script src="/module/splide-4.1.3/dist/js/splide.min.js" defer></script>
-    <script src="/js/main.js" defer></script>
-    <script src="/js/forum.js" defer></script>
+        <%- include('../partials/footer') %>
+            <script>
+                document.getElementById('btnNewPost').addEventListener('click', function () {
+                    document.getElementById('newPostModal').style.display = 'flex';
+                });
+
+                document.getElementById('closeModal').addEventListener('click', function () {
+                    document.getElementById('newPostModal').style.display = 'none';
+                });
+
+                document.getElementById('submitModalPost').addEventListener('click', function () {
+                    const postContent = document.getElementById('modalPostInput').value;
+                    if (postContent.trim() !== '') {
+                        alert('Bài viết đã được đăng thành công!');
+                        document.getElementById('modalPostInput').value = '';
+                        document.getElementById('newPostModal').style.display = 'none';
+
+                        const mainContent = document.querySelector('.main-content');
+                        const firstPost = document.querySelector('.post-form');
+
+                        const newPost = document.createElement('div');
+                        newPost.className = 'post';
+                        newPost.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="user-avatar">ND</div>
+                            <div class="post-author-info">
+                                <h4>Người Dùng</h4>
+                                <div class="post-time">Vừa xong</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-ellipsis-h" style="color: var(--text-secondary); cursor: pointer;"></i>
+                    </div>
+                    
+                    <div class="post-content">
+                        <p>${postContent}</p>
+                    </div>
+                    
+                    <div class="post-stats">
+                        <div><i class="fas fa-thumbs-up" style="color: var(--primary-color);"></i> 0</div>
+                        <div>0 bình luận • 0 chia sẻ</div>
+                    </div>
+                    
+                    <div class="post-actions-bar">
+                        <button class="post-action-btn">
+                            <i class="fas fa-thumbs-up"></i> Thích
+                        </button>
+                        <button class="post-action-btn">
+                            <i class="fas fa-comment"></i> Bình luận
+                        </button>
+                        <button class="post-action-btn">
+                            <i class="fas fa-share"></i> Chia sẻ
+                        </button>
+                    </div>
+                `;
+
+                        mainContent.insertBefore(newPost, firstPost.nextSibling);
+                    }
+                });
+
+                document.getElementById('submitPost').addEventListener('click', function () {
+                    const postInput = document.querySelector('.post-input');
+                    const postContent = postInput.value;
+
+                    if (postContent.trim() !== '') {
+                        alert('Bài viết đã được đăng thành công!');
+                        postInput.value = '';
+
+                        const mainContent = document.querySelector('.main-content');
+                        const firstPost = document.querySelector('.post-form');
+
+                        const newPost = document.createElement('div');
+                        newPost.className = 'post';
+                        newPost.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="user-avatar">ND</div>
+                            <div class="post-author-info">
+                                <h4>Người Dùng</h4>
+                                <div class="post-time">Vừa xong</div>
+                            </div>
+                        </div>
+                        <i class="fas fa-ellipsis-h" style="color: var(--text-secondary); cursor: pointer;"></i>
+                    </div>
+                    
+                    <div class="post-content">
+                        <p>${postContent}</p>
+                    </div>
+                    
+                    <div class="post-stats">
+                        <div><i class="fas fa-thumbs-up" style="color: var(--primary-color);"></i> 0</div>
+                        <div>0 bình luận • 0 chia sẻ</div>
+                    </div>
+                    
+                    <div class="post-actions-bar">
+                        <button class="post-action-btn">
+                            <i class="fas fa-thumbs-up"></i> Thích
+                        </button>
+                        <button class="post-action-btn">
+                            <i class="fas fa-comment"></i> Bình luận
+                        </button>
+                        <button class="post-action-btn">
+                            <i class="fas fa-share"></i> Chia sẻ
+                        </button>
+                    </div>
+                `;
+
+                        mainContent.insertBefore(newPost, firstPost.nextSibling);
+                    }
+                });
+
+                const searchInput = document.querySelector('.search-box input');
+                const searchButton = document.querySelector('.search-box button');
+
+                searchButton.addEventListener('click', function () {
+                    performSearch();
+                });
+
+                searchInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+
+                function performSearch() {
+                    const searchTerm = searchInput.value;
+                    if (searchTerm.trim() !== '') {
+                        alert(`Đang tìm kiếm: "${searchTerm}"`);
+                    }
+                }
+
+                const filterItems = document.querySelectorAll('.filter-item');
+                filterItems.forEach(item => {
+                    item.addEventListener('click', function () {
+                        filterItems.forEach(i => i.classList.remove('active'));
+                        this.classList.add('active');
+
+                        const checkbox = this.querySelector('input[type="checkbox"]');
+                        if (checkbox) {
+                            checkbox.checked = !checkbox.checked;
+                        }
+                    });
+                });
+
+                const likeButtons = document.querySelectorAll('.post-action-btn');
+                likeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const icon = this.querySelector('i');
+                        if (icon.classList.contains('fa-thumbs-up')) {
+                            if (this.classList.contains('liked')) {
+                                this.classList.remove('liked');
+                                icon.style.color = 'var(--text-secondary)';
+                            } else {
+                                this.classList.add('liked');
+                                icon.style.color = 'var(--primary-color)';
+                            }
+                        } else if (icon.classList.contains('fa-comment')) {
+                            const commentInput = this.closest('.post').querySelector('.comment-input');
+                            if (commentInput) {
+                                commentInput.focus();
+                            }
+                        }
+                    });
+                });
+
+                const commentInputs = document.querySelectorAll('.comment-input');
+                commentInputs.forEach(input => {
+                    input.addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter' && this.value.trim() !== '') {
+                            const commentSection = this.closest('.comments-section');
+                            const newComment = document.createElement('div');
+                            newComment.className = 'comment';
+                            newComment.innerHTML = `
+                        <div class="user-avatar" style="width: 32px; height: 32px; font-size: 14px;">ND</div>
+                        <div class="comment-content">
+                            <div class="comment-author">Người Dùng</div>
+                            <div class="comment-text">${this.value}</div>
+                            <div class="comment-actions">
+                                <span class="comment-action">Thích</span>
+                                <span class="comment-action">Phản hồi</span>
+                                <span class="post-time">Vừa xong</span>
+                            </div>
+                        </div>
+                    `;
+
+                            commentSection.appendChild(newComment);
+                            this.value = '';
+                        }
+                    });
+                });
+
+                window.addEventListener('click', function (e) {
+                    const modal = document.getElementById('newPostModal');
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            </script>
 </body>
+
 </html>

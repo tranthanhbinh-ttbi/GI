@@ -1,5 +1,4 @@
 const { Follower } = require('../models')
-const { broadcast } = require('../controllers/realtime')
 
 async function FollowRoutes(fastify) {
   fastify.post('/api/follow-toggle', { preHandler: fastify.authenticate }, async (request) => {

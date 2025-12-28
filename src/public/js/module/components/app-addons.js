@@ -12,10 +12,9 @@ window.appAddons = () => {
     let currentBackToTopVisible;
     let currentProgress = -1;
     (() => {
-        // Initialize theme from localStorage or system preference
-        const preferredTheme = localStorage.getItem('theme') || 
+        const preferredTheme = localStorage.getItem('theme') ||
             (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        
+
         function updateBrandImages(mode) {
             const newSrc = mode === 'dark' ? '/photos/brands/gender-insights-w.png' : '/photos/brands/gender-insights.svg';
             brandImages.forEach((brandImage) => {
@@ -225,23 +224,20 @@ window.appAddons = () => {
             ticking = true;
         }
     })();
-    // Thêm function này vào bên trong window.appAddons hoặc chạy nó trong main.js
-function initMobileSidebar() {
-    // 1. Kiểm tra nếu sidebar đã tồn tại thì không tạo lại
-    if (document.getElementById('gen-mobile-sidebar')) return;
 
-    // 2. Các phần tử nguồn cần sao chép
-    const originalLogo = document.querySelector('#gen-brand');
-    const originalMenu = document.querySelector('.main-mn > ul');
-    const originalSearch = document.querySelector('#search-form');
-    const originalSocial = document.querySelector('.link-social');
-    const originalDL = document.querySelector('#dl');
-    const sidebarTrigger = document.querySelector('#sbar'); // Nút hamburger
+    function initMobileSidebar() {
+        if (document.getElementById('gen-mobile-sidebar')) return;
 
-    if (!originalMenu || !sidebarTrigger) return;
+        const originalLogo = document.querySelector('#gen-brand');
+        const originalMenu = document.querySelector('.header__main-menu > ul');
+        const originalSearch = document.querySelector('#search-form');
+        const originalSocial = document.querySelector('.header__social-media');
+        const originalDL = document.querySelector('#dl');
+        const sidebarTrigger = document.querySelector('#sbar');
 
-    // 3. Tạo cấu trúc HTML cho Sidebar
-    const sidebarHTML = `
+        if (!originalMenu || !sidebarTrigger) return;
+
+        const sidebarHTML = `
         <div id="gen-mobile-overlay"></div>
         <div id="gen-mobile-sidebar">
             <div class="ms-header">
@@ -261,127 +257,105 @@ function initMobileSidebar() {
         </div>
     `;
 
-    // Chèn Sidebar vào cuối body
-    document.body.insertAdjacentHTML('beforeend', sidebarHTML);
+        document.body.insertAdjacentHTML('beforeend', sidebarHTML);
 
-    // 4. Lấy các vùng chứa trong Sidebar mới
-    const sidebar = document.getElementById('gen-mobile-sidebar');
-    const overlay = document.getElementById('gen-mobile-overlay');
-    const closeBtn = document.getElementById('ms-close-btn');
-    
-    // 5. Clone và đưa nội dung vào
-    // Logo
-    if(originalLogo) {
-        document.querySelector('.ms-logo-area').appendChild(originalLogo.cloneNode(true));
-    }
-    
-    // Menu
-    if(originalMenu) {
-        const clonedMenu = originalMenu.cloneNode(true);
-        document.querySelector('.ms-nav-area').appendChild(clonedMenu);
-    }
+        const sidebar = document.getElementById('gen-mobile-sidebar');
+        const overlay = document.getElementById('gen-mobile-overlay');
+        const closeBtn = document.getElementById('ms-close-btn');
 
-    // Search
-    if(originalSearch) {
-        document.querySelector('.ms-search-area').appendChild(originalSearch.cloneNode(true));
-    }
+        if (originalLogo) {
+            document.querySelector('.ms-logo-area').appendChild(originalLogo.cloneNode(true));
+        }
 
-    // Social Icons
-    if(originalSocial) {
-        document.querySelector('.ms-social-area').appendChild(originalSocial.cloneNode(true));
-    }
+        if (originalMenu) {
+            const clonedMenu = originalMenu.cloneNode(true);
+            document.querySelector('.ms-nav-area').appendChild(clonedMenu);
+        }
 
-    // Dark/Light Toggle
-    if(originalDL) {
-        const clonedDL = originalDL.cloneNode(true);
-        const input = clonedDL.querySelector('input');
-        const originalInput = originalDL.querySelector('input');
-        
-        // Đổi ID để tránh trùng lặp DOM
-        if (input) {
-            input.id = 'dl-swi-mobile'; 
-            // Khi click bản mobile -> kích hoạt bản desktop (để chạy logic gốc)
-            input.addEventListener('change', (e) => {
-                if(originalInput) {
-                    originalInput.click();
-                    // Cập nhật ngay lập tức logo trong sidebar
-                    const isDark = input.checked;
+        if (originalSearch) {
+            document.querySelector('.ms-search-area').appendChild(originalSearch.cloneNode(true));
+        }
+
+        if (originalSocial) {
+            document.querySelector('.ms-social-area').appendChild(originalSocial.cloneNode(true));
+        }
+
+        if (originalDL) {
+            const clonedDL = originalDL.cloneNode(true);
+            const input = clonedDL.querySelector('input');
+            const originalInput = originalDL.querySelector('input');
+
+            if (input) {
+                input.id = 'dl-swi-mobile';
+                input.addEventListener('change', (e) => {
+                    if (originalInput) {
+                        originalInput.click();
+                        const isDark = input.checked;
+                        const mobileLogo = sidebar.querySelector('.gen-brands');
+                        if (mobileLogo) {
+                            const newSrc = isDark ? '/photos/brands/gender-insights-w.png' : '/photos/brands/gender-insights.svg';
+                            mobileLogo.src = newSrc;
+                        }
+                    }
+                });
+                if (originalInput) input.checked = originalInput.checked;
+            }
+            document.querySelector('.ms-dl-area').appendChild(clonedDL);
+        }
+
+        function toggleSidebar(show) {
+            if (show) {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                const originalInput = originalDL.querySelector('input');
+                const mobileInput = sidebar.querySelector('#dl-swi-mobile');
+                if (originalInput && mobileInput) {
+                    mobileInput.checked = originalInput.checked;
                     const mobileLogo = sidebar.querySelector('.gen-brands');
-                    if(mobileLogo) {
+                    if (mobileLogo) {
+                        const isDark = originalInput.checked;
                         const newSrc = isDark ? '/photos/brands/gender-insights-w.png' : '/photos/brands/gender-insights.svg';
                         mobileLogo.src = newSrc;
                     }
                 }
-            });
-            // Đồng bộ trạng thái ban đầu
-            if(originalInput) input.checked = originalInput.checked;
-        }
-        document.querySelector('.ms-dl-area').appendChild(clonedDL);
-    }
 
-    // 6. Xử lý sự kiện Đóng/Mở Sidebar
-    function toggleSidebar(show) {
-        if (show) {
-            sidebar.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Khóa cuộn trang
-            
-            // Cập nhật lại trạng thái darkmode và logo mỗi khi mở
-            const originalInput = originalDL.querySelector('input');
-            const mobileInput = sidebar.querySelector('#dl-swi-mobile');
-            if(originalInput && mobileInput) {
-                mobileInput.checked = originalInput.checked;
-                const mobileLogo = sidebar.querySelector('.gen-brands');
-                if(mobileLogo) {
-                    const isDark = originalInput.checked;
-                    const newSrc = isDark ? '/photos/brands/gender-insights-w.png' : '/photos/brands/gender-insights.svg';
-                    mobileLogo.src = newSrc;
+            } else {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        const mobileScrollLinks = sidebar.querySelectorAll('[data-scrolling]');
+
+        mobileScrollLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                toggleSidebar(false);
+
+                const targetSelector = link.getAttribute('data-scrolling');
+                const targetBlock = link.getAttribute('data-block') || 'start';
+                const targetElement = document.querySelector(targetSelector);
+
+                if (targetElement) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: targetBlock });
+                    }, 100);
                 }
-            }
+            });
+        });
 
-        } else {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
+        sidebarTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleSidebar(true);
+        });
+
+        closeBtn.addEventListener('click', () => toggleSidebar(false));
+        overlay.addEventListener('click', () => toggleSidebar(false));
     }
 
-    // --- BẮT ĐẦU: Code Mới Để Xử Lý Click "Liên Hệ" ---
-    // Tìm các link có data-scrolling trong sidebar mới tạo
-    const mobileScrollLinks = sidebar.querySelectorAll('[data-scrolling]');
-    
-    mobileScrollLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault(); // Ngăn chặn hành vi nhảy link mặc định
-
-            // 1. Đóng Sidebar trước
-            toggleSidebar(false);
-
-            // 2. Lấy đích đến (footer)
-            const targetSelector = link.getAttribute('data-scrolling');
-            const targetBlock = link.getAttribute('data-block') || 'start';
-            const targetElement = document.querySelector(targetSelector);
-
-            // 3. Thực hiện cuộn mượt
-            if (targetElement) {
-                // Thêm setTimeout nhỏ để sidebar kịp đóng (tùy chọn, giúp hiệu ứng mượt hơn)
-                setTimeout(() => {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: targetBlock });
-                }, 100); 
-            }
-        });
-    });
-    // --- KẾT THÚC: Code Mới ---
-
-    sidebarTrigger.addEventListener('click', (e) => {
-        e.preventDefault();
-        toggleSidebar(true);
-    });
-
-    closeBtn.addEventListener('click', () => toggleSidebar(false));
-    overlay.addEventListener('click', () => toggleSidebar(false));
-}
-
-// Gọi hàm khởi tạo
-initMobileSidebar();
+    initMobileSidebar();
 }

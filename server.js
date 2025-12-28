@@ -26,15 +26,15 @@ try {
 const app = fastify({ trustProxy: true, logger: false, connectionTimeout: 5000, bodyLimit: 1048576 * 2 })
 
 app.register(require('@fastify/compress'), {
-    global: true,
-    threshold: 2048,
-    encodings: ['br', 'gzip', 'deflate']
+  global: true,
+  threshold: 2048,
+  encodings: ['br', 'gzip']
 })
 app.register(require('@fastify/static'), {
-    root: path.join(__dirname, 'src', 'public'),
-    setHeaders: (res, path, stat) => {
-        res.setHeader('Cache-Control', 'public, max-age=31536000');
-    }
+  root: path.join(__dirname, 'src', 'public'),
+  setHeaders: (res, path, stat) => {
+    res.setHeader('Cache-Control', 'public, max-age=31536000');
+  }
 })
 
 app.register(require('@fastify/rate-limit'), {
@@ -42,24 +42,8 @@ app.register(require('@fastify/rate-limit'), {
   timeWindow: '1 minute',
   cache: 10000,
 })
-// Basic security headers and CSP
-// app.addHook('onRequest', async (request, reply) => {
-//   reply.header('X-Frame-Options', 'DENY')
-//   reply.header('X-Content-Type-Options', 'nosniff')
-//   reply.header('Referrer-Policy', 'strict-origin-when-cross-origin')
-//   reply.header('Permissions-Policy', 'geolocation=(), camera=(), microphone=(self)')
-//   const csp = [
-//     "default-src 'self'",
-//     "img-src 'self' data: lh3.googleusercontent.com platform-lookaside.fbsbx.com",
-//     "style-src 'self' 'unsafe-inline'",
-//     'connect-src \u0027self\u0027',
-//     'font-src \u0027self\u0027 data:',
-//     'object-src \u0027none\u0027',
-//     'base-uri \u0027self\u0027',
-//     'form-action \u0027self\u0027',
-//   ].join('; ')
-//   reply.header('Content-Security-Policy', csp)
-// })
+
+
 
 app.register(require('@fastify/cookie'), {
   parseOptions: {
@@ -71,7 +55,7 @@ app.register(require('@fastify/cookie'), {
 })
 app.register(require('@fastify/secure-session'), {
   key: sessionKey,
-  sodium: require('sodium-javascript'), 
+  sodium: require('sodium-javascript'),
   cookieName: 'session',
   cookie: {
     path: '/',
@@ -90,30 +74,25 @@ app.register(FPassport.initialize())
 app.register(FPassport.secureSession())
 
 app.register(require('@fastify/caching'), {
-    privacy: 'public',
-    ttl: 900000
+  privacy: 'public',
+  ttl: 900000
 });
 app.register(require('@fastify/view'), {
-    engine: {
-        ejs: require('ejs')
-    },
-    templates: path.join(__dirname, 'src', 'views'),
-    production: process.env.NODE_ENV === 'production',
-    options: {
-        cache: true,
-        useHtmlMinifier: minifier,
-        htmlMinifierOptions: {
-            collapseWhitespace: true,
-            removeComments: true,
-            minifyCSS: true,
-            minifyJS: true,
-        }
+  engine: {
+    ejs: require('ejs')
+  },
+  templates: path.join(__dirname, 'src', 'views'),
+  production: process.env.NODE_ENV === 'production',
+  options: {
+    cache: true,
+    useHtmlMinifier: minifier,
+    htmlMinifierOptions: {
+      collapseWhitespace: true,
+      removeComments: true,
+      minifyCSS: true,
+      minifyJS: true,
     }
-})
-
-app.register(require('@fastify/websocket'))
-app.get('/ws', { websocket: true }, (connection /* SocketStream */, req) => {
-  require('./src/controllers/realtime').registerSocket(connection)
+  }
 })
 
 app.register(require('./src/routes/pages-routes'))
@@ -121,7 +100,6 @@ app.register(require('./src/routes/api-routes'))
 app.register(require('./src/routes/auth-routes'))
 app.register(require('./src/routes/mail-routes'))
 app.register(require('./src/routes/follow-routes'))
-app.register(require('./src/routes/search-routes'))
 
 const start = async () => {
   try {
@@ -134,7 +112,6 @@ const start = async () => {
     const host = process.env.HOST || '0.0.0.0'
     await app.listen({ port, host })
 
-    // Extend timeouts to reduce spurious connection drops
     if (app.server) {
       app.server.keepAliveTimeout = 65_000
       app.server.headersTimeout = 66_000

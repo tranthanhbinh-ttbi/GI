@@ -1,6 +1,6 @@
 const { LRUCache } = require('lru-cache');
 
-const cacheOptions = {
+const Options = {
     user: {
         max: 10000,
         ttl: 1000 * 60 * 30,
@@ -12,8 +12,8 @@ const cacheOptions = {
     }
 };
 
-const userCache = new LRUCache(cacheOptions.user);
-const contentCache = new LRUCache(cacheOptions.content);
+const userCache = new LRUCache(Options.user);
+const contentCache = new LRUCache(Options.content);
 
 module.exports = {
     userCache,

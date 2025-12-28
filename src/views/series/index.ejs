@@ -1,959 +1,634 @@
 <!DOCTYPE html>
 <html lang="vi-VN" data-gen-themes="light">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
-    <meta name="description" content="Khám phá các series video, podcast và bài viết về giáo dục giới tính."/>
-    <meta name="author" content="Gender Insights"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:locale" content="vi_VN"/>
-    <meta property="og:title" content="Series | Gender Insights"/>
-    <meta property="og:description" content="Khám phá các series video, podcast và bài viết về giáo dục giới tính."/>
-    <meta property="og:image" content="photos/brands/gender-insights.svg"/>
-    <meta property="og:image:alt" content="Gender Insights"/>
-    <title>Gender Insights | Series</title> 
-    <link rel="shortcut icon" href="photos/brands/gender-insights.ico" type="image/x-icon"/>
-    <link rel="preload" href="/css/main.css" as="style"/>
-    <link rel="preload" href="/css/bases.css" as="style"/>
-    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff2" as="font" type="font/woff2" crossorigin/>
-    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff" as="font" type="font/woff" crossorigin/>
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" integrity="sha256-5uKiXEwbaQh9cgd2/5Vp6WmMnsUr3VZZw0a8rKnOKNU=" crossorigin="anonymous"/>
-    
-    <link rel="stylesheet" href="/css/main.css"/>
-    <link rel="stylesheet" href="/css/bases.css"/>
-    <link rel="stylesheet" href="/css/responsive.css"/>
-    <link rel="stylesheet" href="/css/trang-chu/index.css"/>
-    <link rel="stylesheet" href="/fonts/index.css"/>
-    
-    <link rel="stylesheet" href="/css/tailwind-converted.css"/>
 
-    <link rel="alternate" href="https://gender-insights.vercel.app/series" hreflang="vi-VN"/>
-    <link rel="canonical" href="https://gender-insights.vercel.app/series"/> 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <meta name="description" content="Khám phá các series video, podcast và bài viết về giáo dục giới tính." />
+    <meta name="author" content="Gender Insights" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta property="og:title" content="Series | Gender Insights" />
+    <meta property="og:description" content="Khám phá các series video, podcast và bài viết về giáo dục giới tính." />
+    <meta property="og:image" content="photos/brands/gender-insights.svg" />
+    <meta property="og:image:alt" content="Gender Insights" />
+    <title>Gender Insights | Series</title>
+    <link rel="shortcut icon" href="photos/brands/gender-insights.ico" type="image/x-icon" />
+    <link rel="preload" href="/css/components/main.css" as="style" />
+    <link rel="preload" href="/css/components/bases.css" as="style" />
+    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff" as="font" type="font/woff" crossorigin />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
+        integrity="sha256-5uKiXEwbaQh9cgd2/5Vp6WmMnsUr3VZZw0a8rKnOKNU=" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="/css/components/bases.css" />
+    <link rel="stylesheet" href="/css/components/main.css" />
+    <link rel="stylesheet" href="/fonts/index.css" />
+    <link rel="stylesheet" href="/css/series.css" />
+
+    <link rel="alternate" href="https://gender-insights.vercel.app/series" hreflang="vi-VN" />
+    <link rel="canonical" href="https://gender-insights.vercel.app/series" />
     <style>
         * {
             margin: 0;
-            padding: 0; 
+            padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-        html, body, input, select, button {
+
+        html,
+        body,
+        input,
+        select,
+        button {
             font-family: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
         }
-        /* Giúp thanh filter cuộn mượt mà trên di động */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none; 
-        }
-
-        
-        /* CSS cho bài viết lớn (Hero Slide) */
-        /* --- CSS CHO HERO SLIDE (BÀI VIẾT LỚN) --- */
-
-/* 1. Khung chứa chính của Slide */
-.slide-item {
-    position: relative;
-    width: 100%;
-    height: 280px; /* Mobile height */
-    border-radius: 16px;
-    overflow: hidden;
-}
-
-@media (min-width: 768px) {
-    .slide-item {
-        height: 450px;
-    }
-}
-
-/* 2. Ảnh nền */
-.slide-image {
-    max-width: 100%;
-    height: 100%;
-    object-fit: fill;
-    transition: transform 0.5s ease;
-}
-
-/* Thêm vào phần <style> */
-.super-sharp {
-    /* 1. Tối ưu render cho màn hình hiện đại */
-    image-rendering: -webkit-optimize-contrast; /* Cực tốt cho Chrome/Safari */
-    image-rendering: crisp-edges;
-    
-    /* 2. Hack tăng độ nét thị giác (Visual Sharpness) */
-    /* Tăng tương phản nhẹ và độ sáng để ảnh trông 'trong' hơn */
-    filter: contrast(1.05) brightness(1.02) saturate(1.05);
-    
-    /* 3. Đảm bảo ảnh không bị mờ do biến đổi 3D */
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transform: translateZ(0);
-}
-
-.slide-item:hover .slide-image {
-    transform: scale(1.05);
-}
-
-/* 3. Lớp phủ Gradient */
-.slide-gradient {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        to bottom, 
-        rgba(0,0,0,0) 40%,
-        rgba(0,0,0,0.6) 70%,
-        rgba(0,0,0,0.9) 100%
-    );
-    z-index: 1;
-}
-
-/* 4. Khu vực Tags ở trên cùng */
-.hero-slide-top-tags {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    right: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    z-index: 2;
-}
-
-.hero-slide-category-tag {
-    display: inline-block;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-.article-tag {
-    background: var(--gen-terracotta);
-}
-.postcard-tag {
-    background: #777c6d;
-}
-
-.hero-slide-category-tag--purple, 
-.hero-slide-category-tag--violet {
-    background: linear-gradient(135deg, #9b59b6, #8e44ad);
-}
-
-.hero-slide-date-tag {
-    color: #e5e7eb;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    padding: 6px 12px;
-    border-radius: 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-}
-
-/* --- 5. NỘI DUNG CHÍNH (Đã sửa đổi logic) --- */
-.hero-slide-body {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    
-    /* Logic mới: Giữ padding chuẩn, KHÔNG ép phải hay ép dưới ở khung cha */
-    padding: 1.5rem; 
-    
-    color: white;
-    text-align: left;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-/* Thống kê (View + Rating) */
-.hero-slide-stats {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 0.8rem;
-    color: #d1d5db;
-    margin-bottom: 4px;
-    
-    /* QUAN TRỌNG: Cho phép dòng này dùng 100% chiều rộng, không né nút Share */
-    width: 100%; 
-}
-
-.hero-slide-stats svg {
-    margin-right: 4px;
-}
-
-.hero-slide-rating {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-/* Tiêu đề bài viết */
-.hero-slide-title {
-    font-size: 1.25rem;
-    font-weight: 800;
-    line-height: 1.3;
-    margin: 0;
-    
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-
-    /* QUAN TRỌNG: Né nút Share bằng padding bên phải */
-    padding-right: 50px; 
-}
-
-/* Mô tả ngắn */
-.hero-slide-description {
-    font-size: 0.9rem;
-    color: #e5e7eb;
-    margin: 0;
-    
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    opacity: 0.9;
-
-    /* QUAN TRỌNG: Né nút Share bằng padding bên phải */
-    padding-right: 50px;
-}
-
-/* Responsive cho PC */
-@media (min-width: 768px) {
-    .hero-slide-top-tags {
-        top: 1.5rem; left: 2rem; right: 2rem;
-    }
-    
-    .hero-slide-body {
-        padding: 2rem;
-        padding-right: 80px; /* Chừa chỗ cho nút Share */
-    }
-
-    .hero-slide-title {
-        font-size: 2rem;
-        margin-bottom: 8px;
-        padding-right: 0; /* Reset lại padding né nút vì trên PC đã có padding cha */
-    }
-
-    .hero-slide-description {
-        -webkit-line-clamp: 2;
-        font-size: 1rem;
-        max-width: 85%;
-        padding-right: 0; /* Reset lại padding */
-    }
-}
-
-/* 6. Nút Share */
-.slide-share-button {
-    position: absolute;
-    
-    /* Vị trí nằm gọn ở góc dưới cùng */
-    bottom: 1.5rem; 
-    right: 1.5rem;
-    
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    backdrop-filter: blur(4px);
-    transition: background 0.3s;
-    z-index: 3;
-}
-
-.slide-share-button:hover {
-    background: rgba(255, 255, 255, 0.4);
-}
-
-@media (min-width: 768px) {
-    .slide-share-button {
-        bottom: 2rem;
-        right: 2rem;
-    }
-}
     </style>
-    
-    <script>
-        const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ?
-        localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); 
-        document.documentElement.setAttribute('data-gen-themes', preferredTheme);
-    </script>
 </head>
-<body class="body-styles">
 
+<body>
     <%- include('../partials/header') %>
-
-    <main>
-        <div class="container">
-
-            <section id="series-carousel" class="splide series-carousel" aria-label="Nội dung nổi bật">
-                <div class="splide__track">
-                    <ul class="splide__list">
-                        
-                        <% 
-                           // Lấy 3 bài viết mới nhất
-                           const heroPosts = (typeof posts !== 'undefined' && posts.length > 0) ? posts.slice(0, 3) : [];
-                        %>
-
-                        <% if (heroPosts.length > 0) { %>
-                            <% heroPosts.forEach(post => { %>
-                                <li class="splide__slide">
-                                    <div class="slide-item">
-                                        
-                                        <a href="/series/<%= post.slug %>" 
-                                           title="<%= post.title %>"
-                                           style="position: absolute; inset: 0; z-index: 2; cursor: pointer;">
-                                        </a>
-
-                                        <img src="<%= post.thumbnail %>" class="slide-image super-sharp" alt="<%= post.title %>" loading="eager" decoding="async"/>
-                                        
-                                        <div class="slide-gradient"></div>
-
-                                        <div class="hero-slide-top-tags">
-                                            <div class="hero-slide-category-container">
-                                                <% 
-                                                    let badgeClass = 'hero-slide-category-tag--violet';
-                                                    if (post.category === 'Podcast') badgeClass = 'postcard-tag';
-                                                    if (post.category === 'Bài Viết') badgeClass = 'article-tag';
-                                                %>
-                                                <span class="hero-slide-category-tag <%= badgeClass %>"><%= post.category %></span>
-                                            </div>
-                                            <span class="hero-slide-date-tag"><%= post.displayDate || post.date %></span>
-                                        </div>
-
-                                        <div class="hero-slide-body">
-                                            <div class="hero-slide-stats">
-                                                <span>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"></path><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"></path></svg>
-                                                </span>
-                                                <span class="hero-slide-views"><%= post.views || Math.floor(Math.random() * 1000) + 500 %> views</span>
-                                                <span class="hero-slide-separator">/</span>
-                                                <div class="hero-slide-rating">
-                                                    <div class="flex items-center">
-                                                        <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                                        <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                                        <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                                        <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                                                        <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
+        <main>
+            <div class="container">
+                <section id="series-carousel" class="splide series-carousel" aria-label="Nội dung nổi bật">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            <% const heroPosts=(typeof posts !=='undefined' && posts.length> 0) ? posts.slice(0, 3) :
+                                [];
+                                %>
+                                <% if (heroPosts.length> 0) { %>
+                                    <% heroPosts.forEach(post=> { %>
+                                        <li class="splide__slide">
+                                            <div class="slide-item">
+                                                <a href="/series/<%= post.slug %>" title="<%= post.title %>"
+                                                    style="position: absolute; inset: 0; z-index: 2; cursor: pointer;">
+                                                </a>
+                                                <img src="<%= post.thumbnail %>" class="slide-image super-sharp"
+                                                    alt="<%= post.title %>" loading="eager" decoding="async" />
+                                                <div class="slide-gradient"></div>
+                                                <div class="hero-slide-top-tags">
+                                                    <div class="hero-slide-category-container">
+                                                        <% let badgeClass='hero-slide-category-tag--violet' ; if
+                                                            (post.category==='Podcast' ) badgeClass='postcard-tag' ; if
+                                                            (post.category==='Bài Viết' ) badgeClass='article-tag' ; %>
+                                                            <span class="hero-slide-category-tag <%= badgeClass %>">
+                                                                <%= post.category %>
+                                                            </span>
                                                     </div>
-                                                    <span class="hero-slide-rating-count">(98)</span>
+                                                    <span class="hero-slide-date-tag">
+                                                        <%= post.displayDate || post.date %>
+                                                    </span>
+                                                </div>
+
+                                                <div class="hero-slide-body">
+                                                    <div class="hero-slide-stats">
+                                                        <span>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                height="16" fill="currentColor" class="bi bi-eye-fill"
+                                                                viewBox="0 0 16 16">
+                                                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0">
+                                                                </path>
+                                                                <path
+                                                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7">
+                                                                </path>
+                                                            </svg>
+                                                        </span>
+                                                        <span class="hero-slide-views">
+                                                            <%= post.views || Math.floor(Math.random() * 1000) + 500 %>
+                                                                views
+                                                        </span>
+                                                        <span class="hero-slide-separator">/</span>
+                                                        <div class="hero-slide-rating">
+                                                            <div class="flex items-center">
+                                                                <svg class="icon-sm text-yellow-400" fill="currentColor"
+                                                                    viewBox="0 0 20 20">
+                                                                    <path
+                                                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z">
+                                                                    </path>
+                                                                </svg>
+                                                                <svg class="icon-sm text-yellow-400" fill="currentColor"
+                                                                    viewBox="0 0 20 20">
+                                                                    <path
+                                                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z">
+                                                                    </path>
+                                                                </svg>
+                                                                <svg class="icon-sm text-yellow-400" fill="currentColor"
+                                                                    viewBox="0 0 20 20">
+                                                                    <path
+                                                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z">
+                                                                    </path>
+                                                                </svg>
+                                                                <svg class="icon-sm text-yellow-400" fill="currentColor"
+                                                                    viewBox="0 0 20 20">
+                                                                    <path
+                                                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z">
+                                                                    </path>
+                                                                </svg>
+                                                                <svg class="icon-sm text-gray-300" fill="currentColor"
+                                                                    viewBox="0 0 20 20">
+                                                                    <path
+                                                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z">
+                                                                    </path>
+                                                                </svg>
+                                                            </div>
+                                                            <span class="hero-slide-rating-count">(98)</span>
+                                                        </div>
+                                                    </div>
+                                                    <a href="/series/<%= post.slug %>" title="<%= post.title %>">
+                                                        <h1 class="hero-slide-title">
+                                                            <%= post.title %>
+                                                        </h1>
+                                                    </a>
+                                                    <p class="hero-slide-description">
+                                                        <%= post.description %>
+                                                    </p>
+                                                </div>
+
+                                                <div class="share-wrapper slide-share-wrapper">
+                                                    <button class="slide-share-button" title="Chia sẻ">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" viewBox="0 0 512 512">
+                                                            <path
+                                                                d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z" />
+                                                        </svg>
+                                                    </button>
+                                                    <!-- Radial Menu -->
+                                                    <div class="radial-share-menu">
+                                                        <div class="radial-backdrop"></div>
+                                                        <div class="radial-track">
+                                                            <!-- Facebook -->
+                                                            <a href="#" class="share-item" title="Facebook">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
+</svg>
+                                                            </a>
+                                                            <!-- Twitter/X -->
+                                                            <a href="#" class="share-item" title="Twitter">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter-x" viewBox="0 0 16 16">
+  <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
+</svg>
+                                                            </a>
+                                                            <!-- LinkedIn -->
+                                                            <a href="#" class="share-item" title="LinkedIn">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
+</svg>
+                                                            </a>
+                                                            <a href="#" class="share-item" title="Telegram">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telegram" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.287 5.906q-1.168.486-4.666 2.01-.567.225-.595.442c-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294q.39.01.868-.32 3.269-2.206 3.374-2.23c.05-.012.12-.026.166.016s.042.12.037.141c-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8 8 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629q.14.092.27.187c.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.4 1.4 0 0 0-.013-.315.34.34 0 0 0-.114-.217.53.53 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09"/>
+</svg>
+                                                            </a>
+                                                            <!-- Email -->
+                                                            <a href="#" class="share-item" title="Email">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+  <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
+</svg>
+                                                            </a>
+                                                            <!-- Copy Link -->
+                                                            <a href="#" class="share-item" title="Sao chép liên kết">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+</svg>
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <a href="/series/<%= post.slug %>" 
-                                           title="<%= post.title %>">
-                                           <h1 class="hero-slide-title"><%= post.title %></h1>
-                                        </a>
-                                            <p class="hero-slide-description"><%= post.description %></p>
-                                        </div>
-
-                                        <button class="slide-share-button" title="Chia sẻ">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
-                                        </button>
-                                    </div>
-                                </li>
-                            <% }) %>
-                        <% } else { %>
-                            <li class="splide__slide">
-                                <div class="slide-item">
-                                    <img src="/photos/placeholder-m6a0q.png" class="slide-image">
-                                    <div class="slide-gradient"></div>
-                                    <div class="hero-slide-body">
-                                        <h1 class="hero-slide-title">Chưa có bài viết nào</h1>
-                                    </div>
-                                </div>
-                            </li>
-                        <% } %>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- <section id="series-carousel" class="splide series-carousel" aria-label="Nội dung nổi bật">
-                <div class="splide__track">
-                    <ul class="splide__list">
-                       
-
-                        <li class="splide__slide">
-                            <div class="slide-item">
-                            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=800" class="slide-image">
-                            <div class="slide-gradient"></div>
-
-                            <div class="hero-slide-top-tags">
-                                <div class="hero-slide-category-container">
-                                        <span class="hero-slide-category-tag hero-slide-category-tag--violet">Video</span>
-                                    </div>
-                                <span class="hero-slide-date-tag">15 tháng 9, 2024</span>
-                            </div>
-
-                            <div class="hero-slide-body">
-                                <div class="hero-slide-stats">
-                                    <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"></path><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"></path></svg>
-                                    </span>
-                                    <span class="hero-slide-views">2100 views</span>
-                                    <span class="hero-slide-separator">/</span>
-                                    <div class="hero-slide-rating">
-                                        <div class="flex items-center">
-                        
-                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                            <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                        </div>
-                                        <span class="hero-slide-rating-count">(98)</span>
-                                    </div>
-                                </div>
-                                <h1 class="hero-slide-title">Hiểu Biết Về Tuổi Dậy Thì</h1>
-                                <p class="hero-slide-description">Tìm hiểu về những thay đổi tự nhiên của cơ thể và tâm lý trong giai đoạn này.</p>
-                            </div>
-                            <button class="slide-share-button" title="Chia sẻ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
-                                </button>
-                                </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="slide-item">
-                                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800" class="slide-image">
-                                <div class="slide-gradient"></div>
-
-                                <div class="hero-slide-top-tags">
-                                    <div class="hero-slide-category-container">
-                                        <span class="hero-slide-category-tag hero-slide-category-tag--purple">Podcast</span>
-                                    </div>
-                                    <span class="hero-slide-date-tag">10 tháng 9, 2024</span>
-                                </div>
-
-                                <div class="hero-slide-body">
-                                    <div class="hero-slide-stats">
-                                        <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"></path><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"></path></svg>
-                                    </span>
-                                        <span class="hero-slide-views">654 views</span>
-                                        <span class="hero-slide-separator">/</span>
-                                        <div class="hero-slide-rating">
-                                            <div class="flex items-center">
-                        
-                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                            <svg class="icon-sm text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                            <svg class="icon-sm text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z"></path></svg>
-                        
-                                                                        </div>
-                                            <span class="hero-slide-rating-count">(32)</span>
-                                        </div>
-                                    </div>
-                                    <h1 class="hero-slide-title">Phá Vỡ Định Kiến Giới Tính</h1>
-                                    <p class="hero-slide-description">Cuộc trò chuyện thẳng thắn về những quan niệm sai lầm phổ biến.</p>
-                                </div>
-
-                                <button class="slide-share-button" title="Chia sẻ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"><path d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"/></svg>
-                                </button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </section> -->
-            
-            <div class="main-layout-grid">
-
-   
-                <section class="main-column">
-
-                    <div class="filter-bar-container">
-                        <div class="filter-bar no-scrollbar">
-                            <button class="filter-button filter-button-active">
-         
-                                Tất Cả
-                            </button>
-                            <button class="filter-button filter-button-inactive">
-                  
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                                <span>Bài Viết</span>
-        
-                            </button>
-                            <button class="filter-button filter-button-inactive">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <span>Video</span>
-                            </button>
-                    
-                            <button class="filter-button filter-button-inactive">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
-                      
-                                <span>Podcast</span>
-                            </button>
-                        </div>
+                                        </li>
+                                        <% }) %>
+                                            <% } else { %>
+                                                <li class="splide__slide">
+                                                    <div class="slide-item">
+                                                        <img src="/photos/placeholder-m6a0q.png" class="slide-image">
+                                                        <div class="slide-gradient"></div>
+                                                        <div class="hero-slide-body">
+                                                            <h1 class="hero-slide-title">Chưa có bài viết nào</h1>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <% } %>
+                        </ul>
                     </div>
-
-                  
-                    <div class="mobile-filter-box">
-                        <h3 class="widget-title">Bộ Lọc Tìm Kiếm</h3>
-                        <span class="widget-decorator"></span>
-                        
-                    
-                        <form action="/series/filter" method="GET">
-                            <div class="form-group">
-                                <label for="post-date-mobile" class="form-label">Ngày đăng</label>
-                                <select id="post-date-mobile" name="post-date-range" class="form-input">
-                                    <option value="all" selected>Tất cả thời gian</option>
-                                    <option value="today">Hôm nay</option>
-                                    <option value="this_week">Tuần này</option>
-                                    <option value="this_month">Tháng này</option>
-                                    <option value="this_year">Năm này</option>
-                                    <option value="custom">Tùy chỉnh...</option>
-                                </select>
-                            </div>
-                            <div id="custom-date-range-mobile" class="custom-date-range-container" style="display: none;">
-                                <div class="marg-b0">
-                                    <label for="start-date-mobile" class="form-label">Từ ngày</label>
-                                    <input type="date" id="start-date-mobile" name="start-date" class="form-input">
-                                </div>
-                                <div class="form-group">
-                                    <label for="end-date-mobile" class="form-label">Đến ngày</label>
-                                    <input type="date" id="end-date-mobile" name="end-date" class="form-input">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="rating-mobile" class="form-label">Số sao</label>
-                                <select id="rating-mobile" name="rating" class="form-input">
-             
-                                    <option value="">Tất cả</option>
-                                    <option value="5">Từ 5 sao</option>
-                                    
-                                    <option value="4">Từ 4 sao trở lên</option>
-                                    <option value="3">Từ 3 sao trở lên</option>
-                                </select>
-                      
-                            </div>
-                            <div>
-                                <label for="sort-by-mobile" class="form-label">Sắp xếp</label>
-                              
-                                <select id="sort-by-mobile" name="sort-by" class="form-input">
-                                    <option value="newest">Mới nhất</option>
-                                    <option value="oldest">Cũ nhất</option>
-                                    <option value="most-viewed">Xem nhiều nhất</option>
-                                </select>
-                            </div>
-                        </form>
-    
-                    </div>
-                    <div class="card-grid" id="series-grid-container">
-    <%- include('../partials/card-series', { posts: posts }) %>
-</div>
-
-<div class="load-more-container">
-    <button id="btn-load-more-series" class="load-more-button" data-type="series" data-page="2" 
-            style="padding: 10px 24px; background: var(--primary-color, #6C5DD3); color: white; border-radius: 8px; border: none; cursor: pointer; font-weight: 600;">
-        Xem Thêm
-    </button>
-</div>
-
                 </section>
+                <div class="main-layout-grid">
+                    <section class="main-column">
 
-                <aside class="sidebar">
-                    
-                   
-                    <div class="sidebar-widget">
-                        <h3 class="widget-title">Bộ Lọc Tìm Kiếm</h3>
-                        <span class="widget-decorator"></span>
-                        
-                     
-                        <form action="/series/filter" method="GET">
-                            <div class="form-group">
-                                <label for="post-date" class="form-label">Ngày đăng</label>
-                                <select id="post-date" name="post-date-range" class="form-input">
-                                    <option value="all" selected>Tất cả thời gian</option>
-                                    <option value="today">Hôm nay</option>
-                                    <option value="this_week">Tuần này</option>
-                                    <option value="this_month">Tháng này</option>
-                                    <option value="this_year">Năm này</option>
-                                    <option value="custom">Tùy chỉnh...</option>
-                                </select>
+                        <div class="filter-bar-container">
+                            <div class="filter-bar no-scrollbar">
+                                <button class="filter-button filter-button-active">
+                                    Tất Cả
+                                </button>
+                                <button class="filter-button filter-button-inactive">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                                        </path>
+                                    </svg>
+                                    <span>Bài Viết</span>
+                                </button>
+                                <button class="filter-button filter-button-inactive">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span>Video</span>
+                                </button>
+                                <button class="filter-button filter-button-inactive">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                                        </path>
+                                    </svg>
+                                    <span>Podcast</span>
+                                </button>
                             </div>
-                            <div id="custom-date-range-desktop" class="custom-date-range-container" style="display: none;">
-                                <div class="marg-b0">
-                                    <label for="start-date" class="form-label">Từ ngày</label>
-                                    <input type="date" id="start-date" name="start-date" class="form-input">
-                                </div>
-                                <div class="form-group">
-                                    <label for="end-date" class="form-label">Đến ngày</label>
-                                    <input type="date" id="end-date" name="end-date" class="form-input">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="rating" class="form-label">Đánh giá bài viết</label>
-                                <select id="rating" name="rating" class="form-input">
-              
-                                    <option value="">Tất cả</option>
-                                    <option value="5">Từ 5 sao</option>
-                                    <option value="4">Từ 4 sao trở lên</option>
-                                    <option value="3">Từ 3 sao trở lên</option>
-                                </select>
-                       
-                            </div>
-                            <div>
-                                <label for="sort-by" class="form-label">Sắp xếp</label>
-                               
-                                <select id="sort-by" name="sort-by" class="form-input">
-                                    <option value="newest">Mới nhất</option>
-                                    <option value="oldest">Cũ nhất</option>
-                                    <option value="most-viewed">Xem nhiều nhất</option>
-                                </select>
-                            </div>
-                        </form>
-     
-                    </div>
-
-                    <div class="sidebar-widget">
-                        <h3 class="widget-title">Bài Viết Phổ Biến</h3>
-                        <span class="widget-decorator"></span>
-           
-                        <div class="popular-posts-list">
-    
-                            <div class="popular-post-card">
-                                <div class="popular-card-image-container">
-                                    <a href="#">
-                                        <img class="popular-card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
-                                    </a>
-                                    <!-- <span class="popular-card-category-badge">Lifestyle</span> -->
-                                    <span class="card-category-badge bg-red-600">Bài Viết</span>
-                                    <span class="popular-card-read-time-badge">
-                                        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        <span>5 Mins Read</span>
-                                    </span>
-                                </div>
-                                <div class="popular-card-content">
-                                    <div class="popular-card-meta">
-                                        <span>29 tháng 10, 2025</span>
-                                    </div>
-                                    <h4 class="popular-card-title">
-                                        <a href="#">3 Cách Đơn Giản Để Hiểu Bản Thân Hơn</a>
-                                    </h4>
-                                </div>
-                            </div>
-
-                            <div class="popular-post-card">
-                                <div class="popular-card-image-container">
-                                    <a href="#">
-                                        <img class="popular-card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
-                                    </a>
-                                    <!-- <span class="popular-card-category-badge">Productivity</span> -->
-                                    <span class="card-category-badge bg-red-600">Bài Viết</span>
-                                    <span class="popular-card-read-time-badge">
-                                        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        <span>4 Mins Read</span>
-                                    </span>
-                                </div>
-                                <div class="popular-card-content">
-                                    <div class="popular-card-meta">
-                                        <span>28 tháng 10, 2025</span>
-                                    </div>
-                                    <h4 class="popular-card-title">
-                                        <a href="#">Phương Pháp Cực Dễ Hiểu Về Mọi Người</a>
-                                    </h4>
-                                </div>
-                            </div>
-                            
-                            <div class="popular-post-card">
-                                <div class="popular-card-image-container">
-                                    <a href="#">
-                                        <img class="popular-card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
-                                    </a>
-                                    <!-- <span class="popular-card-category-badge">Tips</span> -->
-                                    <span class="card-category-badge bg-red-600">Bài Viết</span>
-                                    <span class="popular-card-read-time-badge">
-                                        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        <span>3 Mins Read</span>
-                                    </span>
-                                </div>
-                                <div class="popular-card-content">
-                                    <div class="popular-card-meta">
-                                        <span>27 tháng 10, 2025</span>
-                                    </div>
-                                    <h4 class="popular-card-title">
-                                        <a href="#">10 Điều Cần Làm Ngay Lập Tức</a>
-                                    </h4>
-                                </div>
-                            </div>
-
-                            <div class="popular-post-card">
-                                <div class="popular-card-image-container">
-                                    <a href="#">
-                                        <img class="popular-card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
-                                    </a>
-                                    <!-- <span class="popular-card-category-badge">Tips</span> -->
-                                    <span class="card-category-badge bg-red-600">Bài Viết</span>
-                                    <span class="popular-card-read-time-badge">
-                                        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        <span>3 Mins Read</span>
-                                    </span>
-                                </div>
-                                <div class="popular-card-content">
-                                    <div class="popular-card-meta">
-                                        <span>27 tháng 10, 2025</span>
-                                    </div>
-                                    <h4 class="popular-card-title">
-                                        <a href="#">10 Điều Cần Làm Ngay Lập Tức</a>
-                                    </h4>
-                                </div>
-                            </div>
-
-                            <div class="popular-post-card">
-                                <div class="popular-card-image-container">
-                                    <a href="#">
-                                        <img class="popular-card-image" src="/photos/placeholder-m6a0q.png" alt="Tiêu đề bài viết">
-                                    </a>
-                                    <!-- <span class="popular-card-category-badge">Tips</span> -->
-                                    <span class="card-category-badge bg-red-600">Bài Viết</span>
-                                    <span class="popular-card-read-time-badge">
-                                        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        <span>3 Mins Read</span>
-                                    </span>
-                                </div>
-                                <div class="popular-card-content">
-                                    <div class="popular-card-meta">
-                                        <span>27 tháng 10, 2025</span>
-                                    </div>
-                                    <h4 class="popular-card-title">
-                                        <a href="#">10 Điều Cần Làm Ngay Lập Tức</a>
-                                    </h4>
-                                </div>
-                            </div>
-
-                        </div>
                         </div>
 
-                </aside>
+
+                        <div class="card-grid" id="series-grid-container">
+                            <%- include('../partials/card-series', { posts: posts }) %>
+                        </div>
+
+                        <div class="load-more-container">
+                            <button id="btn-load-more-series" class="load-more-button" data-type="series" data-page="2"
+                                style="padding: 10px 24px; background: var(--primary-color, #6C5DD3); color: white; border-radius: 8px; border: none; cursor: pointer; font-weight: 600;">
+                                Xem Thêm
+                            </button>
+                        </div>
+
+                    </section>
+
+                    <aside class="sidebar">
+                        <div class="search-filter-box">
+                            <h3 class="widget-title">Bộ Lọc Tìm Kiếm</h3>
+                            <span class="widget-decorator"></span>
+                            <form action="/series/filter" method="GET" id="search-filter-form">
+                                <div class="filter-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">Chủ đề</label>
+                                        <select class="form-input">
+                                            <option value="all" selected>Tất cả chủ đề</option>
+                                            <option value="1">Series Mẹ Và Con Gái</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="post-date" class="form-label">Ngày đăng</label>
+                                        <select id="post-date" name="post-date-range" class="form-input">
+                                            <option value="all" selected>Tất cả thời gian</option>
+                                            <option value="today">Hôm nay</option>
+                                            <option value="this_week">Tuần này</option>
+                                            <option value="this_month">Tháng này</option>
+                                            <option value="this_year">Năm này</option>
+                                            <option value="custom">Tùy chỉnh...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="rating" class="form-label">Đánh giá</label>
+                                        <select id="rating" name="rating" class="form-input">
+                                            <option value="">Tất cả</option>
+                                            <option value="5">Từ 5 sao</option>
+                                            <option value="4">Từ 4 sao trở lên</option>
+                                            <option value="3">Từ 3 sao trở lên</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sort-by" class="form-label">Sắp xếp</label>
+                                        <select id="sort-by" name="sort-by" class="form-input">
+                                            <option value="newest">Mới nhất</option>
+                                            <option value="oldest">Cũ nhất</option>
+                                            <option value="most-viewed">Xem nhiều nhất</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="custom-date-range" class="custom-date-range-container" style="display: none;">
+                                    <div class="marg-b0">
+                                        <label for="start-date" class="form-label">Từ ngày</label>
+                                        <input type="date" id="start-date" name="start-date" class="form-input">
+                                    </div>
+                                    <div class="marg-b0">
+                                        <label for="end-date" class="form-label">Đến ngày</label>
+                                        <input type="date" id="end-date" name="end-date" class="form-input">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="sidebar-widget">
+                            <h3 class="widget-title">Bài Viết Phổ Biến</h3>
+                            <span class="widget-decorator"></span>
+                            <div class="popular-posts-list">
+                                <div class="popular-post-card">
+                                    <div class="popular-card-image-container">
+                                        <a href="#">
+                                            <img class="popular-card-image" src="/photos/placeholder-m6a0q.png"
+                                                alt="Tiêu đề bài viết">
+                                        </a>
+                                        <span class="card-category-badge bg-red-600">Bài Viết</span>
+                                        <span class="popular-card-read-time-badge">
+                                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <span>5 Mins Read</span>
+                                        </span>
+                                    </div>
+                                    <div class="popular-card-content">
+                                        <div class="popular-card-meta">
+                                            <span>29 tháng 10, 2025</span>
+                                        </div>
+                                        <h4 class="popular-card-title">
+                                            <a href="#">3 Cách Đơn Giản Để Hiểu Bản Thân Hơn</a>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <div class="popular-post-card">
+                                    <div class="popular-card-image-container">
+                                        <a href="#">
+                                            <img class="popular-card-image" src="/photos/placeholder-m6a0q.png"
+                                                alt="Tiêu đề bài viết">
+                                        </a>
+                                        <span class="card-category-badge bg-red-600">Bài Viết</span>
+                                        <span class="popular-card-read-time-badge">
+                                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <span>4 Mins Read</span>
+                                        </span>
+                                    </div>
+                                    <div class="popular-card-content">
+                                        <div class="popular-card-meta">
+                                            <span>28 tháng 10, 2025</span>
+                                        </div>
+                                        <h4 class="popular-card-title">
+                                            <a href="#">Phương Pháp Cực Dễ Hiểu Về Mọi Người</a>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <div class="popular-post-card">
+                                    <div class="popular-card-image-container">
+                                        <a href="#">
+                                            <img class="popular-card-image" src="/photos/placeholder-m6a0q.png"
+                                                alt="Tiêu đề bài viết">
+                                        </a>
+                                        <span class="card-category-badge bg-red-600">Bài Viết</span>
+                                        <span class="popular-card-read-time-badge">
+                                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <span>3 Mins Read</span>
+                                        </span>
+                                    </div>
+                                    <div class="popular-card-content">
+                                        <div class="popular-card-meta">
+                                            <span>27 tháng 10, 2025</span>
+                                        </div>
+                                        <h4 class="popular-card-title">
+                                            <a href="#">10 Điều Cần Làm Ngay Lập Tức</a>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <div class="popular-post-card">
+                                    <div class="popular-card-image-container">
+                                        <a href="#">
+                                            <img class="popular-card-image" src="/photos/placeholder-m6a0q.png"
+                                                alt="Tiêu đề bài viết">
+                                        </a>
+                                        <span class="card-category-badge bg-red-600">Bài Viết</span>
+                                        <span class="popular-card-read-time-badge">
+                                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <span>3 Mins Read</span>
+                                        </span>
+                                    </div>
+                                    <div class="popular-card-content">
+                                        <div class="popular-card-meta">
+                                            <span>27 tháng 10, 2025</span>
+                                        </div>
+                                        <h4 class="popular-card-title">
+                                            <a href="#">10 Điều Cần Làm Ngay Lập Tức</a>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <div class="popular-post-card">
+                                    <div class="popular-card-image-container">
+                                        <a href="#">
+                                            <img class="popular-card-image" src="/photos/placeholder-m6a0q.png"
+                                                alt="Tiêu đề bài viết">
+                                        </a>
+                                        <span class="card-category-badge bg-red-600">Bài Viết</span>
+                                        <span class="popular-card-read-time-badge">
+                                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <span>3 Mins Read</span>
+                                        </span>
+                                    </div>
+                                    <div class="popular-card-content">
+                                        <div class="popular-card-meta">
+                                            <span>27 tháng 10, 2025</span>
+                                        </div>
+                                        <h4 class="popular-card-title">
+                                            <a href="#">10 Điều Cần Làm Ngay Lập Tức</a>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </aside>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <%- include('../partials/footer') %>
+        <%- include('../partials/footer') %>
 
-   
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js" integrity="sha256-FZsW7H2V5X9TGinSjjwYJ419Xka27I8XPDmWryGlWtw=" crossorigin="anonymous" defer></script>
-    <script>
-document.addEventListener('DOMContentLoaded', () => {
-    // === KHỞI TẠO BIẾN ===
-    const gridContainer = document.getElementById('series-grid-container');
-    const loadMoreBtn = document.getElementById('btn-load-more-series');
-    
-    // Quản lý trạng thái bộ lọc
-    let currentFilter = {
-        type: 'series',
-        page: 1,
-        limit: 6,
-        category: 'Tất Cả',
-        dateRange: 'all',
-        startDate: '',
-        endDate: '',
-        rating: '',
-        sort: 'newest'
-    };
+            <script type="module" src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"
+                integrity="sha256-FZsW7H2V5X9TGinSjjwYJ419Xka27I8XPDmWryGlWtw=" crossorigin="anonymous" defer></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const gridContainer = document.getElementById('series-grid-container');
+                    const loadMoreBtn = document.getElementById('btn-load-more-series');
 
-    // === HÀM GỌI API ===
-    async function fetchSeries(isLoadMore = false) {
-        
-        // 1. Xác định trang cần tải (Page Logic)
-        // Nếu là Load More -> Lấy trang hiện tại + 1
-        // Nếu là Lọc (Filter) -> Reset về trang 1
-        const pageToFetch = isLoadMore ? currentFilter.page + 1 : 1;
+                    let currentFilter = {
+                        type: 'series',
+                        page: 1,
+                        limit: 6,
+                        category: 'Tất Cả',
+                        dateRange: 'all',
+                        startDate: '',
+                        endDate: '',
+                        rating: '',
+                        sort: 'newest'
+                    };
 
-        if (!isLoadMore) {
-            // Nếu là lọc mới -> Reset về trang 1 và hiển thị loading
-            gridContainer.innerHTML = '<div style="width:100%; text-align:center; padding: 40px; color: #666;">Đang tìm kiếm...</div>';
-            if (loadMoreBtn) loadMoreBtn.style.display = 'none';
-        } else {
-            // Nếu là xem thêm -> UI Loading button
-            if (loadMoreBtn) {
-                loadMoreBtn.innerHTML = 'Đang tải...';
-                loadMoreBtn.disabled = true;
-            }
-        }
+                    async function fetchSeries(isLoadMore = false) {
+                        const pageToFetch = isLoadMore ? currentFilter.page + 1 : 1;
 
-        // Tạo Query String với số trang mới (pageToFetch)
-        const params = new URLSearchParams({
-            type: currentFilter.type,
-            page: pageToFetch, // SỬ DỤNG BIẾN ĐÃ TÍNH TOÁN
-            limit: currentFilter.limit,
-            category: currentFilter.category,
-            dateRange: currentFilter.dateRange,
-            rating: currentFilter.rating,
-            sort: currentFilter.sort,
-            startDate: currentFilter.startDate,
-            endDate: currentFilter.endDate
-        });
+                        if (!isLoadMore) {
+                            gridContainer.innerHTML = '<div style="width:100%; text-align:center; padding: 40px; color: #666;">Đang tìm kiếm...</div>';
+                            if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                        } else {
+                            if (loadMoreBtn) {
+                                loadMoreBtn.innerHTML = 'Đang tải...';
+                                loadMoreBtn.disabled = true;
+                            }
+                        }
 
-        try {
-            const response = await fetch(`/api/posts?${params.toString()}`);
-            const data = await response.json();
+                        const params = new URLSearchParams({
+                            type: currentFilter.type,
+                            page: pageToFetch,
+                            limit: currentFilter.limit,
+                            category: currentFilter.category,
+                            dateRange: currentFilter.dateRange,
+                            rating: currentFilter.rating,
+                            sort: currentFilter.sort,
+                            startDate: currentFilter.startDate,
+                            endDate: currentFilter.endDate
+                        });
 
-            if (data.success) {
-                // Xử lý hiển thị
-                if (!isLoadMore) {
-                    gridContainer.innerHTML = ''; // Xóa loading text hoặc nội dung cũ
-                    if (data.total === 0) {
-                        gridContainer.innerHTML = '<div style="width:100%; text-align:center; padding: 40px;">Không tìm thấy bài viết nào phù hợp.</div>';
+                        try {
+                            const response = await fetch(`/api/posts?${params.toString()}`);
+                            const data = await response.json();
+
+                            if (data.success) {
+                                if (!isLoadMore) {
+                                    gridContainer.innerHTML = '';
+                                    if (data.total === 0) {
+                                        gridContainer.innerHTML = '<div style="width:100%; text-align:center; padding: 40px;">Không tìm thấy bài viết nào phù hợp.</div>';
+                                    }
+                                }
+
+                                gridContainer.insertAdjacentHTML('beforeend', data.html);
+
+                                currentFilter.page = pageToFetch;
+
+                                if (loadMoreBtn) {
+                                    if (data.hasMore) {
+                                        loadMoreBtn.style.display = 'block';
+                                        loadMoreBtn.innerHTML = 'Xem Thêm';
+                                        loadMoreBtn.disabled = false;
+                                    } else {
+                                        loadMoreBtn.style.display = 'none';
+                                    }
+                                }
+                            }
+                        } catch (error) {
+                            console.error(error);
+                            if (!isLoadMore) gridContainer.innerHTML = '<div style="text-align:center;">Có lỗi xảy ra. Vui lòng thử lại.</div>';
+                            if (isLoadMore && loadMoreBtn) {
+                                loadMoreBtn.innerHTML = 'Thử lại';
+                                loadMoreBtn.disabled = false;
+                            }
+                        }
                     }
-                }
 
-                // Chèn HTML mới vào
-                gridContainer.insertAdjacentHTML('beforeend', data.html);
+                    const categoryBtns = document.querySelectorAll('.filter-button');
+                    categoryBtns.forEach(btn => {
+                        btn.addEventListener('click', function () {
+                            categoryBtns.forEach(b => {
+                                b.classList.remove('filter-button-active');
+                                b.classList.add('filter-button-inactive');
+                            });
+                            this.classList.add('filter-button-active');
+                            this.classList.remove('filter-button-inactive');
 
-                // CẬP NHẬT TRẠNG THÁI PAGE SAU KHI THÀNH CÔNG
-                currentFilter.page = pageToFetch;
-
-                // Xử lý nút Load More
-                if (loadMoreBtn) {
-                    if (data.hasMore) {
-                        loadMoreBtn.style.display = 'block';
-                        loadMoreBtn.innerHTML = 'Xem Thêm';
-                        loadMoreBtn.disabled = false;
-                    } else {
-                        loadMoreBtn.style.display = 'none';
-                    }
-                }
-            }
-        } catch (error) {
-            console.error(error);
-            if(!isLoadMore) gridContainer.innerHTML = '<div style="text-align:center;">Có lỗi xảy ra. Vui lòng thử lại.</div>';
-            if(isLoadMore && loadMoreBtn) {
-                loadMoreBtn.innerHTML = 'Thử lại';
-                loadMoreBtn.disabled = false;
-            }
-        }
-    }
-
-    // === BẮT SỰ KIỆN (EVENT LISTENERS) ===
-
-    // 1. Bộ lọc Category (Các nút bấm ngang)
-    const categoryBtns = document.querySelectorAll('.filter-button');
-    categoryBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            // Xử lý visual active
-            categoryBtns.forEach(b => {
-                b.classList.remove('filter-button-active');
-                b.classList.add('filter-button-inactive');
-            });
-            this.classList.add('filter-button-active');
-            this.classList.remove('filter-button-inactive');
-
-            // Cập nhật filter và gọi API
-            // Lấy text thuần (bỏ qua icon svg nếu có)
-            const spanText = this.querySelector('span') ? this.querySelector('span').innerText : this.innerText;
-            currentFilter.category = spanText.trim();
-            fetchSeries(false);
-        });
-    });
-
-    // 2. Bộ lọc Dropdown (Ngày, Rating, Sort)
-    // Map ID của các element Desktop và Mobile
-    const filterMaps = [
-        { key: 'dateRange', ids: ['post-date', 'post-date-mobile'] },
-        { key: 'rating', ids: ['rating', 'rating-mobile'] },
-        { key: 'sort', ids: ['sort-by', 'sort-by-mobile'] }
-    ];
-
-    filterMaps.forEach(map => {
-        map.ids.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) {
-                el.addEventListener('change', (e) => {
-                    const val = e.target.value;
-                    currentFilter[map.key] = val;
-                    
-                    // Đồng bộ giá trị giữa Desktop và Mobile
-                    map.ids.forEach(syncId => {
-                        const syncEl = document.getElementById(syncId);
-                        if(syncEl) syncEl.value = val;
+                            const spanText = this.querySelector('span') ? this.querySelector('span').innerText : this.innerText;
+                            currentFilter.category = spanText.trim();
+                            fetchSeries(false);
+                        });
                     });
 
-                    // Nếu chọn Custom Date thì chưa fetch vội, đợi nhập ngày
-                    if (map.key === 'dateRange' && val === 'custom') {
-                        const customDivs = document.querySelectorAll('.custom-date-range-container');
-                        customDivs.forEach(div => div.style.display = 'block');
-                        return; 
-                    } else {
-                         const customDivs = document.querySelectorAll('.custom-date-range-container');
-                        customDivs.forEach(div => div.style.display = 'none');
+                    const filterMaps = [
+                        { key: 'dateRange', id: 'post-date' },
+                        { key: 'rating', id: 'rating' },
+                        { key: 'sort', id: 'sort-by' }
+                    ];
+
+                    filterMaps.forEach(map => {
+                        const el = document.getElementById(map.id);
+                        if (el) {
+                            el.addEventListener('change', (e) => {
+                                const val = e.target.value;
+                                currentFilter[map.key] = val;
+
+                                if (map.key === 'dateRange') {
+                                    const customDiv = document.getElementById('custom-date-range');
+                                    if (customDiv) {
+                                        customDiv.style.display = (val === 'custom') ? 'grid' : 'none';
+                                    }
+                                }
+
+                                fetchSeries(false);
+                            });
+                        }
+                    });
+
+                    const startInputs = document.querySelectorAll('input[name="start-date"]');
+                    const endInputs = document.querySelectorAll('input[name="end-date"]');
+
+                    function handleCustomDate() {
+                        let startVal = '';
+                        let endVal = '';
+                        startInputs.forEach(input => { if (input.value) startVal = input.value; });
+                        endInputs.forEach(input => { if (input.value) endVal = input.value; });
+
+                        if (startVal && endVal) {
+                            currentFilter.startDate = startVal;
+                            currentFilter.endDate = endVal;
+                            fetchSeries(false);
+                        }
                     }
 
-                    fetchSeries(false);
+                    [...startInputs, ...endInputs].forEach(input => {
+                        input.addEventListener('change', handleCustomDate);
+                    });
+
+                    if (loadMoreBtn) {
+                        loadMoreBtn.addEventListener('click', () => {
+                            fetchSeries(true);
+                        });
+                    }
+
+                    if (typeof Splide !== 'undefined') {
+                        const seriesCarousel = document.getElementById('series-carousel');
+                        if (seriesCarousel) {
+                            new Splide(seriesCarousel, {
+                                type: 'loop', perPage: 1, autoplay: true, interval: 5000,
+                                pauseOnHover: true, arrows: true, pagination: false,
+                                breakpoints: {
+                                    768: { pagination: true, arrows: false },
+                                    597: { pagination: true, arrows: false }
+                                }
+                            }).mount();
+                        }
+                    }
                 });
-            }
-        });
-    });
-
-    // 3. Xử lý Custom Date
-    const startInputs = document.querySelectorAll('input[name="start-date"]');
-    const endInputs = document.querySelectorAll('input[name="end-date"]');
-    
-    function handleCustomDate() {
-        // Lấy giá trị từ bất kỳ input nào có dữ liệu
-        let startVal = '';
-        let endVal = '';
-        startInputs.forEach(input => { if(input.value) startVal = input.value; });
-        endInputs.forEach(input => { if(input.value) endVal = input.value; });
-
-        if (startVal && endVal) {
-            currentFilter.startDate = startVal;
-            currentFilter.endDate = endVal;
-            fetchSeries(false);
-        }
-    }
-
-    [...startInputs, ...endInputs].forEach(input => {
-        input.addEventListener('change', handleCustomDate);
-    });
-
-    // 4. Sự kiện nút Xem Thêm
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', () => {
-            fetchSeries(true);
-        });
-    }
-
-    // === LOGIC SPLIDE CAROUSEL (GIỮ NGUYÊN) ===
-    if (typeof Splide !== 'undefined') {
-        const seriesCarousel = document.getElementById('series-carousel');
-        if (seriesCarousel) {
-            new Splide(seriesCarousel, {
-                type: 'loop', perPage: 1, autoplay: true, interval: 5000,
-                pauseOnHover: true, arrows: true, pagination: false,
-                breakpoints: {
-                    768: { pagination: true, arrows: false },
-                    597: { pagination: true, arrows: false }
-                }
-            }).mount();
-        }
-    }
-});
-</script>
+            </script>
+            <script src="/js/radial-menu.js"></script>
 </body>
+
 </html>

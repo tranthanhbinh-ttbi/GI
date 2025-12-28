@@ -9,46 +9,85 @@
 <body>
     <script src="https://unpkg.com/decap-cms@3.9.0/dist/decap-cms.js"></script>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
     <script>
-        CMS.registerEventListener({
-            name: 'preSave',
-            handler: ({ entry }) => {
-                const data = entry.get('data');
-                console.log("--- CHẠY SCRIPT CHUẨN HÓA MARKDOWN V3 ---");
+    // 1. HÀM TÁCH ID (Giữ nguyên logic "Thợ Săn" mạnh mẽ)
+    const getYoutubeId = (url) => {
+        if (!url) return null;
+        // Nếu đã là ID chuẩn 11 ký tự thì lấy luôn
+        if (url.length === 11 && /^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+        
+        // Regex tìm ID sau v=, youtu.be/ hoặc embed/
+        const match = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+        return match ? match[1] : null;
+    };
 
-                if (data.has('body')) {
-                    let body = data.get('body');
-                    let originalBody = body;
+    // 2. ĐĂNG KÝ WIDGET
+    CMS.registerEditorComponent({
+        id: "youtube",
+        label: "Youtube Video",
+        fields: [
+            {
+                name: "url",
+                label: "Youtube Link",
+                widget: "string",
+                hint: "Dán link Youtube vào đây (Ví dụ: https://youtu.be/AbSpXa4tPq0...)"
+            }
+        ],
+        // Pattern này khớp với link youtube.com chuẩn
+        pattern: /^<div class="youtube-embed"><iframe src="https:\/\/www\.youtube\.com\/embed\/([^"]+)" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen><\/iframe><\/div>$/,
+        
+        fromBlock: function(match) {
+            return {
+                url: match[1] ? `https://www.youtube.com/watch?v=${match[1]}` : ''
+            };
+        },
+        
+        toBlock: function(obj) {
+            const videoId = getYoutubeId(obj.url);
+            if (!videoId) return ''; 
+            
+            // QUAY VỀ DOMAIN CHUẨN: youtube.com
+            return (
+                '<div class="youtube-embed"><iframe src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>'
+            );
+        },
+        
+        toPreview: function(obj) {
+            const videoId = getYoutubeId(obj.url);
+            if (!videoId) {
+                return '<div style="padding: 10px; text-align: center; color: #666; border: 1px dashed #ccc;">⏳ Vui lòng dán link video...</div>';
+            }
 
-                    if (body) {
-                        // BƯỚC 1: Xóa khoảng trắng thừa (Fix lỗi cách dòng)
-                        // Ví dụ: * "Text" -> *"Text"
-                        body = body.replace(/\*\s+([\"“”])/g, '*$1');
-                        body = body.replace(/([\"“”])\s+\*/g, '$1*');
+            // Preview cũng dùng youtube.com
+            return (
+                '<div class="youtube-embed" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border: 1px solid #333; background: #000;">' +
+                '<iframe src="https://www.youtube.com/embed/' + videoId + '" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' +
+                '</div>'
+            );
+        }
+    });
 
-                        // BƯỚC 2: Sửa lỗi lồng ghép (Fix lỗi cái thẳng cái nghiêng)
-                        // Mục tiêu: Đưa dấu sao ra NGOÀI CÙNG để in nghiêng toàn bộ câu thoại
-                        
-                        // Case A: Tìm [Ngoặc kép][Sao] -> Đổi thành [Sao][Ngoặc kép]
-                        // Ví dụ: “*Cháu -> *“Cháu
-                        body = body.replace(/([“"'])\*/g, '*$1');
-                        
-                        // Case B: Tìm [Sao][Ngoặc kép] (ở cuối câu) -> Đổi thành [Ngoặc kép][Sao]
-                        // Lưu ý: Logic này giúp đảm bảo dấu sao luôn bao ngoài cùng.
-                        // Ví dụ: Text*” -> Text”*
-                        body = body.replace(/\*([”"'])/g, '$1*');
-
-                        // Kiểm tra xem có thay đổi gì không để báo log
-                        if (body !== originalBody) {
-                            console.log("-> Đã chuẩn hóa: Fix khoảng trắng & Đẩy dấu * ra ngoài ngoặc kép.");
-                            return data.set('body', body);
-                        }
+    // 3. EVENT LISTENER (Giữ nguyên)
+    CMS.registerEventListener({
+        name: 'preSave',
+        handler: ({ entry }) => {
+            const data = entry.get('data');
+            if (data.has('body')) {
+                let body = data.get('body');
+                let originalBody = body;
+                if (body) {
+                    body = body.replace(/\*\s+([\"“”])/g, '*$1');
+                    body = body.replace(/([\"“”])\s+\*/g, '$1*');
+                    body = body.replace(/([“"'])\*/g, '*$1');
+                    body = body.replace(/\*([”"'])/g, '$1*');
+                    if (body !== originalBody) {
+                        return data.set('body', body);
                     }
                 }
-                return data;
-            },
-        });
-    </script>
+            }
+            return data;
+        },
+    });
+</script>
 </body>
 </html>

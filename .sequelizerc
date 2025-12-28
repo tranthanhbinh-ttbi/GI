@@ -1,8 +1,7 @@
-// .sequelizerc
-const path = require('path');
+const path = require('node:path')
 
 module.exports = {
-  'config': path.resolve('src', 'config', 'config.js'), // Chúng ta sẽ tạo file này ở bước 3
+  'config': path.resolve('src', 'config', 'connect-database-config.js'),
   'models-path': path.resolve('src', 'models'),
   'seeders-path': path.resolve('src', 'seeders'),
   'migrations-path': path.resolve('src', 'migrations')

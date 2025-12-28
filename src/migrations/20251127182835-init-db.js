@@ -2,7 +2,6 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // 1. Tạo bảng Users
     await queryInterface.createTable('users', {
       id: {
         allowNull: false,
@@ -14,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING(50),
         allowNull: false
       },
-      provider_id: { // Lưu ý: underscored: true biến providerId thành provider_id
+      provider_id: {
         type: Sequelize.STRING(255),
         allowNull: false,
         unique: true
@@ -28,7 +27,7 @@ module.exports = {
         allowNull: true,
         unique: true
       },
-      avatar_url: { // underscored: true
+      avatar_url: {
         type: Sequelize.TEXT,
         allowNull: true
       },
@@ -41,11 +40,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-
-    // Thêm Index cho bảng Users
     await queryInterface.addIndex('users', ['provider']);
-
-    // 2. Tạo bảng Followers
     await queryInterface.createTable('followers', {
       id: {
         allowNull: false,
@@ -53,7 +48,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.BIGINT
       },
-      user_id: { // Foreign Key
+      user_id: {
         type: Sequelize.BIGINT,
         allowNull: false,
         unique: true,

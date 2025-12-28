@@ -1,65 +1,96 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const fm = require('front-matter');
 const MarkdownIt = require('markdown-it');
 const md = new MarkdownIt();
-const glob = require('glob');
+const { glob } = require('glob'); // glob v10+ returns promise if signal not passed, or use glob package correctly. Check version.
+// package.json says "glob": "^13.0.0" -> Sync API requires specific import or use async glob method.
+// Actually glob 13 exports { glob }.
 
-const getPosts = (collectionName) => {
+const { LRUCache } = require('lru-cache');
+
+// Initialize Cache (Max 100 items, 5 minutes TTL)
+const postCache = new LRUCache({
+    max: 100,
+    ttl: 1000 * 60 * 5,
+});
+
+/**
+ * Helper to get Vietnam Time
+ */
+function getVietnamTime() {
+    return new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" }));
+}
+
+/**
+ * Async Get Posts with Caching
+ * @param {string} collectionName - 'series' or 'news'
+ */
+const getPosts = async (collectionName) => {
+    const cacheKey = `posts-${collectionName}`;
+    if (postCache.has(cacheKey)) {
+        return postCache.get(cacheKey);
+    }
+
     const postsDirectory = path.join(process.cwd(), 'src', 'content', collectionName);
-    
-    if (!fs.existsSync(postsDirectory)){
+
+    // Check dir exists
+    try {
+        await fs.access(postsDirectory);
+    } catch {
         return [];
     }
 
-    const files = glob.sync(`${postsDirectory}/*.md`);
+    // Async Glob
+    // glob v13: const files = await glob(`${postsDirectory}/*.md`);
+    const files = await glob(`${postsDirectory.replace(/\\/g, '/')}/*.md`);
+
     const posts = [];
+    const nowVietnam = getVietnamTime();
 
-    // --- XỬ LÝ GIỜ VIỆT NAM (Quan trọng) ---
-    // 1. Lấy giờ UTC hiện tại của server
-    const nowUTC = new Date(); 
-    // 2. Cộng thêm 7 tiếng (7 * 60 phút * 60 giây * 1000 mili giây)
-    const nowVietnam = new Date(nowUTC.getTime() + (7 * 60 * 60 * 1000));
-    // ----------------------------------------
-
-    files.forEach((file) => {
+    // Read files concurrently
+    await Promise.all(files.map(async (file) => {
         try {
-            const fileContent = fs.readFileSync(file, 'utf8');
+            const fileContent = await fs.readFile(file, 'utf8');
             const parsed = fm(fileContent);
             const attributes = parsed.attributes;
-            const body = md.render(parsed.body);
-            
+            // Only render Markdown if needed for list? Usually list only needs excerpt. 
+            // But current logic renders body. We keep it for consistency.
+            const body = md.render(parsed.body || '');
+
             const postDate = new Date(attributes.date);
 
-            // LOGIC HẸN GIỜ:
-            // So sánh giờ bài viết với giờ Việt Nam hiện tại
-            // Nếu bài viết có giờ <= giờ hiện tại -> HIỆN
-            // Nếu bài viết có giờ > giờ hiện tại -> ẨN (tự động hiện khi đến giờ)
-            
+            // Logic: Compare with Vietnam Time
+            // If postDate <= now -> Show
             if (postDate <= nowVietnam) {
                 posts.push({
                     ...attributes,
                     body: body,
                     slug: path.basename(file, '.md'),
                     displayDate: postDate.toLocaleDateString('vi-VN', {
-                        day: 'numeric', 
-                        month: 'long', 
+                        day: 'numeric',
+                        month: 'long',
                         year: 'numeric'
                     }),
                     originalDate: postDate
                 });
             } else {
-                // (Tùy chọn) Log ra những bài chưa đến giờ đăng để debug
-                 console.log(`[SCHEDULED] Bài "${attributes.title}" sẽ đăng lúc ${postDate.toISOString()}`);
+                if (process.env.NODE_ENV !== 'production') {
+                    console.log(`[SCHEDULED] "${attributes.title}" @ ${postDate.toISOString()}`);
+                }
             }
-
         } catch (err) {
-            console.error(`Lỗi đọc file ${file}:`, err);
+            console.error(`Error reading file ${file}:`, err);
         }
-    });
+    }));
 
-    // Sắp xếp bài mới nhất lên đầu
-    return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    // Sort: Newest first
+    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    // Save to Cache
+    postCache.set(cacheKey, posts);
+
+    return posts;
 };
 
 module.exports = { getPosts };

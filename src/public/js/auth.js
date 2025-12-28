@@ -146,15 +146,18 @@
   }
 
   function writeStorage(key, value) {
-    try { localStorage.setItem(key, value) } catch {}
+    try { localStorage.setItem(key, value) } catch { }
   }
 
   function removeStorage(key) {
-    try { localStorage.removeItem(key) } catch {}
+    try { localStorage.removeItem(key) } catch { }
   }
 
   function closeProfileMenu() {
-    if (profileMenu?.classList.contains('active')) profileMenu.classList.remove('active')
+    if (profileMenu?.classList.contains('active')) {
+      profileMenu.classList.remove('active')
+      $('header')?.classList.remove('menu-open')
+    }
     menuScrolledDown = false
   }
 
@@ -163,11 +166,11 @@
   }
 
   function writeSession(key, value) {
-    try { sessionStorage.setItem(key, value) } catch {}
+    try { sessionStorage.setItem(key, value) } catch { }
   }
 
   function removeSession(key) {
-    try { sessionStorage.removeItem(key) } catch {}
+    try { sessionStorage.removeItem(key) } catch { }
   }
 
   function normalizeEmail(email) {
@@ -268,24 +271,11 @@
   }
   async function fetchMe() {
     try {
-      const res = await fetch('/api/me', { credentials: 'include' })
+      const res = await fetch('/login', { credentials: 'include' })
       if (!res.ok) return null
-      return await res.json()
-    } catch(error) { return null }
-  }
-
-  // NEW: Confirm handshake before fetching user data
-  async function confirmHandshake(token) {
-    if (!token) return null
-    try {
-      const res = await fetch('/api/auth/confirm-handshake', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ handshakeToken: token })
-      })
-      if (!res.ok) return null
-      return await res.json()
+      const data = await res.json()
+      if (data.code === 401) return null
+      return data
     } catch (error) { return null }
   }
 
@@ -295,7 +285,7 @@
       handleMailSyncAfterLogin(user.email)
       // Hide follow button after successful login
       followBtn?.classList.add('hidden')
-      profileAvatarImg.src = user.avatarUrl || '/photos/placeholder-m6a0q.png'
+      profileAvatarImg.src = user.avatarUrl
       dropdownAvatarImg.src = profileAvatarImg.src
       dropdownName.textContent = user.name || ''
       dropdownEmail.textContent = user.email || ''
@@ -305,7 +295,7 @@
         toast('Đăng nhập thành công')
         writeSession(LOGIN_TOAST_KEY, '1')
       }
-      connectWS()
+      // connectWS()
       // Prefill email field on home page when logged in
       if (emailInput && (accountMailOverride || user.email)) emailInput.value = accountMailOverride || user.email
     } else {
@@ -317,27 +307,27 @@
       profileContainer.classList.add('opacn')
       updateFollowUI(false, 0)
       closeProfileMenu()
-      disconnectWS()
+      // disconnectWS()
       followToggleBusy = false
     }
   }
 
-  function connectWS() {
-    if (ws) return
-    ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/ws')
-    ws.addEventListener('message', (e) => {
-      try {
-        const msg = JSON.parse(e.data)
-        if (msg.event === 'followers:update') {
-          const rawCount = Number(msg.payload?.followersCount)
-          const nextCount = Number.isFinite(rawCount) ? rawCount : 0
-          if (me) updateFollowUI(me.isFollowing, nextCount)
-        }
-      } catch {}
-    })
-    ws.addEventListener('close', () => { ws = null })
-  }
-  function disconnectWS() { if (ws) { try { ws.close() } catch {} ws = null } }
+  // function connectWS() {
+  //   if (ws) return
+  //   ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/ws')
+  //   ws.addEventListener('message', (e) => {
+  //     try {
+  //       const msg = JSON.parse(e.data)
+  //       if (msg.event === 'followers:update') {
+  //         const rawCount = Number(msg.payload?.followersCount)
+  //         const nextCount = Number.isFinite(rawCount) ? rawCount : 0
+  //         if (me) updateFollowUI(me.isFollowing, nextCount)
+  //       }
+  //     } catch {}
+  //   })
+  //   ws.addEventListener('close', () => { ws = null })
+  // }
+  // function disconnectWS() { if (ws) { try { ws.close() } catch {} ws = null } }
 
   // Follow button behavior
   followBtn?.addEventListener('click', async () => {
@@ -354,10 +344,10 @@
 
   $('#confirm-logout')?.addEventListener('click', async () => {
     try {
-      const res = await fetch('/api/logout', { 
-        method: 'POST', 
+      const res = await fetch('/logout', {
+        method: 'POST',
         credentials: 'include',
-        headers: { 'x-csrf-token': getCSRF() } 
+        headers: { 'x-csrf-token': getCSRF() }
       })
       if (res.ok) {
         setProfile(null)
@@ -371,14 +361,20 @@
   profileAvatarBtn?.addEventListener('click', (e) => {
     e.stopPropagation()
     profileMenu?.classList.toggle('active')
-    if (profileMenu?.classList.contains('active')) menuScrolledDown = false
+    const isActive = profileMenu?.classList.contains('active')
+    $('header')?.classList.toggle('menu-open', isActive)
+
+    if (isActive) menuScrolledDown = false
   })
   // Open with keyboard (Enter/Space)
   profileAvatarBtn?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
       profileMenu?.classList.toggle('active')
-      if (profileMenu?.classList.contains('active')) menuScrolledDown = false
+      const isActive = profileMenu?.classList.contains('active')
+      $('header')?.classList.toggle('menu-open', isActive)
+
+      if (isActive) menuScrolledDown = false
     }
   })
   // Open logout dialog when clicking item in dropdown
@@ -390,11 +386,17 @@
   })
   window.addEventListener('scroll', () => {
     const currentY = window.scrollY || 0
+    const isMobile = window.innerWidth <= 768
+
     if (profileMenu?.classList.contains('active')) {
-      if (currentY > lastScrollY) {
-        if (currentY - lastScrollY > 2) menuScrolledDown = true
-      } else if (currentY < lastScrollY) {
-        if (menuScrolledDown && lastScrollY - currentY > 2) closeProfileMenu()
+      if (isMobile) {
+        closeProfileMenu()
+      } else {
+        if (currentY > lastScrollY) {
+          if (currentY - lastScrollY > 2) menuScrolledDown = true
+        } else if (currentY < lastScrollY) {
+          if (menuScrolledDown && lastScrollY - currentY > 2) closeProfileMenu()
+        }
       }
     } else {
       menuScrolledDown = false
@@ -422,28 +424,28 @@
   }
 
   // Search UX
-  let aborter = null
-  async function doSuggest() {
-    const q = (searchInput.value || '').trim()
-    if (!q) { suggList.innerHTML = ''; return }
-    aborter?.abort()
-    aborter = new AbortController()
-    const url = new URL('/api/search/suggest', location.origin)
-    url.searchParams.set('q', q)
-    if (filterPage.value) url.searchParams.set('page', filterPage.value)
-    if (filterSort.value) url.searchParams.set('sort', filterSort.value)
-    try {
-      const res = await fetch(url.toString(), { signal: aborter.signal })
-      const data = await res.json()
-      suggList.innerHTML = data.suggestions.map((s) => `<div class="sugg" role="option" data-id="${s.id}" data-page="${s.page}">${s.title}</div>`).join('')
-    } catch {}
-  }
-  searchInput?.addEventListener('input', throttle(doSuggest, 150))
-  searchForm?.addEventListener('submit', (e) => { e.preventDefault(); doSuggest() })
-  suggList?.addEventListener('click', (e) => {
-    const item = e.target.closest('.sugg')
-    if (item) window.location.href = '/' + (item.dataset.page || '')
-  })
+  // let aborter = null
+  // async function doSuggest() {
+  //   const q = (searchInput.value || '').trim()
+  //   if (!q) { suggList.innerHTML = ''; return }
+  //   aborter?.abort()
+  //   aborter = new AbortController()
+  //   const url = new URL('/api/search/suggest', location.origin)
+  //   url.searchParams.set('q', q)
+  //   if (filterPage.value) url.searchParams.set('page', filterPage.value)
+  //   if (filterSort.value) url.searchParams.set('sort', filterSort.value)
+  //   try {
+  //     const res = await fetch(url.toString(), { signal: aborter.signal })
+  //     const data = await res.json()
+  //     suggList.innerHTML = data.suggestions.map((s) => `<div class="sugg" role="option" data-id="${s.id}" data-page="${s.page}">${s.title}</div>`).join('')
+  //   } catch {}
+  // }
+  // searchInput?.addEventListener('input', throttle(doSuggest, 150))
+  // searchForm?.addEventListener('submit', (e) => { e.preventDefault(); doSuggest() })
+  // suggList?.addEventListener('click', (e) => {
+  //   const item = e.target.closest('.sugg')
+  //   if (item) window.location.href = '/' + (item.dataset.page || '')
+  // })
 
   // Voice search using Web Speech API
   let rec = null
@@ -472,14 +474,14 @@
     // Check for handshake token in URL
     const urlParams = new URLSearchParams(window.location.search)
     const handshakeToken = urlParams.get('handshake')
-    
+
     if (handshakeToken) {
       // Confirm handshake first
       await confirmHandshake(handshakeToken)
       // Remove token from URL
       window.history.replaceState({}, document.title, window.location.pathname)
     }
-    
+
     // Now fetch user data
     const user = await fetchMe()
     setProfile(user || null)
@@ -493,7 +495,7 @@
         toast('Gửi mail thành công')
         clearPendingFeedback()
       }
-    } catch {}
+    } catch { }
   })
 
   // dropdownFollowStatus?.addEventListener('click', async (e) => {
@@ -535,20 +537,20 @@
     e.preventDefault()
     const email = (emailInput?.value || '').trim()
     const message = (messageInput?.value || '').trim()
-    
+
     // Validate input before proceeding
     if (!message) {
       toast('Vui lòng nhập nội dung phản hồi', 'warn')
       messageInput?.focus()
       return
     }
-    
+
     if (!email || !likelyEmail(email)) {
       toast('Vui lòng nhập địa chỉ email hợp lệ', 'warn')
       emailInput?.focus()
       return
     }
-    
+
     if (!me) {
       // Not logged in: show login and defer the send
       rememberTempMail(email)
@@ -556,7 +558,7 @@
       loginDialog?.showModal()
       return
     }
-    
+
     try {
       await sendFeedback(email || me.email || '', message)
       toast('Gửi mail thành công')

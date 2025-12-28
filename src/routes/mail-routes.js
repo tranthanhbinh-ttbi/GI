@@ -4,7 +4,6 @@ const { google } = require('googleapis');
 
 function sanitizeInput(str) {
 	if (!str || typeof str !== 'string') return ''
-	// Remove CRLF to mitigate header injection and trim whitespace
 	return str.replace(/[\r\n]+/g, ' ').trim().slice(0, 5000)
 }
 
@@ -33,7 +32,6 @@ async function createTransporter() {
 
 async function MailRoutes(fastify) {
 	const transporterPromise = createTransporter()
-
 	const preHandlers = []
 	if (process.env.NODE_ENV !== 'development') {
 		preHandlers.push(fastify.csrfProtection)
@@ -51,7 +49,6 @@ async function MailRoutes(fastify) {
 			},
 		},
 		config: { rateLimit: { max: 5, timeWindow: '1 minute' } },
-		// preHandler: [fastify.csrfProtection],
 		preHandler: preHandlers,
 	}, async (request, reply) => {
 		try {
@@ -59,7 +56,6 @@ async function MailRoutes(fastify) {
 			const safeEmail = sanitizeInput(email)
 			const safeMessage = sanitizeInput(message)
 
-			// Recipient fixed per requirement
 			const toAddress = 'genderinsights2024@gmail.com'
 			const fromAddress = process.env.MAIL_FROM
 
