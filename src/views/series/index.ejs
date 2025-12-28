@@ -45,6 +45,10 @@
             font-family: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
         }
     </style>
+    <script>
+        const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ? localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-gen-themes', preferredTheme);
+    </script>
 </head>
 
 <body>
