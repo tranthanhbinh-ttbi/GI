@@ -301,7 +301,7 @@ main {
             background: var(--gen-purp);
             border-radius: 16px;
             padding: 24px;
-            box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+            box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 48px -42px;
 
             h3 {
                 display: flex;
@@ -343,7 +343,7 @@ main {
             .act-cad {
                 background: #fff;
                 border-radius: 30px;
-                box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 20px 40px -28px rgba(0, 0, 0, 0.1);
                 overflow: hidden;
                 transition: transform 0.3s ease, box-shadow 0.3s ease;
                 display: flex;
@@ -765,6 +765,22 @@ main {
             #hro-cont {
                 >h1 {
                     max-width: 20rem;
+                    font-size: 2.35rem;
+                }
+
+                >h2 {
+                    font-size: 1.25rem;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 340px) {
+    main {
+        #containers {
+            #hro-cont {
+                >h1 {
+                    max-width: 20rem;
                     font-size: 2.15rem;
                 }
 
@@ -775,7 +791,6 @@ main {
         }
     }
 }
-
 @keyframes orbit-rotate {
     0% {
         transform: translate(-50%, -50%) rotate(0deg);
