@@ -41,10 +41,14 @@ main {
 
             >h1 {
                 position: relative;
-                max-width: 25rem;
+                /* max-width: 25rem; */
                 margin: 16px 0;
                 line-height: 4rem;
-                font-size: 3rem;
+                /* font-size: 3rem; */
+                font-size: clamp(2.25rem, 2rem + 1vw, 3rem);
+                max-width: fit-content;
+                padding-right: 20px;
+                width: fit-content;
                 font-weight: 900;
                 white-space: nowrap;
                 overflow: hidden;
@@ -65,6 +69,9 @@ main {
                 animation:
                     typing 12s steps(50) infinite,
                     blink 0.75s step-end infinite;
+            }
+            > h2 {
+                font-size: clamp(1.25rem, 1rem + 1.4vw, 1.5rem);
             }
         }
 
@@ -738,56 +745,6 @@ main {
         #containers {
             padding-bottom: 2rem;
             grid-template-columns: 1fr;
-        }
-    }
-}
-
-@media (max-width: 425px) {
-    main {
-        #containers {
-            #hro-cont {
-                >h1 {
-                    max-width: 21rem;
-                    font-size: 2.5rem;
-                }
-
-                >h2 {
-                    font-size: 1.4rem;
-                }
-            }
-        }
-    }
-}
-
-@media (max-width: 375px) {
-    main {
-        #containers {
-            #hro-cont {
-                >h1 {
-                    max-width: 20rem;
-                    font-size: 2.35rem;
-                }
-
-                >h2 {
-                    font-size: 1.25rem;
-                }
-            }
-        }
-    }
-}
-@media (max-width: 340px) {
-    main {
-        #containers {
-            #hro-cont {
-                >h1 {
-                    max-width: 20rem;
-                    font-size: 2.15rem;
-                }
-
-                >h2 {
-                    font-size: 1.21rem;
-                }
-            }
         }
     }
 }
