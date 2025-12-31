@@ -97,6 +97,7 @@ app.register(require('@fastify/view'), {
 
 app.register(require('./src/routes/pages-routes'))
 app.register(require('./src/routes/api-routes'))
+app.register(require('./src/routes/admin-auth-routes'))
 app.register(require('./src/routes/auth-routes'))
 app.register(require('./src/routes/mail-routes'))
 app.register(require('./src/routes/follow-routes'))

@@ -23,7 +23,6 @@ collections:
       - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm" }
       - { label: "Mô tả ngắn", name: "description", widget: "text" }
       - { label: "Danh mục", name: "category", widget: "select", options: ["Bài Viết", "Video", "Podcast"] }
-      - { lable: "Chủ đề", name: "topics", widget: "select"}
       - { label: "Ảnh bìa", name: "thumbnail", widget: "image" }
       - { label: "Nội dung", name: "body", widget: "markdown" }
 

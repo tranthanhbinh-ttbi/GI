@@ -10,64 +10,47 @@
     <script src="https://unpkg.com/decap-cms@3.9.0/dist/decap-cms.js"></script>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
-    // 1. HÀM TÁCH ID (Giữ nguyên logic "Thợ Săn" mạnh mẽ)
     const getYoutubeId = (url) => {
-        if (!url) return null;
-        // Nếu đã là ID chuẩn 11 ký tự thì lấy luôn
-        if (url.length === 11 && /^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
-        
-        // Regex tìm ID sau v=, youtu.be/ hoặc embed/
-        const match = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
-        return match ? match[1] : null;
+        if (!url) return '';
+        // Regex này chấp nhận các dạng: youtube.com/watch?v=ID, youtu.be/ID, embed/ID
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
+        // Nếu tìm thấy ID 11 ký tự thì trả về ID, nếu không thì trả về nguyên gốc (đề phòng người dùng nhập ID trực tiếp)
+        return (match && match[2].length === 11) ? match[2] : url;
     };
 
-    // 2. ĐĂNG KÝ WIDGET
+    // --- 2. Đăng ký thành phần Youtube ---
     CMS.registerEditorComponent({
         id: "youtube",
-        label: "Youtube Video",
-        fields: [
-            {
-                name: "url",
-                label: "Youtube Link",
-                widget: "string",
-                hint: "Dán link Youtube vào đây (Ví dụ: https://youtu.be/AbSpXa4tPq0...)"
-            }
-        ],
-        // Pattern này khớp với link youtube.com chuẩn
-        pattern: /^<div class="youtube-embed"><iframe src="https:\/\/www\.youtube\.com\/embed\/([^"]+)" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen><\/iframe><\/div>$/,
+        label: "YouTube",
+        fields: [{
+            name: 'url',
+            label: 'Youtube URL',
+            widget: 'string',
+            hint: 'Dán đường dẫn video vào đây (Ví dụ: https://www.youtube.com/watch?v=dQw4w9WgXcQ)'
+        }],
+        // Nhận diện thẻ iframe trong file markdown đã lưu
+        pattern: /^<iframe.+src="https:\/\/www\.youtube\.com\/embed\/([^"]+)".+<\/iframe>$/,
         
+        // Khi tải bài viết lên CMS: Lấy ID từ iframe và hiển thị lại dưới dạng link đầy đủ cho dễ nhìn
         fromBlock: function(match) {
             return {
-                url: match[1] ? `https://www.youtube.com/watch?v=${match[1]}` : ''
+                url: 'https://www.youtube.com/watch?v=' + match[1]
             };
         },
-        
+        // Khi lưu bài viết: Lấy URL người dùng nhập -> Tách ID -> Tạo thẻ iframe
         toBlock: function(obj) {
-            const videoId = getYoutubeId(obj.url);
-            if (!videoId) return ''; 
-            
-            // QUAY VỀ DOMAIN CHUẨN: youtube.com
-            return (
-                '<div class="youtube-embed"><iframe src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>'
-            );
+            const id = getYoutubeId(obj.url);
+            return '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + id + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
         },
-        
+        // Hiển thị preview trong lúc soạn thảo
         toPreview: function(obj) {
-            const videoId = getYoutubeId(obj.url);
-            if (!videoId) {
-                return '<div style="padding: 10px; text-align: center; color: #666; border: 1px dashed #ccc;">⏳ Vui lòng dán link video...</div>';
-            }
-
-            // Preview cũng dùng youtube.com
-            return (
-                '<div class="youtube-embed" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border: 1px solid #333; background: #000;">' +
-                '<iframe src="https://www.youtube.com/embed/' + videoId + '" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' +
-                '</div>'
-            );
+            const id = getYoutubeId(obj.url);
+            return '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
         }
     });
 
-    // 3. EVENT LISTENER (Giữ nguyên)
+    // --- 3. Sự kiện xử lý văn bản (Code cũ của bạn giữ nguyên) ---
     CMS.registerEventListener({
         name: 'preSave',
         handler: ({ entry }) => {
