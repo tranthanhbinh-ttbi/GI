@@ -1,9 +1,8 @@
-local_backend: true
 backend:
   name: github
   repo: tranthanhbinh-ttbi/GI
   branch: main
-  # base_url: https://genderinsights.vercel.app
+  base_url: https://genderinsights.vercel.app
 
 media_folder: "src/public/uploads"
 public_folder: "/uploads"

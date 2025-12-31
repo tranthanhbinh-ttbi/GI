@@ -11,10 +11,10 @@
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
     const getYoutubeId = (url) => {
-        if (!url) return '';
+        if (!url) return null; // Nếu không có url => trả về null
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
         const match = url.match(regExp);
-        return (match && match[2].length === 11) ? match[2] : url;
+        return (match && match[2].length === 11) ? match[2] : null;
     };
     CMS.registerEditorComponent({
         id: "youtube",
@@ -37,7 +37,7 @@
         },
         toPreview: function(obj) {
             const id = getYoutubeId(obj.url);
-            if (!id) return '<div style="color: #888; background: #eee; padding: 10px; border-radius: 5px; text-align: center; border: 1px dashed #ccc;">🔗 Đang chờ link YouTube...</div>';
+            if (!id) return '<div style="color: #888; background: #eee; padding: 10px; border-radius: 5px; text-align: center; border: 1px dashed #ccc;">🔗 Đang chờ dán đường dẫn Youtube...</div>';
             return '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + id + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
         }
     });
