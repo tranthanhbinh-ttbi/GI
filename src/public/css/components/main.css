@@ -1,6 +1,6 @@
 html,
 body {
-    padding: 0 0.5rem;
+    padding: 0 0.35rem;
     text-align: justify;
     background: var(--gen-body-bg);
     color: var(--gen-body-color);
