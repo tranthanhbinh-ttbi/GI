@@ -28,9 +28,12 @@
     font-size: 0.9rem;
     color: var(--gen-body-color);
     margin-bottom: 1.5rem;
-    flex-wrap: wrap;
 }
-
+@media (max-width: 768px) {
+    .post-breadcrumbs {
+        flex-wrap: wrap;
+    }
+}
 .post-breadcrumbs a {
     color: var(--gen-body-color);
     text-decoration: none;
