@@ -20,9 +20,23 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Tiêu đề", name: "title", widget: "string" }
+      - { label: "Chủ đề", name: "topic", widget: "string" }
       - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm" }
       - { label: "Mô tả ngắn", name: "description", widget: "text" }
       - { label: "Danh mục", name: "category", widget: "select", options: ["Bài Viết", "Video", "Podcast"] }
+      - { label: "Ảnh bìa", name: "thumbnail", widget: "image" }
+      - { label: "Nội dung", name: "body", widget: "markdown" }
+
+  - name: "explore"
+    label: "Trang Khám Phá"
+    folder: "src/content/explore"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Tiêu đề", name: "title", widget: "string" }
+      - { label: "Chủ đề", name: "topic", widget: "string" }
+      - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm" }
+      - { label: "Mô tả ngắn", name: "description", widget: "text" }
       - { label: "Ảnh bìa", name: "thumbnail", widget: "image" }
       - { label: "Nội dung", name: "body", widget: "markdown" }
 
