@@ -2,7 +2,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const fm = require('front-matter');
 const MarkdownIt = require('markdown-it');
-const md = new MarkdownIt();
+const md = new MarkdownIt({html: true});
 const { glob } = require('glob'); // glob v10+ returns promise if signal not passed, or use glob package correctly. Check version.
 // package.json says "glob": "^13.0.0" -> Sync API requires specific import or use async glob method.
 // Actually glob 13 exports { glob }.
