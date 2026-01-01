@@ -64,4 +64,5 @@ async function oauthAdminRoutes(fastify) {
         }
     });
 }
+
 module.exports = oauthAdminRoutes

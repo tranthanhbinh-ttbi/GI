@@ -16,5 +16,3 @@ async function FollowRoutes(fastify) {
 }
 
 module.exports = FollowRoutes
-
-

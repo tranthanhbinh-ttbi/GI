@@ -30,7 +30,7 @@ async function Pages(fastify, options) {
         return reply.viewAsync('tin-tuc/index', { Current_Page: 'tin-tuc', posts: posts });
     });
 
-    fastify.get('/tin-tuc/post/:slug', async (request, reply) => {
+    fastify.get('/tin-tuc/:slug', async (request, reply) => {
         const posts = await getPosts('news');
         const post = posts.find(p => p.slug === request.params.slug);
         if (!post) return reply.code(404).send('Not found');
