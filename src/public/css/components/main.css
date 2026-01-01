@@ -433,7 +433,7 @@ main {
         align-items: center;
     }
     .toast {
-        transform: translateY(32px);
+        transform: translateY(-20px);
     }
 
     .toast--visible {
@@ -441,7 +441,7 @@ main {
     }
 
     .toast--leaving {
-        transform: translateY(32px);
+        transform: translateY(-20px);
     }
 }
 
