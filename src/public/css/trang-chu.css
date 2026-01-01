@@ -256,7 +256,7 @@ main {
         gap: 20px;
         text-align: center;
         margin: 64px 0;
-
+        scroll-margin-top: 7rem;
         .figr {
             font-size: 37px;
             font-weight: 700;
