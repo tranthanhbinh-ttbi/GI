@@ -387,7 +387,14 @@
   window.addEventListener('scroll', () => {
     const currentY = window.scrollY || 0
     const isMobile = window.innerWidth <= 768
-
+    const toastContainer = document.getElementById('toast-container')
+    if (toastContainer) {
+        if (currentY > 50) {
+            toastContainer.classList.add('scrolled')
+        } else {
+            toastContainer.classList.remove('scrolled')
+        }
+    }
     if (profileMenu?.classList.contains('active')) {
       if (isMobile) {
         closeProfileMenu()
