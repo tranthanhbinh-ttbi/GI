@@ -427,15 +427,11 @@ main {
 @media (max-width: 640px) {
     #toast-container {
         top: 12rem;
-        /* bottom: 1.25rem; */
         right: 50%;
         transform: translateX(50%);
         width: calc(100% - 1.5rem);
         align-items: center;
     }
-    /* #toast-container.scrolled {
-        top: 4rem !important; 
-    } */
     .toast {
         transform: translateY(32px);
     }
