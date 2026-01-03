@@ -172,24 +172,21 @@
                     </li>
                 </ul>
                 <div class="header-search">
-                    <form id="search-form" class="dfx-alc-jcb" role="search" novalidate autocomplete="off">
-                        <div class="dfx-alc-jcb">
-                            <button type="submit" id="search-btn" aria-label="Search"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    viewBox="0 0 16 16">
+                    <div class="main-search">
+                        <div class="search-bar-wrapper" id="header-search-trigger"> <!-- Trigger for Modal -->
+                            <div class="search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-search" viewBox="0 0 16 16">
                                     <path
                                         d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                </svg></button>
-                            <input type="search" id="search-input" placeholder="Tìm kiếm ..." aria-label="Search" />
+                                </svg>
+                            </div>
+                            <input type="text" placeholder="Tìm kiếm..." aria-label="Tìm kiếm" readonly
+                                class="cursor-pointer">
+                            <!-- Visual cues only -->
+                            <div class="shortcut-hint">/</div>
                         </div>
-                        <button type="button" id="voice-btn" title="Voice Search" aria-label="Voice Search"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-mic-fill" viewBox="0 0 16 16">
-                                <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0z" />
-                                <path
-                                    d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5" />
-                            </svg></button>
-                    </form>
+                    </div>
                 </div>
                 <div id="toogle-sbar">
                     <button type="button" title="Side Bar" id="sbar">
@@ -202,5 +199,110 @@
                 </div>
             </nav>
             <div class="prog"></div>
+
+            <!-- Spotlight Search Modal -->
+            <div id="spotlight-overlay" class="hidden">
+                <div id="spotlight-modal">
+                    <div class="spotlight-header">
+                        <div class="search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                            </svg>
+                        </div>
+                        <input type="text" id="spotlight-input" placeholder="Nhập từ khóa để tìm kiếm..."
+                            autocomplete="off">
+
+                        <button id="spotlight-voice" class="spotlight-action-btn" title="Tìm bằng giọng nói">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5" />
+                                <path
+                                    d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5M8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3" />
+                            </svg>
+                        </button>
+                        <button id="spotlight-close" class="spotlight-action-btn" title="Close">ESC</button>
+                    </div>
+
+                    <div class="spotlight-tabs-container">
+                        <div class="spotlight-tabs">
+                            <button class="sp-tab active" data-target="sp-series">Series</button>
+                            <button class="sp-tab" data-target="sp-news">Tin tức</button>
+                            <button class="sp-tab" data-target="sp-explore">Khám phá</button>
+                        </div>
+
+                        <!-- Detailed Filters -->
+                        <div class="spotlight-filters-detail">
+                            <!-- Series Filters -->
+                            <div class="sp-filter-group" id="sp-series">
+                                <select class="sp-select">
+                                    <option value="">Chủ đề</option>
+                                    <option value="tech">Công nghệ</option>
+                                    <option value="life">Đời sống</option>
+                                </select>
+                                <input type="text" class="sp-input-date" placeholder="Ngày đăng"
+                                    onfocus="(this.type='date')" onblur="(this.type='text')">
+                                <select class="sp-select">
+                                    <option value="">Đánh giá</option>
+                                    <option value="5">5 Sao</option>
+                                    <option value="4">> 4 Sao</option>
+                                </select>
+                                <select class="sp-select">
+                                    <option value="newest">Mới nhất</option>
+                                    <option value="popular">Phổ biến</option>
+                                </select>
+                            </div>
+
+                            <!-- News Filters -->
+                            <div class="sp-filter-group hidden" id="sp-news">
+                                <select class="sp-select">
+                                    <option value="">Nguồn tin</option>
+                                    <option value="official">Chính thức</option>
+                                    <option value="community">Cộng đồng</option>
+                                </select>
+                                <input type="text" class="sp-input-date" placeholder="Ngày đăng"
+                                    onfocus="(this.type='date')" onblur="(this.type='text')">
+                                <select class="sp-select">
+                                    <option value="newest">Mới nhất</option>
+                                    <option value="related">Liên quan</option>
+                                </select>
+                            </div>
+
+                            <!-- Explore Filters -->
+                            <div class="sp-filter-group hidden" id="sp-explore">
+                                <input type="text" class="sp-input-text" placeholder="Tác giả">
+                                <input type="text" class="sp-input-date" placeholder="Ngày đăng"
+                                    onfocus="(this.type='date')" onblur="(this.type='text')">
+                                <select class="sp-select">
+                                    <option value="">Đánh giá</option>
+                                    <option value="5">5 Sao</option>
+                                    <option value="4">> 4 Sao</option>
+                                </select>
+                                <select class="sp-select">
+                                    <option value="newest">Mới nhất</option>
+                                    <option value="popular">Phổ biến</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spotlight-body">
+                        <!-- Dynamic Results Here -->
+                        <div id="spotlight-results">
+                            <!-- Helper / Initial State -->
+                            <div class="sp-helper-text">Nhập từ khóa để tìm kiếm nội dung...</div>
+                        </div>
+                    </div>
+
+                    <div class="spotlight-footer">
+
+                        <div class="sp-shortcut">
+                            <span>esc</span> để đóng
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 </header>

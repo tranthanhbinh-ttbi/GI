@@ -34,8 +34,7 @@ body {
     gap: 0.5rem;
 }
 
-button,
-input[type="search"] {
+button, #header-search-trigger input, #gen-mobile-sidebar .ms-search-area input {
     outline: none;
     border: none;
     background: none;

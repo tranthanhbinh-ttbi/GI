@@ -230,7 +230,7 @@ window.appAddons = () => {
 
         const originalLogo = document.querySelector('#gen-brand');
         const originalMenu = document.querySelector('.header__main-menu > ul');
-        const originalSearch = document.querySelector('#search-form');
+        const originalSearch = document.querySelector('.main-search');
         const originalSocial = document.querySelector('.header__social-media');
         const originalDL = document.querySelector('#dl');
         const sidebarTrigger = document.querySelector('#sbar');
@@ -248,7 +248,7 @@ window.appAddons = () => {
             </div>
             <div class="ms-body">
                 <nav class="ms-nav-area"></nav>
-                <div class="ms-search-area"></div>
+                <div class="ms-search-area" style="padding: 15px;"></div>
             </div>
             <div class="ms-footer">
                 <div class="ms-social-area"></div>
@@ -273,7 +273,10 @@ window.appAddons = () => {
         }
 
         if (originalSearch) {
-            document.querySelector('.ms-search-area').appendChild(originalSearch.cloneNode(true));
+            const clonedSearch = originalSearch.cloneNode(true);
+            const trigger = clonedSearch.querySelector('#header-search-trigger');
+            if (trigger) trigger.id = 'mobile-search-trigger'; // Avoid duplicate ID
+            document.querySelector('.ms-search-area').appendChild(clonedSearch);
         }
 
         if (originalSocial) {
