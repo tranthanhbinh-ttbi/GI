@@ -16,7 +16,7 @@
     "@fastify/websocket": "^11.2.0",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
-    "eta": "^4.0.1",
+    "eta": "^4.5.0",
     "fastify": "^5.6.1",
     "fastify-websocket": "^4.2.2",
     "front-matter": "^4.0.2",
