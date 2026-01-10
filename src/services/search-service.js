@@ -31,6 +31,10 @@ class SearchService {
     async init() {
         console.log('[SearchService] Initializing search index...');
         const { default: chokidar } = await import('chokidar');
+        if (!chokidar || typeof chokidar.watch !== 'function') {
+            console.error('[SearchService] Error: Failed to load chokidar or .watch function is missing.');
+            return;
+        }
         // Khởi tạo watcher
         const watcher = chokidar.watch(this.contentDir, {
             ignored: /(^|[\/\\])\../,
