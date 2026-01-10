@@ -1,5 +1,5 @@
 const { Document } = require('flexsearch');
-const chokidar = require('chokidar');
+//const chokidar = require('chokidar');
 const fs = require('fs');
 const path = require('path');
 const frontMatter = require('front-matter');
@@ -30,7 +30,7 @@ class SearchService {
      */
     async init() {
         console.log('[SearchService] Initializing search index...');
-        
+        const { default: chokidar } = await import('chokidar');
         // Khởi tạo watcher
         const watcher = chokidar.watch(this.contentDir, {
             ignored: /(^|[\/\\])\../,
