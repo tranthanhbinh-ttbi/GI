@@ -1,51 +1,125 @@
-const { getPosts } = require('../utils/contentLoader');
+const searchService = require('../services/search-service');
+const { Notification } = require('../models');
+
 
 async function Pages(fastify, options) {
-    const INITIAL_LIMIT = 6;
+    
+    // --- 1. Trang Chủ ---
     fastify.get('/', { config: { cache: true } }, async (request, reply) => {
-        return reply.viewAsync('trang-chu/index', { Current_Page: 'trang-chu' });
+        // Lấy 10 bài mới nhất bất kể danh mục để hiển thị (nếu cần)
+        const result = searchService.search('', 1, 10);
+        return reply.viewAsync('trang-chu/index', { 
+            Current_Page: 'trang-chu',
+            posts: result.data 
+        });
     });
 
-    fastify.get('/series', async (request, reply) => {
-        reply.header('Cache-Control', 'public, max-age=0, s-maxage=60');
-        const allPosts = await getPosts('series');
-        const posts = allPosts.slice(0, INITIAL_LIMIT);
-        return reply.viewAsync('series/index', { Current_Page: 'series', posts: posts });
-    });
+    // --- 2. Các Trang Danh Sách (Listing Pages) ---
+    // Cấu hình mapping giữa URL và Loại bài viết (Type) trong SearchService
+    const listRoutes = [
+        { path: '/series', template: 'series/index', pageName: 'series', type: 'series' },
+        { path: '/kham-pha', template: 'kham-pha/index', pageName: 'kham-pha', type: 'explore' },
+        { path: '/tin-tuc', template: 'tin-tuc/index', pageName: 'tin-tuc', type: 'news' },
+        // 'su-kien' và 'dien-dan' có thể chưa có content type tương ứng, tạm thời để trống type
+        { path: '/su-kien', template: 'su-kien/index', pageName: 'su-kien', type: 'event' },
+        { path: '/dien-dan', template: 'dien-dan/index', pageName: 'dien-dan', type: null },
+        { path: '/thong-bao', template: 'thong-bao/index', pageName: 'thong-bao', type: null },
+    ];
 
-    fastify.get('/series/:slug', async (request, reply) => {
-        const posts = await getPosts('series');
-        const post = posts.find(p => p.slug === request.params.slug);
+    for (const route of listRoutes) {
+        fastify.get(route.path, async (request, reply) => {
+            let posts = [];
+            // Nếu có type, lấy dữ liệu từ SearchService
+            if (route.type) {
+                const result = searchService.search('', 1, 12, { type: route.type });
+                posts = result.data;
+            } else if (route.pageName === 'dien-dan') {
+                // Trang diễn đàn có thể cần logic riêng hoặc query 'all'
+                // Tạm thời lấy bài mới nhất
+                const result = searchService.search('', 1, 12);
+                posts = result.data;
+            } else if (route.pageName === 'thong-bao') {
+                // Fetch notifications from DB
+                try {
+                    const notifications = await Notification.findAll({
+                        order: [['createdAt', 'DESC']],
+                        limit: 50 // Limit to last 50 notifications
+                    });
+                    
+                    return reply.viewAsync(route.template, { 
+                        Current_Page: route.pageName,
+                        notifications: notifications,
+                        popularPosts: [] // Sidebar might not be needed or fetch if desired
+                    });
+                } catch (err) {
+                    console.error('Error fetching notifications:', err);
+                    posts = []; // Fallback
+                }
+            }
+
+            // Lấy 5 bài viết phổ biến cho Sidebar
+            // Context-aware: Chỉ lấy bài phổ biến thuộc cùng Type với trang hiện tại
+            // Nếu type null (ví dụ trang chủ/diễn đàn), có thể để trống để lấy tất cả hoặc logic khác
+            const popularFilter = { sort: 'popular' };
+            if (route.type) {
+                popularFilter.type = route.type;
+            }
+
+            const popularData = searchService.search('', 1, 5, popularFilter);
+            const popularPosts = popularData.data;
+
+            return reply.viewAsync(route.template, { 
+                Current_Page: route.pageName,
+                posts: posts,
+                popularPosts: popularPosts
+            });
+        });
+    }
+
+    // --- 3. Các Trang Chi Tiết (Detail Pages - Dynamic Routes) ---
+    
+    // Helper function để xử lý render chi tiết
+    const renderPostDetail = async (slug, template, pageName, req, rep) => {
+        const post = searchService.getPostBySlug(slug);
 
         if (!post) {
-            return reply.code(404).send('Bài viết không tìm thấy.');
+            // Nếu không tìm thấy hoặc chưa đến giờ đăng -> 404
+            return rep.callNotFound();
         }
-        return reply.viewAsync('series/post', { Current_Page: 'series-post', post: post, posts: posts });
-    });
 
-    fastify.get('/tin-tuc', async (request, reply) => {
-        reply.header('Cache-Control', 'public, max-age=0, s-maxage=60');
-        const allPosts = await getPosts('news');
-        const posts = allPosts.slice(0, INITIAL_LIMIT);
-        return reply.viewAsync('tin-tuc/index', { Current_Page: 'tin-tuc', posts: posts });
-    });
+        // Lấy bài viết liên quan cho Sidebar
+        const related = searchService.getRelatedPosts(slug, {
+            category: post.category,
+            topic: post.topic,
+            author: post.author
+        }, 5);
 
-    fastify.get('/tin-tuc/:slug', async (request, reply) => {
-        const posts = await getPosts('news');
-        const post = posts.find(p => p.slug === request.params.slug);
-        if (!post) return reply.code(404).send('Not found');
-        return reply.viewAsync('tin-tuc/post', { Current_Page: 'tin-tuc-post', post: post });
-    });
-
-    const staticRoutes = [
-        { path: '/kham-pha', template: 'kham-pha/index', pageName: 'kham-pha' },
-        { path: '/su-kien', template: 'su-kien/index', pageName: 'su-kien' },
-        { path: '/dien-dan', template: 'dien-dan/index', pageName: 'dien-dan' },
-    ];
-    staticRoutes.forEach(route => {
-        fastify.get(route.path, async (request, reply) => {
-            return reply.viewAsync(route.template, { Current_Page: route.pageName });
+        return rep.viewAsync(template, {
+            Current_Page: pageName,
+            post: post,
+            posts: related // Sidebar trong post.ejs dùng biến 'posts' để loop bài liên quan
         });
+    };
+
+    // Route cho Series
+    fastify.get('/series/:slug', async (request, reply) => {
+        return renderPostDetail(request.params.slug, 'series/post', 'series', request, reply);
+    });
+
+    // Route cho Tin Tức
+    fastify.get('/tin-tuc/:slug', async (request, reply) => {
+        // Lưu ý: View tin tức có thể là 'tin-tuc/post' hoặc dùng chung layout
+        return renderPostDetail(request.params.slug, 'tin-tuc/post', 'tin-tuc', request, reply);
+    });
+
+    // Route cho Khám Phá
+    fastify.get('/kham-pha/:slug', async (request, reply) => {
+        return renderPostDetail(request.params.slug, 'kham-pha/post', 'kham-pha', request, reply);
+    });
+    
+    // Route cho Sự Kiện (nếu có bài chi tiết)
+    fastify.get('/su-kien/:slug', async (request, reply) => {
+        return renderPostDetail(request.params.slug, 'su-kien/post', 'su-kien', request, reply);
     });
 }
 

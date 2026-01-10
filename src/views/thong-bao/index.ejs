@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi-VN" data-gen-themes=light>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>Thông báo | Gender Insights</title>
+    <link rel="preconnect" href="https://genderinsights.vercel.app" crossorigin />
+    <link rel="shortcut icon" href="https://genderinsights.vercel.app/photos/brands/gender-insights.ico"
+        type="image/x-icon" />
+    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/fonts/index.css" />
+    <link rel="stylesheet" href="/css/components/bases.css" />
+    <link rel="stylesheet" href="/css/components/main.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/thong-bao.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body,
+        input,
+        select,
+        button {
+            font-family: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+        }
+    </style>
+    <script>
+        const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ? localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-gen-themes', preferredTheme);
+    </script>
+</head>
+
+<body>
+    <%- include('../partials/header') %>
+
+        <main class="container notification-page">
+            <div class="notif-header">
+                <div class="notif-title-group">
+                    <h1>Thông báo</h1>
+                    <span class="notif-count">Bạn có <%= notifications.length %> thông báo</span>
+                </div>
+                <div class="notif-header-actions">
+                    <button class="delete-selected-btn" id="deleteSelectedBtn" style="display: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd"
+                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                        </svg>
+                        Xóa đã chọn
+                    </button>
+                    <!-- <button class="mark-read-btn">Đánh dấu tất cả là đã đọc</button> -->
+                </div>
+            </div>
+
+            <div class="notif-toolbar">
+                <label class="select-all-container">
+                    <input type="checkbox" id="selectAll">
+                    <span>Chọn tất cả</span>
+                </label>
+            </div>
+
+            <% 
+                function timeSince(date) {
+                    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+                    let interval = seconds / 31536000;
+                    if (interval > 1) return Math.floor(interval) + " năm trước";
+                    interval = seconds / 2592000;
+                    if (interval > 1) return Math.floor(interval) + " tháng trước";
+                    interval = seconds / 86400;
+                    if (interval > 1) return Math.floor(interval) + " ngày trước";
+                    interval = seconds / 3600;
+                    if (interval > 1) return Math.floor(interval) + " giờ trước";
+                    interval = seconds / 60;
+                    if (interval > 1) return Math.floor(interval) + " phút trước";
+                    return "Vừa xong";
+                }
+
+                // Group notifications by Date (Simple logic: Today, Yesterday, Older)
+                const groups = { today: [], yesterday: [], older: [] };
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+                const yesterday = new Date(today - 86400000).getTime();
+
+                notifications.forEach(n => {
+                    const time = new Date(n.createdAt).getTime();
+                    if (time >= today) groups.today.push(n);
+                    else if (time >= yesterday) groups.yesterday.push(n);
+                    else groups.older.push(n);
+                });
+            %>
+
+            <% if (notifications.length === 0) { %>
+                <div class="notif-empty" style="text-align: center; padding: 40px; color: #666;">
+                    <p>Chưa có thông báo nào.</p>
+                </div>
+            <% } %>
+
+            <% if (groups.today.length > 0) { %>
+            <div class="notif-group">
+                <h3 class="notif-group-title">Hôm nay</h3>
+                <div class="notif-list">
+                    <% groups.today.forEach(n => { %>
+                        <%- include('item', { n: n, timeSince: timeSince }) %>
+                    <% }) %>
+                </div>
+            </div>
+            <% } %>
+
+            <% if (groups.yesterday.length > 0) { %>
+            <div class="notif-group">
+                <h3 class="notif-group-title">Hôm qua</h3>
+                <div class="notif-list">
+                    <% groups.yesterday.forEach(n => { %>
+                        <%- include('item', { n: n, timeSince: timeSince }) %>
+                    <% }) %>
+                </div>
+            </div>
+            <% } %>
+
+            <% if (groups.older.length > 0) { %>
+            <div class="notif-group">
+                <h3 class="notif-group-title">Cũ hơn</h3>
+                <div class="notif-list">
+                    <% groups.older.forEach(n => { %>
+                        <%- include('item', { n: n, timeSince: timeSince }) %>
+                    <% }) %>
+                </div>
+            </div>
+            <% } %>
+
+        </main>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const selectAllCheckbox = document.getElementById('selectAll');
+                const notifCheckboxes = document.querySelectorAll('.notif-checkbox');
+                const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+
+                if (selectAllCheckbox) {
+                    selectAllCheckbox.addEventListener('change', function () {
+                        const isChecked = this.checked;
+                        notifCheckboxes.forEach(cb => {
+                            cb.checked = isChecked;
+                            toggleSelectedClass(cb);
+                        });
+                        toggleDeleteButton();
+                    });
+                }
+
+                if (notifCheckboxes) {
+                    notifCheckboxes.forEach(cb => {
+                        cb.addEventListener('change', function () {
+                            toggleSelectedClass(this);
+                            toggleDeleteButton();
+                            if (!this.checked) selectAllCheckbox.checked = false;
+                        });
+                    });
+                }
+
+                function toggleSelectedClass(checkbox) {
+                    const item = checkbox.closest('.notif-item');
+                    if (checkbox.checked) item.classList.add('selected');
+                    else item.classList.remove('selected');
+                }
+
+                function toggleDeleteButton() {
+                    const anyChecked = Array.from(notifCheckboxes).some(cb => cb.checked);
+                    if (deleteSelectedBtn) {
+                        deleteSelectedBtn.style.display = anyChecked ? 'inline-flex' : 'none';
+                    }
+                }
+            });
+        </script>
+
+        <%- include('../partials/footer') %>
+</body>
+</html>

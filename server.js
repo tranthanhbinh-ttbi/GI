@@ -7,6 +7,7 @@ const FPassport = require('@fastify/passport')
 
 const { migrate } = require('./src/models')
 const configurePassport = require('./src/config/oauth-config')
+const searchService = require('./src/services/search-service')
 
 const sessionSecretBase64 = process.env.SESSION_SECRET || ''
 let sessionKey = null
@@ -100,12 +101,14 @@ app.register(require('./src/routes/api-routes'))
 app.register(require('./src/routes/admin-auth-routes'))
 app.register(require('./src/routes/auth-routes'))
 app.register(require('./src/routes/mail-routes'))
-app.register(require('./src/routes/follow-routes'))
+app.register(require('./src/controllers/subcribe-controller'))
+
 
 const start = async () => {
   try {
     try {
       await migrate()
+      await searchService.init()
     } catch (e) {
       console.warn('DB connect/migrate failed, continuing to start server:', e.message)
     }

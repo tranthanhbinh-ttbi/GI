@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/css/components/notification.css">
 <header>
     <div id="sub-header" class="header__submenu ds-grid al-items-center">
         <div class="header__social-media ds-inline-flex al-items-center">
@@ -44,7 +45,16 @@
                     <span class="dl-sli"></span>
                 </label>
             </div>
-            <div>
+            <div class="sub-noti">
+                <div id="mobile-search-btn" class="ds-none">
+                <button type="button" title="Tìm kiếm" class="search-trigger-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                    </svg>
+                </button>
+            </div>
                 <dialog id="dialog">
                     <div>
                         <button type="button" title="Close Dialog" id="c-dialog"><svg xmlns="http://www.w3.org/2000/svg"
@@ -59,8 +69,7 @@
                     </div>
                     <form action="#" method="dialog">
                         <button type="button" id="auth-log-gg" class="b-gdlog dfx-alc-jcb">
-                            <span><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 48 48"
-                                    class="google">
+                            <span><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" class="google">
                                     <path fill="#FFC107"
                                         d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z">
                                     </path>
@@ -77,7 +86,7 @@
                             <span>Tiếp tục với Google</span>
                         </button>
                         <button type="button" id="auth-log-fb" class="b-dlog dfx-alc-jcb">
-                            <span><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 48 48">
+                            <span><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21">
                                     <path fill="#1877F2" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path>
                                     <path fill="#fff"
                                         d="M26.572,29.036h4.917l0.772-4.995h-5.69v-2.73c0-2.075,0.678-3.915,2.619-3.915h3.119v-4.359c-0.548-0.074-1.707-0.236-3.897-0.236c-4.573,0-7.254,2.415-7.254,7.917v3.323h-4.701v4.995h4.701v13.729C22.089,42.905,23.032,43,24,43c0.875,0,1.729-0.08,2.572-0.194V29.036z">
@@ -91,15 +100,25 @@
                                 href="#" class="t-comit">Chính sách bảo mật</a> của chúng tôi.</p>
                     </div>
                 </dialog>
+                <div class="header-notification">
+                    <button class="notif-btn" id="notif-btn-header" title="Thông báo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notif-badge" style="display: none;" data-count="0"></span>
+                    </button>
+                </div>
                 <div id="follow-controls">
                     <button type="button" id="follow" class="follow-button dfx-alc-jcb" aria-live="polite">
                         <span class="follow-icon marg-icl posi" aria-hidden="true"><svg
                                 xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-patch-plus-fill" viewBox="0 0 16 16">
+                                class="bi bi-person" viewBox="0 0 16 16">
                                 <path
-                                    d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0" />
+                                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
                             </svg></span>
-                        <span class="follow-label marg">Theo Dõi</span>
+                        <span class="follow-label marg">Đăng Nhập</span>
                     </button>
                     <div id="profile-container" class="profile-container opacn">
                         <button type="button" id="profile-avatar-btn" class="profile-avatar-btn">
@@ -119,11 +138,13 @@
                                 class="follow-button dropdown-item ds-flex al-items-center">
                                 <span class="follow-icon marg-icl posi" aria-hidden="true"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-patch-check-fill" viewBox="0 0 16 16">
-                                        <path
-                                            d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708" />
+                                        class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                        <path fill-rule="evenodd"
+                                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
                                     </svg></span>
-                                <span class="follow-label marg">Đang Theo Dõi</span>
+                                <span class="follow-label marg">Đăng Xuất</span>
                             </button>
                         </div>
                     </div>
@@ -145,45 +166,69 @@
             </div>
         </div>
     </div>
-    <% const Pages=Current_Page || 'trang-chu' ; %>
+    <% const Pages=Current_Page || 'trang-chu' %>
         <div class="lin-header">
             <nav class="header__main-menu ds-flex al-items-center">
                 <ul class="header__menu-list ds-grid al-items-center">
                     <li class="<%= Pages === 'trang-chu' ? 'active' : '' %>">
-                        <a href="/" class="h-hov">Trang Chủ</a>
+                        <a href="/" class="h-hov">
+                            <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                    viewBox="0 0 512 512">
+                                    <path
+                                        d="M277.8 8.6c-12.3-11.4-31.3-11.4-43.5 0l-224 208c-9.6 9-12.8 22.9-8 35.1S18.8 272 32 272l16 0 0 176c0 35.3 28.7 64 64 64l288 0c35.3 0 64-28.7 64-64l0-176 16 0c13.2 0 25-8.1 29.8-20.3s1.6-26.2-8-35.1l-224-208zM240 320l32 0c26.5 0 48 21.5 48 48l0 96-128 0 0-96c0-26.5 21.5-48 48-48z" />
+                                </svg></span>
+                            <span>Trang Chủ</span>
+                        </a>
                     </li>
                     <li class="<%= Pages.startsWith('series') ? 'active' : '' %>">
-                        <a href="/series" class="t-hov">Series</a>
+                        <a href="/series" class="t-hov">
+                            <!-- <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 512 512"><path d="M232.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L13.9 149.8C5.4 145.8 0 137.3 0 128s5.4-17.9 13.9-21.8L232.5 5.2zM48.1 218.4l164.3 75.9c27.7 12.8 59.6 12.8 87.3 0l164.3-75.9 34.1 15.8c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L13.9 277.8C5.4 273.8 0 265.3 0 256s5.4-17.9 13.9-21.8l34.1-15.8zM13.9 362.2l34.1-15.8 164.3 75.9c27.7 12.8 59.6 12.8 87.3 0l164.3-75.9 34.1 15.8c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L13.9 405.8C5.4 401.8 0 393.3 0 384s5.4-17.9 13.9-21.8z"/></svg></span> -->
+                            <span>Series</span>
+                        </a>
                     </li>
                     <li class="<%= Pages === 'kham-pha' ? 'active' : '' %>">
-                        <a href="/kham-pha" class="t-hov">Khám Phá</a>
+                        <a href="/kham-pha" class="t-hov">
+                            <!-- <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zm50.7-186.9L162.4 380.6c-19.4 7.5-38.5-11.6-31-31l55.5-144.3c3.3-8.5 9.9-15.1 18.4-18.4l144.3-55.5c19.4-7.5 38.5 11.6 31 31L325.1 306.7c-3.2 8.5-9.9 15.1-18.4 18.4zM288 256a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg></span> -->
+                            <span>Khám Phá</span>
+                        </a>
                     </li>
                     <li class="<%= Pages === 'tin-tuc' ? 'active' : '' %>">
-                        <a href="/tin-tuc" class="t-hov">Tin Tức</a>
+                        <a href="/tin-tuc" class="t-hov">
+                            <!-- <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 512 512"><path d="M0 416L0 120c0-13.3 10.7-24 24-24s24 10.7 24 24l0 288c0 13.3 10.7 24 24 24s24-10.7 24-24L96 96c0-35.3 28.7-64 64-64l288 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64zM160 128l0 64c0 17.7 14.3 32 32 32l64 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32zm24 240c-13.3 0-24 10.7-24 24s10.7 24 24 24l240 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-240 0zm-24-72c0 13.3 10.7 24 24 24l240 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-240 0c-13.3 0-24 10.7-24 24zM360 176c-13.3 0-24 10.7-24 24s10.7 24 24 24l64 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-64 0z"/></svg></span> -->
+                            <span>Tin Tức</span>
+                        </a>
                     </li>
                     <li class="<%= Pages === 'su-kien' ? 'active' : '' %>">
-                        <a href="/su-kien" class="t-hov">Sự Kiện</a>
+                        <a href="/su-kien" class="t-hov">
+                            <!-- <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16"><path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/></svg></span> -->
+                            <span>Sự Kiện</span>
+                        </a>
                     </li>
                     <li class="<%= Pages === 'dien-dan' ? 'active' : '' %>">
-                        <a href="/dien-dan" class="t-hov">Diễn Đàn</a>
+                        <a href="/dien-dan" class="t-hov">
+                            <!-- <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16"><path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/></svg></span> -->
+                            <span>Diễn Đàn</span>
+                        </a>
                     </li>
                     <li class="<%= Pages === 'lien-he' ? 'active' : '' %>">
-                        <a href="/lien-he" data-scrolling="footer" data-block="start" class="t-hov">Liên Hệ</a>
+                        <a href="/lien-he" data-scrolling="footer" data-block="start" class="t-hov">
+                            <!-- <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 640 512"><path d="M320 16a104 104 0 1 1 0 208 104 104 0 1 1 0-208zM96 88a72 72 0 1 1 0 144 72 72 0 1 1 0-144zM0 416c0-70.7 57.3-128 128-128 12.8 0 25.2 1.9 36.9 5.4-32.9 36.8-52.9 85.4-52.9 138.6l0 16c0 11.4 2.4 22.2 6.7 32L32 480c-17.7 0-32-14.3-32-32l0-32zm521.3 64c4.3-9.8 6.7-20.6 6.7-32l0-16c0-53.2-20-101.8-52.9-138.6 11.7-3.5 24.1-5.4 36.9-5.4 70.7 0 128 57.3 128 128l0 32c0 17.7-14.3 32-32 32l-86.7 0zM472 160a72 72 0 1 1 144 0 72 72 0 1 1 -144 0zM160 432c0-88.4 71.6-160 160-160s160 71.6 160 160l0 16c0 17.7-14.3 32-32 32l-256 0c-17.7 0-32-14.3-32-32l0-16z"/></svg></span> -->
+                            <span>Liên Hệ</span>
+                        </a>
                     </li>
                 </ul>
                 <div class="header-search">
                     <div class="main-search">
-                        <div class="search-bar-wrapper" id="header-search-trigger"> <!-- Trigger for Modal -->
+                        <div class="search-bar-wrapper" id="header-search-trigger">
                             <div class="search-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-search" viewBox="0 0 16 16">
+                                    viewBox="0 0 16 16">
                                     <path
                                         d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                 </svg>
                             </div>
-                            <input type="text" placeholder="Tìm kiếm..." aria-label="Tìm kiếm" readonly
-                                class="cursor-pointer">
-                            <!-- Visual cues only -->
+                            <input type="text" placeholder="Tìm kiếm ..." aria-label="Tìm kiếm" readonly
+                                class="cursor-pointer" />
                             <div class="shortcut-hint">/</div>
                         </div>
                     </div>
@@ -197,10 +242,9 @@
                         </svg>
                     </button>
                 </div>
+
             </nav>
             <div class="prog"></div>
-
-            <!-- Spotlight Search Modal -->
             <div id="spotlight-overlay" class="hidden">
                 <div id="spotlight-modal">
                     <div class="spotlight-header">
@@ -211,9 +255,8 @@
                                     d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                             </svg>
                         </div>
-                        <input type="text" id="spotlight-input" placeholder="Nhập từ khóa để tìm kiếm..."
-                            autocomplete="off">
-
+                        <input type="text" id="spotlight-input" placeholder="Tìm kiếm nội dung bạn muốn ..."
+                            autocomplete="off" />
                         <button id="spotlight-voice" class="spotlight-action-btn" title="Tìm bằng giọng nói">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
                                 viewBox="0 0 16 16">
@@ -225,84 +268,109 @@
                         </button>
                         <button id="spotlight-close" class="spotlight-action-btn" title="Close">ESC</button>
                     </div>
-
                     <div class="spotlight-tabs-container">
                         <div class="spotlight-tabs">
                             <button class="sp-tab active" data-target="sp-series">Series</button>
-                            <button class="sp-tab" data-target="sp-news">Tin tức</button>
                             <button class="sp-tab" data-target="sp-explore">Khám phá</button>
+                            <button class="sp-tab" data-target="sp-news">Tin tức</button>
                         </div>
-
-                        <!-- Detailed Filters -->
                         <div class="spotlight-filters-detail">
-                            <!-- Series Filters -->
                             <div class="sp-filter-group" id="sp-series">
-                                <select class="sp-select">
-                                    <option value="">Chủ đề</option>
-                                    <option value="tech">Công nghệ</option>
-                                    <option value="life">Đời sống</option>
+                                <select class="sp-select" name="category">
+                                    <option value="all">Tất cả chủ đề</option>
+                                    <option value="series-me-va-con-gai">Series Mẹ Và Con Gái</option>
                                 </select>
-                                <input type="text" class="sp-input-date" placeholder="Ngày đăng"
-                                    onfocus="(this.type='date')" onblur="(this.type='text')">
-                                <select class="sp-select">
-                                    <option value="">Đánh giá</option>
-                                    <option value="5">5 Sao</option>
-                                    <option value="4">> 4 Sao</option>
+                                <select class="sp-select sp-date-select" name="time">
+                                    <option value="all">Tất cả thời gian</option>
+                                    <option value="today">Hôm nay</option>
+                                    <option value="week">Tuần này</option>
+                                    <option value="month">Tháng này</option>
+                                    <option value="year">Năm này</option>
+                                    <option value="custom">Tùy chỉnh...</option>
                                 </select>
-                                <select class="sp-select">
+                                <input type="date" class="sp-date-picker hidden" name="custom_date"
+                                    style="position: absolute; opacity: 0; pointer-events: none;">
+                                <select class="sp-select" name="rating">
+                                    <option value="all">Đánh giá</option>
+                                    <option value="5">Từ 5 sao</option>
+                                    <option value="4">Từ 4 sao trở lên</option>
+                                    <option value="3">Từ 3 sao trở lên</option>
+                                </select>
+                                <select class="sp-select" name="sort">
+                                    <option value="relevance" selected>Sắp xếp</option>
                                     <option value="newest">Mới nhất</option>
-                                    <option value="popular">Phổ biến</option>
+                                    <option value="oldest">Cũ nhất</option>
+                                    <option value="most-viewed">Xem nhiều nhất</option>
                                 </select>
                             </div>
 
                             <!-- News Filters -->
                             <div class="sp-filter-group hidden" id="sp-news">
-                                <select class="sp-select">
-                                    <option value="">Nguồn tin</option>
-                                    <option value="official">Chính thức</option>
-                                    <option value="community">Cộng đồng</option>
+                                <select class="sp-select" name="source">
+                                    <option value="all">Tất cả nguồn</option>
+                                    <option value="gender-insights">Gender Insights</option>
+                                    <option value="partners">Đối Tác</option>
+                                    <option value="media">Truyền Thông</option>
                                 </select>
-                                <input type="text" class="sp-input-date" placeholder="Ngày đăng"
-                                    onfocus="(this.type='date')" onblur="(this.type='text')">
-                                <select class="sp-select">
+                                <select class="sp-select sp-date-select" name="time">
+                                    <option value="all">Tất cả thời gian</option>
+                                    <option value="today">Hôm nay</option>
+                                    <option value="week">Tuần này</option>
+                                    <option value="month">Tháng này</option>
+                                    <option value="year">Năm này</option>
+                                    <option value="custom">Tùy chỉnh...</option>
+                                </select>
+                                <input type="date" class="sp-date-picker hidden" name="custom_date"
+                                    style="position: absolute; opacity: 0; pointer-events: none;">
+                                <select class="sp-select" name="sort">
+                                    <option value="relevance" selected>Sắp xếp</option>
                                     <option value="newest">Mới nhất</option>
-                                    <option value="related">Liên quan</option>
+                                    <option value="oldest">Cũ nhất</option>
+                                    <option value="most-viewed">Xem nhiều nhất</option>
                                 </select>
                             </div>
 
                             <!-- Explore Filters -->
                             <div class="sp-filter-group hidden" id="sp-explore">
-                                <input type="text" class="sp-input-text" placeholder="Tác giả">
-                                <input type="text" class="sp-input-date" placeholder="Ngày đăng"
-                                    onfocus="(this.type='date')" onblur="(this.type='text')">
-                                <select class="sp-select">
-                                    <option value="">Đánh giá</option>
-                                    <option value="5">5 Sao</option>
-                                    <option value="4">> 4 Sao</option>
+                                <input type="text" class="sp-input-text" placeholder="Tác giả" name="author">
+                                <select class="sp-select sp-date-select" name="time">
+                                    <option value="all">Tất cả thời gian</option>
+                                    <option value="today">Hôm nay</option>
+                                    <option value="week">Tuần này</option>
+                                    <option value="month">Tháng này</option>
+                                    <option value="year">Năm này</option>
+                                    <option value="custom">Tùy chỉnh...</option>
                                 </select>
-                                <select class="sp-select">
+                                <input type="date" class="sp-date-picker hidden" name="custom_date"
+                                    style="position: absolute; opacity: 0; pointer-events: none;">
+                                <select class="sp-select" name="rating">
+                                    <option value="all">Đánh giá</option>
+                                    <option value="5">Từ 5 sao</option>
+                                    <option value="4">Từ 4 sao trở lên</option>
+                                    <option value="3">Từ 3 sao trở lên</option>
+                                </select>
+                                <select class="sp-select" name="sort">
+                                    <option value="relevance" selected>Sắp xếp</option>
                                     <option value="newest">Mới nhất</option>
-                                    <option value="popular">Phổ biến</option>
+                                    <option value="oldest">Cũ nhất</option>
+                                    <option value="most-viewed">Xem nhiều nhất</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-
                     <div class="spotlight-body">
-                        <!-- Dynamic Results Here -->
                         <div id="spotlight-results">
-                            <!-- Helper / Initial State -->
-                            <div class="sp-helper-text">Nhập từ khóa để tìm kiếm nội dung...</div>
+                            <div class="sp-helper-text">Kết quả tìm kiếm sẽ hiển thị tại đây</div>
                         </div>
                     </div>
-
                     <div class="spotlight-footer">
-
                         <div class="sp-shortcut">
-                            <span>esc</span> để đóng
+                            <p><span>Esc</span> để đóng</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="toast-container"></div>
+        <script src="/js/notification-client.js" defer></script>
 </header>

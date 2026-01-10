@@ -52,3 +52,5 @@ collections:
       - { label: "Ảnh đại diện", name: "thumbnail", widget: "image" }
       - { label: "Mô tả ngắn", name: "description", widget: "text" }
       - { label: "Nội dung chi tiết", name: "body", widget: "markdown" }
+
+  - name: "series"

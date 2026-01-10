@@ -34,7 +34,9 @@ body {
     gap: 0.5rem;
 }
 
-button, #header-search-trigger input, #gen-mobile-sidebar .ms-search-area input {
+button,
+#header-search-trigger input,
+#gen-mobile-sidebar .ms-search-area input {
     outline: none;
     border: none;
     background: none;
@@ -264,9 +266,11 @@ main {
     pointer-events: none;
     width: min(360px, calc(100% - 2rem));
 }
+
 #toast-container.scrolled {
-    top: 3.5rem !important; 
+    top: 3.5rem !important;
 }
+
 .toast {
     --toast-accent: #60a5fa;
     --toast-icon-bg: rgba(96, 165, 250, 0.16);
@@ -431,6 +435,7 @@ main {
         width: calc(100% - 1.5rem);
         align-items: center;
     }
+
     .toast {
         transform: translateY(-20px);
     }
@@ -527,5 +532,99 @@ main {
 
     footer .brands-funding {
         filter: brightness(0) invert(1);
+    }
+}
+
+/* --- HEADER NOTIFICATION --- */
+.header-separator {
+    width: 1px;
+    height: 24px;
+    background-color: #d1d5db;
+    margin: 0 16px;
+}
+
+.sub-noti {
+    display: inline-flex;
+    align-items: center;
+}
+
+.header-notification {
+    position: relative;
+    margin: 0 15px;
+    display: flex;
+    align-items: center;
+}
+
+.notif-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--gen-body-color);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.notif-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.notif-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2px;
+}
+
+/* Badge Style */
+.notif-badge {
+    position: absolute !important;
+    top: 2px !important;
+    right: 2px !important;
+    background-color: #c92a2a !important;
+    color: white !important;
+    font-size: 11px !important;
+    font-family: inherit !important;
+    font-weight: 800 !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 3px solid var(--gen-white) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+.header-separator {
+    width: 1px;
+    height: 24px;
+    background-color: #d1d5db;
+    margin: 0 16px;
+}
+
+.desktop-only {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none !important;
+    }
+
+    .sub-noti {
+        position: absolute;
+        bottom: 5px;
+    }
+
+    header #sub-header {
+        border-bottom: 1px solid var(--gen-border);
+        padding-bottom: 10px;
+        margin-bottom: 0;
     }
 }

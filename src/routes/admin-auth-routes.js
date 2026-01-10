@@ -5,12 +5,10 @@ async function oauthAdminRoutes(fastify) {
         const { provider } = request.query;
         if (provider === 'github') {
             const client_id = process.env.OAUTH_CLIENT_ID;
-            const redirect_uri = `https://${request.hostname}/callback`;
+            const redirect_uri = `${request.protocol}://${request.hostname}/callback`;
             const scope = 'repo,user';
-            const state = crypto.randomUUID();
-
+            const state = crypto.randomUUID(); 
             const authorizationUri = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope}&state=${state}`;
-
             return reply.redirect(authorizationUri);
         }
         return reply.code(400).send('Unsupported provider');
@@ -18,12 +16,9 @@ async function oauthAdminRoutes(fastify) {
 
     fastify.get('/callback', async (request, reply) => {
         const { code } = request.query;
-
-        if (!code) {
-            return reply.code(400).send('Missing code');
-        }
-
+        if (!code) return reply.code(400).send('Missing code');
         try {
+            const redirect_uri = `${request.protocol}://${request.hostname}/callback`;
             const response = await fetch('https://github.com/login/oauth/access_token', {
                 method: 'POST',
                 headers: {
@@ -34,13 +29,14 @@ async function oauthAdminRoutes(fastify) {
                     client_id: process.env.OAUTH_CLIENT_ID,
                     client_secret: process.env.OAUTH_CLIENT_SECRET,
                     code: code,
-                    redirect_uri: `https://${request.hostname}/callback`
+                    redirect_uri: redirect_uri
                 })
             });
 
             const data = await response.json();
+            if (data.error) throw new Error(data.error_description || 'GitHub OAuth Error');
+            
             const token = data.access_token;
-
             const script = `
             <script>
                 (function() {
@@ -51,15 +47,14 @@ async function oauthAdminRoutes(fastify) {
                     );
                 }
                 window.addEventListener("message", receiveMessage, false);
+                // Gửi message thông báo bắt đầu authorize
                 window.opener.postMessage("authorizing:github", "*");
                 })()
             </script>
             `;
-
-            reply.type('text/html').send(script);
-
+            return reply.type('text/html').send(script);
         } catch (error) {
-            console.error('GitHub Auth Error:', error);
+            request.log.error(error, 'GitHub Auth Callback Error');
             return reply.code(500).send('Authentication failed');
         }
     });

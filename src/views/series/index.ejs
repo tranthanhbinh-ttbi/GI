@@ -275,136 +275,41 @@
                             <h3 class="widget-title">Bài Viết Phổ Biến</h3>
                             <span class="widget-decorator"></span>
                             <div class="popular-posts-list">
-                                <div class="popular-post-card">
-                                    <div class="popular-card-image-container">
-                                        <a href="#">
-                                            <img class="popular-card-image" src="/photos/placeholder-m6a0q.png"
-                                                alt="Tiêu đề bài viết">
-                                        </a>
-                                        <span class="card-category-badge bg-red-600">Bài Viết</span>
-                                        <span class="popular-card-read-time-badge">
-                                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                            <span>5 Mins Read</span>
-                                        </span>
-                                    </div>
-                                    <div class="popular-card-content">
-                                        <div class="popular-card-meta">
-                                            <span>29 tháng 10, 2025</span>
+                                <% if (typeof popularPosts !== 'undefined' && popularPosts.length > 0) { %>
+                                    <% popularPosts.forEach(post => { %>
+                                        <div class="popular-post-card">
+                                            <div class="popular-card-image-container">
+                                                <a href="/series/<%= post.slug %>">
+                                                    <img class="popular-card-image" src="<%= post.thumbnail %>" alt="<%= post.title %>">
+                                                </a>
+                                                <% 
+                                                let catBadgeClass = 'bg-red-600';
+                                                if (post.category === 'Video') catBadgeClass = 'bg-blue-600';
+                                                if (post.category === 'Podcast') catBadgeClass = 'bg-green-600';
+                                                %>
+                                                <span class="card-category-badge <%= catBadgeClass %>"><%= post.category || 'Bài Viết' %></span>
+                                                <span class="popular-card-read-time-badge">
+                                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                    </svg>
+                                                    <span>5 Mins Read</span>
+                                                </span>
+                                            </div>
+                                            <div class="popular-card-content">
+                                                <div class="popular-card-meta">
+                                                    <span><%= post.displayDate || (new Date(post.date).toLocaleDateString('vi-VN')) %></span>
+                                                </div>
+                                                <h4 class="popular-card-title">
+                                                    <a href="/series/<%= post.slug %>"><%= post.title %></a>
+                                                </h4>
+                                            </div>
                                         </div>
-                                        <h4 class="popular-card-title">
-                                            <a href="#">3 Cách Đơn Giản Để Hiểu Bản Thân Hơn</a>
-                                        </h4>
-                                    </div>
-                                </div>
-
-                                <div class="popular-post-card">
-                                    <div class="popular-card-image-container">
-                                        <a href="#">
-                                            <img class="popular-card-image" src="/photos/placeholder-m6a0q.png"
-                                                alt="Tiêu đề bài viết">
-                                        </a>
-                                        <span class="card-category-badge bg-red-600">Bài Viết</span>
-                                        <span class="popular-card-read-time-badge">
-                                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                            <span>4 Mins Read</span>
-                                        </span>
-                                    </div>
-                                    <div class="popular-card-content">
-                                        <div class="popular-card-meta">
-                                            <span>28 tháng 10, 2025</span>
-                                        </div>
-                                        <h4 class="popular-card-title">
-                                            <a href="#">Phương Pháp Cực Dễ Hiểu Về Mọi Người</a>
-                                        </h4>
-                                    </div>
-                                </div>
-
-                                <div class="popular-post-card">
-                                    <div class="popular-card-image-container">
-                                        <a href="#">
-                                            <img class="popular-card-image" src="/photos/placeholder-m6a0q.png"
-                                                alt="Tiêu đề bài viết">
-                                        </a>
-                                        <span class="card-category-badge bg-red-600">Bài Viết</span>
-                                        <span class="popular-card-read-time-badge">
-                                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                            <span>3 Mins Read</span>
-                                        </span>
-                                    </div>
-                                    <div class="popular-card-content">
-                                        <div class="popular-card-meta">
-                                            <span>27 tháng 10, 2025</span>
-                                        </div>
-                                        <h4 class="popular-card-title">
-                                            <a href="#">10 Điều Cần Làm Ngay Lập Tức</a>
-                                        </h4>
-                                    </div>
-                                </div>
-
-                                <div class="popular-post-card">
-                                    <div class="popular-card-image-container">
-                                        <a href="#">
-                                            <img class="popular-card-image" src="/photos/placeholder-m6a0q.png"
-                                                alt="Tiêu đề bài viết">
-                                        </a>
-                                        <span class="card-category-badge bg-red-600">Bài Viết</span>
-                                        <span class="popular-card-read-time-badge">
-                                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                            <span>3 Mins Read</span>
-                                        </span>
-                                    </div>
-                                    <div class="popular-card-content">
-                                        <div class="popular-card-meta">
-                                            <span>27 tháng 10, 2025</span>
-                                        </div>
-                                        <h4 class="popular-card-title">
-                                            <a href="#">10 Điều Cần Làm Ngay Lập Tức</a>
-                                        </h4>
-                                    </div>
-                                </div>
-
-                                <div class="popular-post-card">
-                                    <div class="popular-card-image-container">
-                                        <a href="#">
-                                            <img class="popular-card-image" src="/photos/placeholder-m6a0q.png"
-                                                alt="Tiêu đề bài viết">
-                                        </a>
-                                        <span class="card-category-badge bg-red-600">Bài Viết</span>
-                                        <span class="popular-card-read-time-badge">
-                                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                            <span>3 Mins Read</span>
-                                        </span>
-                                    </div>
-                                    <div class="popular-card-content">
-                                        <div class="popular-card-meta">
-                                            <span>27 tháng 10, 2025</span>
-                                        </div>
-                                        <h4 class="popular-card-title">
-                                            <a href="#">10 Điều Cần Làm Ngay Lập Tức</a>
-                                        </h4>
-                                    </div>
-                                </div>
-
+                                    <% }) %>
+                                <% } else { %>
+                                    <p>Chưa có bài viết phổ biến.</p>
+                                <% } %>
                             </div>
                         </div>
 

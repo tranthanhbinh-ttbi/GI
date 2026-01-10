@@ -2,76 +2,84 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.BIGINT
-      },
-      provider: {
-        type: Sequelize.STRING(50),
-        allowNull: false
-      },
-      provider_id: {
-        type: Sequelize.STRING(255),
-        allowNull: false,
-        unique: true
-      },
-      name: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
-      email: {
-        type: Sequelize.STRING(255),
-        allowNull: true,
-        unique: true
-      },
-      avatar_url: {
-        type: Sequelize.TEXT,
-        allowNull: true
-      },
-      created_at: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updated_at: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
-    });
-    await queryInterface.addIndex('users', ['provider']);
-    await queryInterface.createTable('followers', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.BIGINT
-      },
-      user_id: {
-        type: Sequelize.BIGINT,
-        allowNull: false,
-        unique: true,
-        references: {
-          model: 'users',
-          key: 'id'
+    return queryInterface.sequelize.transaction(async (ts) => {
+      await queryInterface.createTable('users', {
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: Sequelize.BIGINT
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
-      created_at: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updated_at: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+        provider: {
+          type: Sequelize.ENUM('google', 'facebook'),
+          allowNull: false
+        },
+        provider_id: {
+          type: Sequelize.STRING(255),
+          allowNull: false,
+        },
+        name: {
+          type: Sequelize.TEXT,
+          allowNull: false
+        },
+        email: {
+          type: Sequelize.STRING(255),
+          allowNull: true
+        },
+        avatar_url: {
+          type: Sequelize.TEXT,
+          allowNull: true
+        },
+        created_at: {
+          allowNull: false,
+          type: Sequelize.DATE
+        },
+        updated_at: {
+          allowNull: false,
+          type: Sequelize.DATE
+        }
+      }, { transaction: ts });
+
+      await queryInterface.addIndex('users', ['provider', 'provider_id'], {
+        unique: true,
+        name: 'users_provider_providerid_unique',
+        transaction: ts
+      });
+      
+      await queryInterface.addIndex('users', ['email'], {
+        unique: true,
+        where: { email: { [Sequelize.Op.ne]: null } },
+        transaction: ts
+      });
+
+      await queryInterface.createTable('subscribes', {
+        user_id: {
+          type: Sequelize.BIGINT,
+          allowNull: false,
+          primaryKey: true,
+          references: {
+            model: 'users',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE'
+        },
+        created_at: {
+          allowNull: false,
+          type: Sequelize.DATE
+        },
+        updated_at: {
+          allowNull: false,
+          type: Sequelize.DATE
+        }
+      }, { transaction: ts });
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('followers');
-    await queryInterface.dropTable('users');
+    return queryInterface.sequelize.transaction(async (ts) => {
+      await queryInterface.dropTable('subscribes', { transaction: ts });
+      await queryInterface.dropTable('users', { transaction: ts });
+    });
   }
 };

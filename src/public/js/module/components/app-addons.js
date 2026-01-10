@@ -272,12 +272,12 @@ window.appAddons = () => {
             document.querySelector('.ms-nav-area').appendChild(clonedMenu);
         }
 
-        if (originalSearch) {
-            const clonedSearch = originalSearch.cloneNode(true);
-            const trigger = clonedSearch.querySelector('#header-search-trigger');
-            if (trigger) trigger.id = 'mobile-search-trigger'; // Avoid duplicate ID
-            document.querySelector('.ms-search-area').appendChild(clonedSearch);
-        }
+        // if (originalSearch) {
+        //     const clonedSearch = originalSearch.cloneNode(true);
+        //     const trigger = clonedSearch.querySelector('#header-search-trigger');
+        //     if (trigger) trigger.id = 'mobile-search-trigger'; // Avoid duplicate ID
+        //     document.querySelector('.ms-search-area').appendChild(clonedSearch);
+        // }
 
         if (originalSocial) {
             document.querySelector('.ms-social-area').appendChild(originalSocial.cloneNode(true));

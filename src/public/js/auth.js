@@ -15,6 +15,7 @@
   const dropdownEmail = $('#dropdown-user-email')
   const dropdownFollowStatus = $('#dropdown-follow-status')
   const logoutBtn = $('#profile-logout-btn')
+  const notifBtn = $('#notif-btn-header')
 
   const searchForm = $('#search-form')
   const searchInput = $('#search-input')
@@ -243,7 +244,7 @@
 
   function updateFollowUI(isFollowing, followersCount) {
     if (followBtn) {
-      followBtn.querySelector('.follow-label').textContent = isFollowing ? 'Đang Theo Dõi' : 'Theo Dõi'
+      followBtn.querySelector('.follow-label').textContent = isFollowing ? 'Đăng Xuất' : 'Đăng Nhập'
       followBtn.classList.toggle('is-following', !!isFollowing)
     }
     if (!dropdownFollowStatus) return
@@ -336,6 +337,15 @@
       return
     }
     logoutDialog.showModal() // confirm unfollow as sign-out per requirement
+  })
+
+  // Notification button behavior
+  notifBtn?.addEventListener('click', () => {
+    if (!me) {
+      loginDialog.showModal()
+    } else {
+      window.location.href = '/thong-bao'
+    }
   })
 
   closeLoginBtn?.addEventListener('click', () => loginDialog.close())
