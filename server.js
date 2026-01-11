@@ -24,7 +24,7 @@ try {
   console.warn('SESSION_SECRET is invalid base64. Using a random ephemeral 32-byte key.')
 }
 
-const app = fastify({ trustProxy: true, logger: false, connectionTimeout: 5000, bodyLimit: 1048576 * 2 })
+const app = fastify({ trustProxy: true, logger: false, connectionTimeout: 0, bodyLimit: 1048576 * 2 })
 
 app.register(require('@fastify/compress'), {
   global: true,
@@ -104,11 +104,21 @@ app.register(require('./src/routes/mail-routes'))
 app.register(require('./src/controllers/subcribe-controller'))
 
 app.register(async (instance) => {
-  try {
-    await migrate();
-    await searchService.init();
-  } catch (e) {
-    console.warn('DB connect/migrate or Search Service init failed:', e.message);
+  const initTask = async () => {
+    try {
+      await migrate();
+      await searchService.init();
+    } catch (e) {
+      console.warn('DB connect/migrate or Search Service init failed:', e.message);
+    }
+  };
+
+  // On Vercel, we must wait for initialization. 
+  // On localhost, we run in background to avoid plugin timeout errors.
+  if (process.env.VERCEL) {
+    await initTask();
+  } else {
+    initTask();
   }
 });
 

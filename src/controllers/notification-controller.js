@@ -4,11 +4,13 @@ const { Op } = require('sequelize');
 
 module.exports = {
   stream: (req, reply) => {
+    reply.hijack();
     // Set headers for SSE
     reply.raw.setHeader('Content-Type', 'text/event-stream');
     reply.raw.setHeader('Cache-Control', 'no-cache');
     reply.raw.setHeader('Connection', 'keep-alive');
     reply.raw.setHeader('Access-Control-Allow-Origin', '*');
+    reply.raw.setHeader('X-No-Compression', 'true');
 
     // Send initial comment to keep connection open and establish stream
     reply.raw.write(': connected\n\n');
