@@ -171,6 +171,37 @@
                 }
             }
 
+            function updateHeaderNotificationCount() {
+                const countSpan = document.querySelector('.notif-count');
+                const items = document.querySelectorAll('.notif-item');
+                if (countSpan) {
+                    countSpan.innerText = `Bạn có ${items.length} thông báo`;
+                }
+                
+                const emptyState = document.querySelector('.notif-empty');
+                if (items.length === 0) {
+                    if (!emptyState) {
+                        const main = document.querySelector('main.notification-page');
+                        const emptyDiv = document.createElement('div');
+                        emptyDiv.className = 'notif-empty';
+                        emptyDiv.style.cssText = 'text-align: center; padding: 40px; color: #666;';
+                        emptyDiv.innerHTML = '<p>Chưa có thông báo nào.</p>';
+                        // Insert after toolbar
+                        const toolbar = document.querySelector('.notif-toolbar');
+                        if (toolbar) toolbar.insertAdjacentElement('afterend', emptyDiv);
+                    } else {
+                        emptyState.style.display = 'block';
+                    }
+                    
+                    // Hide delete button if empty
+                    const deleteBtn = document.getElementById('deleteSelectedBtn');
+                    if (deleteBtn) deleteBtn.style.display = 'none';
+                    
+                } else if (emptyState) {
+                    emptyState.remove(); 
+                }
+            }
+
             async function handleNotificationClick(element, link) {
                 // If it's already read (not unread class), just go
                 if (!element.classList.contains('unread')) {
@@ -277,6 +308,7 @@
                             });
                             
                             updateBadgeCount(unreadDeletedCount);
+                            updateHeaderNotificationCount();
                             
                             // Reset selection
                             selectAllCheckbox.checked = false;
