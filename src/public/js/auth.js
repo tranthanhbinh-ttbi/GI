@@ -511,6 +511,15 @@
       window.history.replaceState({}, document.title, window.location.pathname)
     }
 
+    // Check for login requirement
+    if (urlParams.get('login') === 'true') {
+      loginDialog?.showModal()
+      // Clean URL
+      const newUrl = new URL(window.location.href)
+      newUrl.searchParams.delete('login')
+      window.history.replaceState({}, document.title, newUrl.toString())
+    }
+
     // Now fetch user data
     const user = await fetchMe()
     setProfile(user || null)

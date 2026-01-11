@@ -39,9 +39,14 @@ async function Pages(fastify, options) {
                 const result = searchService.search('', 1, 12);
                 posts = result.data;
             } else if (route.pageName === 'thong-bao') {
+                // Check authentication
+                if (!request.user) {
+                    return reply.redirect('/?login=true');
+                }
+
                 // Fetch notifications from DB
                 try {
-                    const userId = request.user ? request.user.id : null;
+                    const userId = request.user.id;
                     const limit = 50;
 
                     const allNotifications = await Notification.findAll({
