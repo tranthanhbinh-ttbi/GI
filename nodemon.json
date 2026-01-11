@@ -1,8 +1,0 @@
-{
-  "ignore": [
-    "src/content/*",
-    "src/public/*",
-    "public/*"
-  ],
-  "ext": "js,json,ejs"
-}
