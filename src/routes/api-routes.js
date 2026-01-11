@@ -8,6 +8,9 @@ async function ApiRoutes(fastify, options) {
     // Notification Routes
     fastify.get('/api/notifications/stream', notificationController.stream);
     fastify.get('/api/notifications', notificationController.getRecent);
+    fastify.put('/api/notifications/:id/read', notificationController.markRead);
+    fastify.put('/api/notifications/read-all', notificationController.markAllRead);
+    fastify.delete('/api/notifications', notificationController.delete);
 }
 
 module.exports = ApiRoutes;

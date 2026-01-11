@@ -1,5 +1,5 @@
 const searchService = require('../services/search-service');
-const { Notification } = require('../models');
+const { Notification, UserNotification } = require('../models');
 
 
 async function Pages(fastify, options) {
@@ -41,10 +41,34 @@ async function Pages(fastify, options) {
             } else if (route.pageName === 'thong-bao') {
                 // Fetch notifications from DB
                 try {
-                    const notifications = await Notification.findAll({
+                    const userId = request.user ? request.user.id : null;
+                    const limit = 50;
+
+                    const allNotifications = await Notification.findAll({
                         order: [['createdAt', 'DESC']],
-                        limit: 50 // Limit to last 50 notifications
+                        limit: limit,
+                        include: userId ? [{
+                            model: UserNotification,
+                            required: false,
+                            where: { userId: userId }
+                        }] : []
                     });
+
+                    let notifications = [];
+                    if (userId) {
+                        notifications = allNotifications.filter(n => {
+                            const userState = n.UserNotifications && n.UserNotifications[0];
+                            return !userState || !userState.isDeleted;
+                        }).map(n => {
+                            const userState = n.UserNotifications && n.UserNotifications[0];
+                            const plain = n.get({ plain: true });
+                            plain.isRead = userState ? userState.isRead : false;
+                            delete plain.UserNotifications;
+                            return plain;
+                        });
+                    } else {
+                        notifications = allNotifications.map(n => n.get({ plain: true }));
+                    }
                     
                     return reply.viewAsync(route.template, { 
                         Current_Page: route.pageName,

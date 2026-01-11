@@ -60,7 +60,7 @@
                         </svg>
                         Xóa đã chọn
                     </button>
-                    <!-- <button class="mark-read-btn">Đánh dấu tất cả là đã đọc</button> -->
+                    <button class="mark-read-btn" id="markAllReadBtn">Đánh dấu tất cả là đã đọc</button>
                 </div>
             </div>
 
@@ -143,10 +143,67 @@
         </main>
 
         <script>
+            function getCSRF() {
+                const m = document.cookie.match(/_csrf=([^;]+)/)
+                return m ? decodeURIComponent(m[1]) : ''
+            }
+
+            function updateBadgeCount(decrementBy = 0, reset = false) {
+                const badge = document.querySelector('.notif-badge');
+                if (!badge) return;
+                
+                if (reset) {
+                    badge.style.display = 'none';
+                    badge.setAttribute('data-count', '0');
+                    badge.innerText = '0';
+                    return;
+                }
+
+                let current = parseInt(badge.getAttribute('data-count') || '0');
+                if (current > 0) {
+                    current = Math.max(0, current - decrementBy);
+                    if (current === 0) {
+                        badge.style.display = 'none';
+                    } else {
+                        badge.innerText = current > 99 ? '99+' : current;
+                    }
+                    badge.setAttribute('data-count', current);
+                }
+            }
+
+            async function handleNotificationClick(element, link) {
+                // If it's already read (not unread class), just go
+                if (!element.classList.contains('unread')) {
+                    if (link) window.location.href = link;
+                    return;
+                }
+
+                const id = element.dataset.id;
+                try {
+                    await fetch(`/api/notifications/${id}/read`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-csrf-token': getCSRF()
+                        }
+                    });
+                    
+                    // Update UI locally
+                    element.classList.remove('unread');
+                    updateBadgeCount(1);
+                    
+                } catch (e) {
+                    console.error('Failed to mark read', e);
+                }
+
+                if (link) window.location.href = link;
+            }
+
             document.addEventListener('DOMContentLoaded', function () {
                 const selectAllCheckbox = document.getElementById('selectAll');
                 const notifCheckboxes = document.querySelectorAll('.notif-checkbox');
                 const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+                const markAllReadBtn = document.getElementById('markAllReadBtn');
 
                 if (selectAllCheckbox) {
                     selectAllCheckbox.addEventListener('change', function () {
@@ -181,6 +238,76 @@
                         deleteSelectedBtn.style.display = anyChecked ? 'inline-flex' : 'none';
                     }
                 }
+
+                // Delete Selected
+                deleteSelectedBtn?.addEventListener('click', async () => {
+                    const selected = Array.from(notifCheckboxes)
+                        .filter(cb => cb.checked)
+                        .map(cb => cb.value); // Ensure value is ID
+
+                    if (!selected.length) return;
+                    if (!confirm('Bạn có chắc muốn xóa các thông báo đã chọn?')) return;
+
+                    try {
+                        const res = await fetch('/api/notifications', {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'x-csrf-token': getCSRF()
+                            },
+                            body: JSON.stringify({ ids: selected })
+                        });
+                        
+                        if (res.ok) {
+                            // Remove from DOM
+                            let unreadDeletedCount = 0;
+                            selected.forEach(id => {
+                                const item = document.querySelector(`.notif-item[data-id="${id}"]`);
+                                if (item) {
+                                    if (item.classList.contains('unread')) unreadDeletedCount++;
+                                    item.remove();
+                                }
+                            });
+                            
+                            // Check groups empty states (optional, simplistic approach)
+                            document.querySelectorAll('.notif-list').forEach(list => {
+                                if (list.children.length === 0) {
+                                    list.closest('.notif-group').remove();
+                                }
+                            });
+                            
+                            updateBadgeCount(unreadDeletedCount);
+                            
+                            // Reset selection
+                            selectAllCheckbox.checked = false;
+                            deleteSelectedBtn.style.display = 'none';
+                        }
+                    } catch (e) {
+                        console.error('Delete failed', e);
+                        alert('Xóa thất bại');
+                    }
+                });
+
+                // Mark All Read
+                markAllReadBtn?.addEventListener('click', async () => {
+                    try {
+                        const res = await fetch('/api/notifications/read-all', {
+                            method: 'PUT',
+                            headers: {
+                                'x-csrf-token': getCSRF()
+                            }
+                        });
+
+                        if (res.ok) {
+                            document.querySelectorAll('.notif-item.unread').forEach(item => {
+                                item.classList.remove('unread');
+                            });
+                            updateBadgeCount(0, true);
+                        }
+                    } catch (e) {
+                        console.error('Mark all read failed', e);
+                    }
+                });
             });
         </script>
 

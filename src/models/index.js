@@ -98,11 +98,49 @@ const Notification = sequelize.define('Notification', {
   timestamps: true
 })
 
+const UserNotification = sequelize.define('UserNotification', {
+  userId: {
+    type: DataTypes.BIGINT,
+    primaryKey: true,
+    references: {
+      model: 'users',
+      key: 'id'
+    }
+  },
+  notificationId: {
+    type: DataTypes.BIGINT,
+    primaryKey: true,
+    references: {
+      model: 'notifications',
+      key: 'id'
+    }
+  },
+  isRead: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  }
+}, {
+  tableName: 'user_notifications',
+  underscored: true,
+  timestamps: true
+})
+
+User.belongsToMany(Notification, { through: UserNotification, foreignKey: 'userId', otherKey: 'notificationId' })
+Notification.belongsToMany(User, { through: UserNotification, foreignKey: 'notificationId', otherKey: 'userId' })
+User.hasMany(UserNotification, { foreignKey: 'userId' })
+UserNotification.belongsTo(User, { foreignKey: 'userId' })
+Notification.hasMany(UserNotification, { foreignKey: 'notificationId' })
+UserNotification.belongsTo(Notification, { foreignKey: 'notificationId' })
+
 const migrate = async () => {
   try {
     await sequelize.authenticate()
     console.log('Connection to Database has been established successfully.')
-    await sequelize.sync()
+    await sequelize.sync({ alter: true })
     console.log('Database synced successfully.')
   } catch (error) {
     console.error('Unable to connect to the database:', error)
@@ -110,4 +148,4 @@ const migrate = async () => {
   }
 }
 
-module.exports = { sequelize, User, Subscribes, Notification, migrate }
+module.exports = { sequelize, User, Subscribes, Notification, UserNotification, migrate }
