@@ -160,6 +160,21 @@ class SearchService {
         // Tạo slug nếu không có trong frontmatter (dùng tên file)
         const slug = parsed.attributes.slug || path.basename(filePath, '.md');
 
+        // FIX: Xử lý múi giờ trên Vercel (UTC environment)
+        // Nếu chuỗi ngày không có múi giờ (vd: "2026-01-11 11:11"), 
+        // Vercel parse thành 11:11 UTC (tức 18:11 VN), trong khi ý user là 11:11 VN.
+        // Điều này khiến bài viết bị coi là "tương lai" và bị ẩn đi 7 tiếng.
+        // Giải pháp: Nếu phát hiện format ngày không có timezone, force về UTC+7.
+        let date = parsed.attributes.date;
+        const dateMatch = content.match(/^date:\s*["']?(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}(?::\d{2})?)["']?\s*$/m);
+        
+        if (dateMatch) {
+            // Found raw date string without timezone info
+            const rawDate = dateMatch[1];
+             // Force UTC+7 (Vietnam Time)
+             date = new Date(`${rawDate}+07:00`);
+        }
+
         return {
             id: relativePath, // Sử dụng relative path làm ID duy nhất
             title: parsed.attributes.title || 'Untitled',
@@ -168,7 +183,7 @@ class SearchService {
             slug: slug,
             url: urlPrefix + slug,
             thumbnail: parsed.attributes.thumbnail || '/photos/placeholder-m6a0q.png',
-            date: parsed.attributes.date,
+            date: date,
             category: parsed.attributes.category,
             type: type,
             author: parsed.attributes.author || '',
