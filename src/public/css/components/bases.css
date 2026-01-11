@@ -97,7 +97,7 @@ header,
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    margin-right: 25px;
+    margin-right: 18px;
     position: relative;
 
     >input {
@@ -126,7 +126,7 @@ header,
         width: 2px;
         height: 27px;
         top: 1px;
-        right: -26px;
+        right: -24px;
         background: #cecece;
     }
 }
