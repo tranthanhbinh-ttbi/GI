@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (window.initSpotlight) window.initSpotlight();
     }).catch(err => console.log("Search Spotlight failed to load", err));
 
+    // Init Notification Client
+    if (window.NotificationClient) {
+        window.NotificationClient.init();
+    }
+
     // Elements
     const filterToggle = document.getElementById('filter-toggle');
     const filterMenu = document.getElementById('filter-dropdown-menu');
