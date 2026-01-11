@@ -550,7 +550,7 @@ main {
 
 .header-notification {
     position: relative;
-    margin: 0 15px;
+    margin: 0 12px;
     display: flex;
     align-items: center;
 }
