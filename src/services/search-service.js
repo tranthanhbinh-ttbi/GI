@@ -29,28 +29,37 @@ class SearchService {
      * Khởi tạo và bắt đầu theo dõi file
      */
     async init() {
+        if (this.isInit) return;
+        this.isInit = true;
+
         console.log('[SearchService] Initializing search index...');
         const { default: chokidar } = await import('chokidar');
         if (!chokidar || typeof chokidar.watch !== 'function') {
             console.error('[SearchService] Error: Failed to load chokidar or .watch function is missing.');
             return;
         }
-        // Khởi tạo watcher
-        const watcher = chokidar.watch(this.contentDir, {
-            ignored: /(^|[\/\\])\../,
-            persistent: true,
-            ignoreInitial: false, // Index file có sẵn ngay lập tức
-            depth: 2 // Chỉ quét sâu đến folder con (news/series)
-        });
 
-        watcher
-            .on('add', path => this.addFile(path))
-            .on('change', path => this.updateFile(path))
-            .on('unlink', path => this.removeFile(path))
-            .on('ready', () => {
-                this.isReady = true;
-                console.log('[SearchService] Search index ready.');
+        return new Promise((resolve) => {
+            // Khởi tạo watcher
+            const watcher = chokidar.watch(this.contentDir, {
+                ignored: /(^|[\/\\])\../,
+                persistent: true,
+                ignoreInitial: false, // Index file có sẵn ngay lập tức
+                depth: 2 // Chỉ quét sâu đến folder con (news/series)
             });
+
+            watcher
+                .on('add', path => this.addFile(path))
+                .on('change', path => this.updateFile(path))
+                .on('unlink', path => this.removeFile(path))
+                .on('ready', () => {
+                    this.isReady = true;
+                    console.log('[SearchService] Search index ready.');
+                    resolve();
+                });
+            
+            this.watcher = watcher;
+        });
     }
 
     /**

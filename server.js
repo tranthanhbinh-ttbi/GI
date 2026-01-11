@@ -103,15 +103,17 @@ app.register(require('./src/routes/auth-routes'))
 app.register(require('./src/routes/mail-routes'))
 app.register(require('./src/controllers/subcribe-controller'))
 
+app.register(async (instance) => {
+  try {
+    await migrate();
+    await searchService.init();
+  } catch (e) {
+    console.warn('DB connect/migrate or Search Service init failed:', e.message);
+  }
+});
 
 const start = async () => {
   try {
-    try {
-      await migrate()
-      await searchService.init()
-    } catch (e) {
-      console.warn('DB connect/migrate failed, continuing to start server:', e.message)
-    }
     const port = Number(process.env.PORT) || 3000
     const host = process.env.HOST || '0.0.0.0'
     await app.listen({ port, host })
