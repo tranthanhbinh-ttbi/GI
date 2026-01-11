@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Import Spotlight Search Feature
     await import("./module/search-spotlight.js").then((module) => {
-        if (module.default) module.default();
+        if (window.initSpotlight) window.initSpotlight();
     }).catch(err => console.log("Search Spotlight failed to load", err));
 
     // Elements

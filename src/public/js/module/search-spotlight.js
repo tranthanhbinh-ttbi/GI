@@ -1,5 +1,5 @@
 
-export default function initSpotlight() {
+window.initSpotlight = function initSpotlight() {
     // Spotlight Logic
     const spotlightOverlay = document.getElementById('spotlight-overlay');
     const spotlightInput = document.getElementById('spotlight-input');
