@@ -3,12 +3,15 @@
  * Connects to SSE stream and handles Toast UI
  */
 
-(function() {
+window.NotificationClient = (function() {
     const streamUrl = '/api/notifications/stream';
     let evtSource;
     const reconnectInterval = 5000;
+    let isInitialized = false;
 
     function connect() {
+        if (evtSource) evtSource.close();
+        
         evtSource = new EventSource(streamUrl);
 
         evtSource.onmessage = function(event) {
@@ -24,7 +27,9 @@
         evtSource.onerror = function(err) {
             console.error('EventSource failed:', err);
             evtSource.close();
-            setTimeout(connect, reconnectInterval);
+            if (isInitialized) {
+                setTimeout(connect, reconnectInterval);
+            }
         };
     }
 
@@ -110,11 +115,33 @@
         }
     }
 
-    // Initialize
-    if (window.EventSource) {
-        connect();
-        fetchInitialCount();
-    } else {
-        console.warn('Your browser does not support Server-Sent Events.');
+    function init() {
+        if (isInitialized) return;
+        isInitialized = true;
+        
+        if (window.EventSource) {
+            connect();
+            fetchInitialCount();
+        } else {
+            console.warn('Your browser does not support Server-Sent Events.');
+        }
     }
+
+    function stop() {
+        isInitialized = false;
+        if (evtSource) {
+            evtSource.close();
+            evtSource = null;
+        }
+        const badge = document.querySelector('.notif-badge');
+        if (badge) {
+            badge.style.display = 'none';
+            badge.setAttribute('data-count', '0');
+        }
+    }
+
+    return {
+        init: init,
+        stop: stop
+    };
 })();
