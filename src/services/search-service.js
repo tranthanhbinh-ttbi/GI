@@ -48,11 +48,20 @@ class SearchService {
                 depth: 2 // Chỉ quét sâu đến folder con (news/series)
             });
 
+            const timeout = setTimeout(() => {
+                if (!this.isReady) {
+                    console.warn('[SearchService] Warning: Initialization timed out (no ready event). Proceeding anyway.');
+                    this.isReady = true;
+                    resolve();
+                }
+            }, 5000); // 5s timeout
+
             watcher
                 .on('add', path => this.addFile(path))
                 .on('change', path => this.updateFile(path))
                 .on('unlink', path => this.removeFile(path))
                 .on('ready', () => {
+                    clearTimeout(timeout);
                     this.isReady = true;
                     console.log('[SearchService] Search index ready.');
                     resolve();

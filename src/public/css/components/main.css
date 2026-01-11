@@ -593,7 +593,7 @@ main {
     width: 20px !important;
     height: 20px !important;
     border-radius: 50% !important;
-    display: flex !important;
+    display: flex;
     align-items: center !important;
     justify-content: center !important;
     border: 3px solid var(--gen-white) !important;
