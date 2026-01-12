@@ -19,13 +19,13 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Tiêu đề", name: "title", widget: "string" }
-      - { label: "Chủ đề", name: "topic", widget: "string" }
-      - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm" }
-      - { label: "Mô tả ngắn", name: "description", widget: "text" }
       - { label: "Danh mục", name: "category", widget: "select", options: ["Bài Viết", "Video", "Podcast"] }
+      - { label: "Chủ đề", name: "topic", widget: "string" }
+      - { label: "Tiêu đề", name: "title", widget: "string" }
+      - { label: "Mô tả ngắn", name: "description", widget: "text" }
       - { label: "Ảnh bìa", name: "thumbnail", widget: "image" }
       - { label: "Nội dung", name: "body", widget: "markdown" }
+      - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm", dateFormat: "DD/MM/YYYY" }
 
   - name: "explore"
     label: "Trang Khám Phá"
@@ -33,13 +33,13 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Tiêu đề", name: "title", widget: "string" }
       - { label: "Chủ đề", name: "topic", widget: "string" }
-      - { label: "Tác giả", name: "author", widget: "string" }
-      - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm" }
+      - { label: "Tiêu đề", name: "title", widget: "string" }
       - { label: "Mô tả ngắn", name: "description", widget: "text" }
       - { label: "Ảnh bìa", name: "thumbnail", widget: "image" }
       - { label: "Nội dung", name: "body", widget: "markdown" }
+      - { label: "Tác giả", name: "author", widget: "string" }
+      - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm", dateFormat: "DD/MM/YYYY" }
 
   - name: "news"
     label: "Trang Tin Tức"
@@ -47,9 +47,9 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Tiêu đề", name: "title", widget: "string" }
-      - { label: "Ngày đăng", name: "date", widget: "datetime" }
       - { label: "Danh mục", name: "category", widget: "select", options: ["Gender Insights", "Đối Tác", "Truyền Thông"] }
-      - { label: "Ảnh đại diện", name: "thumbnail", widget: "image" }
+      - { label: "Tiêu đề", name: "title", widget: "string" }
       - { label: "Mô tả ngắn", name: "description", widget: "text" }
+      - { label: "Ảnh bìa", name: "thumbnail", widget: "image" }
       - { label: "Nội dung chi tiết", name: "body", widget: "markdown" }
+      - { label: "Ngày đăng", name: "date", widget: "datetime", dateFormat: "DD/MM/YYYY" }
