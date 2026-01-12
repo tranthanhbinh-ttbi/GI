@@ -1,24 +1,7 @@
-const notificationService = require('../services/notification-service');
 const { Notification, UserNotification, sequelize } = require('../models');
 const { Op } = require('sequelize');
 
 module.exports = {
-  stream: (req, reply) => {
-    reply.hijack();
-    // Set headers for SSE
-    reply.raw.setHeader('Content-Type', 'text/event-stream');
-    reply.raw.setHeader('Cache-Control', 'no-cache');
-    reply.raw.setHeader('Connection', 'keep-alive');
-    reply.raw.setHeader('Access-Control-Allow-Origin', '*');
-    reply.raw.setHeader('X-No-Compression', 'true');
-
-    // Send initial comment to keep connection open and establish stream
-    reply.raw.write(': connected\n\n');
-
-    // Add client to service
-    notificationService.addClient(reply);
-  },
-
   getRecent: async (req, reply) => {
     try {
       const limit = req.query.limit ? parseInt(req.query.limit) : 20;

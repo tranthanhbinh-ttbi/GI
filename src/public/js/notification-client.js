@@ -1,37 +1,10 @@
 /**
  * Notification Client
- * Connects to SSE stream and handles Toast UI
+ * Handles Initial Badge Count and Toast UI (if triggered manually)
  */
 
 window.NotificationClient = (function() {
-    const streamUrl = '/api/notifications/stream';
-    let evtSource;
-    const reconnectInterval = 5000;
     let isInitialized = false;
-
-    function connect() {
-        if (evtSource) evtSource.close();
-        
-        evtSource = new EventSource(streamUrl);
-
-        evtSource.onmessage = function(event) {
-            try {
-                const data = JSON.parse(event.data);
-                showToast(data);
-                updateNotificationBadge();
-            } catch (e) {
-                console.error('Error parsing notification data', e);
-            }
-        };
-
-        evtSource.onerror = function(err) {
-            console.error('EventSource failed:', err);
-            evtSource.close();
-            if (isInitialized) {
-                setTimeout(connect, reconnectInterval);
-            }
-        };
-    }
 
     function showToast(notification) {
         const container = document.getElementById('toast-container');
@@ -73,18 +46,6 @@ window.NotificationClient = (function() {
         }, 5000);
     }
 
-    function updateNotificationBadge() {
-        // Logic to update badge count if existing
-        const badge = document.querySelector('.notif-badge');
-        if (badge) {
-            let count = parseInt(badge.getAttribute('data-count') || '0');
-            count++;
-            badge.innerText = count > 99 ? '99+' : count;
-            badge.setAttribute('data-count', count);
-            badge.style.display = 'flex';
-        }
-    }
-
     async function fetchInitialCount() {
         try {
             // Fetch recent notifications to set initial badge count (e.g., notifications from today)
@@ -118,30 +79,11 @@ window.NotificationClient = (function() {
     function init() {
         if (isInitialized) return;
         isInitialized = true;
-        
-        if (window.EventSource) {
-            connect();
-            fetchInitialCount();
-        } else {
-            console.warn('Your browser does not support Server-Sent Events.');
-        }
-    }
-
-    function stop() {
-        isInitialized = false;
-        if (evtSource) {
-            evtSource.close();
-            evtSource = null;
-        }
-        const badge = document.querySelector('.notif-badge');
-        if (badge) {
-            badge.style.display = 'none';
-            badge.setAttribute('data-count', '0');
-        }
+        fetchInitialCount();
     }
 
     return {
         init: init,
-        stop: stop
+        showToast: showToast
     };
 })();

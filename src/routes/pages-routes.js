@@ -1,5 +1,5 @@
 const searchService = require('../services/search-service');
-const { Notification, UserNotification } = require('../models');
+const { Notification, UserNotification, PostMeta } = require('../models');
 
 
 async function Pages(fastify, options) {
@@ -10,7 +10,8 @@ async function Pages(fastify, options) {
         const result = searchService.search('', 1, 10);
         return reply.viewAsync('trang-chu/index', { 
             Current_Page: 'trang-chu',
-            posts: result.data 
+            posts: result.data,
+            user: request.user 
         });
     });
 
@@ -38,7 +39,10 @@ async function Pages(fastify, options) {
                 // Tạm thời lấy bài mới nhất
                 const result = searchService.search('', 1, 12);
                 posts = result.data;
-            } else if (route.pageName === 'thong-bao') {
+            }
+
+            // Xử lý riêng cho trang Thông Báo
+            if (route.pageName === 'thong-bao') {
                 // Check authentication
                 if (!request.user) {
                     return reply.redirect('/?login=true');
@@ -78,11 +82,38 @@ async function Pages(fastify, options) {
                     return reply.viewAsync(route.template, { 
                         Current_Page: route.pageName,
                         notifications: notifications,
-                        popularPosts: [] // Sidebar might not be needed or fetch if desired
+                        popularPosts: [], 
+                        user: request.user
                     });
                 } catch (err) {
                     console.error('Error fetching notifications:', err);
                     posts = []; // Fallback
+                }
+            }
+
+            // --- Bổ sung stats từ DB (Views, Rating) cho các trang Listing còn lại ---
+            if (posts && posts.length > 0) {
+                try {
+                    const slugs = posts.map(p => p.slug);
+                    const metas = await PostMeta.findAll({
+                        where: { slug: slugs },
+                        raw: true
+                    });
+                    
+                    // Map meta back to posts
+                    const metaMap = new Map(metas.map(m => [m.slug, m]));
+                    posts = posts.map(p => {
+                        const m = metaMap.get(p.slug);
+                        return {
+                            ...p,
+                            views: m ? m.views : 0,
+                            avgRating: m ? m.avgRating : 0,
+                            totalRatings: m ? m.totalRatings : 0
+                        };
+                    });
+                } catch (e) {
+                    console.error('Failed to fetch post stats:', e);
+                    // Không làm gì cả, giữ nguyên posts gốc để hiển thị
                 }
             }
 
@@ -100,7 +131,8 @@ async function Pages(fastify, options) {
             return reply.viewAsync(route.template, { 
                 Current_Page: route.pageName,
                 posts: posts,
-                popularPosts: popularPosts
+                popularPosts: popularPosts,
+                user: request.user
             });
         });
     }
@@ -123,10 +155,18 @@ async function Pages(fastify, options) {
             author: post.author
         }, 5);
 
+        // Lấy bài viết phổ biến cho Sidebar (Context-aware)
+        // Logic giống với trang listing: sort by popular, same type
+        const popularFilter = { sort: 'popular', type: post.type };
+        const popularData = searchService.search('', 1, 5, popularFilter);
+        const popularPosts = popularData.data;
+
         return rep.viewAsync(template, {
             Current_Page: pageName,
             post: post,
-            posts: related // Sidebar trong post.ejs dùng biến 'posts' để loop bài liên quan
+            posts: related, // Sidebar trong post.ejs dùng biến 'posts' để loop bài liên quan (giữ lại để tương thích cũ)
+            popularPosts: popularPosts, // Truyền thêm biến này cho Widget Phổ Biến chuẩn
+            user: req.user
         });
     };
 

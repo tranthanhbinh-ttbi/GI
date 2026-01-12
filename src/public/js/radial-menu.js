@@ -1,7 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
+window.initRadialMenus = function () {
     const wrappers = document.querySelectorAll('.share-wrapper');
 
     wrappers.forEach(wrapper => {
+        if (wrapper.dataset.radialInit === 'true') return; // Prevent double init
+        wrapper.dataset.radialInit = 'true';
+
         const btn = wrapper.querySelector('.card-share-button') || wrapper.querySelector('.slide-share-button');
         const menu = wrapper.querySelector('.radial-share-menu');
         const track = wrapper.querySelector('.radial-track');
@@ -67,9 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
             isOpen = !isOpen;
             // Close others
             if (isOpen) {
-                wrappers.forEach(w => {
+                document.querySelectorAll('.share-wrapper').forEach(w => {
                     if (w !== wrapper) {
-                        w.querySelector('.radial-share-menu').classList.remove('active');
+                        const otherMenu = w.querySelector('.radial-share-menu');
+                        if (otherMenu) otherMenu.classList.remove('active');
+                        // Reset rotation of others if needed, or just close them
                     }
                 });
             }
@@ -236,4 +241,8 @@ document.addEventListener('DOMContentLoaded', () => {
             render();
         }, { passive: false });
     });
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.initRadialMenus) window.initRadialMenus();
 });

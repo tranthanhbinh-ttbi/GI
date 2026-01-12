@@ -24,7 +24,7 @@ try {
   console.warn('SESSION_SECRET is invalid base64. Using a random ephemeral 32-byte key.')
 }
 
-const app = fastify({ trustProxy: true, logger: false, connectionTimeout: 5000, bodyLimit: 1048576 * 2 })
+const app = fastify({ trustProxy: true, logger: false, connectionTimeout: 5000, bodyLimit: 1048576 * 2, pluginTimeout: 60000 })
 
 app.register(require('@fastify/compress'), {
   global: true,
@@ -103,17 +103,29 @@ app.register(require('./src/routes/auth-routes'))
 app.register(require('./src/routes/mail-routes'))
 app.register(require('./src/controllers/subcribe-controller'))
 
-app.register(async (instance) => {
+// --- Service Initialization Logic ---
+const initServices = async () => {
   try {
+    console.log('Starting DB migration...');
     await migrate();
+    console.log('DB migration finished. Starting SearchService...');
     await searchService.init();
+    console.log('SearchService initialized.');
   } catch (e) {
     console.warn('DB connect/migrate or Search Service init failed:', e.message);
   }
-});
+};
+
+// Attach to app for reuse in Vercel/api-routes
+app.initServices = initServices;
+app.isServicesInitialized = false;
 
 const start = async () => {
   try {
+    // Run initialization BEFORE listening, bypassing Fastify plugin timeout
+    await initServices();
+    app.isServicesInitialized = true;
+
     const port = Number(process.env.PORT) || 3000
     const host = process.env.HOST || '0.0.0.0'
     await app.listen({ port, host })
@@ -135,4 +147,4 @@ if (require.main === module && !process.env.VERCEL) {
 }
 
 module.exports = app;
-// Server updated at 2026-01-03
+// Server updated at 2026-01-11

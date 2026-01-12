@@ -296,11 +296,6 @@
         toast('Đăng nhập thành công')
         writeSession(LOGIN_TOAST_KEY, '1')
       }
-      
-      // Initialize notification client
-      if (window.NotificationClient) {
-        window.NotificationClient.init()
-      }
 
       // connectWS()
       // Prefill email field on home page when logged in

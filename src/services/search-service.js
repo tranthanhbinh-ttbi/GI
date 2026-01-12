@@ -4,10 +4,12 @@ const fs = require('fs');
 const path = require('path');
 const frontMatter = require('front-matter');
 const notificationService = require('./notification-service');
+const MarkdownIt = require('markdown-it');
 
 
 class SearchService {
     constructor() {
+        this.md = new MarkdownIt({ html: true });
         // Cấu hình FlexSearch Document
         this.index = new Document({
             charset: "latin:extra",
@@ -16,7 +18,7 @@ class SearchService {
             document: {
                 id: "id",
                 index: ["title", "description", "content"], // Index content để tìm kiếm
-                store: ["title", "description", "slug", "url", "thumbnail", "date", "category", "type", "author", "rating", "ratingCount"] // KHÔNG lưu content vào store để tiết kiệm RAM
+                store: ["title", "description", "slug", "url", "thumbnail", "date", "displayDate", "category", "type", "author", "rating", "ratingCount"] // KHÔNG lưu content vào store để tiết kiệm RAM
             }
         });
 
@@ -66,7 +68,7 @@ class SearchService {
                     console.log('[SearchService] Search index ready.');
                     resolve();
                 });
-            
+
             this.watcher = watcher;
         });
     }
@@ -81,7 +83,7 @@ class SearchService {
             const data = this.parseFile(filePath);
             if (data) {
                 this.index.add(data);
-                
+
                 // Tối ưu RAM: Chỉ lưu metadata vào Map, loại bỏ content text dài
                 const { content, ...metadata } = data;
                 this.documents.set(data.id, metadata);
@@ -107,12 +109,12 @@ class SearchService {
      */
     updateFile(filePath) {
         if (path.extname(filePath) !== '.md') return;
-        
+
         try {
             const data = this.parseFile(filePath);
             if (data) {
                 this.index.update(data);
-                
+
                 // Tối ưu RAM: Chỉ lưu metadata vào Map
                 const { content, ...metadata } = data;
                 this.documents.set(data.id, metadata);
@@ -128,7 +130,7 @@ class SearchService {
      */
     removeFile(filePath) {
         if (path.extname(filePath) !== '.md') return;
-        
+
         // ID là đường dẫn tương đối để đảm bảo duy nhất
         const id = path.relative(this.contentDir, filePath);
         this.index.remove(id);
@@ -143,7 +145,7 @@ class SearchService {
         const content = fs.readFileSync(filePath, 'utf8');
         const parsed = frontMatter(content);
         const relativePath = path.relative(this.contentDir, filePath);
-        
+
         // Xác định loại bài viết dựa trên thư mục cha
         const folderName = path.dirname(relativePath).split(path.sep)[0];
         let type = 'other';
@@ -167,12 +169,24 @@ class SearchService {
         // Giải pháp: Nếu phát hiện format ngày không có timezone, force về UTC+7.
         let date = parsed.attributes.date;
         const dateMatch = content.match(/^date:\s*["']?(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}(?::\d{2})?)["']?\s*$/m);
-        
+
         if (dateMatch) {
             // Found raw date string without timezone info
             const rawDate = dateMatch[1];
-             // Force UTC+7 (Vietnam Time)
-             date = new Date(`${rawDate}+07:00`);
+            // Force UTC+7 (Vietnam Time)
+            date = new Date(`${rawDate}+07:00`);
+        }
+
+        // Format displayDate
+        let displayDate = '';
+        if (date) {
+            const d = new Date(date);
+            if (!isNaN(d.getTime())) {
+                const day = d.getDate().toString().padStart(2, '0');
+                const month = (d.getMonth() + 1).toString().padStart(2, '0');
+                const year = d.getFullYear();
+                displayDate = `${day} Tháng ${month}, ${year}`;
+            }
         }
 
         return {
@@ -184,6 +198,7 @@ class SearchService {
             url: urlPrefix + slug,
             thumbnail: parsed.attributes.thumbnail || '/photos/placeholder-m6a0q.png',
             date: date,
+            displayDate: displayDate, // Thêm formatted date
             category: parsed.attributes.category,
             type: type,
             author: parsed.attributes.author || '',
@@ -198,7 +213,7 @@ class SearchService {
      */
     generateQueryVariations(query) {
         if (!query) return [];
-        
+
         const variations = new Set([query]);
         const lowerQuery = query.toLowerCase();
 
@@ -221,7 +236,7 @@ class SearchService {
         // Regex bắt các số đứng riêng lẻ hoặc kèm ký tự biên
         const regex = /\b([0-9]|10)\b/g;
         let match;
-        
+
         // Nếu query chứa số, thay thế bằng chữ
         while ((match = regex.exec(lowerQuery)) !== null) {
             const num = match[0];
@@ -235,7 +250,7 @@ class SearchService {
 
         // Trường hợp ngược lại: Nếu query chứa chữ số dạng text (ví dụ "tập ba") -> "tập 3"
         // (Optional: Có thể thêm nếu cần, nhưng thường STT trả về số nhiều hơn)
-        
+
         return Array.from(variations);
     }
 
@@ -256,8 +271,8 @@ class SearchService {
             // Chạy tìm kiếm cho từng biến thể
             queryVariations.forEach(q => {
                 const results = this.index.search(q, {
-                    limit: 1000, 
-                    enrich: true, 
+                    limit: 1000,
+                    enrich: true,
                     bool: "or"
                 });
 
@@ -288,8 +303,8 @@ class SearchService {
             const cat = filters.category.toLowerCase();
             docs = docs.filter(doc => {
                 return (doc.category && doc.category.toLowerCase().includes(cat)) ||
-                       (doc.slug && doc.slug.toLowerCase().includes(cat)) ||
-                       (doc.title && doc.title.toLowerCase().includes(cat));
+                    (doc.slug && doc.slug.toLowerCase().includes(cat)) ||
+                    (doc.title && doc.title.toLowerCase().includes(cat));
             });
         }
 
@@ -314,8 +329,8 @@ class SearchService {
         if (!filters.includeFuture) {
             const now = new Date();
             docs = docs.filter(doc => {
-                 if (!doc.date) return true; // Nếu không có date, mặc định hiện (hoặc ẩn tùy logic)
-                 return new Date(doc.date) <= now;
+                if (!doc.date) return true; // Nếu không có date, mặc định hiện (hoặc ẩn tùy logic)
+                return new Date(doc.date) <= now;
             });
         }
 
@@ -334,7 +349,7 @@ class SearchService {
                     const docDate = new Date(doc.date);
                     const diffTime = now - docDate; // miliseconds
                     const diffDays = diffTime / (1000 * 60 * 60 * 24);
-                    
+
                     switch (filters.time) {
                         case 'today': return diffDays <= 1;
                         case 'week': return diffDays <= 7;
@@ -368,12 +383,12 @@ class SearchService {
                 });
             }
         } else {
-             // Mặc định (nếu không truyền sort):
-             // Có query -> Giữ Relevance
-             // Không query -> Mới nhất
-             if (!query) {
-                 docs.sort((a, b) => new Date(b.date) - new Date(a.date));
-             }
+            // Mặc định (nếu không truyền sort):
+            // Có query -> Giữ Relevance
+            // Không query -> Mới nhất
+            if (!query) {
+                docs.sort((a, b) => new Date(b.date) - new Date(a.date));
+            }
         }
 
         // --- Pagination ---
@@ -381,7 +396,7 @@ class SearchService {
         const totalPages = Math.ceil(total / limit);
         const startIndex = (page - 1) * limit;
         const endIndex = page * limit;
-        
+
         const paginatedDocs = docs.slice(startIndex, endIndex);
 
         return {
@@ -404,14 +419,33 @@ class SearchService {
         // Lưu ý: documents map lưu key là relative path, nên phải duyệt value để tìm slug
         // Đây là O(n), nhưng với memory map thì rất nhanh.
         // Nếu cần nhanh hơn, có thể tạo thêm Map<Slug, ID>
-        
+
         for (const doc of this.documents.values()) {
             if (doc.slug === slug) {
                 // Check ngày xuất bản
                 if (!includeFuture && doc.date && new Date(doc.date) > new Date()) {
                     return null; // Chưa đến giờ đăng
                 }
-                return doc;
+                
+                // Re-read content from file (because content is stripped from memory cache)
+                try {
+                    const fullPath = path.join(this.contentDir, doc.id); // doc.id is relative path
+                    const fileContent = fs.readFileSync(fullPath, 'utf8');
+                    const parsed = frontMatter(fileContent);
+                    
+                    const htmlContent = this.md.render(parsed.body);
+
+                    // Return merged object: cached metadata + fresh content body
+                    // Returning both 'content' and 'body' to support inconsistent view templates (series uses body, others use content)
+                    return {
+                        ...doc,
+                        content: htmlContent,
+                        body: htmlContent
+                    };
+                } catch (err) {
+                    console.error(`[SearchService] Error reading content for slug ${slug}:`, err);
+                    return doc; // Fallback to doc without body if read fails
+                }
             }
         }
         return null;
@@ -425,11 +459,11 @@ class SearchService {
      */
     getRelatedPosts(currentSlug, criteria = {}, limit = 5) {
         let allDocs = Array.from(this.documents.values());
-        
+
         // 1. Lọc bài hiện tại và bài tương lai
         const now = new Date();
-        allDocs = allDocs.filter(doc => 
-            doc.slug !== currentSlug && 
+        allDocs = allDocs.filter(doc =>
+            doc.slug !== currentSlug &&
             (!doc.date || new Date(doc.date) <= now)
         );
 

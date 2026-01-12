@@ -35,6 +35,7 @@ collections:
     fields:
       - { label: "Tiêu đề", name: "title", widget: "string" }
       - { label: "Chủ đề", name: "topic", widget: "string" }
+      - { label: "Tác giả", name: "author", widget: "string" }
       - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm" }
       - { label: "Mô tả ngắn", name: "description", widget: "text" }
       - { label: "Ảnh bìa", name: "thumbnail", widget: "image" }

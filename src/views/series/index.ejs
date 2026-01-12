@@ -99,44 +99,24 @@
                                                             </svg>
                                                         </span>
                                                         <span class="hero-slide-views">
-                                                            <%= post.views || Math.floor(Math.random() * 1000) + 500 %>
+                                                            <%= post.views || 0 %>
                                                                 views
                                                         </span>
                                                         <span class="hero-slide-separator">/</span>
                                                         <div class="hero-slide-rating">
                                                             <div class="flex items-center">
-                                                                <svg class="icon-sm text-yellow-400" fill="currentColor"
-                                                                    viewBox="0 0 20 20">
-                                                                    <path
-                                                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z">
-                                                                    </path>
-                                                                </svg>
-                                                                <svg class="icon-sm text-yellow-400" fill="currentColor"
-                                                                    viewBox="0 0 20 20">
-                                                                    <path
-                                                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z">
-                                                                    </path>
-                                                                </svg>
-                                                                <svg class="icon-sm text-yellow-400" fill="currentColor"
-                                                                    viewBox="0 0 20 20">
-                                                                    <path
-                                                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z">
-                                                                    </path>
-                                                                </svg>
-                                                                <svg class="icon-sm text-yellow-400" fill="currentColor"
-                                                                    viewBox="0 0 20 20">
-                                                                    <path
-                                                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z">
-                                                                    </path>
-                                                                </svg>
-                                                                <svg class="icon-sm text-gray-300" fill="currentColor"
-                                                                    viewBox="0 0 20 20">
-                                                                    <path
-                                                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z">
-                                                                    </path>
-                                                                </svg>
+                                                                <% const hRating=post.avgRating || 0; %>
+                                                                    <% for(let i=1; i<=5; i++) { %>
+                                                                        <svg class="icon-sm <%= i <= Math.round(hRating) ? 'text-yellow-400' : 'text-gray-300' %>"
+                                                                            fill="currentColor" viewBox="0 0 20 20">
+                                                                            <path
+                                                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.172c.969 0 1.371 1.24.588 1.81l-3.38 2.455 1.287 3.971c.3.921-.755 1.688-1.54 1.182L10 13.34l-3.379 2.455c-.784.506-1.84-.261-1.54-1.182l1.287-3.971-3.38-2.455c-.783-.57-.38-1.81.588-1.81h4.172l1.286-3.971z">
+                                                                            </path>
+                                                                        </svg>
+                                                                        <% } %>
                                                             </div>
-                                                            <span class="hero-slide-rating-count">(98)</span>
+                                                            <span class="hero-slide-rating-count">(<%= post.totalRatings
+                                                                    || 0 %>)</span>
                                                         </div>
                                                     </div>
                                                     <a href="/series/<%= post.slug %>" title="<%= post.title %>">
@@ -162,39 +142,49 @@
                                                         <div class="radial-backdrop"></div>
                                                         <div class="radial-track">
                                                             <!-- Facebook -->
-                                                            <a href="#" class="share-item" title="Facebook">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
-  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
-</svg>
+                                                            <a href="#" class="share-item share-action"
+                                                                data-platform="facebook" data-slug="<%= post.slug %>"
+                                                                data-title="<%= post.title %>" title="Facebook">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                    height="16" fill="currentColor"
+                                                                    class="bi bi-facebook" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+                                                                </svg>
+                                                            </a>
+                                                            <!-- Messenger -->
+                                                            <a href="#" class="share-item share-action"
+                                                                data-platform="messenger" data-slug="<%= post.slug %>"
+                                                                data-title="<%= post.title %>" title="Messenger">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                    height="16" fill="currentColor"
+                                                                    class="bi bi-messenger" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.64.64 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.64.64 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76m5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
+                                                                </svg>
                                                             </a>
                                                             <!-- Twitter/X -->
-                                                            <a href="#" class="share-item" title="Twitter">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter-x" viewBox="0 0 16 16">
-  <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
-</svg>
-                                                            </a>
-                                                            <!-- LinkedIn -->
-                                                            <a href="#" class="share-item" title="LinkedIn">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
-  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
-</svg>
-                                                            </a>
-                                                            <a href="#" class="share-item" title="Telegram">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telegram" viewBox="0 0 16 16">
-  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.287 5.906q-1.168.486-4.666 2.01-.567.225-.595.442c-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294q.39.01.868-.32 3.269-2.206 3.374-2.23c.05-.012.12-.026.166.016s.042.12.037.141c-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8 8 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629q.14.092.27.187c.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.4 1.4 0 0 0-.013-.315.34.34 0 0 0-.114-.217.53.53 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09"/>
-</svg>
-                                                            </a>
-                                                            <!-- Email -->
-                                                            <a href="#" class="share-item" title="Email">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
-  <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
-</svg>
+                                                            <a href="#" class="share-item share-action"
+                                                                data-platform="twitter" data-slug="<%= post.slug %>"
+                                                                data-title="<%= post.title %>" title="Twitter">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                    height="16" fill="currentColor"
+                                                                    class="bi bi-twitter-x" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                                                                </svg>
                                                             </a>
                                                             <!-- Copy Link -->
-                                                            <a href="#" class="share-item" title="Sao chép liên kết">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
-</svg>
+                                                            <a href="#" class="share-item share-action"
+                                                                data-platform="copy" data-slug="<%= post.slug %>"
+                                                                data-title="<%= post.title %>"
+                                                                title="Sao chép liên kết">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                    height="16" fill="currentColor" class="bi bi-copy"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z" />
+                                                                </svg>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -219,7 +209,7 @@
                 <div class="main-layout-grid">
                     <section class="main-column">
 
-                        <div class="filter-bar-container">
+                        <div class="filter-bar-container" style="justify-content: space-between; align-items: center;">
                             <div class="filter-bar no-scrollbar">
                                 <button class="filter-button filter-button-active">
                                     Tất Cả
@@ -254,6 +244,28 @@
                                     <span>Podcast</span>
                                 </button>
                             </div>
+
+                            <!-- View Switcher -->
+                            <div class="view-switcher">
+                                <button class="view-btn view-btn-active" data-view="grid" title="Chế độ Lưới">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                        class="bi bi-grid-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3A1.5 1.5 0 0 1 15 10.5v3A1.5 1.5 0 0 1 13.5 15h-3A1.5 1.5 0 0 1 9 13.5z" />
+                                    </svg>
+                                </button>
+                                <button class="view-btn" data-view="list" title="Chế độ Danh sách">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                        class="bi bi-list-task" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z" />
+                                        <path
+                                            d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z" />
+                                        <path fill-rule="evenodd"
+                                            d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM3 11H2v1h1z" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
 
 
@@ -275,41 +287,48 @@
                             <h3 class="widget-title">Bài Viết Phổ Biến</h3>
                             <span class="widget-decorator"></span>
                             <div class="popular-posts-list">
-                                <% if (typeof popularPosts !== 'undefined' && popularPosts.length > 0) { %>
-                                    <% popularPosts.forEach(post => { %>
+                                <% if (typeof popularPosts !=='undefined' && popularPosts.length> 0) { %>
+                                    <% popularPosts.forEach(post=> { %>
                                         <div class="popular-post-card">
                                             <div class="popular-card-image-container">
                                                 <a href="/series/<%= post.slug %>">
-                                                    <img class="popular-card-image" src="<%= post.thumbnail %>" alt="<%= post.title %>">
+                                                    <img class="popular-card-image" src="<%= post.thumbnail %>"
+                                                        alt="<%= post.title %>">
                                                 </a>
-                                                <% 
-                                                let catBadgeClass = 'bg-red-600';
-                                                if (post.category === 'Video') catBadgeClass = 'bg-blue-600';
-                                                if (post.category === 'Podcast') catBadgeClass = 'bg-green-600';
-                                                %>
-                                                <span class="card-category-badge <%= catBadgeClass %>"><%= post.category || 'Bài Viết' %></span>
-                                                <span class="popular-card-read-time-badge">
-                                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                    </svg>
-                                                    <span>5 Mins Read</span>
-                                                </span>
+                                                <% let catBadgeClass='bg-red-600' ; if (post.category==='Video' )
+                                                    catBadgeClass='bg-blue-600' ; if (post.category==='Podcast' )
+                                                    catBadgeClass='bg-green-600' ; %>
+                                                    <span class="card-category-badge <%= catBadgeClass %>">
+                                                        <%= post.category || 'Bài Viết' %>
+                                                    </span>
+                                                    <span class="popular-card-read-time-badge">
+                                                        <svg class="icon-sm" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                        </svg>
+                                                        <span>5 Mins Read</span>
+                                                    </span>
                                             </div>
                                             <div class="popular-card-content">
                                                 <div class="popular-card-meta">
-                                                    <span><%= post.displayDate || (new Date(post.date).toLocaleDateString('vi-VN')) %></span>
+                                                    <span>
+                                                        <%= post.displayDate || (new
+                                                            Date(post.date).toLocaleDateString('vi-VN')) %>
+                                                    </span>
                                                 </div>
                                                 <h4 class="popular-card-title">
-                                                    <a href="/series/<%= post.slug %>"><%= post.title %></a>
+                                                    <a href="/series/<%= post.slug %>">
+                                                        <%= post.title %>
+                                                    </a>
                                                 </h4>
                                             </div>
                                         </div>
-                                    <% }) %>
-                                <% } else { %>
-                                    <p>Chưa có bài viết phổ biến.</p>
-                                <% } %>
+                                        <% }) %>
+                                            <% } else { %>
+                                                <p>Chưa có bài viết phổ biến.</p>
+                                                <% } %>
                             </div>
                         </div>
 
@@ -326,6 +345,44 @@
                 document.addEventListener('DOMContentLoaded', () => {
                     const gridContainer = document.getElementById('series-grid-container');
                     const loadMoreBtn = document.getElementById('btn-load-more-series');
+
+                    // --- View Switcher Logic ---
+                    const viewBtns = document.querySelectorAll('.view-btn');
+
+                    function setView(viewMode) {
+                        // 1. Toggle class
+                        if (viewMode === 'list') {
+                            gridContainer.classList.add('view-list');
+                        } else {
+                            gridContainer.classList.remove('view-list');
+                        }
+
+                        // 2. Update buttons
+                        viewBtns.forEach(btn => {
+                            if (btn.dataset.view === viewMode) {
+                                btn.classList.add('view-btn-active');
+                                btn.classList.remove('text-gray-400'); // Assuming inactive style
+                            } else {
+                                btn.classList.remove('view-btn-active');
+                                btn.classList.add('text-gray-400');
+                            }
+                        });
+
+                        // 3. Persist
+                        localStorage.setItem('seriesViewMode', viewMode);
+                    }
+
+                    // Init from localStorage
+                    const savedView = localStorage.getItem('seriesViewMode') || 'grid';
+                    setView(savedView);
+
+                    // Event listeners
+                    viewBtns.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const mode = btn.dataset.view;
+                            setView(mode);
+                        });
+                    });
 
                     let currentFilter = {
                         type: 'series',
@@ -389,6 +446,11 @@
                                         loadMoreBtn.style.display = 'none';
                                     }
                                 }
+
+                                if (window.initRadialMenus) {
+                                    window.initRadialMenus();
+                                }
+                                initShareButtons();
                             }
                         } catch (error) {
                             console.error(error);
@@ -399,6 +461,53 @@
                             }
                         }
                     }
+
+                    // --- Share Buttons Handling ---
+                    function initShareButtons() {
+                        const shareBtns = document.querySelectorAll('.share-action');
+                        shareBtns.forEach(btn => {
+                            // Avoid double binding
+                            if (btn.dataset.bound) return;
+                            btn.dataset.bound = true;
+
+                            btn.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                const platform = btn.dataset.platform;
+                                const slug = btn.dataset.slug;
+                                const title = btn.dataset.title;
+                                const url = `${window.location.origin}/series/${slug}`;
+
+                                switch (platform) {
+                                    case 'facebook':
+                                        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
+                                        break;
+                                    case 'twitter':
+                                        window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank', 'width=600,height=400');
+                                        break;
+                                    case 'messenger':
+                                        const fbAppId = '1501202124127451'; // Thay bằng App ID thật của bạn
+                                        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                                        if (isMobile) {
+                                            window.location.href = `fb-messenger://share/?link=${encodeURIComponent(url)}`;
+                                        } else {
+                                            window.open(`https://www.facebook.com/dialog/send?link=${encodeURIComponent(url)}&app_id=${fbAppId}&redirect_uri=${encodeURIComponent(url)}`, '_blank', 'width=1100,height=600');
+                                        }
+                                        break;
+                                    case 'copy':
+                                        navigator.clipboard.writeText(url).then(() => {
+                                            alert('Đã sao chép liên kết: ' + url);
+                                        }).catch(() => {
+                                            console.error('Copy failed');
+                                        });
+                                        break;
+                                }
+                            });
+                        });
+                    }
+
+                    // Initial calls
+                    if (window.initRadialMenus) window.initRadialMenus();
+                    initShareButtons();
 
                     const categoryBtns = document.querySelectorAll('.filter-button');
                     categoryBtns.forEach(btn => {
