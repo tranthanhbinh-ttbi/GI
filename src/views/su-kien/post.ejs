@@ -90,9 +90,9 @@
                         <% upcomingEvents.forEach((event, index) => { %>
                             <div class="post-item">
                                 <span class="rank"><%= index + 1 %></span>
-                                <a href="/su-kien/post/<%= event.slug %>"><img src="/photos/placeholder-m6a0q.png" alt="<%= event.title %>"></a>
+                                <a href="/su-kien/<%= event.slug %>"><img src="/photos/placeholder-m6a0q.png" alt="<%= event.title %>"></a>
                                 <div class="post-item-info">
-                                    <a href="/su-kien/post/<%= event.slug %>"><h4 class="post-title"><%= event.title %></h4></a>
+                                    <a href="/su-kien/<%= event.slug %>"><h4 class="post-title"><%= event.title %></h4></a>
                                     <div class="post-date"><%= event.date %></div>
                                 </div>
                             </div>

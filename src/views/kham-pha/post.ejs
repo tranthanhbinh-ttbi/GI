@@ -86,9 +86,9 @@
                         <% popularPosts.slice(0, 3).forEach((pPost, index) => { %>
                             <div class="post-item">
                                 <span class="rank"><%= index + 1 %></span>
-                                <a href="/kham-pha/post/<%= pPost.slug %>"><img src="<%= pPost.thumbnail || '/photos/placeholder-m6a0q.png' %>" alt="<%= pPost.title %>"></a>
+                                <a href="/kham-pha/<%= pPost.slug %>"><img src="<%= pPost.thumbnail || '/photos/placeholder-m6a0q.png' %>" alt="<%= pPost.title %>"></a>
                                 <div class="post-item-info">
-                                    <a href="/kham-pha/post/<%= pPost.slug %>"><h4 class="post-title"><%= pPost.title %></h4></a>
+                                    <a href="/kham-pha/<%= pPost.slug %>"><h4 class="post-title"><%= pPost.title %></h4></a>
                                     <div class="post-date"><%= pPost.displayDate || (pPost.date ? new Date(pPost.date).toLocaleDateString('vi-VN') : '') %></div>
                                 </div>
                             </div>

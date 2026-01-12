@@ -48,7 +48,7 @@
         .reply-form { margin-top: 1rem; display: none; }
     </style>
     <script>
-        window.currentUser = <%- JSON.stringify(typeof user !== 'undefined' ? user : null) %>;
+        window.currentUser = <%- JSON.stringify(locals.user || null) %>;
         window.postSlug = '<%= post.slug %>';
     </script>
 </head>
@@ -57,7 +57,7 @@
     <%- include('../partials/header') %>
         <main class="post-container">
             <div class="post-main">
-                <%- include('../partials/breadcrumbs', { currentPage: 'series' , postTitle: post.title }) %>
+                <%- include('../partials/breadcrumbs', { currentPage: 'series', postTitle: post.title }) %>
                     <h1 class="post-title">
                         <%= post.title %>
                     </h1>
@@ -67,9 +67,6 @@
                         </span>
                         <span class="post-date">
                             <%= post.displayDate %>
-                        </span>
-                        <span id="post-views-count" style="display: none; margin-left: 10px; font-size: 0.9rem; color: #666;">
-                            <!-- Views will be loaded here -->
                         </span>
                     </div>
 
@@ -179,14 +176,14 @@
                         <% if (typeof popularPosts !== 'undefined' && popularPosts.length > 0) { %>
                             <% popularPosts.slice(0, 5).forEach((pPost, index) => { %>
                                 <div class="post-item">
-                                    <a href="/series/post/<%= pPost.slug %>">
+                                    <a href="/series/<%= pPost.slug %>">
                                         <img src="<%= pPost.thumbnail || '/photos/placeholder-m6a0q.png' %>" alt="<%= pPost.title %>">
                                     </a>
                                     <div class="post-item-info">
                                         <div class="post-date">
                                             <%= pPost.displayDate || (pPost.date ? new Date(pPost.date).toLocaleDateString('vi-VN') : '') %>
                                         </div>
-                                        <a href="/series/post/<%= pPost.slug %>">
+                                        <a href="/series/<%= pPost.slug %>">
                                             <h4 class="post-title">
                                                 <%= pPost.title %>
                                             </h4>
@@ -207,7 +204,7 @@
                         <% if (typeof posts !== 'undefined' && posts.length > 0) { %>
                             <% posts.slice(0, 5).forEach(rPost => { %>
                                 <div class="post-item">
-                                    <a href="/series/post/<%= rPost.slug %>">
+                                    <a href="/series/<%= rPost.slug %>">
                                         <div class="related-post-image-container">
                                             <img src="<%= rPost.thumbnail || '/photos/placeholder-m6a0q.png' %>" alt="<%= rPost.title %>">
                                             <span class="related-badge"><%= rPost.category || 'Series' %></span>
