@@ -22,14 +22,16 @@ async function getPosts(request, reply) {
         // 2. Lấy dữ liệu từ Service
         // Nếu type=all mà category=Tất cả -> Lấy hết
         // SearchService đã xử lý logic 'all'
-        
+
         const results = searchService.search(q || '', safePage, safeLimit, filters);
-        
+
         // 3. Render HTML partial (Card)
         // Đường dẫn tới template card
         // Lưu ý: search-controller nằm trong src/controllers, views ở src/views
-        const templatePath = path.join(__dirname, '../views/partials/card-series.ejs');
-        
+        const templatePath = path.join(__dirname, '../views/partials/' +
+            (filters.type === 'explore' ? 'card-kham-pha.ejs' :
+                filters.type === 'news' ? 'card-news.ejs' : 'card-series.ejs'));
+
         // Render file EJS
         // Chúng ta cần truyền biến 'posts' vào template
         const html = await ejs.renderFile(templatePath, { posts: results.data });
@@ -45,9 +47,9 @@ async function getPosts(request, reply) {
 
     } catch (error) {
         request.log.error(error);
-        return reply.code(500).send({ 
-            success: false, 
-            error: 'Internal Server Error' 
+        return reply.code(500).send({
+            success: false,
+            error: 'Internal Server Error'
         });
     }
 }
@@ -62,7 +64,7 @@ async function search(request, reply) {
         // Security: Validation & Sanitization
         // 1. Giới hạn độ dài query string để tránh DoS regex/search
         const safeQuery = (q && typeof q === 'string') ? q.slice(0, 100).trim() : '';
-        
+
         // 2. Validate Limit: Max 100 items, Default 10
         let safeLimit = parseInt(limit);
         if (isNaN(safeLimit) || safeLimit < 1) safeLimit = 10;
@@ -77,13 +79,13 @@ async function search(request, reply) {
         const hasQuery = safeQuery.length > 0;
 
         if (!hasQuery && !hasFilters) {
-             return reply.send([]);
+            return reply.send([]);
         }
 
         const results = searchService.search(safeQuery, safePage, safeLimit, filters);
-        
+
         // Trả về trực tiếp object { data, pagination } để frontend xử lý
-        return reply.send(results.data); 
+        return reply.send(results.data);
     } catch (error) {
         request.log.error(error);
         return reply.code(500).send({ error: 'Internal Server Error' });

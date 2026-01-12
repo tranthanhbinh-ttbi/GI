@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Khám Phá - Full Description Desktop</title>
+    <title>Trang Khám Phá | Gender Insights</title>
     <link rel="stylesheet" href="/css/components/bases.css" />
     <link rel="stylesheet" href="/css/components/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -20,29 +22,37 @@
             --accent: #2c3e50;
             --red-brand: #b91c1c;
             --radius: 16px;
-            --shadow: 0 4px 20px rgba(0,0,0,0.05);
-            
-            /* Màu sắc layout nghiên cứu */
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+
             --green-btn: #5fcb97;
             --purple-tag: #eaddff;
             --purple-text: #6750a4;
             --gray-tag: #f0f0f0;
             --green-tag-bg: #e0f2f1;
             --green-tag-text: #00897b;
-            --yellow-star: #f1c40f; 
+            --yellow-star: #f1c40f;
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-        html, body, input, select, button {
+
+        html,
+        body,
+        input,
+        select,
+        button {
             font-family: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
         }
-        /* * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Be Vietnam Pro', sans-serif; }
-        body { background-color: var(--bg-color); padding: 20px; color: var(--primary-color); } */
-        .container { max-width: 1200px; margin: 0 auto; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
 
         /* --- HERO SECTION --- */
         .hero-section {
@@ -55,117 +65,410 @@
         }
 
         /* Hero Left (Main) */
-        .hero-main { position: relative; border-radius: var(--radius); overflow: hidden; height: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-        .hero-bg { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .hero-main:hover .hero-bg { transform: scale(1.05); }
-        .hero-gradient { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.95) 100%); }
-
-        .hero-top { position: absolute; top: 25px; left: 25px; right: 25px; display: flex; justify-content: space-between; z-index: 2; }
-        .badge-red { background: var(--red-brand); color: white; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 12px; text-transform: uppercase; }
-        .badge-date { background: rgba(0,0,0,0.6); color: #e5e5e5; padding: 6px 12px; border-radius: 6px; font-size: 12px; backdrop-filter: blur(4px); }
-
-        .hero-content { 
-            position: absolute; 
-            bottom: 30px; 
-            left: 30px; 
-            right: 120px; 
-            max-width: 75%; 
-            z-index: 2; 
+        .hero-main {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
-        
-        .hero-title { 
-            font-size: 32px; 
-            font-weight: 700; 
-            color: white; 
+
+        .hero-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .hero-main:hover .hero-bg {
+            transform: scale(1.05);
+        }
+
+        .hero-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.95) 100%);
+            pointer-events: none;
+        }
+
+        .hero-top {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            right: 25px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .badge-red {
+            background: var(--red-brand);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .badge-date {
+            background: rgba(0, 0, 0, 0.6);
+            color: #e5e5e5;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            backdrop-filter: blur(4px);
+        }
+
+        .hero-content {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 120px;
+            max-width: 75%;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
             line-height: 1.3;
-            margin-bottom: 8px; 
+            margin-bottom: 8px;
             display: -webkit-box;
-            -webkit-line-clamp: 2; 
+            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        /* --- CẬP NHẬT: HIỂN THỊ ĐẦY ĐỦ TRÊN DESKTOP --- */
-        .hero-desc { 
-            color: #f0f0f0; 
-            font-size: 15px; 
-            /* Đã xóa các thuộc tính giới hạn dòng ở đây để hiện full text */
+        .hero-desc {
+            color: #f0f0f0;
+            font-size: 15px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-            line-height: 1.5; /* Thêm khoảng cách dòng cho dễ đọc */
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+            line-height: 1.5;
         }
-        /* ----------------------------------------------- */
 
-        .hero-stats { 
-            display: flex; align-items: center; gap: 12px; color: #ccc; 
-            font-size: 13px; margin-bottom: 10px; flex-wrap: nowrap;
+        .hero-stats {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #ccc;
+            font-size: 13px;
+            margin-bottom: 10px;
+            flex-wrap: nowrap;
         }
-        .hero-stats span { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
-        .hero-stats .divider { color: rgba(255,255,255,0.4); margin: 0 2px; }
-        .stars { color: var(--yellow-star); font-size: 12px; display: flex; gap: 2px; }
 
-        .hero-share { position: absolute; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; cursor: pointer; z-index: 2; transition: 0.3s; }
-        .hero-share:hover { background: rgba(255,255,255,0.3); transform: rotate(15deg); }
+        .hero-stats span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+
+        .hero-stats .divider {
+            color: rgba(255, 255, 255, 0.4);
+            margin: 0 2px;
+        }
+
+        .stars {
+            color: var(--yellow-star);
+            font-size: 12px;
+            display: flex;
+            gap: 2px;
+        }
+
+        .hero-share {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        .hero-share:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(15deg);
+        }
 
         /* Hero Right (Nav Mini Cards) */
-        .hero-nav { display: flex; flex-direction: column; gap: 15px; height: 100%; }
-        .nav-item { flex: 1; border-radius: var(--radius); position: relative; background-size: cover; background-position: center; cursor: pointer; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; border: 2px solid transparent; }
-        .nav-item:hover { transform: translateY(-3px); }
-        .nav-item.active { border-color: var(--white); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .nav-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.1) 70%, rgba(0,0,0,0.9) 100%); z-index: 1; }
-        .nav-top { position: absolute; top: 12px; left: 15px; right: 15px; z-index: 2; display: flex; justify-content: space-between; align-items: flex-start; }
-        .mini-badge { background-color: var(--red-brand); color: white; font-size: 9px; font-weight: 700; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .mini-date { color: #f1f1f1; font-size: 10px; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.8); background-color: rgb(0 0 0 / 0.5); padding: 0.25rem 0.75rem; border-radius: 0.5rem; backdrop-filter: blur(4px);}
-        
-        .nav-content { position: absolute; bottom: 12px; left: 15px; right: 15px; z-index: 2; display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; }
-        .nav-text-info { display: flex; flex-direction: column; flex: 1; gap: 4px; }
-        .nav-meta-line { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #ddd; font-weight: 500; }
-        .nav-author i, .nav-view i { font-size: 9px; margin-right: 2px; }
-        .nav-dot { font-size: 8px; opacity: 0.6; margin-top: 1px; }
-        .nav-stars { color: var(--yellow-star); display: flex; gap: 1px; font-size: 9px; }
-        .nav-title { color: white; font-size: 14px; font-weight: 600; line-height: 1.35; text-shadow: 0 1px 3px rgba(0,0,0,0.8); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; width: 100%; }
-        .mini-share { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.3); color: white; font-size: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; flex-shrink: 0; }
-        .mini-share:hover { background: rgba(255,255,255,0.4); transform: rotate(15deg); }
+        .hero-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 100%;
+        }
+
+        .nav-item {
+            flex: 1;
+            border-radius: var(--radius);
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .nav-item.active {
+            border-color: var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.1) 30%, rgba(0, 0, 0, 0.1) 70%, rgba(0, 0, 0, 0.9) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .nav-top {
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            right: 15px;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .mini-badge {
+            background-color: var(--red-brand);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .mini-date {
+            color: #f1f1f1;
+            font-size: 10px;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+            background-color: rgb(0 0 0 / 0.5);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .nav-content {
+            position: absolute;
+            bottom: 12px;
+            left: 15px;
+            right: 15px;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .nav-text-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 4px;
+            pointer-events: none;
+        }
+
+        .nav-meta-line {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            color: #ddd;
+            font-weight: 500;
+        }
+
+        .nav-author i,
+        .nav-view i {
+            font-size: 9px;
+            margin-right: 2px;
+        }
+
+        .nav-dot {
+            font-size: 8px;
+            opacity: 0.6;
+            margin-top: 1px;
+        }
+
+        .nav-title {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.35;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            width: 100%;
+        }
 
         /* --- CONTENT LAYOUT --- */
-        .content-wrapper { display: grid; grid-template-columns: 2.5fr 1fr; gap: 40px; }
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 2.5fr 1fr;
+            gap: 40px;
+        }
 
-        .post-card.research-layout { display: flex; gap: 25px; margin-bottom: 30px; padding: 25px; background: var(--white); border-radius: var(--radius); box-shadow: 0 2px 10px rgba(0,0,0,0.03); border: 1px solid #f0f0f0; transition: box-shadow 0.3s; }
-        .post-card.research-layout:hover { box-shadow: var(--shadow); }
-        .post-card.research-layout .post-img-box { flex: 0 0 32%; height: auto; min-height: 250px; border-radius: 12px; overflow: hidden; }
-        .post-card.research-layout .post-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .post-info { flex: 1; display: flex; flex-direction: column; }
+        .post-card.research-layout {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            border: 1px solid #f0f0f0;
+            transition: box-shadow 0.3s;
+        }
 
-        .post-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .post-tags-group { display: flex; gap: 10px; flex-wrap: wrap; }
-        .tag { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 20px; }
-        .tag-purple { background: var(--purple-tag); color: var(--purple-text); }
-        .tag-gray { background: var(--gray-tag); color: var(--text-color); }
-        .tag-green { background: var(--green-tag-bg); color: var(--green-tag-text); }
-        .share-icon { background: none; border: none; color: #999; font-size: 16px; cursor: pointer; padding: 8px; border-radius: 50%; transition: 0.3s all; display: flex; align-items: center; justify-content: center; }
-        .share-icon:hover { color: var(--accent); background-color: rgba(0,0,0,0.05); }
-        
-        .post-title.large { font-size: 20px; font-weight: 700; color: var(--primary-color); line-height: 1.4; margin-bottom: 12px; }
-        .post-excerpt { font-size: 14px; color: var(--text-color); line-height: 1.6; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        
-        /* Layout cho Meta (Tác giả + Ngày) */
-        .post-meta-row { 
-            display: flex; 
-            justify-content: space-between; 
+        .post-card.research-layout:hover {
+            box-shadow: var(--shadow);
+        }
+
+        .post-card.research-layout .post-img-box {
+            flex: 0 0 32%;
+            height: auto;
+            min-height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .post-card.research-layout .post-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .post-tags-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .tag-purple {
+            background: var(--purple-tag);
+            color: var(--purple-text);
+        }
+
+        .tag-gray {
+            background: var(--gray-tag);
+            color: var(--text-color);
+        }
+
+        .tag-green {
+            background: var(--green-tag-bg);
+            color: var(--green-tag-text);
+        }
+
+        .share-icon {
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: 0.3s all;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-icon:hover {
+            color: var(--accent);
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .post-title.large {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .post-excerpt {
+            font-size: 14px;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-meta-row {
+            display: flex;
+            justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 15px; 
-            padding-bottom: 15px; 
-            border-bottom: 1px solid #eee; 
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
             color: var(--primary-color);
             font-size: 14px;
         }
-        .meta-item { display: flex; align-items: center; gap: 8px; }
-        .post-meta-row i { color: var(--text-light); }
-        
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .post-meta-row i {
+            color: var(--text-light);
+        }
+
         .post-stats-row {
             display: flex;
             align-items: center;
@@ -174,56 +477,161 @@
             color: var(--text-light);
             font-size: 14px;
         }
-        .post-stats-row span { display: flex; align-items: center; gap: 6px; }
 
-        .read-more-btn { 
-            display: block; width: 100%; text-align: center;
-            background-color: var(--green-btn); color: white; 
-            font-weight: 600; font-size: 15px; 
-            padding: 12px 0; border-radius: 8px; 
-            text-decoration: none; transition: 0.3s; margin-top: auto; 
+        .post-stats-row span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .read-more-btn:hover { 
-            background-color: #4db685; 
-            box-shadow: 0 4px 12px rgba(95, 203, 151, 0.4); 
+
+        .read-more-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: var(--green-btn);
+            color: white;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 12px 0;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+            margin-top: auto;
+        }
+
+        .read-more-btn:hover {
+            background-color: #4db685;
+            box-shadow: 0 4px 12px rgba(95, 203, 151, 0.4);
             transform: translateY(-1px);
         }
 
         /* Sidebar */
-        .sidebar-widget { background: var(--white); padding: 25px; border-radius: var(--radius); box-shadow: var(--shadow); }
-        .widget-head { font-size: 18px; font-weight: 700; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #f0f0f0; color: #444; }
-        .pop-item { display: flex; gap: 15px; margin-bottom: 20px; align-items: center; transition: 0.3s; cursor: pointer; }
-        .pop-item:hover { transform: translateX(5px); }
-        .pop-item:last-child { margin-bottom: 0; }
-        .pop-img { width: 70px; height: 70px; border-radius: 10px; background-color: #eee; flex-shrink: 0; background-size: cover; background-position: center;}
-        .pop-text h4 { font-size: 14px; margin-bottom: 5px; line-height: 1.4; color: var(--primary-color); font-weight: 600; }
-        .pop-text span { font-size: 11px; color: #999; font-weight: 700; text-transform: uppercase; }
+        .sidebar-widget {
+            background: var(--white);
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .widget-head {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #444;
+        }
+
+        .pop-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .pop-item:hover {
+            transform: translateX(5px);
+        }
+
+        .pop-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .pop-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            background-color: #eee;
+            flex-shrink: 0;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .pop-text h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            line-height: 1.4;
+            color: var(--primary-color);
+            font-weight: 600;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .pop-text span {
+            font-size: 11px;
+            color: #999;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
 
         /* --- RESPONSIVE MOBILE --- */
         @media (max-width: 768px) {
-            .hero-section { grid-template-columns: 1fr; height: auto; }
-            .hero-main { height: 450px; margin-bottom: 20px; }
-            .hero-nav { display: flex; height: auto; gap: 15px; }
-            .nav-item { height: 180px; flex: none; }
-            .content-wrapper { grid-template-columns: 1fr; }
-            
-            .hero-title { font-size: 22px; margin-bottom: 5px; }
-            .hero-content { left: 20px; right: 80px; bottom: 20px; max-width: none; }
-            .hero-stats { gap: 5px 3px; font-size: 12px; }
-            
-            /* CẬP NHẬT: Thêm lại giới hạn dòng cho mô tả trên mobile */
-            .hero-desc { 
-                display: -webkit-box; 
-                -webkit-line-clamp: 2; 
+            .hero-section {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .hero-main {
+                height: 450px;
+                margin-bottom: 20px;
+            }
+
+            .hero-nav {
+                display: flex;
+                height: auto;
+                gap: 15px;
+            }
+
+            .nav-item {
+                height: 180px;
+                flex: none;
+            }
+
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 22px;
+                margin-bottom: 5px;
+            }
+
+            .hero-content {
+                left: 20px;
+                right: 80px;
+                bottom: 20px;
+                max-width: none;
+            }
+
+            .hero-stats {
+                gap: 5px 3px;
+                font-size: 12px;
+            }
+
+            .hero-desc {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 padding-right: 7px;
-                overflow: hidden; 
-                font-size: 13px; 
+                overflow: hidden;
+                font-size: 13px;
             }
-            /* ----------------------------------------------------- */
 
-            .post-card.research-layout { flex-direction: column; padding: 20px; }
-            .post-card.research-layout .post-img-box { width: 100%; height: 200px; margin-bottom: 20px; min-height: auto; }
+            .post-card.research-layout {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .post-card.research-layout .post-img-box {
+                width: 100%;
+                height: 200px;
+                margin-bottom: 20px;
+                min-height: auto;
+            }
 
             .post-meta-row {
                 flex-direction: column;
@@ -231,232 +639,260 @@
                 align-items: flex-start;
             }
         }
+
         .load-more-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Radial Menu in Hero */
+        .series-carousel .radial-share-menu,
+        .hero-section .radial-share-menu {
+            top: auto;
+            bottom: 100%;
+            right: 0;
+            left: auto;
+            transform: translate(25px, -10px);
+        }
     </style>
 </head>
+
 <body>
     <%- include('../partials/header') %>
-    <main>
-        <div class="container">
-        
-        <section class="hero-section">
-            <div class="hero-main">
-                <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=1200" alt="Hero" class="hero-bg">
-                <div class="hero-gradient"></div>
+        <main>
+            <div class="container">
 
-                <div class="hero-top">
-                    <span class="badge-red">BÀI VIẾT NỔI BẬT</span>
-                    <span class="badge-date">12 Tháng 02, 2025</span>
-                </div>
+                <% let heroMain=null; let heroSide=[]; let mainList=[]; if (typeof posts !=='undefined' && posts.length>
+                    0) {
+                    // Adjust: Use available posts
+                    heroMain = posts[0];
+                    heroSide = posts.slice(1, 4);
+                    mainList = posts.slice(4);
+                    }
+                    %>
 
-                <div class="hero-content">
-                    <div class="hero-stats">
-                        <span class="author-item"><i class="fa-regular fa-user"></i> Bởi Emma</span>
-                        <span class="divider">/</span>
-                        <span><i class="fa-regular fa-eye"></i> 1.5k views</span>
-                        <span class="divider">/</span>
-                        <span class="stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                        </span>
-                        <span>(98)</span>
+                    <section class="hero-section">
+                        <% if (heroMain) { %>
+                            <div class="hero-main">
+                                <a href="/kham-pha/<%= heroMain.slug %>"
+                                    style="display:block; width:100%; height:100%;">
+                                    <img src="<%= heroMain.thumbnail || '/photos/placeholder-m6a0q.png' %>"
+                                        alt="<%= heroMain.title %>" class="hero-bg">
+                                    <div class="hero-gradient"></div>
+
+                                    <div class="hero-top">
+                                        <span class="badge-red">
+                                            <%= heroMain.category || 'NỔI BẬT' %>
+                                        </span>
+                                        <span class="badge-date">
+                                            <%= heroMain.displayDate || heroMain.date %>
+                                        </span>
+                                    </div>
+
+                                    <div class="hero-content">
+                                        <div class="hero-stats">
+                                            <span class="author-item"><i class="fa-regular fa-user"></i>
+                                                <%= heroMain.author || 'Admin' %>
+                                            </span>
+                                            <span class="divider">/</span>
+                                            <span><i class="fa-regular fa-eye"></i>
+                                                <%= heroMain.views || 0 %> views
+                                            </span>
+                                            <span class="divider">/</span>
+                                            <span class="stars">
+                                                <% const hRating=heroMain.avgRating || 0; %>
+                                                    <% for(let i=1; i<=5; i++) { %>
+                                                        <i class="fa-solid fa-star"
+                                                            style="<%= i <= Math.round(hRating) ? 'color: var(--yellow-star);' : 'color: #ccc;' %>"></i>
+                                                        <% } %>
+                                            </span>
+                                            <span>(<%= heroMain.totalRatings || 0 %>)</span>
+                                        </div>
+
+                                        <h2 class="hero-title">
+                                            <%= heroMain.title %>
+                                        </h2>
+                                        <p class="hero-desc">
+                                            <%= heroMain.description %>
+                                        </p>
+                                    </div>
+                                </a>
+
+                                <div class="share-wrapper"
+                                    style="position: absolute; bottom: 30px; right: 30px; z-index: 5;">
+                                    <button class="hero-share share-action card-share-button" title="Chia sẻ"><i
+                                            class="fa-solid fa-share-nodes"></i></button>
+                                    <!-- Radial Menu -->
+                                    <div class="radial-share-menu">
+                                        <div class="radial-backdrop"></div>
+                                        <div class="radial-track">
+                                            <a href="#" class="share-item share-action" data-platform="facebook"
+                                                data-slug="<%= heroMain.slug %>" data-title="<%= heroMain.title %>"
+                                                title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                                            <a href="#" class="share-item share-action" data-platform="messenger"
+                                                data-slug="<%= heroMain.slug %>" data-title="<%= heroMain.title %>"
+                                                title="Messenger"><i class="fa-brands fa-facebook-messenger"></i></a>
+                                            <a href="#" class="share-item share-action" data-platform="twitter"
+                                                data-slug="<%= heroMain.slug %>" data-title="<%= heroMain.title %>"
+                                                title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                                            <a href="#" class="share-item share-action" data-platform="copy"
+                                                data-slug="<%= heroMain.slug %>" data-title="<%= heroMain.title %>"
+                                                title="Copy"><i class="fa-solid fa-copy"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } else { %>
+                                <div class="hero-main"
+                                    style="background:#333; display:flex; align-items:center; justify-content:center;">
+                                    <p style="color:white;">Đang cập nhật...</p>
+                                </div>
+                                <% } %>
+
+                                    <div class="hero-nav">
+                                        <% if (heroSide.length> 0) { %>
+                                            <% heroSide.forEach(sub=> { %>
+                                                <div class="nav-item"
+                                                    style="background-image: url('<%= sub.thumbnail || '/photos/placeholder-m6a0q.png' %>');">
+                                                    <a href="/kham-pha/<%= sub.slug %>"
+                                                        style="position:absolute; inset:0; z-index:1;"></a>
+                                                    <div class="nav-overlay"></div>
+                                                    <div class="nav-top">
+                                                        <span class="mini-badge">
+                                                            <%= sub.category || 'Mới' %>
+                                                        </span>
+                                                        <span class="mini-date">
+                                                            <%= sub.displayDate || sub.date %>
+                                                        </span>
+                                                    </div>
+                                                    <div class="nav-content">
+                                                        <div class="nav-text-info">
+                                                            <div class="nav-meta-line">
+                                                                <span class="nav-author"><i
+                                                                        class="fa-regular fa-user"></i>
+                                                                    <%= sub.author || 'Admin' %>
+                                                                </span>
+                                                                <span class="nav-dot">/</span>
+                                                                <span class="nav-view"><i class="fa-regular fa-eye"></i>
+                                                                    <%= sub.views || 0 %>
+                                                                </span>
+                                                            </div>
+                                                            <h4 class="nav-title">
+                                                                <%= sub.title %>
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <% }) %>
+                                                    <% } %>
+                                    </div>
+                    </section>
+
+                    <div class="content-wrapper">
+
+                        <div class="post-list" id="kham-pha-grid-container">
+                            <%- include('../partials/card-kham-pha', { posts: mainList }) %>
+                        </div>
+
+                        <aside class="sidebar">
+                            <div class="sidebar-widget">
+                                <h3 class="widget-head">Bài Viết Phổ Biến</h3>
+                                <% if (typeof popularPosts !=='undefined' && popularPosts.length> 0) { %>
+                                    <% popularPosts.forEach(p=> { %>
+                                        <div class="pop-item">
+                                            <a href="/kham-pha/<%= p.slug %>" class="pop-img"
+                                                style="background-image: url('<%= p.thumbnail || '/photos/placeholder-m6a0q.png' %>'); display:block;"></a>
+                                            <div class="pop-text">
+                                                <a href="/kham-pha/<%= p.slug %>"
+                                                    style="text-decoration:none; color:inherit;">
+                                                    <span>
+                                                        <%= p.displayDate || p.date %>
+                                                    </span>
+                                                    <h4>
+                                                        <%= p.title %>
+                                                    </h4>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <% }) %>
+                                            <% } else { %>
+                                                <p>Chưa có dữ liệu.</p>
+                                                <% } %>
+                            </div>
+                        </aside>
                     </div>
 
-                    <h2 class="hero-title">Tập 10: Mẹ Của Con - Hành Trình Xây Dựng Niềm Tin [Series Mẹ & Con Gái]</h2>
-                    <p class="hero-desc">Câu chuyện cảm động về cách người mẹ dạy con gái nhận diện ranh giới cơ thể và xây dựng sự tự tin, giúp con gái hiểu rõ giá trị bản thân và mạnh mẽ hơn trong cuộc sống.</p>
-                </div>
+                    <div class="load-more-container" style="margin-top: 30px;">
+                        <button id="btn-load-more-kham-pha" class="load-more-btn-styled" data-type="explore"
+                            data-page="2">
+                            Xem Thêm
+                        </button>
+                    </div>
 
-                <button class="hero-share" title="Chia sẻ"><i class="fa-solid fa-share-nodes"></i></button>
             </div>
+        </main>
+        <%- include('../partials/footer') %>
 
-            <div class="hero-nav">
-                <div class="nav-item active" style="background-image: url('https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400');">
-                    <div class="nav-overlay"></div>
-                    <div class="nav-top">
-                        <span class="mini-badge">Gia đình</span>
-                        <span class="mini-date">12 Tháng 02, 2025</span>
-                    </div>
-                    <div class="nav-content">
-                        <div class="nav-text-info">
-                            <div class="nav-meta-line">
-                                <span class="nav-author"><i class="fa-regular fa-user"></i> Emma</span>
-                                <span class="nav-dot">/</span>
-                                <span class="nav-view"><i class="fa-regular fa-eye"></i> 1.2k views</span>
-                                <span class="nav-dot">/</span>
-                                <span class="nav-stars">
-                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                </span>
-                                <span>(78)</span>
-                            </div>
-                            <h4 class="nav-title">Mẹ Của Con: Hành Trình Niềm Tin</h4>
-                        </div>
-                        <button class="mini-share" title="Chia sẻ"><i class="fa-solid fa-share-nodes"></i></button>
-                    </div>
-                </div>
-                
-                <div class="nav-item" style="background-image: url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=400');">
-                    <div class="nav-overlay"></div>
-                    <div class="nav-top">
-                        <span class="mini-badge">Thiên nhiên</span>
-                        <span class="mini-date">10 Tháng 02, 2025</span>
-                    </div>
-                    <div class="nav-content">
-                        <div class="nav-text-info">
-                            <div class="nav-meta-line">
-                                <span class="nav-author"><i class="fa-regular fa-user"></i> Tuấn Anh</span>
-                                <span class="nav-dot">/</span>
-                                <span class="nav-view"><i class="fa-regular fa-eye"></i> 850 views</span>
-                                <span class="nav-dot">/</span>
-                                <span class="nav-stars">
-                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                </span>
-                                <span>(88)</span>
-                            </div>
-                            <h4 class="nav-title">Vẻ Đẹp Hùng Vĩ Của Núi Rừng</h4>
-                        </div>
-                        <button class="mini-share" title="Chia sẻ"><i class="fa-solid fa-share-nodes"></i></button>
-                    </div>
-                </div>
+            <script src="/js/radial-menu.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const gridContainer = document.getElementById('kham-pha-grid-container');
+                    const loadMoreBtn = document.getElementById('btn-load-more-kham-pha');
+                    let currentPage = 2; // Since we rendered page 1
 
-                <div class="nav-item" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400');">
-                    <div class="nav-overlay"></div>
-                    <div class="nav-top">
-                        <span class="mini-badge">Khoa học</span>
-                        <span class="mini-date">08 Tháng 02, 2025</span>
-                    </div>
-                    <div class="nav-content">
-                        <div class="nav-text-info">
-                            <div class="nav-meta-line">
-                                <span class="nav-author"><i class="fa-regular fa-user"></i> Sarah</span>
-                                <span class="nav-dot">/</span>
-                                <span class="nav-view"><i class="fa-regular fa-eye"></i> 2.1k views</span>
-                                <span class="nav-dot">/</span>
-                                <span class="nav-stars">
-                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                                </span>
-                                <span>(100)</span>
-                            </div>
-                            <h4 class="nav-title">Khám Phá Vũ Trụ Bao La</h4>
-                        </div>
-                        <button class="mini-share" title="Chia sẻ"><i class="fa-solid fa-share-nodes"></i></button>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    async function loadMore() {
+                        loadMoreBtn.innerHTML = 'Đang tải...';
+                        loadMoreBtn.disabled = true;
 
-        <div class="content-wrapper">
-            
-            <div class="post-list">
-                <article class="post-card research-layout">
-                    <div class="post-img-box">
-                        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800" alt="Nghiên cứu">
-                    </div>
-                    <div class="post-info">
-                        <div class="post-header-row">
-                            <div class="post-tags-group">
-                                <span class="tag tag-purple">Tâm lý học</span>
-                                <span class="tag tag-gray">Nghiên cứu</span>
-                                <span class="tag tag-green"><i class="fa-solid fa-ribbon"></i> Peer-reviewed</span>
-                            </div>
-                            <button class="share-icon" title="Chia sẻ"><i class="fa-solid fa-share-nodes"></i></button>
-                        </div>
-                        
-                        <h3 class="post-title large">Tác động của Giáo dục Giới tính Toàn diện đến Sức khỏe Tâm lý Thanh thiếu niên</h3>
-                        <p class="post-excerpt">Nghiên cứu định lượng với 1,200 học sinh THCS và THPT nhằm đánh giá tác động của chương trình giáo dục giới tính toàn diện đến sức khỏe tâm lý...</p>
-                        
-                        <div class="post-meta-row">
-                            <div class="meta-item">
-                                <i class="fa-regular fa-user"></i> 
-                                <strong>TS. Nguyễn Văn Minh</strong>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fa-regular fa-calendar"></i> 
-                                <span>15 Tháng 09, 2025</span>
-                            </div>
-                        </div>
+                        try {
+                            const res = await fetch(`/api/posts?type=explore&page=${currentPage}&limit=6`);
+                            const data = await res.json();
 
-                        <div class="post-stats-row">
-                            <span><i class="fa-regular fa-eye"></i> 2.4k views</span>
-                            <span class="stars">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </span>
-                            <span>(198)</span>
-                        </div>
+                            if (data.success && data.html) {
+                                gridContainer.insertAdjacentHTML('beforeend', data.html);
 
-                        <a href="#" class="read-more-btn">Đọc nghiên cứu</a>
-                    </div>
-                </article>
+                                if (data.hasMore) {
+                                    currentPage++;
+                                    loadMoreBtn.innerHTML = 'Xem Thêm';
+                                    loadMoreBtn.disabled = false;
+                                } else {
+                                    loadMoreBtn.style.display = 'none';
+                                }
 
-                <article class="post-card research-layout">
-                    <div class="post-img-box">
-                        <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=800" alt="Yoga">
-                    </div>
-                    <div class="post-info">
-                        <div class="post-header-row">
-                            <div class="post-tags-group">
-                                <span class="tag tag-purple">Sức khỏe</span>
-                                <span class="tag tag-gray">Lối sống</span>
-                            </div>
-                            <button class="share-icon" title="Chia sẻ"><i class="fa-solid fa-share-nodes"></i></button>
-                        </div>
-                        
-                        <h3 class="post-title large">Hiệu Quả Của Các Bài Tập Yoga Trong Việc Giảm Căng Thẳng</h3>
-                        <p class="post-excerpt">Phân tích tổng hợp các nghiên cứu về tác dụng của Yoga đối với việc cải thiện sức khỏe tinh thần và giảm các triệu chứng lo âu...</p>
-                        
-                        <div class="post-meta-row">
-                            <div class="meta-item">
-                                <i class="fa-regular fa-user"></i> 
-                                <strong>ThS. Lê Thị Hoa</strong>
-                            </div>
-                            <div class="meta-item">
-                                <i class="fa-regular fa-calendar"></i> 
-                                <span>12 Tháng 02, 2025</span>
-                            </div>
-                        </div>
+                                if (window.initRadialMenus) window.initRadialMenus();
+                            }
+                        } catch (e) {
+                            console.error(e);
+                            loadMoreBtn.innerHTML = 'Thử lại';
+                            loadMoreBtn.disabled = false;
+                        }
+                    }
 
-                        <div class="post-stats-row">
-                            <span><i class="fa-regular fa-eye"></i> 1.5k views</span>
-                            <span class="stars">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                            </span>
-                            <span>(127)</span>
-                        </div>
+                    if (loadMoreBtn) {
+                        loadMoreBtn.addEventListener('click', loadMore);
+                    }
+                    if (window.initRadialMenus) window.initRadialMenus();
+                });
+            </script>
+            <style>
+                .load-more-btn-styled {
+                    padding: 12px 30px;
+                    background: var(--green-btn);
+                    color: white;
+                    border-radius: 8px;
+                    border: none;
+                    cursor: pointer;
+                    font-weight: 600;
+                    transition: 0.3s;
+                }
 
-                        <a href="#" class="read-more-btn">Đọc nghiên cứu</a>
-                    </div>
-                </article>
-                <div class="load-more-container">
-                            <button id="btn-load-more-series" class="load-more-button" data-type="series" data-page="2"
-                                style="padding: 10px 24px; background: var(--primary-color, #6C5DD3); color: white; border-radius: 8px; border: none; cursor: pointer; font-weight: 600;">
-                                Xem Thêm
-                            </button>
-                        </div>
-            </div>
-
-            <aside class="sidebar">
-                <div class="sidebar-widget">
-                    <h3 class="widget-head">Bài Viết Phổ Biến</h3>
-                    <div class="pop-item">
-                        <div class="pop-img" style="background-image: url('https://images.unsplash.com/photo-1493612276216-ee3925520721?w=150');"></div>
-                        <div class="pop-text"><span>28 Tháng 10, 2025</span><h4>3 Cách Đơn Giản Để Hiểu Bản Thân Hơn</h4></div>
-                    </div>
-                    <div class="pop-item">
-                        <div class="pop-img" style="background-image: url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=150');"></div>
-                        <div class="pop-text"><span>25 Tháng 10, 2025</span><h4>Phương Pháp Cực Dễ Hiểu Về Mọi Người</h4></div>
-                    </div>
-                    <div class="pop-item">
-                        <div class="pop-img" style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=150');"></div>
-                        <div class="pop-text"><span>20 Tháng 10, 2025</span><h4>Công Nghệ AI Thay Đổi Cuộc Sống Thế Nào</h4></div>
-                    </div>
-                </div>
-            </aside>
-        </div>
-    </div>
-    </main>
-    <%- include('../partials/footer') %>
+                .load-more-btn-styled:hover {
+                    background: #4db685;
+                    box-shadow: 0 4px 12px rgba(95, 203, 151, 0.4);
+                }
+            </style>
 </body>
+
 </html>

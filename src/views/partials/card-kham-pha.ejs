@@ -1,0 +1,98 @@
+<% if (typeof posts !=='undefined' && posts.length> 0) { %>
+    <% posts.forEach(post=> { %>
+        <article class="post-card research-layout">
+            <div class="post-img-box">
+                <a href="/kham-pha/<%= post.slug %>" style="display:block; width:100%; height:100%;">
+                    <img src="<%= post.thumbnail || '/photos/placeholder-m6a0q.png' %>" alt="<%= post.title %>"
+                        loading="lazy">
+                </a>
+            </div>
+            <div class="post-info">
+                <div class="post-header-row">
+                    <div class="post-tags-group">
+                        <% if (post.category) { %>
+                            <span class="tag tag-purple">
+                                <%= post.category %>
+                            </span>
+                            <% } %>
+                                <span class="tag tag-gray">Bài Viết</span>
+                    </div>
+
+                    <div class="share-wrapper" style="position: relative;">
+                        <button class="share-icon share-action card-share-button" title="Chia sẻ">
+                            <i class="fa-solid fa-share-nodes"></i>
+                        </button>
+                        <!-- Radial Menu -->
+                        <div class="radial-share-menu">
+                            <div class="radial-backdrop"></div>
+                            <div class="radial-track">
+                                <a href="#" class="share-item share-action" data-platform="facebook"
+                                    data-slug="<%= post.slug %>" data-title="<%= post.title %>" title="Facebook">
+                                    <i class="fa-brands fa-facebook"></i>
+                                </a>
+                                <a href="#" class="share-item share-action" data-platform="messenger"
+                                    data-slug="<%= post.slug %>" data-title="<%= post.title %>" title="Messenger">
+                                    <i class="fa-brands fa-facebook-messenger"></i>
+                                </a>
+                                <a href="#" class="share-item share-action" data-platform="twitter"
+                                    data-slug="<%= post.slug %>" data-title="<%= post.title %>" title="Twitter">
+                                    <i class="fa-brands fa-x-twitter"></i>
+                                </a>
+                                <a href="#" class="share-item share-action" data-platform="copy"
+                                    data-slug="<%= post.slug %>" data-title="<%= post.title %>"
+                                    title="Sao chép liên kết">
+                                    <i class="fa-solid fa-copy"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="post-title large">
+                    <a href="/kham-pha/<%= post.slug %>" style="text-decoration:none; color:inherit;">
+                        <%= post.title %>
+                    </a>
+                </h3>
+                <p class="post-excerpt">
+                    <%= post.description %>
+                </p>
+
+                <div class="post-meta-row">
+                    <div class="meta-item">
+                        <i class="fa-regular fa-user"></i>
+                        <strong>
+                            <%= post.author || 'Admin' %>
+                        </strong>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span>
+                            <%= post.displayDate || post.date %>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="post-stats-row">
+                    <span><i class="fa-regular fa-eye"></i>
+                        <%= post.views || 0 %> views
+                    </span>
+                    <span class="stars">
+                        <% const rating=post.avgRating || 0; %>
+                            <% for(let i=1; i<=5; i++) { %>
+                                <% if (i <=Math.round(rating)) { %>
+                                    <i class="fa-solid fa-star" style="color: var(--yellow-star);"></i>
+                                    <% } else { %>
+                                        <i class="fa-regular fa-star" style="color: #ccc;"></i>
+                                        <% } %>
+                                            <% } %>
+                    </span>
+                    <span>(<%= post.totalRatings || 0 %>)</span>
+                </div>
+
+                <a href="/kham-pha/<%= post.slug %>" class="read-more-btn">Đọc bài viết</a>
+            </div>
+        </article>
+        <% }) %>
+            <% } else { %>
+                <div style="text-align:center; padding: 40px; color: #666;">Chưa có bài viết nào.</div>
+                <% } %>

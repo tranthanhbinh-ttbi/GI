@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi-VN" data-gen-themes=light>
+<html lang="vi-VN" data-gen-themes="light">
 
 <head>
     <meta charset="UTF-8" />
@@ -9,291 +9,222 @@
     <meta name="author" content="Gender Insights" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="vi_VN" />
-    <meta property="og:title" content="Gender Insights | Hiểu Biết - Đối Thoại - Kết Nối" />
-    <meta property="og:description"
-        content="Gender Insights là dự án giáo dục giới tính cho thanh thiếu niên, đồng thời nâng cao nhận thức cộng đồng về phòng chống xâm hại tình dục trẻ em." />
-    <meta property="og:image" content="photos/brands/gender-insights.svg" />
-    <meta property="og:image:alt" content="Gender Insights" />
-    <title>Gender Insights | Hiểu Biết - Đối Thoại - Kết Nối</title>
+    <meta property="og:title" content="Gender Insights | Tin Tức" />
+    <title>Gender Insights | Tin Tức</title>
     <link rel="shortcut icon" href="photos/brands/gender-insights.ico" type="image/x-icon" />
-    <link rel="preload" href="/css/main.css" as="style" />
-    <link rel="preload" href="/css/bases.css" as="style" />
-    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff" as="font" type="font/woff" crossorigin />
-    <link rel="prefetch" href="/series" />
-    <link rel="prefetch" href="/kham-pha" />
-    <link rel="prefetch" href="/tin-tuc" />
-    <link rel="prefetch" href="/su-kien" />
-    <link rel="prefetch" href="/dien-dan" />
     <link rel="stylesheet" href="/fonts/index.css" />
     <link rel="stylesheet" href="/css/components/bases.css" />
     <link rel="stylesheet" href="/css/components/main.css" />
-    <link rel="alternate" href="https://gender-insights.vercel.app" hreflang="vi-VN" />
-    <link rel="canonical" href="https://gender-insights.vercel.app" />
     <link rel="stylesheet" href="/css/tin-tuc.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+        .radial-share-menu {
+            bottom: 100%;
+            right: 0;
+            transform: translateY(-10px);
         }
 
-        html,
-        body,
-        input,
-        select,
-        button {
-            font-family: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
+        /* Custom button style override if needed */
+        .btn-read-more {
+            cursor: pointer;
         }
     </style>
-    <script>
-        const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ? localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-gen-themes', preferredTheme);
-    </script>
 </head>
 
 <body>
-    <%- include('../partials/header', { Current_Page: 'tin-tuc' }) %>
+    <%- include('../partials/header') %>
         <main>
-            <section class="top-cards-section">
-                <div class="top-cards-grid">
-                    <div class="top-card">
-                        <div class="top-card-category">SỐNG KHỎE</div>
-                        <div class="top-card-meta"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                <path
-                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                            </svg> 835 - 12 tháng 3, 2025</div>
-                        <h3 class="top-card-title">Bí quyết sống khỏe mỗi ngày</h3>
-                        <p class="top-card-description">Khám phá những thói quen đơn giản giúp cải thiện sức khỏe tinh
-                            thần và thể chất của bạn.</p>
-                    </div>
-                    <div class="top-card">
-                        <div class="top-card-category">KINH NGHIỆM</div>
-                        <div class="top-card-meta"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                <path
-                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                            </svg> 654 - 15 tháng 3, 2025</div>
-                        <h3 class="top-card-title">Kinh nghiệm làm việc hiệu quả</h3>
-                        <p class="top-card-description">Học hỏi từ chuyên gia về cách tối ưu hóa năng suất và cân bằng
-                            công việc - cuộc sống.</p>
-                    </div>
-                    <div class="top-card">
-                        <div class="top-card-category">TRUYỀN THỐNG</div>
-                        <div class="top-card-meta"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                <path
-                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                            </svg> 100 - 18 tháng 3, 2025</div>
-                        <h3 class="top-card-title">Giá trị văn hóa truyền thống</h3>
-                        <p class="top-card-description">Tìm hiểu về những giá trị cốt lõi của văn hóa Việt Nam trong bối
-                            cảnh hiện đại.</p>
-                    </div>
-                    <div class="top-card">
-                        <div class="top-card-category">ĐỐI TÁC</div>
-                        <div class="top-card-meta"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                <path
-                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                            </svg> 520 - 20 tháng 3, 2025</div>
-                        <h3 class="top-card-title">Mạng lưới đối tác chiến lược</h3>
-                        <p class="top-card-description">Giới thiệu các đối tác đồng hành trong hành trình phát triển bền
-                            vững.</p>
-                    </div>
-                </div>
-            </section>
+            <% let topCards=[]; if (typeof popularPosts !=='undefined' && popularPosts.length> 0) {
+                topCards = popularPosts.slice(0, 4);
+                }
 
-            <section class="featured-article-section">
-                <div class="featured-article-container">
-                    <div class="featured-image-container">
-                        <div class="featured-image-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#ccc"
-                                viewBox="0 0 16 16">
-                                <path
-                                    d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="featured-content">
-                        <div class="featured-category">FURNITURE</div>
-                        <div class="featured-meta">
-                            <span class="featured-views"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                    <path
-                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                                </svg> 200 - 17 tháng 3, 2025</span>
-                        </div>
-                        <h1 class="featured-title">Chủ nghĩa tối giản đang định nghĩa lại thói quen sống hiện đại</h1>
-                        <p class="featured-description">Từ cách chọn nội thất đến thói quen tiêu dùng, lối sống tối giản
-                            đang giúp các gia đình ưu tiên những gì quan trọng nhất và giảm tải các quyết định mỗi ngày.
-                        </p>
-                        <div class="featured-actions">
-                            <button class="btn-read-more">Đọc bài viết</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                let featuredPost = null;
+                let mainList = [];
+                if (typeof posts !== 'undefined' && posts.length > 0) {
+                featuredPost = posts[0];
+                mainList = posts.slice(1);
+                }
+                %>
 
-            <div class="main-content-wrapper">
-                <section class="article-grid-section">
-                    <div class="article-grid" id="news-grid-container">
-                        <%- include('../partials/card-news', { posts: posts }) %>
-                    </div>
+                <!-- TOP CARDS SECTION (Popular) -->
+                <% if (topCards.length> 0) { %>
+                    <section class="top-cards-section">
+                        <div class="top-cards-grid">
+                            <% topCards.forEach(card=> { %>
+                                <div class="top-card">
+                                    <div class="top-card-category">
+                                        <%= card.category || 'TIN TỨC' %>
+                                    </div>
+                                    <div class="top-card-meta">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                            <path
+                                                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                        </svg>
+                                        <%= card.views || 0 %> - <%= card.displayDate || card.date %>
+                                    </div>
+                                    <h3 class="top-card-title"><a href="/tin-tuc/<%= card.slug %>"
+                                            style="color:inherit; text-decoration:none;">
+                                            <%= card.title %>
+                                        </a></h3>
+                                    <p class="top-card-description">
+                                        <%= card.description %>
+                                    </p>
+                                </div>
+                                <% }) %>
+                        </div>
+                    </section>
+                    <% } %>
 
-                    <div class="load-more-container">
-                        <button id="btn-load-more-news" class="btn-load-more" data-type="news" data-page="2">
-                            Xem Thêm
-                        </button>
-                    </div>
-                </section>
-            </div>
+                        <!-- FEATURED ARTICLE -->
+                        <% if (featuredPost) { %>
+                            <section class="featured-article-section">
+                                <div class="featured-article-container">
+                                    <div class="featured-image-container">
+                                        <% if (featuredPost.thumbnail) { %>
+                                            <img src="<%= featuredPost.thumbnail %>" alt="<%= featuredPost.title %>"
+                                                style="width:100%; height:100%; object-fit:cover; border-radius: 8px;">
+                                            <% } else { %>
+                                                <div class="featured-image-placeholder">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"
+                                                        fill="#ccc" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                                    </svg>
+                                                </div>
+                                                <% } %>
+                                    </div>
+                                    <div class="featured-content">
+                                        <div class="featured-category">
+                                            <%= featuredPost.category || 'NỔI BẬT' %>
+                                        </div>
+                                        <div class="featured-meta">
+                                            <span class="featured-views">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                                    <path
+                                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                                </svg>
+                                                <%= featuredPost.views || 0 %> - <%= featuredPost.displayDate ||
+                                                        featuredPost.date %>
+                                            </span>
+                                        </div>
+                                        <h1 class="featured-title"><a href="/tin-tuc/<%= featuredPost.slug %>"
+                                                style="color:inherit; text-decoration:none;">
+                                                <%= featuredPost.title %>
+                                            </a></h1>
+                                        <p class="featured-description">
+                                            <%= featuredPost.description %>
+                                        </p>
+                                        <div class="featured-actions">
+                                            <a href="/tin-tuc/<%= featuredPost.slug %>" class="btn-read-more"
+                                                style="text-decoration:none; display:inline-block; padding: 10px 20px; background: #333; color: #fff; border-radius: 4px;">Đọc
+                                                bài viết</a>
+
+                                            <div class="share-wrapper"
+                                                style="position: relative; display: inline-block; margin-left: 10px;">
+                                                <button class="share-icon share-action card-share-button"
+                                                    title="Chia sẻ"
+                                                    style="background: rgba(0,0,0,0.05); width: 40px; height: 40px;">
+                                                    <i class="fa-solid fa-share-nodes"></i>
+                                                </button>
+                                                <!-- Radial Menu -->
+                                                <div class="radial-share-menu">
+                                                    <div class="radial-backdrop"></div>
+                                                    <div class="radial-track">
+                                                        <a href="#" class="share-item share-action"
+                                                            data-platform="facebook"
+                                                            data-slug="<%= featuredPost.slug %>"
+                                                            data-title="<%= featuredPost.title %>" title="Facebook"><i
+                                                                class="fa-brands fa-facebook"></i></a>
+                                                        <a href="#" class="share-item share-action"
+                                                            data-platform="messenger"
+                                                            data-slug="<%= featuredPost.slug %>"
+                                                            data-title="<%= featuredPost.title %>" title="Messenger"><i
+                                                                class="fa-brands fa-facebook-messenger"></i></a>
+                                                        <a href="#" class="share-item share-action"
+                                                            data-platform="twitter" data-slug="<%= featuredPost.slug %>"
+                                                            data-title="<%= featuredPost.title %>" title="Twitter"><i
+                                                                class="fa-brands fa-x-twitter"></i></a>
+                                                        <a href="#" class="share-item share-action" data-platform="copy"
+                                                            data-slug="<%= featuredPost.slug %>"
+                                                            data-title="<%= featuredPost.title %>" title="Copy"><i
+                                                                class="fa-solid fa-copy"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <% } %>
+
+                                <div class="main-content-wrapper">
+                                    <section class="article-grid-section">
+                                        <div class="article-grid" id="news-grid-container">
+                                            <% if (mainList.length> 0) { %>
+                                                <%- include('../partials/card-news', { posts: mainList }) %>
+                                                    <% } else { %>
+                                                        <p style="text-align:center; width:100%;">Không có tin tức nào
+                                                            khác.</p>
+                                                        <% } %>
+                                        </div>
+
+                                        <div class="load-more-container">
+                                            <button id="btn-load-more-news" class="btn-load-more" data-type="news"
+                                                data-page="2">
+                                                Xem Thêm
+                                            </button>
+                                        </div>
+                                    </section>
+                                </div>
         </main>
         <%- include('../partials/footer') %>
 
+            <script src="/js/radial-menu.js"></script>
             <script>
-                document.addEventListener('DOMContentLoaded', function () {
+                document.addEventListener('DOMContentLoaded', () => {
                     const gridContainer = document.getElementById('news-grid-container');
                     const loadMoreBtn = document.getElementById('btn-load-more-news');
-                    const applyFilterBtn = document.querySelector('.btn-apply-filter');
+                    let currentPage = 2;
 
-                    const sourceFilter = document.getElementById('source-filter');
-                    const timeFilter = document.getElementById('time-filter');
-                    const sortFilter = document.getElementById('sort-filter');
-
-                    const startDateMobile = document.getElementById('start-date-mobile');
-                    const endDateMobile = document.getElementById('end-date-mobile');
-
-                    let currentFilter = {
-                        type: 'news',
-                        page: 1,
-                        source: 'all',
-                        dateRange: 'all',
-                        startDate: '',
-                        endDate: '',
-                        sort: 'newest'
-                    };
-
-                    async function fetchNews(isLoadMore = false) {
-                        if (!isLoadMore) {
-                            currentFilter.page = 1;
-                            gridContainer.innerHTML = '<div style="text-align:center; padding:30px; width:100%;">Đang tìm kiếm...</div>';
-                            if (loadMoreBtn) loadMoreBtn.style.display = 'none';
-                        } else {
-                            if (loadMoreBtn) {
-                                loadMoreBtn.textContent = 'Đang tải...';
-                                loadMoreBtn.disabled = true;
-                            }
-                        }
-
-                        const params = new URLSearchParams({
-                            type: 'news',
-                            page: currentFilter.page,
-                            limit: 6,
-                            source: currentFilter.source,
-                            dateRange: currentFilter.dateRange,
-                            sort: currentFilter.sort,
-                            startDate: currentFilter.startDate,
-                            endDate: currentFilter.endDate
-                        });
+                    async function loadMore() {
+                        loadMoreBtn.innerText = 'Đang tải...';
+                        loadMoreBtn.disabled = true;
 
                         try {
-                            const res = await fetch(`/api/posts?${params.toString()}`);
+                            // Assuming API handles type=news and returns appropriate HTML
+                            const res = await fetch(`/api/posts?type=news&page=${currentPage}&limit=6`);
                             const data = await res.json();
 
-                            if (data.success) {
-                                if (!isLoadMore) {
-                                    gridContainer.innerHTML = '';
-                                    if (data.total === 0) gridContainer.innerHTML = '<p style="text-align:center; width:100%">Không tìm thấy tin tức nào.</p>';
-                                }
-
+                            if (data.success && data.html) {
                                 gridContainer.insertAdjacentHTML('beforeend', data.html);
 
-                                if (loadMoreBtn) {
-                                    if (data.hasMore) {
-                                        loadMoreBtn.style.display = 'block';
-                                        loadMoreBtn.textContent = 'Xem Thêm';
-                                        loadMoreBtn.disabled = false;
-                                        if (isLoadMore) currentFilter.page++;
-                                        else currentFilter.page = 2;
-                                    } else {
-                                        loadMoreBtn.style.display = 'none';
-                                    }
-                                }
-                            }
-                        } catch (error) {
-                            console.error(error);
-                            if (!isLoadMore) gridContainer.innerHTML = '<p style="text-align:center;">Lỗi kết nối.</p>';
-                        }
-                    }
-
-                    const filters = [sourceFilter, timeFilter, sortFilter];
-                    filters.forEach(f => {
-                        if (f) {
-                            f.addEventListener('change', (e) => {
-                                const val = e.target.value;
-                                const id = e.target.id;
-
-                                if (id === 'source-filter') currentFilter.source = val;
-                                if (id === 'sort-filter') currentFilter.sort = val;
-
-                                if (id === 'time-filter') {
-                                    currentFilter.dateRange = val;
-                                    const customRange = document.getElementById('custom-date-range-mobile');
-                                    if (customRange) {
-                                        customRange.style.display = (val === 'custom') ? 'block' : 'none';
-                                    }
-                                    if (val === 'custom') return;
+                                if (data.hasMore) {
+                                    currentPage++;
+                                    loadMoreBtn.innerText = 'Xem Thêm';
+                                    loadMoreBtn.disabled = false;
+                                } else {
+                                    loadMoreBtn.style.display = 'none';
                                 }
 
-                                fetchNews(false);
-                            });
-                        }
-                    });
-
-                    if (startDateMobile && endDateMobile) {
-                        function checkDateMobile() {
-                            if (startDateMobile.value && endDateMobile.value) {
-                                currentFilter.startDate = startDateMobile.value;
-                                currentFilter.endDate = endDateMobile.value;
-                                fetchNews(false);
+                                if (window.initRadialMenus) window.initRadialMenus();
                             }
+                        } catch (e) {
+                            console.error(e);
+                            loadMoreBtn.innerText = 'Thử lại';
+                            loadMoreBtn.disabled = false;
                         }
-                        startDateMobile.addEventListener('change', checkDateMobile);
-                        endDateMobile.addEventListener('change', checkDateMobile);
-                    }
-
-                    if (applyFilterBtn) {
-                        applyFilterBtn.addEventListener('click', () => {
-                            fetchNews(false);
-                        });
                     }
 
                     if (loadMoreBtn) {
-                        loadMoreBtn.addEventListener('click', () => {
-                            fetchNews(true);
-                        });
+                        loadMoreBtn.addEventListener('click', loadMore);
                     }
 
-                    window.showToast = function (message, type = 'info') {
-                        const toastContainer = document.getElementById('toast-container');
-                        if (!toastContainer) return;
-                        const toast = document.createElement('div');
-                        toast.className = `toast toast-${type}`;
-                        toast.textContent = message;
-                        toastContainer.appendChild(toast);
-                        setTimeout(() => toast.classList.add('show'), 100);
-                        setTimeout(() => {
-                            toast.classList.remove('show');
-                            setTimeout(() => toast.remove(), 300);
-                        }, 3000);
-                    }
+                    if (window.initRadialMenus) window.initRadialMenus();
                 });
             </script>
 </body>

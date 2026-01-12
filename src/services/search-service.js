@@ -1,5 +1,5 @@
 const { Document } = require('flexsearch');
-//const chokidar = require('chokidar');
+// chokidar imported dynamically in init()
 const fs = require('fs');
 const path = require('path');
 const frontMatter = require('front-matter');
@@ -35,7 +35,8 @@ class SearchService {
         this.isInit = true;
 
         console.log('[SearchService] Initializing search index...');
-        const { default: chokidar } = await import('chokidar');
+        const chokidarModule = await import('chokidar');
+        const chokidar = chokidarModule.default || chokidarModule;
         if (!chokidar || typeof chokidar.watch !== 'function') {
             console.error('[SearchService] Error: Failed to load chokidar or .watch function is missing.');
             return;
@@ -157,6 +158,9 @@ class SearchService {
         } else if (folderName === 'series') {
             type = 'series';
             urlPrefix = '/series/';
+        } else if (folderName === 'explore') {
+            type = 'explore';
+            urlPrefix = '/kham-pha/';
         }
 
         // Tạo slug nếu không có trong frontmatter (dùng tên file)
@@ -426,13 +430,13 @@ class SearchService {
                 if (!includeFuture && doc.date && new Date(doc.date) > new Date()) {
                     return null; // Chưa đến giờ đăng
                 }
-                
+
                 // Re-read content from file (because content is stripped from memory cache)
                 try {
                     const fullPath = path.join(this.contentDir, doc.id); // doc.id is relative path
                     const fileContent = fs.readFileSync(fullPath, 'utf8');
                     const parsed = frontMatter(fileContent);
-                    
+
                     const htmlContent = this.md.render(parsed.body);
 
                     // Return merged object: cached metadata + fresh content body
