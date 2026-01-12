@@ -130,12 +130,17 @@ window.initRadialMenus = function () {
             startDragAngle = getCursorAngle(clientX, clientY);
             startRotation = currentRotation;
             // prevent default only on touch to stop scrolling page
-            if (e.type === 'touchstart') e.preventDefault();
+    // if (e.type === 'touchstart') e.preventDefault(); 
+    // Removed to allow 'click' event to fire after tap.
         }
 
         function moveDrag(e) {
             if (!isDragging) return;
-            // e.preventDefault(); // Stop page scroll while dragging menu
+            
+            // Stop page scroll while dragging menu
+            if (e.cancelable && e.type === 'touchmove') {
+                e.preventDefault(); 
+            }
 
             const clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
             const clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);

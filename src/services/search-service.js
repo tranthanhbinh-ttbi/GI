@@ -1,10 +1,12 @@
 const { Document } = require('flexsearch');
 // chokidar imported dynamically in init()
 const fs = require('fs');
+const fsPromises = require('fs').promises; // Add fs promises for async read
 const path = require('path');
 const frontMatter = require('front-matter');
 const notificationService = require('./notification-service');
 const MarkdownIt = require('markdown-it');
+const { glob } = require('glob'); // Import glob
 
 
 class SearchService {
@@ -28,77 +30,52 @@ class SearchService {
     }
 
     /**
-     * Khởi tạo và bắt đầu theo dõi file
+     * Khởi tạo và nạp toàn bộ file vào index
      */
     async init() {
         if (this.isInit) return;
         this.isInit = true;
 
         console.log('[SearchService] Initializing search index...');
-        const chokidarModule = await import('chokidar');
-        const chokidar = chokidarModule.default || chokidarModule;
-        if (!chokidar || typeof chokidar.watch !== 'function') {
-            console.error('[SearchService] Error: Failed to load chokidar or .watch function is missing.');
-            return;
-        }
 
-        return new Promise((resolve) => {
-            // Khởi tạo watcher
-            const watcher = chokidar.watch(this.contentDir, {
-                ignored: /(^|[\/\\])\../,
-                persistent: true,
-                ignoreInitial: false, // Index file có sẵn ngay lập tức
-                depth: 2 // Chỉ quét sâu đến folder con (news/series)
-            });
-
-            const timeout = setTimeout(() => {
-                if (!this.isReady) {
-                    console.warn('[SearchService] Warning: Initialization timed out (no ready event). Proceeding anyway.');
-                    this.isReady = true;
-                    resolve();
+        try {
+            // Glob all .md files
+            const files = await glob('**/*.md', { cwd: this.contentDir, absolute: true });
+            
+            // Read and index all files in parallel
+            await Promise.all(files.map(async (filePath) => {
+                try {
+                    const content = await fsPromises.readFile(filePath, 'utf8');
+                    this.addFile(filePath, content);
+                } catch (err) {
+                    console.error(`[SearchService] Failed to load ${filePath}:`, err.message);
                 }
-            }, 5000); // 5s timeout
+            }));
 
-            watcher
-                .on('add', path => this.addFile(path))
-                .on('change', path => this.updateFile(path))
-                .on('unlink', path => this.removeFile(path))
-                .on('ready', () => {
-                    clearTimeout(timeout);
-                    this.isReady = true;
-                    console.log('[SearchService] Search index ready.');
-                    resolve();
-                });
-
-            this.watcher = watcher;
-        });
+            this.isReady = true;
+            console.log(`[SearchService] Search index ready. Indexed ${this.documents.size} documents.`);
+        } catch (err) {
+            console.error('[SearchService] Critical Error in init:', err);
+            this.isReady = true; 
+        }
     }
 
     /**
      * Xử lý thêm file mới vào index
+     * @param {string} filePath Absolute path to file
+     * @param {string|null} preLoadedContent Optional content if already read
      */
-    addFile(filePath) {
+    addFile(filePath, preLoadedContent = null) {
         if (path.extname(filePath) !== '.md') return;
 
         try {
-            const data = this.parseFile(filePath);
+            const data = this.parseFile(filePath, preLoadedContent);
             if (data) {
                 this.index.add(data);
 
                 // Tối ưu RAM: Chỉ lưu metadata vào Map, loại bỏ content text dài
                 const { content, ...metadata } = data;
                 this.documents.set(data.id, metadata);
-                // console.log(`[SearchService] Indexed: ${data.title}`);
-
-                // Trigger Notification if system is already running (new post added live)
-                if (this.isReady) {
-                    notificationService.createAndBroadcast({
-                        title: 'Bài viết mới!',
-                        message: `Đã có bài viết mới: "${data.title}". Mời bạn vào xem ngay!`,
-                        type: 'new_post',
-                        link: data.url
-                    });
-                }
             }
         } catch (error) {
             console.error(`[SearchService] Error indexing file ${filePath}:`, error.message);
@@ -106,44 +83,15 @@ class SearchService {
     }
 
     /**
-     * Xử lý cập nhật file
-     */
-    updateFile(filePath) {
-        if (path.extname(filePath) !== '.md') return;
-
-        try {
-            const data = this.parseFile(filePath);
-            if (data) {
-                this.index.update(data);
-
-                // Tối ưu RAM: Chỉ lưu metadata vào Map
-                const { content, ...metadata } = data;
-                this.documents.set(data.id, metadata);
-                // console.log(`[SearchService] Updated: ${data.title}`);
-            }
-        } catch (error) {
-            console.error(`[SearchService] Error updating file ${filePath}:`, error.message);
-        }
-    }
-
-    /**
-     * Xử lý xóa file
-     */
-    removeFile(filePath) {
-        if (path.extname(filePath) !== '.md') return;
-
-        // ID là đường dẫn tương đối để đảm bảo duy nhất
-        const id = path.relative(this.contentDir, filePath);
-        this.index.remove(id);
-        this.documents.delete(id);
-        // console.log(`[SearchService] Removed: ${id}`);
-    }
-
-    /**
      * Đọc và parse nội dung file
+     * @param {string} filePath
+     * @param {string|null} content Optional content
      */
-    parseFile(filePath) {
-        const content = fs.readFileSync(filePath, 'utf8');
+    parseFile(filePath, content = null) {
+        if (content === null) {
+            content = fs.readFileSync(filePath, 'utf8');
+        }
+        
         const parsed = frontMatter(content);
         const relativePath = path.relative(this.contentDir, filePath);
 
