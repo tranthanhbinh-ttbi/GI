@@ -106,9 +106,23 @@ app.register(require('./src/controllers/subcribe-controller'))
 // --- Service Initialization Logic ---
 const initServices = async () => {
   try {
-    console.log('Starting DB migration...');
-    await migrate();
-    console.log('DB migration finished. Starting SearchService...');
+    // VERCEL OPTIMIZATION: Skip expensive DB migration on cold start
+    // Only run migration if NOT on Vercel OR if explicitly requested via env var
+    const shouldRunMigration = !process.env.VERCEL || process.env.RUN_MIGRATION === 'true';
+
+    if (shouldRunMigration) {
+      console.log('Starting DB migration...');
+      await migrate();
+      console.log('DB migration finished.');
+    } else {
+      console.log('Skipping DB migration on Vercel runtime to improve cold start speed.');
+      // Still need to authenticate to ensure DB connection is ready
+      const { sequelize } = require('./src/models');
+      await sequelize.authenticate();
+      console.log('DB connection established.');
+    }
+
+    console.log('Starting SearchService...');
     await searchService.init();
     console.log('SearchService initialized.');
   } catch (e) {
