@@ -309,12 +309,6 @@
       profileContainer.classList.add('opacn')
       updateFollowUI(false, 0)
       closeProfileMenu()
-      
-      // Stop notification client
-      if (window.NotificationClient) {
-        window.NotificationClient.stop()
-      }
-
       // disconnectWS()
       followToggleBusy = false
     }
