@@ -404,37 +404,83 @@ class SearchService {
     }
 
     /**
-     * Lấy bài viết liên quan
+     * Lấy bài viết liên quan (Nâng cấp: Metadata + Content Relevance)
+     * Trọng số: Category (3.5), Topic (2.5), Content (2.5), Author (1.0)
      * @param {string} currentSlug Slug bài hiện tại để loại trừ
-     * @param {object} criteria Tiêu chí (category, topic, author)
+     * @param {object} criteria Tiêu chí (category, topic, author, title)
      * @param {number} limit
      */
     getRelatedPosts(currentSlug, criteria = {}, limit = 5) {
         let allDocs = Array.from(this.documents.values());
 
-        // 1. Lọc bài hiện tại và bài tương lai
+        // 1. Tìm kiếm dựa trên nội dung (Sử dụng tiêu đề bài hiện tại làm từ khóa)
+        let contentMatches = new Set();
+        if (criteria.title) {
+            // Tìm kiếm lỏng (loose) để bắt được nhiều ngữ cảnh hơn
+            const results = this.index.search(criteria.title, {
+                limit: 20, // Lấy top 20 bài giống nhất về nội dung để xét điểm cộng
+                suggest: true // Cho phép sai chính tả nhẹ
+            });
+            
+            // FlexSearch trả về mảng ID
+            results.forEach(id => contentMatches.add(id));
+        }
+
+        // 2. Lọc bài hiện tại và bài tương lai
         const now = new Date();
         allDocs = allDocs.filter(doc =>
             doc.slug !== currentSlug &&
             (!doc.date || new Date(doc.date) <= now)
         );
 
-        // 2. Tính điểm liên quan (Scoring)
+        // 3. Tính điểm liên quan (Scoring System)
         const scoredDocs = allDocs.map(doc => {
             let score = 0;
-            if (criteria.category && doc.category === criteria.category) score += 3;
-            if (criteria.topic && doc.topic === criteria.topic) score += 2; // Giả sử có field topic
-            if (criteria.author && doc.author === criteria.author) score += 1;
+
+            // --- Metadata Scoring (Dựa trên nhãn dán) ---
+            // Ưu tiên cao nhất: Cùng Category (3.5)
+            if (criteria.category && doc.category === criteria.category) score += 3.5;
+            
+            // Ưu tiên nhì: Cùng Topic (2.5)
+            if (criteria.topic && doc.topic === criteria.topic) score += 2.5; 
+            
+            // Ưu tiên ba: Cùng Tác giả (1.0)
+            if (criteria.author && doc.author === criteria.author) score += 1.0;
+
+            // --- Content Scoring (Dựa trên nội dung thực tế) ---
+            // Nếu bài viết này nằm trong kết quả tìm kiếm của FlexSearch (2.5)
+            if (contentMatches.has(doc.id)) {
+                score += 2.5; 
+            }
+
             return { doc, score };
         });
 
-        // 3. Sort theo điểm cao nhất -> mới nhất
+        // 4. Sort theo điểm cao nhất -> mới nhất
         scoredDocs.sort((a, b) => {
             if (b.score !== a.score) return b.score - a.score;
             return new Date(b.doc.date) - new Date(a.doc.date);
         });
 
-        return scoredDocs.slice(0, limit).map(item => item.doc);
+        // 5. Chọn lọc & Fallback
+        // Chỉ lấy các bài có điểm > 0
+        const relevantDocs = scoredDocs.filter(item => item.score > 0);
+        let finalResult = relevantDocs.slice(0, limit).map(item => item.doc);
+
+        // Fallback: Nếu không đủ bài liên quan, lấy thêm các bài mới nhất để lấp đầy UI
+        if (finalResult.length < limit) {
+            const remainingCount = limit - finalResult.length;
+            const existingSlugs = new Set(finalResult.map(d => d.slug));
+            
+            const fallbackDocs = allDocs
+                .filter(d => !existingSlugs.has(d.slug)) // Chưa có trong list
+                .sort((a, b) => new Date(b.date) - new Date(a.date)) // Mới nhất
+                .slice(0, remainingCount);
+            
+            finalResult = [...finalResult, ...fallbackDocs];
+        }
+
+        return finalResult;
     }
 }
 
