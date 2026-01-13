@@ -42,6 +42,44 @@
             }
         });
 
+        CMS.registerEditorComponent({
+            id: "spotify",
+            label: "Spotify",
+            fields: [{
+                name: 'url',
+                label: 'Spotify URL',
+                widget: 'string',
+                hint: 'Dán đường dẫn podcast từ Spotify vào đây.'
+            }],
+
+            pattern: /^<iframe.+src="https:\/\/open\.spotify\.com\/embed\/([^"]+)".+<\/iframe>$/,
+            
+            fromBlock: function(match) {
+                return {
+                    url: 'https://open.spotify.com/' + match[1]
+                };
+            },
+            
+            toBlock: function(obj) {
+                if (!obj.url) return null;
+                let path = obj.url.replace(/https?:\/\/(open\.spotify\.com\/)/, '');
+                path = path.split('?')[0];
+                
+                return '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/' + path + '" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';
+            },
+            
+            toPreview: function(obj) {
+                if (!obj || !obj.url || obj.url.trim() === "") {
+                    return '<div style="color: #888; background: #eee; padding: 10px; border-radius: 5px; text-align: center; border: 1px dashed #ccc;">🔗 Đang chờ dán link Spotify...</div>';
+                }
+                
+                let path = obj.url.replace(/https?:\/\/(open\.spotify\.com\/)/, '');
+                path = path.split('?')[0];
+
+                return '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/' + path + '" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';
+            }
+        });
+
         CMS.registerEventListener({
             name: 'preSave',
             handler: ({ entry }) => {

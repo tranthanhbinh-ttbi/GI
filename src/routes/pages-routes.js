@@ -3,15 +3,15 @@ const { Notification, UserNotification, PostMeta } = require('../models');
 
 
 async function Pages(fastify, options) {
-    
+
     // --- 1. Trang Chủ ---
     fastify.get('/', { config: { cache: true } }, async (request, reply) => {
         // Lấy 10 bài mới nhất bất kể danh mục để hiển thị (nếu cần)
         const result = searchService.search('', 1, 10);
-        return reply.viewAsync('trang-chu/index', { 
+        return reply.viewAsync('trang-chu/index', {
             Current_Page: 'trang-chu',
             posts: result.data,
-            user: request.user 
+            user: request.user
         });
     });
 
@@ -78,11 +78,11 @@ async function Pages(fastify, options) {
                     } else {
                         notifications = allNotifications.map(n => n.get({ plain: true }));
                     }
-                    
-                    return reply.viewAsync(route.template, { 
+
+                    return reply.viewAsync(route.template, {
                         Current_Page: route.pageName,
                         notifications: notifications,
-                        popularPosts: [], 
+                        popularPosts: [],
                         user: request.user
                     });
                 } catch (err) {
@@ -99,7 +99,7 @@ async function Pages(fastify, options) {
                         where: { slug: slugs },
                         raw: true
                     });
-                    
+
                     // Map meta back to posts
                     const metaMap = new Map(metas.map(m => [m.slug, m]));
                     posts = posts.map(p => {
@@ -128,7 +128,7 @@ async function Pages(fastify, options) {
             const popularData = searchService.search('', 1, 5, popularFilter);
             const popularPosts = popularData.data;
 
-            return reply.viewAsync(route.template, { 
+            return reply.viewAsync(route.template, {
                 Current_Page: route.pageName,
                 posts: posts,
                 popularPosts: popularPosts,
@@ -138,7 +138,7 @@ async function Pages(fastify, options) {
     }
 
     // --- 3. Các Trang Chi Tiết (Detail Pages - Dynamic Routes) ---
-    
+
     // Helper function để xử lý render chi tiết
     const renderPostDetail = async (slug, template, pageName, req, rep) => {
         const post = searchService.getPostBySlug(slug);
@@ -185,7 +185,7 @@ async function Pages(fastify, options) {
     fastify.get('/kham-pha/:slug', async (request, reply) => {
         return renderPostDetail(request.params.slug, 'kham-pha/post', 'kham-pha', request, reply);
     });
-    
+
     // Route cho Sự Kiện (nếu có bài chi tiết)
     fastify.get('/su-kien/:slug', async (request, reply) => {
         return renderPostDetail(request.params.slug, 'su-kien/post', 'su-kien', request, reply);

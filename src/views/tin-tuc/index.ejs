@@ -5,191 +5,360 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <meta name="description"
-        content="Gender Insights là dự án giáo dục giới tính cho thanh thiếu niên, đồng thời nâng cao nhận thức cộng đồng về phòng chống xâm hại tình dục trẻ em." />
+        content="Cập nhật tin tức mới nhất về các dự án giáo dục, hoạt động cộng đồng và quan hệ đối tác báo chí của Gender Insights." />
     <meta name="author" content="Gender Insights" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta property="og:site_name" content="Gender Insights" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://genderinsights.vercel.app/tin-tuc/" />
     <meta property="og:locale" content="vi_VN" />
-    <meta property="og:title" content="Gender Insights | Tin Tức" />
-    <title>Gender Insights | Tin Tức</title>
-    <link rel="shortcut icon" href="photos/brands/gender-insights.ico" type="image/x-icon" />
+    <meta property="og:title" content="Tin Tức & Hoạt Động Truyền Thông | Gender Insights" />
+    <meta property="og:description"
+        content="Cập nhật tin tức mới nhất về các dự án giáo dục, hoạt động cộng đồng và quan hệ đối tác báo chí của Gender Insights." />
+    <meta property="og:image" content="https://genderinsights.vercel.app/photos/brands/gender-insights.svg" />
+    <meta property="og:image:alt" content="Gender Insights" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Tin Tức & Hoạt Động Truyền Thông | Gender Insights" />
+    <meta name="twitter:description"
+        content="Cập nhật tin tức mới nhất về các dự án giáo dục, hoạt động cộng đồng và quan hệ đối tác báo chí của Gender Insights." />
+    <meta name="twitter:image" content="https://genderinsights.vercel.app/photos/brands/gender-insights.svg" />
+    <meta name="google-site-verification" content="WYtNJAPGpG3GU15m7LDN27dg87rSi9SSYkL4o1Oc3LQ" />
+    <title>Tin Tức & Hoạt Động Truyền Thông | Gender Insights</title>
+    <link rel="preconnect" href="https://genderinsights.vercel.app/tin-tuc/" crossorigin />
+    <link rel="shortcut icon" href="https://genderinsights.vercel.app/photos/brands/gender-insights.ico"
+        type="image/x-icon" />
+    <link rel="canonical" href="https://genderinsights.vercel.app/tin-tuc/" />
+    <link rel="alternate" href="https://genderinsights.vercel.app/tin-tuc/" hreflang="vi-VN" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="preload" href="/fonts/Montserrat/Montserrat.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="stylesheet" href="/fonts/index.css" />
     <link rel="stylesheet" href="/css/components/bases.css" />
     <link rel="stylesheet" href="/css/components/main.css" />
     <link rel="stylesheet" href="/css/tin-tuc.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" />
+    </noscript>
+    <link rel="prefetch" href="https://genderinsights.vercel.app/" />
+    <link rel="prefetch" href="https://genderinsights.vercel.app/series/" />
+    <link rel="prefetch" href="https://genderinsights.vercel.app/kham-pha/" />
+    <link rel="prefetch" href="https://genderinsights.vercel.app/su-kien/" />
+    <link rel="prefetch" href="https://genderinsights.vercel.app/dien-dan/" />
     <style>
-        .radial-share-menu {
-            bottom: 100%;
-            right: 0;
-            transform: translateY(-10px);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Custom button style override if needed */
-        .btn-read-more {
-            cursor: pointer;
+        html,
+        body,
+        input,
+        select,
+        button {
+            font-family: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
         }
     </style>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Trang chủ",
+                "item": "https://genderinsights.vercel.app/"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Tin tức",
+                "item": "https://genderinsights.vercel.app/tin-tuc"
+            }]
+        }
+    </script>
+    <script>
+        const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ? localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-gen-themes', preferredTheme);
+    </script>
 </head>
 
 <body>
     <%- include('../partials/header') %>
         <main>
-            <% let topCards=[]; if (typeof popularPosts !=='undefined' && popularPosts.length> 0) {
-                topCards = popularPosts.slice(0, 4);
-                }
+            <div class="news-container">
+                <% let topCards=[]; if (typeof popularPosts !=='undefined' && popularPosts.length> 0) {
+                    topCards = popularPosts.slice(0, 4);
+                    }
 
-                let featuredPost = null;
-                let mainList = [];
-                if (typeof posts !== 'undefined' && posts.length > 0) {
-                featuredPost = posts[0];
-                mainList = posts.slice(1);
-                }
-                %>
+                    let featuredPost = null;
+                    let mainList = [];
+                    if (typeof posts !== 'undefined' && posts.length > 0) {
+                    featuredPost = posts[0];
+                    mainList = posts.slice(1);
+                    }
+                    %>
 
-                <!-- TOP CARDS SECTION (Popular) -->
-                <% if (topCards.length> 0) { %>
-                    <section class="top-cards-section">
-                        <div class="top-cards-grid">
-                            <% topCards.forEach(card=> { %>
-                                <div class="top-card">
-                                    <div class="top-card-category">
-                                        <%= card.category || 'TIN TỨC' %>
-                                    </div>
-                                    <div class="top-card-meta">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                            <path
-                                                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                                        </svg>
-                                        <%= card.views || 0 %> - <%= card.displayDate || card.date %>
-                                    </div>
-                                    <h3 class="top-card-title"><a href="/tin-tuc/<%= card.slug %>"
-                                            style="color:inherit; text-decoration:none;">
-                                            <%= card.title %>
-                                        </a></h3>
-                                    <p class="top-card-description">
-                                        <%= card.description %>
-                                    </p>
-                                </div>
-                                <% }) %>
-                        </div>
-                    </section>
-                    <% } %>
+                    <!-- TOP CARDS SECTION (Popular) -->
+                    <% if (topCards.length> 0) { %>
+                        <section class="top-cards-section">
+                            <div class="splide top-cards-splide" aria-label="Popular Posts">
+                                <div class="splide__track">
+                                    <ul class="splide__list">
+                                        <% topCards.forEach(card=> { %>
+                                            <li class="splide__slide">
+                                                <div class="top-card-horizontal">
+                                                    <div class="top-card-img-wrapper">
+                                                        <% if (card.thumbnail) { %>
+                                                            <img src="<%= card.thumbnail %>" alt="<%= card.title %>">
+                                                            <% } else { %>
+                                                                <div class="top-card-placeholder">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                                                        height="32" fill="#ccc" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                                                    </svg>
+                                                                </div>
+                                                                <% } %>
+                                                    </div>
+                                                    <div class="top-card-content-wrapper">
+                                                        <div class="top-card-date-row">
+                                                            <span class="date-item">
+                                                                <%= card.displayDate || card.date %>
+                                                            </span>
+                                                        </div>
 
-                        <!-- FEATURED ARTICLE -->
-                        <% if (featuredPost) { %>
-                            <section class="featured-article-section">
-                                <div class="featured-article-container">
-                                    <div class="featured-image-container">
-                                        <% if (featuredPost.thumbnail) { %>
-                                            <img src="<%= featuredPost.thumbnail %>" alt="<%= featuredPost.title %>"
-                                                style="width:100%; height:100%; object-fit:cover; border-radius: 8px;">
-                                            <% } else { %>
-                                                <div class="featured-image-placeholder">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"
-                                                        fill="#ccc" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                                                    </svg>
+                                                        <h3 class="top-card-title-h">
+                                                            <a href="/tin-tuc/<%= card.slug %>">
+                                                                <%= card.title %>
+                                                            </a>
+                                                        </h3>
+
+                                                        <div class="top-card-views-row">
+                                                            <div class="meta-item">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="14"
+                                                                    height="14" fill="currentColor" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                                                    <path
+                                                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                                                </svg>
+                                                                <span>
+                                                                    <%= card.views || 0 %> views
+                                                                </span>
+                                                            </div>
+                                                            <div class="share-wrapper item-share-wrapper">
+                                                                <button
+                                                                    class="share-icon share-action slide-share-button"
+                                                                    title="Chia sẻ">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                        height="16" fill="currentColor"
+                                                                        viewBox="0 0 512 512">
+                                                                        <path
+                                                                            d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z" />
+                                                                    </svg>
+                                                                </button>
+                                                                <div class="radial-share-menu">
+                                                                    <div class="radial-backdrop"></div>
+                                                                    <div class="radial-track">
+                                                                        <a href="#" class="share-item share-action"
+                                                                            data-platform="facebook"
+                                                                            data-slug="<%= card.slug %>"
+                                                                            data-title="<%= card.title %>"
+                                                                            title="Facebook"><i
+                                                                                class="fa-brands fa-facebook"></i></a>
+                                                                        <a href="#" class="share-item share-action"
+                                                                            data-platform="messenger"
+                                                                            data-slug="<%= card.slug %>"
+                                                                            data-title="<%= card.title %>"
+                                                                            title="Messenger"><i
+                                                                                class="fa-brands fa-facebook-messenger"></i></a>
+                                                                        <a href="#" class="share-item share-action"
+                                                                            data-platform="twitter"
+                                                                            data-slug="<%= card.slug %>"
+                                                                            data-title="<%= card.title %>"
+                                                                            title="Twitter"><i
+                                                                                class="fa-brands fa-x-twitter"></i></a>
+                                                                        <a href="#" class="share-item share-action"
+                                                                            data-platform="copy"
+                                                                            data-slug="<%= card.slug %>"
+                                                                            data-title="<%= card.title %>"
+                                                                            title="Copy"><i
+                                                                                class="fa-solid fa-copy"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <% } %>
-                                    </div>
-                                    <div class="featured-content">
-                                        <div class="featured-category">
-                                            <%= featuredPost.category || 'NỔI BẬT' %>
-                                        </div>
-                                        <div class="featured-meta">
-                                            <span class="featured-views">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                                    <path
-                                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                                                </svg>
-                                                <%= featuredPost.views || 0 %> - <%= featuredPost.displayDate ||
-                                                        featuredPost.date %>
-                                            </span>
-                                        </div>
-                                        <h1 class="featured-title"><a href="/tin-tuc/<%= featuredPost.slug %>"
-                                                style="color:inherit; text-decoration:none;">
-                                                <%= featuredPost.title %>
-                                            </a></h1>
-                                        <p class="featured-description">
-                                            <%= featuredPost.description %>
-                                        </p>
-                                        <div class="featured-actions">
-                                            <a href="/tin-tuc/<%= featuredPost.slug %>" class="btn-read-more"
-                                                style="text-decoration:none; display:inline-block; padding: 10px 20px; background: #333; color: #fff; border-radius: 4px;">Đọc
-                                                bài viết</a>
+                                            </li>
+                                            <% }) %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                        <% } %>
 
-                                            <div class="share-wrapper"
-                                                style="position: relative; display: inline-block; margin-left: 10px;">
-                                                <button class="share-icon share-action card-share-button"
-                                                    title="Chia sẻ"
-                                                    style="background: rgba(0,0,0,0.05); width: 40px; height: 40px;">
-                                                    <i class="fa-solid fa-share-nodes"></i>
-                                                </button>
-                                                <!-- Radial Menu -->
-                                                <div class="radial-share-menu">
-                                                    <div class="radial-backdrop"></div>
-                                                    <div class="radial-track">
-                                                        <a href="#" class="share-item share-action"
-                                                            data-platform="facebook"
-                                                            data-slug="<%= featuredPost.slug %>"
-                                                            data-title="<%= featuredPost.title %>" title="Facebook"><i
-                                                                class="fa-brands fa-facebook"></i></a>
-                                                        <a href="#" class="share-item share-action"
-                                                            data-platform="messenger"
-                                                            data-slug="<%= featuredPost.slug %>"
-                                                            data-title="<%= featuredPost.title %>" title="Messenger"><i
-                                                                class="fa-brands fa-facebook-messenger"></i></a>
-                                                        <a href="#" class="share-item share-action"
-                                                            data-platform="twitter" data-slug="<%= featuredPost.slug %>"
-                                                            data-title="<%= featuredPost.title %>" title="Twitter"><i
-                                                                class="fa-brands fa-x-twitter"></i></a>
-                                                        <a href="#" class="share-item share-action" data-platform="copy"
-                                                            data-slug="<%= featuredPost.slug %>"
-                                                            data-title="<%= featuredPost.title %>" title="Copy"><i
-                                                                class="fa-solid fa-copy"></i></a>
+                            <!-- FEATURED ARTICLE -->
+                            <% if (featuredPost) { %>
+                                <section class="featured-article-section">
+                                    <div class="featured-article-container">
+                                        <div class="featured-image-container">
+                                            <div class="featured-category-badge">
+                                                <%= featuredPost.category || 'NỔI BẬT' %>
+                                            </div>
+                                            <% if (featuredPost.thumbnail) { %>
+                                                <img src="<%= featuredPost.thumbnail %>" alt="<%= featuredPost.title %>"
+                                                    class="featured-img">
+                                                <% } else { %>
+                                                    <div class="featured-image-placeholder">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"
+                                                            fill="#ccc" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                                        </svg>
+                                                    </div>
+                                                    <% } %>
+                                        </div>
+                                        <div class="featured-content">
+                                            <div class="featured-meta-row">
+                                                <span class="featured-date">
+                                                    <%= featuredPost.displayDate || featuredPost.date %>
+                                                </span>
+                                                <span class="meta-sep">•</span>
+                                                <span class="featured-views">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                        fill="currentColor" viewBox="0 0 16 16">
+                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                                        <path
+                                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                                    </svg>
+                                                    <%= featuredPost.views || 0 %>
+                                                </span>
+                                            </div>
+
+                                            <h1 class="featured-title">
+                                                <a href="/tin-tuc/<%= featuredPost.slug %>">
+                                                    <%= featuredPost.title %>
+                                                </a>
+                                            </h1>
+
+                                            <p class="featured-description">
+                                                <%= featuredPost.description %>
+                                            </p>
+
+                                            <div class="featured-actions">
+                                                <a href="/tin-tuc/<%= featuredPost.slug %>" class="btn-read-more">
+                                                    Đọc bài viết
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-arrow-right-short"
+                                                        viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd"
+                                                            d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8" />
+                                                    </svg>
+                                                </a>
+
+                                                <div class="share-wrapper" style="position: relative;">
+                                                    <button
+                                                        class="share-icon share-action card-share-button btn-icon-only"
+                                                        title="Chia sẻ">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" viewBox="0 0 512 512">
+                                                            <path
+                                                                d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z" />
+                                                        </svg>
+                                                    </button>
+                                                    <!-- Radial Menu Reused -->
+                                                    <div class="radial-share-menu">
+                                                        <div class="radial-backdrop"></div>
+                                                        <div class="radial-track">
+                                                            <a href="#" class="share-item share-action"
+                                                                data-platform="facebook"
+                                                                data-slug="<%= featuredPost.slug %>"
+                                                                data-title="<%= featuredPost.title %>"><i
+                                                                    class="fa-brands fa-facebook"></i></a>
+                                                            <a href="#" class="share-item share-action"
+                                                                data-platform="messenger"
+                                                                data-slug="<%= featuredPost.slug %>"
+                                                                data-title="<%= featuredPost.title %>"><i
+                                                                    class="fa-brands fa-facebook-messenger"></i></a>
+                                                            <a href="#" class="share-item share-action"
+                                                                data-platform="twitter"
+                                                                data-slug="<%= featuredPost.slug %>"
+                                                                data-title="<%= featuredPost.title %>"><i
+                                                                    class="fa-brands fa-x-twitter"></i></a>
+                                                            <a href="#" class="share-item share-action"
+                                                                data-platform="copy"
+                                                                data-slug="<%= featuredPost.slug %>"
+                                                                data-title="<%= featuredPost.title %>"><i
+                                                                    class="fa-solid fa-copy"></i></a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </section>
-                            <% } %>
+                                </section>
+                                <% } %>
 
-                                <div class="main-content-wrapper">
-                                    <section class="article-grid-section">
-                                        <div class="article-grid" id="news-grid-container">
-                                            <% if (mainList.length> 0) { %>
-                                                <%- include('../partials/card-news', { posts: mainList }) %>
-                                                    <% } else { %>
-                                                        <p style="text-align:center; width:100%;">Không có tin tức nào
-                                                            khác.</p>
-                                                        <% } %>
-                                        </div>
+                                    <div class="main-content-wrapper">
+                                        <section class="article-grid-section">
+                                            <div class="article-grid" id="news-grid-container">
+                                                <% if (mainList.length> 0) { %>
+                                                    <%- include('../partials/card-news', { posts: mainList }) %>
+                                                        <% } else { %>
+                                                            <p style="text-align:center; width:100%;">Không có tin tức
+                                                                nào
+                                                                khác.</p>
+                                                            <% } %>
+                                            </div>
 
-                                        <div class="load-more-container">
-                                            <button id="btn-load-more-news" class="btn-load-more" data-type="news"
-                                                data-page="2">
-                                                Xem Thêm
-                                            </button>
-                                        </div>
-                                    </section>
-                                </div>
+                                            <div class="load-more-container">
+                                                <button id="btn-load-more-news" class="btn-load-more" data-type="news"
+                                                    data-page="3">
+                                                    Xem Thêm
+                                                </button>
+                                            </div>
+                                        </section>
+                                    </div>
+            </div>
         </main>
         <%- include('../partials/footer') %>
 
             <script src="/js/radial-menu.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
+                    // Init Splide
+                    const splideEl = document.querySelector('.top-cards-splide');
+                    if (splideEl) {
+                        new Splide(splideEl, {
+                            perPage: 4,
+                            gap: '1.5rem',
+                            arrows: false,
+                            pagination: false,
+                            snap: true,
+                            breakpoints: {
+                                1200: { perPage: 3 },
+                                900: { perPage: 2 },
+                                600: { perPage: 1, gap: '1rem' }
+                            }
+                        }).mount();
+
+                        // Initial animation for cards
+                        const cards = document.querySelectorAll('.top-card-horizontal');
+                        cards.forEach((card, index) => {
+                            setTimeout(() => {
+                                card.classList.add('visible');
+                            }, index * 100);
+                        });
+                    }
+
                     const gridContainer = document.getElementById('news-grid-container');
                     const loadMoreBtn = document.getElementById('btn-load-more-news');
-                    let currentPage = 2;
+                    let currentPage = 3;
 
                     async function loadMore() {
                         loadMoreBtn.innerText = 'Đang tải...';

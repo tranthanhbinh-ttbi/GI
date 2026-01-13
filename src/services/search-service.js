@@ -41,7 +41,7 @@ class SearchService {
         try {
             // Glob all .md files
             const files = await glob('**/*.md', { cwd: this.contentDir, absolute: true });
-            
+
             // Read and index all files in parallel
             await Promise.all(files.map(async (filePath) => {
                 try {
@@ -56,7 +56,7 @@ class SearchService {
             console.log(`[SearchService] Search index ready. Indexed ${this.documents.size} documents.`);
         } catch (err) {
             console.error('[SearchService] Critical Error in init:', err);
-            this.isReady = true; 
+            this.isReady = true;
         }
     }
 
@@ -91,7 +91,7 @@ class SearchService {
         if (content === null) {
             content = fs.readFileSync(filePath, 'utf8');
         }
-        
+
         const parsed = frontMatter(content);
         const relativePath = path.relative(this.contentDir, filePath);
 
@@ -421,7 +421,7 @@ class SearchService {
                 limit: 20, // Lấy top 20 bài giống nhất về nội dung để xét điểm cộng
                 suggest: true // Cho phép sai chính tả nhẹ
             });
-            
+
             // FlexSearch trả về mảng ID
             results.forEach(id => contentMatches.add(id));
         }
@@ -440,17 +440,17 @@ class SearchService {
             // --- Metadata Scoring (Dựa trên nhãn dán) ---
             // Ưu tiên cao nhất: Cùng Category (3.5)
             if (criteria.category && doc.category === criteria.category) score += 3.5;
-            
+
             // Ưu tiên nhì: Cùng Topic (2.5)
-            if (criteria.topic && doc.topic === criteria.topic) score += 2.5; 
-            
+            if (criteria.topic && doc.topic === criteria.topic) score += 2.5;
+
             // Ưu tiên ba: Cùng Tác giả (1.0)
             if (criteria.author && doc.author === criteria.author) score += 1.0;
 
             // --- Content Scoring (Dựa trên nội dung thực tế) ---
             // Nếu bài viết này nằm trong kết quả tìm kiếm của FlexSearch (2.5)
             if (contentMatches.has(doc.id)) {
-                score += 2.5; 
+                score += 2.5;
             }
 
             return { doc, score };
@@ -471,12 +471,12 @@ class SearchService {
         if (finalResult.length < limit) {
             const remainingCount = limit - finalResult.length;
             const existingSlugs = new Set(finalResult.map(d => d.slug));
-            
+
             const fallbackDocs = allDocs
                 .filter(d => !existingSlugs.has(d.slug)) // Chưa có trong list
                 .sort((a, b) => new Date(b.date) - new Date(a.date)) // Mới nhất
                 .slice(0, remainingCount);
-            
+
             finalResult = [...finalResult, ...fallbackDocs];
         }
 
