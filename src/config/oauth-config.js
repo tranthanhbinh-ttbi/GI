@@ -11,18 +11,13 @@ async function oauthPassport(fastify) {
   
   FPassport.registerUserSerializer(async (user, request) => { return user.id })
   FPassport.registerUserDeserializer(async (id, request) => {
-    const cachedUser = userCache.get(id)
-    if (cachedUser) return cachedUser
-    const user = await User.findByPk(id, {
-      raw: true,
-      nest: true,
-      attributes: ['id', 'name', 'email', 'avatarUrl', 'provider']
-    })
-    if (user) {
-        userCache.set(id, user);
-        return user
+    // Return Sequelize Instance so controllers can use .update()
+    try {
+      const user = await User.findByPk(id);
+      return user;
+    } catch (e) {
+      return null;
     }
-    return null
   })
 
   const getOathCallback = (providerName) => async (accessToken, refreshToken, profile, done) => {

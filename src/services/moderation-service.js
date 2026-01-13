@@ -1,79 +1,123 @@
+const { Worker } = require('worker_threads');
+const path = require('path');
+const { Comment, User, ViolationLog, Notification, UserNotification, sequelize } = require('../models');
 const { isContentSafe } = require('../utils/content-filter');
 
-/**
- * Moderation Service
- * Kết hợp bộ lọc từ khóa nội bộ và OpenAI Moderation API
- */
+// === WORKER SETUP ===
+const workerPath = path.resolve(__dirname, '../workers/toxicity-worker.js');
+let worker = null;
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+function initWorker() {
+    if (worker) return;
 
-/**
- * Gọi OpenAI Moderation API
- * @param {string} input - Nội dung cần kiểm tra
- * @returns {Promise<boolean>} - true nếu an toàn, false nếu vi phạm
- */
-async function checkOpenAI(input) {
-    if (!OPENAI_API_KEY) {
-        // Nếu không có key, bỏ qua bước này (hoặc log warning)
-        console.warn('OPENAI_API_KEY not found. Skipping AI moderation.');
-        return true;
-    }
+    worker = new Worker(workerPath);
 
-    try {
-        const response = await fetch('https://api.openai.com/v1/moderations', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${OPENAI_API_KEY}`
-            },
-            body: JSON.stringify({ input })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok || data.error) {
-            console.error('OpenAI Moderation API Error:', data.error || response.statusText);
-            // Nếu lỗi do Key hoặc Quota, nên return true để không chặn user (Fail-open)
-            // Tuy nhiên, nếu user muốn debug, họ cần thấy log này.
-            return true;
+    worker.on('message', async (result) => {
+        // result: { success, id, toxicityScore, isToxic, label, error }
+        if (!result.success) {
+            console.error(`[ModerationService] Worker failed for comment ${result.id}:`, result.error);
+            return;
         }
 
-        if (data.results && data.results.length > 0) {
-            const result = data.results[0];
-            // result.flagged = true nếu vi phạm bất kỳ category nào
-            return !result.flagged;
+        try {
+            await handleAnalysisResult(result);
+        } catch (err) {
+            console.error(`[ModerationService] Error handling result for comment ${result.id}:`, err);
         }
-        
-        return true;
-    } catch (error) {
-        console.error('OpenAI Moderation API failed:', error);
-        // Fallback: coi như an toàn để không chặn user oan nếu server lỗi, 
-        // hoặc return false nếu muốn strict (tùy policy, ở đây chọn fail-open cho UX)
-        return true;
+    });
+
+    worker.on('error', (err) => {
+        console.error('[ModerationService] Worker error:', err);
+        // Restart worker on crash?
+        setTimeout(() => {
+            worker = null;
+            initWorker();
+        }, 5000);
+    });
+
+    worker.on('exit', (code) => {
+        if (code !== 0) console.error(`[ModerationService] Worker stopped with exit code ${code}`);
+    });
+    
+    console.log('[ModerationService] Toxicity Worker initialized.');
+}
+
+// === LOGIC XỬ LÝ KẾT QUẢ ===
+async function handleAnalysisResult({ id, toxicityScore, isToxic, label }) {
+    const comment = await Comment.findByPk(id);
+    if (!comment) return;
+
+    // Update score regardless
+    comment.toxicityScore = toxicityScore;
+    
+    if (isToxic) {
+        // === TOXIC LOGIC (UPDATED) ===
+        // 1. Chỉ đánh dấu là cần xem xét (Flagged)
+        comment.status = 'flagged'; 
+        await comment.save();
+
+        // 2. Ghi log để Admin tham khảo lý do AI bắt lỗi
+        const user = await User.findByPk(comment.userId);
+        if (user) {
+            await ViolationLog.create({
+                userId: user.id,
+                postSlug: comment.postSlug,
+                content: comment.content,
+                reason: `AI Suspicion: ${label} (Score: ${toxicityScore.toFixed(2)}) - Waiting for Admin Decision`
+            });
+            
+            // 3. (Optional) Gửi thông báo cho user biết comment đang bị giữ lại để duyệt
+            // Không tăng count, không ban ở đây.
+        }
+    } else {
+        // === CLEAN LOGIC ===
+        // Nếu comment đang pending, chuyển sang approved
+        if (comment.status === 'pending') {
+            comment.status = 'approved';
+            await comment.save();
+        }
     }
 }
 
+async function sendNotification(userId, title, message, type) {
+    try {
+        const noti = await Notification.create({ title, message, type, isGlobal: false });
+        await UserNotification.create({ userId, notificationId: noti.id, isRead: false });
+    } catch (e) {
+        console.error('Notify Error:', e);
+    }
+}
+
+// === PUBLIC METHODS ===
+
+// Initialize worker on module load (or call explicitly in server.js)
+initWorker();
+
 /**
- * Kiểm duyệt nội dung toàn diện
- * @param {string} text 
- * @returns {Promise<{ isSafe: boolean, reason: string }>}
+ * Kiểm tra nhanh bằng Regex (Synchronous)
+ * @returns { isSafe, reason }
  */
-async function moderateContent(text) {
-    // 1. Kiểm tra nhanh bằng bộ lọc từ khóa (Local Regex)
-    // Tiết kiệm chi phí API và bắt các lỗi cơ bản
+function quickCheck(text) {
     if (!isContentSafe(text)) {
-        return { isSafe: false, reason: 'Nội dung chứa từ ngữ không phù hợp (Local Filter).' };
+        return { isSafe: false, reason: 'Nội dung chứa từ ngữ cấm (Local Filter).' };
     }
+    return { isSafe: true };
+}
 
-    // 2. Kiểm tra sâu bằng AI (Context, hate speech, harassment...)
-    const aiSafe = await checkOpenAI(text);
-    if (!aiSafe) {
-        return { isSafe: false, reason: 'Nội dung vi phạm tiêu chuẩn cộng đồng (AI Detected).' };
-    }
-
-    return { isSafe: true, reason: null };
+/**
+ * Gửi comment vào hàng đợi xử lý AI (Asynchronous)
+ */
+function submitForAnalysis(comment) {
+    if (!worker) initWorker();
+    
+    // Gửi message sang worker
+    worker.postMessage({
+        id: comment.id,
+        content: comment.content
+    });
 }
 
 module.exports = {
-    moderateContent
+    quickCheck,
+    submitForAnalysis
 };

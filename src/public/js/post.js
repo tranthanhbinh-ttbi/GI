@@ -300,18 +300,24 @@ document.addEventListener('DOMContentLoaded', function () {
             deleteBtnHtml = `<button class="delete-comment-btn" data-id="${comment.id}" style="background: none; border: none; color: #dc3545; cursor: pointer; padding: 0; font-size: 0.9rem; margin-left: 10px;">Xóa</button>`;
         }
 
+        // OPTIMISTIC UI: Không hiện nhãn "Đang kiểm tra" để tạo cảm giác phản hồi tức thì.
+        // Hệ thống vẫn kiểm tra ngầm, nếu vi phạm sẽ bị ẩn sau.
+        let pendingLabel = '';
+        
         div.innerHTML = `
             <div style="display: flex; gap: 1rem;">
                 <img src="${avatar}" alt="${name}" class="comment-author-avatar">
                 <div class="comment-content" style="flex: 1;">
                     <p>
                         <strong class="comment-author">${name}</strong>
+                        ${pendingLabel}
                         <span class="comment-date" style="font-size: 0.8rem; color: #888; margin-left: 0.5rem;">${dateStr}</span>
                     </p>
                     <p class="comment-text" style="margin: 0.5rem 0;">${escapeHtml(comment.content)}</p>
                     
                     <div class="comment-actions">
                         <button class="comment-reply-btn" style="background: none; border: none; color: #1a73e8; cursor: pointer; padding: 0; font-size: 0.9rem;">Trả lời</button>
+                        <button class="report-comment-btn" data-id="${comment.id}" style="background: none; border: none; color: #6c757d; cursor: pointer; padding: 0; font-size: 0.9rem; margin-left: 10px;">Báo cáo</button>
                         ${deleteBtnHtml}
                     </div>
                     
@@ -335,6 +341,13 @@ document.addEventListener('DOMContentLoaded', function () {
             replyForm.style.display = replyForm.style.display === 'block' ? 'none' : 'block';
         });
 
+        const reportBtn = div.querySelector('.report-comment-btn');
+        if (reportBtn) {
+            reportBtn.addEventListener('click', async () => {
+                await handleReport(comment.id);
+            });
+        }
+
         const delBtn = div.querySelector('.delete-comment-btn');
         if (delBtn) {
             delBtn.addEventListener('click', async () => {
@@ -343,6 +356,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         }
+
 
         const sendReplyBtn = div.querySelector('.send-reply-btn');
         sendReplyBtn.addEventListener('click', async () => {
@@ -390,20 +404,61 @@ document.addEventListener('DOMContentLoaded', function () {
         if (window.currentUser && String(window.currentUser.id) === String(reply.userId)) {
             deleteBtnHtml = `<button class="delete-reply-btn" data-id="${reply.id}" style="background: none; border: none; color: #dc3545; cursor: pointer; padding: 0; font-size: 0.85rem; margin-left: 10px;">Xóa</button>`;
         }
+
+        // OPTIMISTIC UI: Không hiện nhãn Pending
+        let pendingLabel = '';
+
+        // Note: report-reply-btn needs listener binding in appendReply or re-render
+        // Here we just return HTML string, so listeners must be delegated or bound after insertion.
+        // For simplicity in this structure, we'll bind via event delegation on container or finding elements after inject.
+        // But since this returns a string, we can't easily bind.
+        // FIX: Change logic to bind after HTML injection in createCommentElement or appendReply.
         
         return `
             <div class="comment-item" id="comment-${reply.id}" style="border: none; padding: 0.5rem 0;">
                 <div style="display: flex; gap: 0.8rem;">
                     <img src="${reply.User?.avatarUrl || '/photos/placeholder-m6a0q.png'}" class="comment-author-avatar" style="width: 32px; height: 32px;">
                     <div style="flex: 1;">
-                        <p><strong>${reply.User?.name || 'Người dùng'}</strong> <span style="font-size: 0.75rem; color: #888;">${new Date(reply.createdAt).toLocaleString('vi-VN')}</span></p>
+                        <p>
+                            <strong>${reply.User?.name || 'Người dùng'}</strong> 
+                            ${pendingLabel}
+                            <span style="font-size: 0.75rem; color: #888;">${new Date(reply.createdAt).toLocaleString('vi-VN')}</span>
+                        </p>
                         <p style="margin-top: 0.2rem;">${escapeHtml(reply.content)}</p>
-                        ${deleteBtnHtml}
+                        <div class="comment-actions">
+                            <button class="report-reply-btn" onclick="handleReport(${reply.id})" style="background: none; border: none; color: #6c757d; cursor: pointer; padding: 0; font-size: 0.85rem;">Báo cáo</button>
+                            ${deleteBtnHtml}
+                        </div>
                     </div>
                 </div>
             </div>
         `;
     }
+
+    // Expose handleReport globally so onclick works (simplest fix for HTML string injection)
+    window.handleReport = async function(commentId) {
+        const isLoggedIn = await requireLogin();
+        if (!isLoggedIn) return;
+
+        const reason = prompt('Vui lòng nhập lý do báo cáo (ví dụ: thù địch, spam...):');
+        if (!reason) return;
+
+        try {
+            const response = await fetch('/api/comments/report', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ commentId, reason })
+            });
+            const result = await response.json();
+            if (result.success) {
+                showToast(result.message, 'success');
+            } else {
+                showToast(result.message, 'error');
+            }
+        } catch (e) {
+            showToast('Lỗi kết nối', 'error');
+        }
+    };
 
     async function deleteCommentApi(id, element, isReply = false) {
         try {
@@ -480,26 +535,126 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function showToast(message, type = 'success') {
+        console.log('Showing toast:', message, type); 
+
+        // 1. Icons SVG
+        const icons = {
+            success: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #28a745;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`,
+            error: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #dc3545;"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`,
+            warning: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #ffc107;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+        };
+
+        const titles = {
+            success: 'Thành công',
+            error: 'Lỗi',
+            warning: 'Cảnh báo'
+        };
+
+        // 2. Create Toast Container
         const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        toast.textContent = message;
+        toast.className = `toast-notification toast-${type}`;
+        
+        // 3. Inner HTML Structure
+        toast.innerHTML = `
+            <div class="toast-content">
+                <div class="toast-icon">
+                    ${icons[type] || icons.success}
+                </div>
+                <div class="toast-text">
+                    <h4 class="toast-title">${titles[type] || 'Thông báo'}</h4>
+                    <p class="toast-message">${escapeHtml(message)}</p>
+                </div>
+                <div class="toast-close" onclick="this.parentElement.parentElement.remove()">
+                    &times;
+                </div>
+            </div>
+            <div class="toast-progress"></div>
+        `;
+
+        // 4. Styles
         toast.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 1rem 1.5rem;
+            min-width: 300px;
+            max-width: 400px;
+            background: #fff;
             border-radius: 8px;
-            color: white;
-            z-index: 9999;
-            background: ${type === 'success' ? '#28a745' : '#dc3545'};
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            animation: slideIn 0.3s forwards;
+            padding: 0;
+            overflow: hidden;
+            z-index: 2147483647;
+            animation: slideIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            font-family: 'Montserrat', sans-serif;
+            border-left: 4px solid ${type === 'success' ? '#28a745' : (type === 'error' ? '#dc3545' : '#ffc107')};
         `;
+
+        // Add inner styles for children (scoped by unique class name to avoid conflicts)
+        const contentStyle = `
+            .toast-notification .toast-content {
+                display: flex;
+                align-items: flex-start;
+                padding: 16px;
+            }
+            .toast-notification .toast-icon {
+                margin-right: 12px;
+                display: flex;
+                align-items: center;
+                height: 20px; /* Align with title */
+            }
+            .toast-notification .toast-text {
+                flex: 1;
+            }
+            .toast-notification .toast-title {
+                margin: 0 0 4px 0;
+                font-size: 16px;
+                font-weight: 600;
+                color: #333;
+            }
+            .toast-notification .toast-message {
+                margin: 0;
+                font-size: 14px;
+                color: #666;
+                line-height: 1.4;
+            }
+            .toast-notification .toast-close {
+                margin-left: 12px;
+                cursor: pointer;
+                font-size: 20px;
+                color: #999;
+                line-height: 1;
+            }
+            .toast-notification .toast-close:hover {
+                color: #333;
+            }
+            .toast-notification .toast-progress {
+                height: 3px;
+                width: 100%;
+                background-color: ${type === 'success' ? '#28a745' : (type === 'error' ? '#dc3545' : '#ffc107')};
+                animation: progress 4s linear forwards;
+            }
+            @keyframes progress {
+                from { width: 100%; }
+                to { width: 0%; }
+            }
+        `;
+        
+        // Inject styles dynamically
+        const styleId = 'toast-style-dynamic';
+        if (!document.getElementById(styleId)) {
+            const s = document.createElement('style');
+            s.id = styleId;
+            s.textContent = contentStyle;
+            document.head.appendChild(s);
+        }
+
         document.body.appendChild(toast);
+
+        // Auto remove
         setTimeout(() => {
             toast.style.animation = 'slideOut 0.3s forwards';
             setTimeout(() => toast.remove(), 300);
-        }, 3000);
+        }, 4000);
     }
 
     function escapeHtml(text) {

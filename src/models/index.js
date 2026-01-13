@@ -206,6 +206,15 @@ const Comment = sequelize.define('Comment', {
     type: DataTypes.TEXT,
     allowNull: false
   },
+  status: {
+    type: DataTypes.ENUM('pending', 'approved', 'flagged', 'rejected'),
+    defaultValue: 'pending'
+  },
+  toxicityScore: {
+    type: DataTypes.FLOAT,
+    defaultValue: 0.0,
+    field: 'toxicity_score'
+  },
   parentId: {
     type: DataTypes.BIGINT,
     allowNull: true,
@@ -220,6 +229,43 @@ const Comment = sequelize.define('Comment', {
   timestamps: true
 })
 
+// === NEW: Comment Report Model ===
+const CommentReport = sequelize.define('CommentReport', {
+  id: {
+    type: DataTypes.BIGINT,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  commentId: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+    references: {
+      model: 'post_comments',
+      key: 'id'
+    }
+  },
+  reporterId: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'id'
+    }
+  },
+  reason: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  status: {
+    type: DataTypes.ENUM('pending', 'resolved', 'dismissed'),
+    defaultValue: 'pending'
+  }
+}, {
+  tableName: 'comment_reports',
+  underscored: true,
+  timestamps: true
+});
+
 User.hasMany(PostRating, { foreignKey: 'userId' })
 PostRating.belongsTo(User, { foreignKey: 'userId' })
 
@@ -228,6 +274,12 @@ Comment.belongsTo(User, { foreignKey: 'userId' })
 
 Comment.hasMany(Comment, { as: 'replies', foreignKey: 'parentId' })
 Comment.belongsTo(Comment, { as: 'parent', foreignKey: 'parentId' })
+
+// Report Associations
+Comment.hasMany(CommentReport, { foreignKey: 'commentId', onDelete: 'CASCADE' });
+CommentReport.belongsTo(Comment, { foreignKey: 'commentId' });
+User.hasMany(CommentReport, { foreignKey: 'reporterId' });
+CommentReport.belongsTo(User, { foreignKey: 'reporterId' });
 
 const PostMeta = sequelize.define('PostMeta', {
   slug: {
@@ -331,4 +383,4 @@ const migrate = async () => {
   }
 }
 
-module.exports = { sequelize, User, Subscribes, Notification, UserNotification, PostRating, Comment, PostMeta, ViolationLog, PostViewLog, migrate }
+module.exports = { sequelize, User, Subscribes, Notification, UserNotification, PostRating, Comment, CommentReport, PostMeta, ViolationLog, PostViewLog, migrate }

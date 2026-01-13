@@ -1,6 +1,6 @@
-const { PostRating, Comment, User, PostMeta, Notification, UserNotification, ViolationLog, PostViewLog, sequelize } = require('../models');
+const { PostRating, Comment, CommentReport, User, PostMeta, Notification, UserNotification, ViolationLog, PostViewLog, sequelize } = require('../models');
 const { Op } = require('sequelize');
-const { moderateContent } = require('../services/moderation-service');
+const { quickCheck, submitForAnalysis } = require('../services/moderation-service');
 
 const VIEW_THROTTLE_MS = 60 * 60 * 1000; // 1 giờ
 
@@ -241,7 +241,11 @@ async function getComments(request, reply) {
     const { slug } = request.params;
     try {
         const comments = await Comment.findAll({
-            where: { postSlug: slug, parentId: null },
+            where: { 
+                postSlug: slug, 
+                parentId: null,
+                status: 'approved' // Chỉ lấy comment đã duyệt
+            },
             include: [
                 {
                     model: User,
@@ -250,6 +254,8 @@ async function getComments(request, reply) {
                 {
                     model: Comment,
                     as: 'replies',
+                    where: { status: 'approved' }, // Chỉ lấy reply đã duyệt
+                    required: false,
                     include: [{ model: User, attributes: ['name', 'avatarUrl'] }]
                 }
             ],
@@ -288,60 +294,44 @@ async function postComment(request, reply) {
         return reply.code(400).send({ success: false, message: 'Nội dung bình luận không được để trống' });
     }
 
-    // 2. Kiểm duyệt Nội dung (AI + Local)
-    try {
-        const { isSafe, reason } = await moderateContent(content);
+    // 2. Kiểm duyệt nhanh (Local Regex - Synchronous)
+    // Nếu vi phạm từ cấm cứng -> Chặn ngay lập tức
+    const { isSafe, reason } = quickCheck(content);
 
-        if (!isSafe) {
-            // A. Lưu bằng chứng vi phạm (Violation Log)
-            // Comment KHÔNG được tạo trong bảng Comments (coi như xóa ngay lập tức khỏi hiển thị)
-            await ViolationLog.create({
-                userId: user.id,
-                postSlug: slug,
-                content: content,
-                reason: reason
+    if (!isSafe) {
+        // A. Lưu bằng chứng vi phạm (Violation Log)
+        await ViolationLog.create({
+            userId: user.id,
+            postSlug: slug,
+            content: content,
+            reason: reason
+        });
+
+        // B. Tăng số lần vi phạm & Xử lý Ban
+        const newCount = (user.violationCount || 0) + 1;
+        
+        if (newCount > 3) {
+            await user.update({ violationCount: newCount, isBanned: true });
+            await sendUserNotification(
+                user.id,
+                'Tài khoản bị khóa',
+                'Bạn đã vi phạm tiêu chuẩn cộng đồng quá 3 lần.',
+                'warning'
+            );
+            return reply.code(403).send({ success: false, message: 'Nội dung chứa từ ngữ cấm! Tài khoản đã bị khóa.' });
+        } else {
+            await user.update({ violationCount: newCount });
+            await sendUserNotification(
+                user.id,
+                'Cảnh báo vi phạm',
+                `Nội dung chứa từ ngữ cấm (${reason}). Vi phạm ${newCount}/3.`,
+                'warning'
+            );
+            return reply.code(400).send({ 
+                success: false, 
+                message: `Phát hiện nội dung đáng ngờ (${reason}). Bình luận này sẽ không được hiển thị.` 
             });
-
-            // B. Tăng số lần vi phạm
-            const newCount = (user.violationCount || 0) + 1;
-            
-            if (newCount > 3) {
-                // Ban ngay lập tức nếu vượt quá 3 lần
-                await user.update({ violationCount: newCount, isBanned: true });
-                
-                // Gửi thông báo Ban
-                await sendUserNotification(
-                    user.id,
-                    'Tài khoản bị khóa',
-                    'Bạn đã vi phạm tiêu chuẩn cộng đồng quá 3 lần. Tài khoản của bạn đã bị khóa vĩnh viễn. Nếu có nhầm lẫn, vui lòng khiếu nại qua email: support@example.com',
-                    'warning'
-                );
-
-                return reply.code(403).send({ 
-                    success: false, 
-                    message: 'Nội dung độc hại! Bạn đã vi phạm quá 3 lần. Tài khoản của bạn đã bị khóa. Vui lòng kiểm tra thông báo để biết thêm chi tiết.' 
-                });
-            } else {
-                // Cảnh báo
-                await user.update({ violationCount: newCount });
-                
-                // Gửi thông báo Cảnh báo
-                await sendUserNotification(
-                    user.id,
-                    'Cảnh báo vi phạm nội dung',
-                    `Nội dung bình luận của bạn đã bị hệ thống xóa ngay lập tức vì lý do: ${reason}. Đây là lần vi phạm thứ ${newCount}/3.`,
-                    'warning'
-                );
-
-                return reply.code(400).send({ 
-                    success: false, 
-                    message: `Nội dung không phù hợp (${reason})! Cảnh báo vi phạm lần ${newCount}/3. Nếu vi phạm quá 3 lần tài khoản sẽ bị khóa.` 
-                });
-            }
         }
-    } catch (err) {
-        request.log.error(err);
-        return reply.code(500).send({ success: false, message: 'Lỗi hệ thống khi kiểm duyệt nội dung.' });
     }
 
     // 3. Chống Spam: Rate Limiting (30s)
@@ -353,28 +343,34 @@ async function postComment(request, reply) {
 
         if (lastComment) {
             const diffMs = Date.now() - new Date(lastComment.createdAt).getTime();
-            if (diffMs < 30000) { 
-                const remaining = Math.ceil((30000 - diffMs) / 1000);
+            // GIẢM XUỐNG 3s ĐỂ TEST
+            if (diffMs < 3000) { 
+                const remaining = Math.ceil((3000 - diffMs) / 1000);
                 return reply.code(429).send({ 
                     success: false, 
-                    message: `Bạn đang bình luận quá nhanh. Vui lòng đợi ${remaining} giây.` 
+                    message: `Bạn bình luận quá nhanh. Vui lòng đợi ${remaining} giây.` 
                 });
             }
         }
 
-        // 4. Tạo comment (Nội dung sạch)
+        // 4. Tạo comment (Status: Pending)
+        // Optimistic: Coi như OK, nhưng hệ thống sẽ check ngầm
         const comment = await Comment.create({
             userId: user.id,
             postSlug: slug,
             content: content, 
-            parentId: parentId || null
+            parentId: parentId || null,
+            status: 'pending' // Chờ AI check
         });
+
+        // 5. Gửi sang Worker để check AI (Fire & Forget)
+        submitForAnalysis(comment);
 
         const fullComment = await Comment.findByPk(comment.id, {
             include: [{ model: User, attributes: ['name', 'avatarUrl'] }]
         });
 
-        return { success: true, comment: fullComment };
+        return { success: true, comment: fullComment, message: 'Bình luận đang được kiểm tra an toàn.' };
     } catch (error) {
         request.log.error(error);
         return reply.code(500).send({ success: false, message: 'Không thể gửi bình luận' });
@@ -441,6 +437,36 @@ async function syncPostMeta(slug) {
     }
 }
 
+/**
+ * Báo cáo bình luận xấu
+ */
+async function reportComment(request, reply) {
+    if (!request.isAuthenticated()) {
+        return reply.code(401).send({ success: false, message: 'Vui lòng đăng nhập' });
+    }
+
+    const { commentId, reason } = request.body;
+    const userId = request.user.id;
+
+    if (!reason) {
+        return reply.code(400).send({ success: false, message: 'Vui lòng cung cấp lý do báo cáo' });
+    }
+
+    try {
+        await CommentReport.create({
+            commentId,
+            reporterId: userId,
+            reason,
+            status: 'pending'
+        });
+
+        return { success: true, message: 'Cảm ơn bạn đã báo cáo. Chúng tôi sẽ xem xét.' };
+    } catch (error) {
+        request.log.error(error);
+        return reply.code(500).send({ success: false, message: 'Lỗi khi gửi báo cáo' });
+    }
+}
+
 module.exports = {
     getPostRating,
     ratePost,
@@ -448,5 +474,6 @@ module.exports = {
     getComments,
     postComment,
     deleteComment,
+    reportComment,
     increaseView
 };

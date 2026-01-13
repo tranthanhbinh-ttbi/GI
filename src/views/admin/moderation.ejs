@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Moderation | Gender Insights</title>
+    <link rel="stylesheet" href="/css/components/bases.css">
+    <style>
+        body { background: #f4f6f8; padding: 20px; }
+        .admin-container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        h1 { margin-bottom: 20px; color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f9fafb; font-weight: 600; color: #555; }
+        .user-info { display: flex; align-items: center; gap: 10px; }
+        .avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+        .score-bad { color: #dc3545; font-weight: bold; }
+        .btn { padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; transition: 0.2s; }
+        .btn-approve { background: #28a745; color: white; margin-right: 5px; }
+        .btn-reject { background: #dc3545; color: white; }
+        .btn:hover { opacity: 0.9; }
+        .empty-state { text-align: center; padding: 40px; color: #888; }
+        .violation-badge { background: #fee2e2; color: #b91c1c; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-left: 5px; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>Duyệt Bình Luận (${comments.length})</h1>
+            <a href="/" style="text-decoration: none; color: #666;">&larr; Quay về trang chủ</a>
+        </div>
+
+        <% if (comments.length === 0) { %>
+            <div class="empty-state">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 10px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <p>Tuyệt vời! Không có bình luận nào cần duyệt.</p>
+            </div>
+        <% } else { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Người dùng</th>
+                        <th style="width: 40%;">Nội dung</th>
+                        <th>Điểm độc hại (AI)</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% comments.forEach(c => { %>
+                        <tr id="row-<%= c.id %>">
+                            <td>
+                                <div class="user-info">
+                                    <img src="<%= c.User?.avatarUrl || '/photos/placeholder-m6a0q.png' %>" class="avatar">
+                                    <div>
+                                        <div><%= c.User?.name %></div>
+                                        <div style="font-size: 11px; color: #888;">Vi phạm: <%= c.User?.violationCount || 0 %>/3</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="font-size: 14px; line-height: 1.5;"><%= c.content %></div>
+                                <div style="font-size: 11px; color: #999; margin-top: 4px;">Post: <%= c.postSlug %></div>
+                            </td>
+                            <td>
+                                <span class="score-bad"><%= (c.toxicityScore * 100).toFixed(1) %>%</span>
+                            </td>
+                            <td>
+                                <button class="btn btn-approve" onclick="review(<%= c.id %>, 'approve')">Cho phép</button>
+                                <button class="btn btn-reject" onclick="review(<%= c.id %>, 'reject')">Từ chối (Phạt)</button>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+
+    <script>
+        async function review(id, action) {
+            if (action === 'reject' && !confirm('Bạn có chắc chắn? Người dùng sẽ bị tính 1 lần vi phạm.')) return;
+            
+            try {
+                const res = await fetch(`/admin/comments/${id}/${action}`, { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById(`row-${id}`).remove();
+                    // Update count basic logic
+                    const h1 = document.querySelector('h1');
+                    const count = parseInt(h1.innerText.match(/\d+/)[0]) - 1;
+                    h1.innerText = `Duyệt Bình Luận (${count})`;
+                    if (count === 0) location.reload(); 
+                } else {
+                    alert('Lỗi: ' + data.message);
+                }
+            } catch (e) {
+                alert('Lỗi kết nối');
+            }
+        }
+    </script>
+</body>
+</html>

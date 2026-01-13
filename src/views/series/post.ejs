@@ -12,7 +12,7 @@
 
     <link rel="preload" href="/css/components/main.css" as="style" />
     <link rel="preload" href="/css/components/bases.css" as="style" />
-    <link rel="preload" href="/css/components/post.css" as="style" />
+    <link rel="preload" href="/css/layout/post.css" as="style" />
 
     <link rel="stylesheet" href="/css/components/main.css" />
     <link rel="stylesheet" href="/css/components/bases.css" />
@@ -223,7 +223,7 @@
             </aside>
         </main>
         <%- include('../partials/footer') %>
-            <script src="/js/post.js" defer></script>
+            <script src="/js/post.js?v=<%= Date.now() %>" defer></script>
 </body>
 
 </html>
