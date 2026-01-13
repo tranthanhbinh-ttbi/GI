@@ -5,7 +5,13 @@ window.initRadialMenus = function () {
         if (wrapper.dataset.radialInit === 'true') return;
         wrapper.dataset.radialInit = 'true';
 
-        const btn = wrapper.querySelector('.card-share-button') || wrapper.querySelector('.slide-share-button');
+        // Xác định nút và chế độ xem (Card hay List)
+        const cardBtn = wrapper.querySelector('.card-share-button');
+        const listBtn = wrapper.querySelector('.slide-share-button');
+        const btn = cardBtn || listBtn;
+
+        const gridContainer = document.getElementById('series-grid-container');
+
         const menu = wrapper.querySelector('.radial-share-menu');
         const track = wrapper.querySelector('.radial-track');
         const items = wrapper.querySelectorAll('.share-item');
@@ -20,29 +26,47 @@ window.initRadialMenus = function () {
         let startRotation = 0;
 
         // Configuration
-        const RADIUS = 90; // Decreased radius for smaller menu
-        // Angles in degrees. 0 is Right, -90 is Top, -180 is Left (standard math coordinates)
-        // Since we are at bottom-right of the menu box which usually means (0,0) is bottom-right and we go negative x, negative y.
-        // Actually since we used `transform-origin: bottom right` on the track, the coordinate system rotates around that point.
-        // An element at `right: 0; bottom: 0` is at (0,0).
-        // Let's assume we place items using `right` and `bottom` CSS or `transform`.
-        // To arrange them in a fan from Top (-90 relative to center) to Left (-180 relative to center):
-        // We want the FIRST item to be near the Top.
-        // We want the LAST item to be near the Left.
-
-        const START_ANGLE_BASE = 275; // Starting near Top (270deg in standard CD, or -90)
-        // Wait, CSS rotation runs clockwise.
-        // 0 deg = right (3 o'clock)
-        // 270 deg = top (12 o'clock)
-        // 180 deg = left (9 o'clock)
-
-        // We want to fill the arc from 270 down to 180.
-        // So steps should be negative.
+        const RADIUS = 90;
+        const START_ANGLE_BASE = 275;
         const ANGLE_STEP = -35;
-
-        // Initial Placement
-        const MENU_SIZE = 260; // Matches CSS
+        const MENU_SIZE = 260;
         const ITEM_SIZE = 44;
+
+        // Helper function to get current config
+        function getCurrentConfig() {
+            // Case 1: Grid items in List View Mode
+            // Requires aggressive negative rotation to bring top icons (Facebook at 275deg) 
+            // down into the visible left/center area, as the card height clips the top.
+            if (gridContainer && gridContainer.classList.contains('view-list') && cardBtn) {
+                // Responsive adjustment:
+                // Mobile (width < 768px): Cards are very short (~90px), need aggressive scroll (-70).
+                // Desktop (width >= 768px): Cards are taller (~200px), less scroll needed (-30).
+                const isMobile = window.innerWidth < 768;
+
+                return isMobile ? {
+                    minRot: -70,
+                    visibleEdge: 180
+                } : {
+                    minRot: -15,
+                    visibleEdge: 180
+                };
+            }
+
+            // Case 2: Hero Slide (slide-share-button)
+            // Preserving original config which works for the large Hero banner
+            if (listBtn) {
+                return {
+                    minRot: -5,
+                    visibleEdge: 180
+                };
+            }
+
+            // Case 3: Grid items in Card View Mode (Default)
+            return {
+                minRot: -5,
+                visibleEdge: 180
+            };
+        }
 
         items.forEach((item, index) => {
             const angleDeg = START_ANGLE_BASE + (index * ANGLE_STEP);
@@ -116,8 +140,7 @@ window.initRadialMenus = function () {
 
         function moveDrag(e) {
             if (!isDragging) return;
-            
-            // Stop page scroll while dragging menu
+
             if (e.cancelable && e.type === 'touchmove') {
                 e.preventDefault();
             }
@@ -135,14 +158,14 @@ window.initRadialMenus = function () {
 
             // --- UPDATED BOUNDS LOGIC ---
             const lastItemAngle = START_ANGLE_BASE + ((items.length - 1) * ANGLE_STEP);
-            const VISIBLE_START = 190;
 
-            // Prevent the First Item (275) from moving down too much.
-            const minRot = -5;
+            const viewConfig = getCurrentConfig();
 
-            // Prevent the Last Item from moving up too much (stop at bottom of view).
-            // Target 180 deg (Left Edge).
-            let maxRot = 180 - lastItemAngle;
+            // Sử dụng config động
+            const minRot = viewConfig.minRot;
+
+            // Tính toán maxRot dựa trên visibleEdge của từng chế độ
+            let maxRot = viewConfig.visibleEdge - lastItemAngle;
 
             if (maxRot < minRot) maxRot = minRot;
 
@@ -158,11 +181,11 @@ window.initRadialMenus = function () {
             isDragging = false;
 
             const lastItemAngle = START_ANGLE_BASE + ((items.length - 1) * ANGLE_STEP);
-            // const VISIBLE_START = 190;
 
-            const minRot = -5;
-            // Target 180 deg (Left Edge) to match Facebook's position relative to Top Edge.
-            let maxRot = 180 - lastItemAngle;
+            const viewConfig = getCurrentConfig();
+            const minRot = viewConfig.minRot;
+            let maxRot = viewConfig.visibleEdge - lastItemAngle;
+
             if (maxRot < minRot) maxRot = minRot;
 
             if (currentRotation < minRot) {
@@ -198,16 +221,18 @@ window.initRadialMenus = function () {
             currentRotation += delta;
 
             const lastItemAngle = START_ANGLE_BASE + ((items.length - 1) * ANGLE_STEP);
-            // const VISIBLE_START = 190;
 
-            const minRot = -5;
-            let maxRot = 180 - lastItemAngle;
+            // --- UPDATED BOUNDS LOGIC ---
+            const viewConfig = getCurrentConfig();
+            const minRot = viewConfig.minRot;
+            let maxRot = viewConfig.visibleEdge - lastItemAngle;
+
             if (maxRot < minRot) maxRot = minRot;
 
             if (currentRotation < minRot) currentRotation = minRot;
             if (currentRotation > maxRot) currentRotation = maxRot;
 
-            track.style.transition = 'none'; // Instant update
+            track.style.transition = 'none';
             render();
         }, { passive: false });
     });
