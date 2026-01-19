@@ -41,9 +41,10 @@
                                 <%= post.views || 0 %>
                             </span>
                             <span>views</span>
+                            <span style="margin-left: 0.5rem;">/</span>
                         </div>
                         <div class="stat-item" title="Đánh giá">
-                            <div class="flex items-center">
+                            <div class="flex items-center star-rating-container">
                                 <% const rating=post.avgRating || 0; %>
                                     <% for(let i=1; i<=5; i++) { %>
                                         <svg class="icon-sm <%= i <= Math.round(rating) ? 'text-yellow-400' : 'text-gray-300' %>"
