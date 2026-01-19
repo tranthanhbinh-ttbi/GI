@@ -16,6 +16,13 @@
             const match = url.match(regExp);
             return (match && match[2].length === 11) ? match[2] : null;
         };
+        const getSpotifyPath = (url) => {
+            if (!url) return null;
+            const regExp = /(track|album|playlist|episode|show)\/([a-zA-Z0-9]+)/;
+            const match = url.match(regExp);
+            return match ? match[0] : null;
+        };
+        
         CMS.registerEditorComponent({
             id: "youtube",
             label: "YouTube",
@@ -42,6 +49,7 @@
             }
         });
 
+        
         CMS.registerEditorComponent({
             id: "spotify",
             label: "Spotify",
@@ -49,34 +57,44 @@
                 name: 'url',
                 label: 'Spotify URL',
                 widget: 'string',
-                hint: 'Dán đường dẫn podcast từ Spotify vào đây.'
+                hint: 'Dán đường dẫn bài hát, album hoặc podcast từ Spotify (Ví dụ: https://open.spotify.com/track/xyz...)'
             }],
 
+            // Regex này dùng để nhận diện block khi bạn mở lại bài viết cũ để chỉnh sửa
+            // Nó tìm thẻ iframe có src chứa open.spotify.com/embed/...
             pattern: /^<iframe.+src="https:\/\/open\.spotify\.com\/embed\/([^"]+)".+<\/iframe>$/,
-            
+
+            // Chuyển từ HTML (đã lưu) thành dữ liệu cho khung nhập liệu (khi sửa bài)
             fromBlock: function(match) {
                 return {
                     url: 'https://open.spotify.com/' + match[1]
                 };
             },
-            
+
+            // Chuyển từ dữ liệu nhập liệu thành HTML (để lưu vào file)
             toBlock: function(obj) {
-                if (!obj.url) return null;
-                let path = obj.url.replace(/https?:\/\/(open\.spotify\.com\/)/, '');
-                path = path.split('?')[0];
+                const path = getSpotifyPath(obj.url);
+                if (!path) return null;
                 
-                return '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/' + path + '" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';
+                // Trả về iframe chuẩn của Spotify
+                return '<iframe style="border-radius:12px" src="https://open.spotify.com/embed/' + path + '" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';
             },
-            
+
+            // Hiển thị bản xem trước trong CMS (bao gồm cả fix lỗi màn hình trắng)
             toPreview: function(obj) {
-                if (!obj || !obj.url || obj.url.trim() === "") {
+                // Kiểm tra an toàn: nếu không có url hoặc url rỗng thì hiện thông báo chờ
+                if (!obj || !obj.url || (typeof obj.url === 'string' && obj.url.trim() === "")) {
                     return '<div style="color: #888; background: #eee; padding: 10px; border-radius: 5px; text-align: center; border: 1px dashed #ccc;">🔗 Đang chờ dán link Spotify...</div>';
                 }
-                
-                let path = obj.url.replace(/https?:\/\/(open\.spotify\.com\/)/, '');
-                path = path.split('?')[0];
 
-                return '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/' + path + '" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';
+                const path = getSpotifyPath(obj.url);
+                
+                // Nếu dán link nhưng không đúng định dạng Spotify
+                if (!path) {
+                    return '<div style="color: #d9534f; background: #f9f2f4; padding: 10px; border-radius: 5px; text-align: center; border: 1px dashed #d9534f;">❌ Link Spotify không hợp lệ hoặc chưa được hỗ trợ.</div>';
+                }
+
+                return '<iframe style="border-radius:12px" src="https://open.spotify.com/embed/' + path + '" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';
             }
         });
 
