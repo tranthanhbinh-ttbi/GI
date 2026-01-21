@@ -419,7 +419,7 @@ button.follow-button {
 }
 
 .logout-dialog__button--primary {
-    background: linear-gradient(315deg, #bc3c4c, #ec4899);
+    background: linear-gradient(145deg, #be123c 0%, #FFAB91 100%);
     color: #fff;
     box-shadow: rgba(37, 99, 235, 0.25) 0 12px 24px -12px;
 }
