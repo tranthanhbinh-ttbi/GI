@@ -350,21 +350,27 @@
   })
 
   closeLoginBtn?.addEventListener('click', () => loginDialog.close())
-  loginGoogle?.addEventListener('click', () => { window.location.href = '/auth/google' })
-  loginFacebook?.addEventListener('click', () => { window.location.href = '/auth/facebook' })
+  loginGoogle?.addEventListener('click', () => { 
+    const returnTo = encodeURIComponent(window.location.pathname + window.location.search)
+    window.location.href = `/auth/google?returnTo=${returnTo}` 
+  })
+  loginFacebook?.addEventListener('click', () => { 
+    const returnTo = encodeURIComponent(window.location.pathname + window.location.search)
+    window.location.href = `/auth/facebook?returnTo=${returnTo}` 
+  })
 
-  $('#confirm-logout')?.addEventListener('click', async () => {
-    try {
-      const res = await fetch('/logout', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'x-csrf-token': getCSRF() }
-      })
-      if (res.ok) {
-        setProfile(null)
-        toast('Đăng xuất thành công')
-      }
-    } finally { logoutDialog.close() }
+  $('#confirm-logout')?.addEventListener('click', () => {
+    // Optimistic UI: Update interface immediately without waiting for server
+    logoutDialog.close()
+    setProfile(null)
+    toast('Đăng xuất thành công')
+
+    // Send request in background to destroy session on server
+    fetch('/logout', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'x-csrf-token': getCSRF() }
+    }).catch(console.error)
   })
   $('#cancel-logout')?.addEventListener('click', () => logoutDialog.close())
 
@@ -489,6 +495,10 @@
 
   // Initialize
   window.addEventListener('DOMContentLoaded', async () => {
+    // Check if user is logged in
+    const user = await fetchMe()
+    setProfile(user)
+
     // Check for handshake token in URL
     const urlParams = new URLSearchParams(window.location.search)
     const handshakeToken = urlParams.get('handshake')
@@ -508,21 +518,6 @@
       newUrl.searchParams.delete('login')
       window.history.replaceState({}, document.title, newUrl.toString())
     }
-
-    // Now fetch user data
-    const user = await fetchMe()
-    setProfile(user || null)
-    // If there is a pending feedback request stored before login, auto-send after login
-    try {
-      const pending = getPendingFeedback()
-      if (pending && user) {
-        const message = pending.message || ''
-        const emailForSend = (accountMailOverride || user.email || '').trim() || (pending.email || '').trim()
-        await sendFeedback(emailForSend, message || '')
-        toast('Gửi mail thành công')
-        clearPendingFeedback()
-      }
-    } catch { }
   })
 
   // dropdownFollowStatus?.addEventListener('click', async (e) => {

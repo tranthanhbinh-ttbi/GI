@@ -22,7 +22,7 @@ window.appAddons = () => {
             });
         }
         function applyTheme(mode, persist = false) {
-            document.documentElement.setAttribute('data-gen-themes', mode);
+            document.documentElement.setAttribute('data-theme', mode);
             updateBrandImages(mode);
             if (persist) localStorage.setItem('theme', mode);
         }

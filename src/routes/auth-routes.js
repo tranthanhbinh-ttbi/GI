@@ -25,7 +25,20 @@ async function oauthRoutes(fastify) {
   }
 
   fastify.get('/auth/google', {
-    preValidation: FPassport.authenticate('google', { scope: ['profile', 'email'] })
+    preValidation: [
+      async (request, reply) => { 
+        if (request.query.returnTo) {
+           // Use a dedicated cookie for returnTo to survive session regeneration
+           reply.setCookie('login_return_to', request.query.returnTo, {
+             path: '/',
+             httpOnly: true,
+             sameSite: 'lax',
+             maxAge: 300 // 5 minutes
+           })
+        }
+      },
+      FPassport.authenticate('google', { scope: ['profile', 'email'] })
+    ]
   }, async (request, reply) => { })
 
   const handleAuthError = (error, request, reply) => {
@@ -38,11 +51,25 @@ async function oauthRoutes(fastify) {
     errorHandler: handleAuthError
   }, async (request, reply) => {
     await checkFollowed(request.user)
-    return reply.redirect('/')
+    const returnTo = request.cookies.login_return_to || '/'
+    reply.clearCookie('login_return_to', { path: '/' })
+    return reply.redirect(returnTo)
   })
 
   fastify.get('/auth/facebook', {
-    preValidation: FPassport.authenticate('facebook', { scope: ['public_profile', 'email'] })
+    preValidation: [
+      async (request, reply) => { 
+        if (request.query.returnTo) {
+          reply.setCookie('login_return_to', request.query.returnTo, {
+             path: '/',
+             httpOnly: true,
+             sameSite: 'lax',
+             maxAge: 300
+           })
+        }
+      },
+      FPassport.authenticate('facebook', { scope: ['public_profile', 'email'] })
+    ]
   }, async (request, reply) => { })
 
   fastify.get('/auth/facebook/callback', {
@@ -50,7 +77,9 @@ async function oauthRoutes(fastify) {
     errorHandler: handleAuthError
   }, async (request, reply) => {
     await checkFollowed(request.user)
-    return reply.redirect('/')
+    const returnTo = request.cookies.login_return_to || '/'
+    reply.clearCookie('login_return_to', { path: '/' })
+    return reply.redirect(returnTo)
   })
 
   fastify.get('/login', {
@@ -71,9 +100,18 @@ async function oauthRoutes(fastify) {
   })
 
   fastify.post('/logout', async (request, reply) => {
-    await request.logout()
-    reply.clearCookie('session', { path: '/' })
-    return { ok: true }
+    try {
+      if (request.logout) {
+        await request.logout()
+      }
+      if (request.session) {
+        request.session.delete()
+      }
+      return { ok: true }
+    } catch (err) {
+      request.log.error(err)
+      return { ok: false, error: 'Logout failed' }
+    }
   })
 }
 

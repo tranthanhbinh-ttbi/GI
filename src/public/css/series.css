@@ -272,6 +272,8 @@ button.splide__arrow {
     top: 0.75rem;
     left: 0.75rem;
     color: rgb(255 255 255);
+    background-color: #D66D75;
+    /* Default to Article color */
     padding: 0.25rem 0.75rem;
     border-radius: 0.5rem;
     font-size: 0.75rem;
@@ -280,13 +282,7 @@ button.splide__arrow {
     text-transform: uppercase;
 }
 
-.card-category-badge.bg-red-600 {
-    background-color: #758694;
-}
-
-.card-category-badge.bg-purple-600 {
-    background-color: #777c6d;
-}
+/* Moved to bases.css */
 
 .card-content {
     padding: 1.25rem;
@@ -798,8 +794,18 @@ button.splide__arrow {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.article-tag {
-    background: var(--gen-terracotta);
+/* Old .article-tag removed */
+/* Specific override for Series Card badges */
+.card-category-badge.bg-article {
+    background-color: #D66D75 !important;
+}
+
+.card-category-badge.bg-video {
+    background-color: #6D94D6 !important;
+}
+
+.card-category-badge.bg-podcast {
+    background-color: #A16DD6 !important;
 }
 
 .postcard-tag {

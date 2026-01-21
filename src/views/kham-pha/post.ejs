@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi-VN" data-gen-themes="light">
+<html lang="vi-VN" data-theme="light">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
@@ -22,7 +22,7 @@
     <script>
         const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ?
         localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); 
-        document.documentElement.setAttribute('data-gen-themes', preferredTheme);
+        document.documentElement.setAttribute('data-theme', preferredTheme);
     </script>
     <style>
         * {

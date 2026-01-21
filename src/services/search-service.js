@@ -154,7 +154,7 @@ class SearchService {
             category: parsed.attributes.category,
             type: type,
             author: parsed.attributes.author || '',
-            rating: parsed.attributes.rating || 5.0,
+            rating: parsed.attributes.rating || 0,
             ratingCount: parsed.attributes.ratingCount || 0
         };
     }
@@ -481,6 +481,19 @@ class SearchService {
         }
 
         return finalResult;
+    }
+
+    /**
+     * Lấy danh sách tác giả duy nhất từ các bài viết Khám phá
+     */
+    getUniqueAuthors() {
+        const authors = new Set();
+        this.documents.forEach(doc => {
+            if (doc.type === 'explore' && doc.author) {
+                authors.add(doc.author.trim());
+            }
+        });
+        return Array.from(authors).sort((a, b) => a.localeCompare(b));
     }
 }
 

@@ -17,7 +17,7 @@ main {
             }
 
             >button {
-                background: linear-gradient(315deg, #a78bfa, #ec4899);
+                background: var(--gradient-primary);
                 border-radius: 10px;
                 padding: 10px;
                 display: inline-flex;
@@ -65,10 +65,11 @@ main {
                 border-left: 5px solid var(--gen-mouse);
                 will-change: transform;
                 animation:
-                    typing 12s steps(50) infinite,
+                    typing 10.5s steps(50) infinite,
                     blink 0.75s step-end infinite;
             }
-            > h2 {
+
+            >h2 {
                 font-size: clamp(1.25rem, 0.5vw + 1.5vw, 1.5rem);
             }
         }
@@ -163,8 +164,8 @@ main {
             }
 
             .dot-pink {
-                background-color: #ec4899;
-                color: #ec4899;
+                background-color: #D66D75;
+                color: #D66D75;
                 top: 50%;
                 right: 0;
                 transform: translate(50%, -50%);
@@ -257,10 +258,11 @@ main {
         text-align: center;
         margin: 64px 0;
         scroll-margin-top: 5rem;
+
         .figr {
             font-size: 37px;
             font-weight: 700;
-            background: linear-gradient(315deg, #be123c, #ffa387);
+            background: var(--gradient-primary);
             text-shadow: #ffa387 0px 0px 2rem;
             -webkit-background-clip: text;
             background-clip: text;
@@ -286,7 +288,7 @@ main {
         }
 
         .ic-cad-sm {
-            background: #66c59a5a;
+            background: #6cb2eb5a;
         }
 
         .ic-cad-pos {
@@ -299,7 +301,7 @@ main {
         }
 
         .bord-cad-sm {
-            border: 1px solid #66c59a5a;
+            border: 1px solid #6cb2eb5a;
         }
 
         .card-soft {
@@ -504,41 +506,54 @@ main {
             }
         }
 
+        #teams-track {
+            padding: 11px 0;
+        }
+
         #info-tems {
             .mems {
                 width: 100%;
                 height: max-content;
                 padding: 24px;
-                border-radius: 12px;
-                background: var(--gen-mems-bg);
-                background-image: radial-gradient(circle at 10% 20%, rgba(86, 80, 151, 0.15), transparent 40%), radial-gradient(circle at 80% 90%, rgba(80, 151, 142, 0.15), transparent 40%);
-                box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -100px, rgba(0, 0, 0, 0.3) 0px 30px 60px -60px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+                border-radius: 20px;
+                background: #fff5f5;
+                background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+                box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+                &:hover {
+                    transform: translateY(-5px);
+                }
 
                 .lo-mems {
-                    border: 4px solid var(--gen-avatar-mems);
+                    border: 4px solid #ffffff;
                     border-radius: 50%;
                     margin-bottom: 16px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
                 }
 
                 h4 {
                     font-size: 20px;
                     margin-bottom: 4px;
+                    color: #1e293b;
                 }
 
                 .pos-mems {
                     margin-bottom: 12px;
-                    color: var(--gen-mems);
-                    font-weight: 600;
+                    color: #ef4444;
+                    font-weight: 700;
+                    letter-spacing: 0.5px;
                 }
 
                 .i-mems {
                     text-align: center;
                     padding-bottom: 24px;
-                    border-bottom: 1px solid #7180962e;
+                    border-bottom: 1px solid rgba(239, 68, 68, 0.1);
                 }
 
                 .des-mems {
                     font-size: 14px;
+                    color: #64748b;
                 }
 
                 >.spec-mems {
@@ -552,11 +567,21 @@ main {
 
                     .tag-des-mems {
                         display: inline-block;
-                        background: linear-gradient(315deg, #bc3c4bcd, #ee8c68ac);
-                        color: #f3fbf7;
-                        border-radius: 7px;
-                        padding: 8px;
-                        font-size: 12px;
+                        background: linear-gradient(135deg, #ef4444, #ff8a65);
+                        color: #ffffff;
+                        border-radius: 20px;
+                        padding: 8px 20px;
+                        font-size: 0.85rem;
+                        font-weight: 600;
+                        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+                        transition: all 0.3s ease;
+                        text-transform: uppercase;
+                    }
+
+                    .tag-des-mems:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+                        background: linear-gradient(135deg, #dc2626, #ef4444);
                     }
                 }
             }
@@ -571,7 +596,7 @@ main {
                 margin-bottom: 8px;
 
                 .text-second-partn {
-                    color: var(--gen-pink-500);
+                    color: var(--gen-blue-400);
                 }
             }
 
@@ -615,16 +640,19 @@ main {
         text-align: center;
         padding: 45px 15px;
         border-radius: 16px;
-        background: var(--gen-act);
+        background: #F4F5F0;
+        color: #334155;
 
         h2 {
             font-size: 1.875rem;
             font-weight: 700;
             margin-bottom: 16px;
+            color: #1e293b;
         }
 
         p {
             margin-bottom: 32px;
+            color: #64748b;
         }
 
         .m-act {
@@ -632,13 +660,11 @@ main {
             max-width: 540px;
             height: auto;
             margin: 0 auto;
-            background: var(--gen-mail-form);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px var(--gen-box-shadow);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 24px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 40px;
 
             >form {
                 display: grid;
@@ -650,7 +676,8 @@ main {
                     margin-bottom: 8px;
 
                     span {
-                        color: var(--gen-mail-color);
+                        color: #df6b6b;
+                        font-weight: 600;
                         font-size: 14px;
 
                         svg {
@@ -668,17 +695,23 @@ main {
 
                     input,
                     textarea {
-                        background: #ffffff33;
-                        box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
-                        border: none;
+                        background: #f8fafc;
+                        border: 1px solid #e2e8f0;
                         border-radius: 8px;
                         padding: 12px 16px;
                         font-size: 14px;
-                        color: var(--gen-body-color);
+                        color: #334155;
                         outline: none;
-
+                        transition: all 0.2s ease;
+                        box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
                         &::placeholder {
-                            color: var(--gen-desc-cont);
+                            color: #94a3b8;
+                        }
+
+                        &:focus {
+                            background: #fff;
+                            border-color: #df6b6b;
+                            box-shadow: 0 0 0 3px rgba(223, 107, 107, 0.15);
                         }
                     }
 
@@ -689,7 +722,7 @@ main {
                 }
 
                 button {
-                    background: var(--gen-mail-color);
+                    background: #df6b6b;
                     border: none;
                     border-radius: 12px;
                     padding: 12px 24px;
@@ -717,9 +750,10 @@ main {
                 text-align: center;
 
                 p {
-                    font-size: 12px;
+                    font-size: 13px;
                     margin-bottom: 6px;
-                    color: var(--gen-pink-500);
+                    color: #5f6cafec;
+                    font-weight: 500;
                 }
             }
         }
@@ -746,6 +780,7 @@ main {
         }
     }
 }
+
 @keyframes orbit-rotate {
     0% {
         transform: translate(-50%, -50%) rotate(0deg);

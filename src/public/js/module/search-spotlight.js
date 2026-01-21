@@ -9,6 +9,22 @@ window.initSpotlight = function initSpotlight() {
     const spTabs = document.querySelectorAll('.sp-tab');
     const spGroups = document.querySelectorAll('.sp-filter-group');
 
+    // Populate Authors
+    const authorSelect = document.getElementById('sp-author-select');
+    if (authorSelect) {
+        fetch('/api/search/authors')
+            .then(res => res.json())
+            .then(authors => {
+                authors.forEach(author => {
+                    const option = document.createElement('option');
+                    option.value = author;
+                    option.textContent = author;
+                    authorSelect.appendChild(option);
+                });
+            })
+            .catch(err => console.error('Failed to load authors:', err));
+    }
+
     // Move overlay to body to ensure z-index covers fixed header
     if (spotlightOverlay && spotlightOverlay.parentElement !== document.body) {
         document.body.appendChild(spotlightOverlay);
@@ -163,8 +179,8 @@ window.initSpotlight = function initSpotlight() {
                         formattedDate = `${d.getDate()} Tháng ${d.getMonth() + 1}, ${d.getFullYear()}`;
                     }
 
-                    const rating = item.rating || '5.0';
-                    const ratingCount = item.ratingCount || '0';
+                    const rating = (item.rating !== undefined && item.rating !== null) ? item.rating : '5.0';
+                    const ratingCount = (item.ratingCount !== undefined && item.ratingCount !== null) ? item.ratingCount : '0';
 
                     html += `
                         <a href="${item.url}" class="sp-item-link" style="text-decoration: none; color: inherit; display: block;">

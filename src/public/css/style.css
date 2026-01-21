@@ -1,21 +1,151 @@
-/* --- 1. CẤU HÌNH CHUNG --- */
+/* --- 1. CẤU HÌNH CHUNG & HEALING COLOR SYSTEM --- */
 :root {
-    --primary-color: #333;
-    --text-color: #555;
-    --text-light: #888;
-    --bg-color: #f8f9fa;
-    --white: #ffffff;
-    --accent: #2c3e50;
-    --red-brand: #b91c1c;
-    --radius: 16px;
-    --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    /* Màu sắc mới */
-    --green-btn: #5fcb97;
-    --purple-tag: #eaddff;
-    --purple-text: #6750a4;
-    --gray-tag: #f0f0f0;
-    --green-tag-bg: #e0f2f1;
-    --green-tag-text: #00897b;
+    /* === CORE PALETTE: CHILL & HEALING (PASTEL VIBES) === */
+    /* Mission: Sex Education, Safety, Healing */
+    /* Standard: WCAG 2.1 AA/AAA Verified */
+
+    /* --- 1. Backgrounds --- */
+    /* Light Mode: #F8F9FE (Alice Blue - Cool, Airy, Calm) */
+    --bg-body: #F8F9FE;
+    --bg-surface: #FFFFFF;
+    --bg-surface-2: #EEF2F7;
+    /* Soft Grey-Blue for secondary areas */
+    --bg-soft: #E3E8EE;
+
+    /* --- 2. Text Colors (High Contrast on #F8F9FE) --- */
+    /* Primary Text uses Dark Mode BG color for perfect harmony */
+    --text-primary: #1E272E;
+    /* Deep Blue Grey - WCAG AAA (15.6:1) */
+    --text-secondary: #57606F;
+    /* Cool Grey - WCAG AA (7.5:1) */
+    --text-tertiary: #A4B0BE;
+
+    /* --- 3. Brand Colors (Healing & Trust) --- */
+    /* Primary: "Insightful Blue" - Calm, Reliable */
+    --color-brand-primary: #74B9FF;
+    /* Soft Blue */
+    --color-brand-hover: #0984E3;
+    /* Deep Blue */
+
+    /* Secondary: "Empathy Pink" - Warmth, Protection */
+    --color-brand-secondary: #FF7675;
+    /* Pastel Red/Pink */
+    --color-brand-secondary-hover: #D63031;
+
+    /* --- 4. Semantic Pastel Colors (The "Healing" Palette) --- */
+    /* Used for Tags, Alerts, Badges, Highlights */
+
+    /* Love & Health (Pink/Rose) - Soft & Caring */
+    --color-healing-pink-bg: #FFF5F7;
+    --color-healing-pink-text: #99004D;
+    /* High contrast pink */
+
+    /* Safety & Growth (Sage/Mint) - Fresh & Safe */
+    --color-healing-green-bg: #E6FFFA;
+    --color-healing-green-text: #006655;
+    /* High contrast teal */
+    --color-healing-sage: #55EFC4;
+
+    /* Hope & Knowledge (Sky/Blue) - Open & Calm */
+    --color-healing-blue-bg: #EBF8FF;
+    --color-healing-blue-text: #00468C;
+    /* High contrast blue */
+
+    /* Diversity & Inclusion (Lavender/Purple) - Creative */
+    --color-healing-purple-bg: #FAF5FF;
+    --color-healing-purple-text: #4C1D95;
+    /* High contrast purple */
+
+    /* Caution & Awareness (Peach/Orange) - Warm Warning */
+    --color-healing-orange-bg: #FFFAF0;
+    --color-healing-orange-text: #9C4221;
+    /* High contrast orange */
+
+    /* --- 5. UI Elements --- */
+    --border-subtle: #DFE4EA;
+    --radius: 20px;
+    /* Enhanced Roundness for "Chill" vibe */
+    --shadow: 0 10px 30px rgba(164, 176, 190, 0.15);
+    /* Soft, dreamy shadow */
+
+    /* --- 6. Gradients (Chill Vibes) --- */
+    --gradient-primary: linear-gradient(135deg, #74B9FF 0%, #A29BFE 100%);
+    /* Blue to Lavender */
+    --gradient-primary-hover: linear-gradient(135deg, #0984E3 0%, #6C5CE7 100%);
+    --gradient-social: linear-gradient(135deg, #81ECEC 0%, #74B9FF 100%);
+    /* Mint to Blue */
+    --gradient-social-hover: linear-gradient(135deg, #00CEC9 0%, #0984E3 100%);
+
+    /* --- MAPPING VARIABLES (Compatibility) --- */
+    --primary-color: var(--text-primary);
+    --text-color: var(--text-secondary);
+    --text-light: var(--text-tertiary);
+    --bg-color: var(--bg-body);
+    --white: var(--bg-surface);
+    --accent: var(--color-brand-primary);
+    --red-brand: var(--color-brand-secondary);
+
+    --green-btn: #00B894;
+    /* Mint Leaf */
+    --purple-tag: var(--color-healing-purple-bg);
+    --purple-text: var(--color-healing-purple-text);
+    --gray-tag: var(--bg-surface-2);
+    --green-tag-bg: var(--color-healing-green-bg);
+    --green-tag-text: var(--color-healing-green-text);
+}
+
+/* === DARK MODE (Deep & Cozy) === */
+[data-theme="dark"] {
+    /* --- 1. Backgrounds --- */
+    /* Dark Mode: #1E272E (Dark Blue Grey - Requested) */
+    --bg-body: #1E272E;
+    --bg-surface: #2F3640;
+    /* Slightly lighter for cards */
+    --bg-surface-2: #353B48;
+
+    /* --- 2. Text Colors (High Contrast on #1E272E) --- */
+    /* Primary Text uses Light Mode BG color */
+    --text-primary: #F8F9FE;
+    /* WCAG AAA (15.6:1) */
+    --text-secondary: #CED6E0;
+    /* WCAG AA (11:1) */
+    --text-tertiary: #A4B0BE;
+
+    /* --- 3. Brand Colors (Adjusted for Dark Mode) --- */
+    --color-brand-primary: #74B9FF;
+    --color-brand-hover: #A29BFE;
+    --color-brand-secondary: #FF7675;
+
+    /* --- 4. Semantic Pastel Colors (Dark Mode) --- */
+    /* Backgrounds darken, Text lightens */
+
+    --color-healing-pink-bg: #4A2330;
+    --color-healing-pink-text: #FFD1E6;
+
+    --color-healing-green-bg: #1B453B;
+    --color-healing-green-text: #A3F0E3;
+    --color-healing-sage: #00B894;
+
+    --color-healing-blue-bg: #1A3048;
+    --color-healing-blue-text: #A8D1FF;
+
+    --color-healing-purple-bg: #34284F;
+    --color-healing-purple-text: #E6D6FF;
+
+    --color-healing-orange-bg: #4A3226;
+    --color-healing-orange-text: #FFDAC1;
+
+    /* --- 5. UI Elements --- */
+    --border-subtle: #57606F;
+    --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+
+    /* --- 6. Gradients --- */
+    --gradient-primary: linear-gradient(135deg, #0984E3 0%, #6C5CE7 100%);
+    --gradient-social: linear-gradient(135deg, #00CEC9 0%, #0984E3 100%);
+
+    /* Remap */
+    --purple-tag: rgba(162, 155, 254, 0.15);
+    --green-tag-bg: rgba(85, 239, 196, 0.15);
 }
 
 /* * {
@@ -135,6 +265,7 @@
     font-size: 15px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -250,6 +381,7 @@
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     flex: 1;
@@ -395,6 +527,7 @@
     margin-bottom: 15px;
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }

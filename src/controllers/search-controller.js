@@ -2,6 +2,21 @@ const searchService = require('../services/search-service');
 const ejs = require('ejs');
 const path = require('path');
 
+const { PostMeta } = require('../models');
+
+/**
+ * API Lấy danh sách tác giả
+ */
+async function getAuthors(request, reply) {
+    try {
+        const authors = searchService.getUniqueAuthors();
+        return reply.send(authors);
+    } catch (error) {
+        request.log.error(error);
+        return reply.code(500).send({ error: 'Internal Server Error' });
+    }
+}
+
 /**
  * API Lấy danh sách bài viết (Load More)
  * Trả về JSON chứa HTML đã render
@@ -24,6 +39,24 @@ async function getPosts(request, reply) {
         // SearchService đã xử lý logic 'all'
 
         const results = searchService.search(q || '', safePage, safeLimit, filters);
+
+        // Enrich with PostMeta (Ratings)
+        const slugs = results.data.map(p => p.slug);
+        const metaList = await PostMeta.findAll({
+            where: { slug: slugs },
+            attributes: ['slug', 'avgRating', 'totalRatings']
+        });
+
+        const metaMap = new Map(metaList.map(m => [m.slug, m]));
+
+        results.data = results.data.map(item => {
+            const meta = metaMap.get(item.slug);
+            return {
+                ...item,
+                rating: meta ? parseFloat(meta.avgRating.toFixed(1)) : (item.rating || 0),
+                ratingCount: meta ? meta.totalRatings : (item.ratingCount || 0)
+            };
+        });
 
         // 3. Render HTML partial (Card)
         // Đường dẫn tới template card
@@ -84,8 +117,26 @@ async function search(request, reply) {
 
         const results = searchService.search(safeQuery, safePage, safeLimit, filters);
 
+        // Enrich with PostMeta (Ratings)
+        const slugs = results.data.map(p => p.slug);
+        const metaList = await PostMeta.findAll({
+            where: { slug: slugs },
+            attributes: ['slug', 'avgRating', 'totalRatings']
+        });
+
+        const metaMap = new Map(metaList.map(m => [m.slug, m]));
+
+        const enrichedData = results.data.map(item => {
+            const meta = metaMap.get(item.slug);
+            return {
+                ...item,
+                rating: meta ? parseFloat(meta.avgRating.toFixed(1)) : (item.rating || 0),
+                ratingCount: meta ? meta.totalRatings : (item.ratingCount || 0)
+            };
+        });
+
         // Trả về trực tiếp object { data, pagination } để frontend xử lý
-        return reply.send(results.data);
+        return reply.send(enrichedData);
     } catch (error) {
         request.log.error(error);
         return reply.code(500).send({ error: 'Internal Server Error' });
@@ -94,5 +145,6 @@ async function search(request, reply) {
 
 module.exports = {
     search,
-    getPosts
+    getPosts,
+    getAuthors
 };

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi-VN" data-gen-themes="light">
+<html lang="vi-VN" data-theme="light">
 
 <head>
     <meta charset="UTF-8" />
@@ -93,12 +93,15 @@
                         <%= post.title %>
                     </h1>
                     <div class="post-meta-top">
-                        <span class="category-badge">
-                            <%= post.category %>
-                        </span>
-                        <span class="post-date">
-                            <%= post.displayDate %>
-                        </span>
+                        <% let mainBadgeClass='bg-article' ; %>
+                            <% if (post.category==='Podcast' ) mainBadgeClass='bg-podcast' ; %>
+                                <% if (post.category==='Video' ) mainBadgeClass='bg-video' ; %>
+                                    <span class="category-badge <%= mainBadgeClass %>">
+                                        <%= post.category %>
+                                    </span>
+                                    <span class="post-date">
+                                        <%= post.displayDate %>
+                                    </span>
                     </div>
 
                     <article>
@@ -257,9 +260,12 @@
                                             <img src="<%= rPost.thumbnail || '/photos/placeholder-m6a0q.png' %>"
                                                 alt="<%= rPost.title %>"
                                                 onerror="this.onerror=null;this.src='/photos/placeholder-m6a0q.png';">
-                                            <span class="related-badge">
-                                                <%= rPost.category || 'Series' %>
-                                            </span>
+                                            <% let relatedBadgeClass='bg-article' ; %>
+                                                <% if (rPost.category==='Podcast' ) relatedBadgeClass='bg-podcast' ; %>
+                                                    <% if (rPost.category==='Video' ) relatedBadgeClass='bg-video' ; %>
+                                                        <span class="related-badge <%= relatedBadgeClass %>">
+                                                            <%= rPost.category || 'Series' %>
+                                                        </span>
                                         </div>
                                         <h4 class="related-post-title">
                                             <%= rPost.title %>

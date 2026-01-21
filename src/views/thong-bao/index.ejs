@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi-VN" data-gen-themes=light>
+<html lang="vi-VN" data-theme=light>
 
 <head>
     <meta charset="UTF-8" />
@@ -36,7 +36,7 @@
     </style>
     <script>
         const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ? localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-gen-themes', preferredTheme);
+        document.documentElement.setAttribute('data-theme', preferredTheme);
     </script>
 </head>
 

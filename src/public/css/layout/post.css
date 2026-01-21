@@ -28,6 +28,7 @@
     font-size: 0.9rem;
     color: var(--gen-body-color);
     margin-bottom: 1.5rem;
+    font-style: italic;
 }
 
 @media (max-width: 768px) {

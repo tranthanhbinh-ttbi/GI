@@ -6,9 +6,9 @@
                     <img class="card-image" src="<%= post.thumbnail || '/photos/placeholder-m6a0q.png' %>"
                         alt="<%= post.title %>">
                 </a>
-                <% let badgeClass='article-tag' ; %>
-                    <% if (post.category==='Podcast' ) badgeClass='bg-purple-600' ; %>
-                        <% if (post.category==='Video' ) badgeClass='article-tag' ; %>
+                <% let badgeClass='bg-article' ; %>
+                    <% if (post.category==='Podcast' ) badgeClass='bg-podcast' ; %>
+                        <% if (post.category==='Video' ) badgeClass='bg-video' ; %>
 
                             <span class="card-category-badge <%= badgeClass %>">
                                 <%= post.category %>

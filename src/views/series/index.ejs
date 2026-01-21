@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi-VN" data-gen-themes="light">
+<html lang="vi-VN" data-theme="light">
 
 <head>
     <meta charset="UTF-8" />
@@ -47,7 +47,7 @@
     </style>
     <script>
         const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ? localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-gen-themes', preferredTheme);
+        document.documentElement.setAttribute('data-theme', preferredTheme);
     </script>
 </head>
 
@@ -73,12 +73,15 @@
                                                 <div class="slide-gradient"></div>
                                                 <div class="hero-slide-top-tags">
                                                     <div class="hero-slide-category-container">
-                                                        <% let badgeClass='hero-slide-category-tag--violet' ; if
-                                                            (post.category==='Podcast' ) badgeClass='postcard-tag' ; if
-                                                            (post.category==='Bài Viết' ) badgeClass='article-tag' ; %>
-                                                            <span class="hero-slide-category-tag <%= badgeClass %>">
-                                                                <%= post.category %>
-                                                            </span>
+                                                        <% let badgeClass='bg-article' ; %>
+                                                            <% if (post.category==='Podcast' ) badgeClass='bg-podcast' ;
+                                                                %>
+                                                                <% if (post.category==='Video' ) badgeClass='bg-video' ;
+                                                                    %>
+                                                                    <span
+                                                                        class="hero-slide-category-tag <%= badgeClass %>">
+                                                                        <%= post.category %>
+                                                                    </span>
                                                     </div>
                                                     <span class="hero-slide-date-tag">
                                                         <%= post.displayDate || post.date %>
@@ -271,7 +274,7 @@
 
                         <div class="load-more-container">
                             <button id="btn-load-more-series" class="load-more-button" data-type="series" data-page="2"
-                                style="padding: 10px 24px; background: var(--primary-color, #6C5DD3); color: white; border-radius: 8px; border: none; cursor: pointer; font-weight: 600;">
+                                style="padding: 10px 24px; background: #7986CB; color: white; border-radius: 8px; border: none; cursor: pointer; font-weight: 600;">
                                 Xem Thêm
                             </button>
                         </div>
@@ -291,21 +294,24 @@
                                                     <img class="popular-card-image" src="<%= post.thumbnail %>"
                                                         alt="<%= post.title %>">
                                                 </a>
-                                                <% let catBadgeClass='bg-red-600' ; if (post.category==='Video' )
-                                                    catBadgeClass='bg-blue-600' ; if (post.category==='Podcast' )
-                                                    catBadgeClass='bg-green-600' ; %>
-                                                    <span class="card-category-badge <%= catBadgeClass %>">
-                                                        <%= post.category || 'Bài Viết' %>
-                                                    </span>
-                                                    <span class="popular-card-read-time-badge">
-                                                        <svg class="icon-sm" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                        </svg>
-                                                        <span>5 Mins Read</span>
-                                                    </span>
+                                                <% let catBadgeClass='bg-article' ; %>
+                                                    <% if (post.category==='Video' ) catBadgeClass='bg-video' ; %>
+                                                        <% if (post.category==='Podcast' ) catBadgeClass='bg-podcast' ;
+                                                            %>
+                                                            <span class="card-category-badge <%= catBadgeClass %>">
+                                                                <%= post.category || 'Bài Viết' %>
+                                                            </span>
+                                                            <span class="popular-card-read-time-badge">
+                                                                <svg class="icon-sm" fill="none" stroke="currentColor"
+                                                                    viewBox="0 0 24 24"
+                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                        stroke-width="2"
+                                                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                                    </path>
+                                                                </svg>
+                                                                <span>5 Mins Read</span>
+                                                            </span>
                                             </div>
                                             <div class="popular-card-content">
                                                 <div class="popular-card-meta">

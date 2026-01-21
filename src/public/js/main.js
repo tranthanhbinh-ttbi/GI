@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         filterToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             filterMenu.classList.toggle('hidden');
-            if (searchSuggestions) searchSuggestions.classList.add('hidden'); 
+            if (searchSuggestions) searchSuggestions.classList.add('hidden');
         });
     }
 
