@@ -10,15 +10,18 @@ button.splide__arrow {
     margin-top: 0;
 }
 
-.icon-sm {
+/* .icon-sm {
     width: 1rem;
     height: 1rem;
+} */
+.stat-item .bi-eye-fill {
+    margin-right: 0.25rem;
 }
-
 .star-rating-container {
     display: flex;
     align-items: center;
     margin-top: 0;
+    gap: 7px;
 }
 
 .icon-sm.text-yellow-400 {
@@ -187,10 +190,10 @@ button.splide__arrow {
 .filter-bar {
     display: flex;
     align-items: center;
-    background-color: rgb(30 41 59);
+    background-color: #f3f4f6;
     overflow-x: auto;
-    border-radius: 0.5rem;
-    ;
+    border-radius: 1rem;
+    padding: 0.25rem;
 }
 
 .filter-bar> :not([hidden])~ :not([hidden]) {
@@ -200,11 +203,12 @@ button.splide__arrow {
 .filter-button {
     flex-shrink: 0;
     padding: 0.5rem 1.25rem;
-    border-radius: 9999px;
+    border-radius: 0.8rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 600;
-    transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     background: none;
@@ -213,15 +217,35 @@ button.splide__arrow {
 }
 
 .filter-button.filter-button-active {
-    color: rgb(255 255 255);
+    background-color: #ffffff;
+    color: #1f2937;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .filter-button.filter-button-inactive {
-    color: rgb(156 163 175);
+    color: #6b7280;
 }
 
 .filter-button.filter-button-inactive:hover {
-    color: rgb(255 255 255);
+    color: #111827;
+}
+
+[data-theme="dark"] .filter-bar {
+    background-color: #252E36;
+    border: 1px solid #34404B;
+}
+
+[data-theme="dark"] .filter-button.filter-button-active {
+    background-color: #f3f4f6;
+    color: #1e293b;
+}
+
+[data-theme="dark"] .filter-button.filter-button-inactive {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .filter-button.filter-button-inactive:hover {
+    color: #f8fafc;
 }
 
 .filter-button svg {
@@ -348,7 +372,7 @@ button.splide__arrow {
 }
 
 .card-share-button:hover {
-    color: rgb(37 99 235);
+    color: #e09f7d;
 }
 
 .card-share-button svg {
@@ -435,7 +459,9 @@ button.splide__arrow {
     line-height: 1.75rem;
     font-weight: 700;
     color: rgb(17 24 39);
-    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--gen-border);
+    padding-bottom: 10px;
+    margin-bottom: 1.5rem;
 }
 
 .widget-decorator {
@@ -822,9 +848,9 @@ button.splide__arrow {
 /* View Switcher Controls */
 .view-switcher {
     display: flex;
-    background: #1e293b;
+    background: #f3f4f6;
     padding: 0.25rem;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     margin-left: 1rem;
     gap: 0.25rem;
 }
@@ -835,7 +861,7 @@ button.splide__arrow {
     justify-content: center;
     width: 2rem;
     height: 2rem;
-    border-radius: 0.375rem;
+    border-radius: 0.7rem;
     background: transparent;
     border: none;
     color: #9ca3af;
@@ -845,15 +871,34 @@ button.splide__arrow {
 }
 
 .view-btn:hover {
-    color: white;
-    background: rgba(255, 255, 255, 0.1);
+    color: #1f2937;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .view-btn.view-btn-active {
-    background: #475569;
-    /* Slate-600 */
-    color: white;
+    background: #ffffff;
+    color: #1f2937;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .view-switcher {
+    background-color: #252E36;
+    border: 1px solid #34404B;
+}
+
+[data-theme="dark"] .view-btn.view-btn-active {
+    background-color: #f3f4f6;
+    color: #1e293b;
+}
+
+[data-theme="dark"] .view-btn:not(.view-btn-active) {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .view-btn:not(.view-btn-active):hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
 }
 
 /* Card Body Wrapper (for default Grid View) */
@@ -1064,20 +1109,34 @@ button.splide__arrow {
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    /* Ensure one line */
     gap: 8px;
-    font-size: 0.8rem;
+    font-size: 0.875rem;
     color: #e5e7eb;
     margin-bottom: 4px;
     width: auto;
-    /* Don't force full width if not needed */
     max-width: 100%;
 }
 
-.hero-slide-stats svg {
-    margin-right: 2px;
-    width: 14px;
-    height: 14px;
+/* Align the eye icon wrapper */
+.hero-slide-stats>span:first-child {
+    display: flex;
+    align-items: center;
+}
+
+/* Text alignment */
+.hero-slide-views {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+}
+
+.hero-slide-separator {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    color: #9ca3af;
+    margin-bottom: 2px;
+    /* Slight optical adjustment */
 }
 
 .hero-slide-rating {
@@ -1085,6 +1144,9 @@ button.splide__arrow {
     align-items: center;
     gap: 4px;
 }
+
+/* Ensure stars match eye icon size for consistency and alignment */
+
 
 .hero-slide-title {
     font-size: 1.5rem;
@@ -1293,7 +1355,7 @@ button.splide__arrow {
 }
 
 .share-item:hover {
-    background-color: var(--primary-color, #6C5DD3);
+    background-color: #7986CB;
     color: white;
     transform: scale(1.15);
     z-index: 10;
@@ -1318,4 +1380,87 @@ button.splide__arrow {
 
 .share-overlay.active {
     display: block;
+}
+
+/* --- Dark Mode Overrides for Cards & Widgets --- */
+[data-theme="dark"] .series-card {
+    background-color: #252E36;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .card-title {
+    color: #f3f4f6;
+    /* Gray-100 */
+}
+
+[data-theme="dark"] .card-description {
+    color: #9ca3af;
+    /* Gray-400 */
+}
+
+[data-theme="dark"] .card-stats {
+    color: #9ca3af;
+}
+
+[data-theme="dark"] .sidebar-widget,
+[data-theme="dark"] .search-filter-box {
+    background-color: #252E36;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .widget-title {
+    color: #f3f4f6;
+}
+
+[data-theme="dark"] .form-label {
+    color: #d1d5db;
+    /* Gray-300 */
+}
+
+[data-theme="dark"] .form-input {
+    background-color: #1e293b;
+    /* Slate-800 */
+    border-color: #4b5563;
+    /* Gray-600 */
+    color: #f3f4f6;
+}
+
+[data-theme="dark"] .form-input:focus {
+    border-color: #60a5fa;
+    /* Blue-400 */
+    background-color: #1e293b;
+}
+
+[data-theme="dark"] .popular-card-title {
+    color: #f3f4f6;
+}
+
+[data-theme="dark"] .popular-card-meta {
+    color: #9ca3af;
+}
+
+[data-theme="dark"] .popular-card-description {
+    color: #9ca3af;
+}
+
+[data-theme="dark"] .load-more-button {
+    background-color: #252E36;
+    color: #f3f4f6;
+    border-color: #34404B;
+}
+
+[data-theme="dark"] .load-more-button:hover {
+    background-color: #334155;
+    /* Slate-700 */
+}
+
+/* --- Dark Mode Radial Menu --- */
+[data-theme="dark"] .radial-backdrop {
+    background: radial-gradient(circle, #252E36 0px, #252E36 58px, #f3f4f6 59px, #f3f4f6 100%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure slide share backdrop keeps transparent inner in dark mode */
+[data-theme="dark"] .slide-share-wrapper .radial-backdrop {
+    background: radial-gradient(circle, transparent 0px, transparent 58px, #334155 59px, #334155 100%);
 }
