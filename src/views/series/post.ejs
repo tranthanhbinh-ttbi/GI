@@ -124,7 +124,7 @@
                                         </div>
                         </div>
 
-                        <div class="rating-widget sidebar-widget sidebar-widget-alt">
+                        <div class="rating-widget">
                             <h3 class="widget-title">Bài viết này hữu ích không?</h3>
                             <p id="rating-prompt">Nhấp vào sao để đánh giá!</p>
                             <div class="rating-stars" id="user-rating-stars">
@@ -229,8 +229,7 @@
 
             <aside class="post-sidebar">
                 <div class="sidebar-widget">
-                    <h3 class="widget-title">Bài Viết Phổ Biến</h3>
-                    <span class="widget-decorator"></span>
+                    <h3 class="widget-title-popular">Bài Viết Phổ Biến</h3>
                     <div class="popular-posts-list">
                         <% if (typeof popularPosts !=='undefined' && popularPosts.length> 0) { %>
                             <% popularPosts.slice(0, 5).forEach((pPost, index)=> { %>
