@@ -1,17 +1,24 @@
 /* --- CẤU HÌNH CHUNG --- */
 :root {
-    /* === CORE PALETTE: CHILL & HEALING (PASTEL VIBES) === */
-    --bg-body: #F8F9FE;
+    /* === CORE PALETTE: SYNCHRONIZED WITH SERIES === */
+    --bg-body: #F3F4F6;
     --bg-surface: #FFFFFF;
-    --bg-surface-2: #EEF2F7;
+    --bg-surface-2: #E5E7EB;
+    /* Gray-200 */
 
-    --text-primary: #1E272E;
-    --text-secondary: #57606F;
-    --text-tertiary: #A4B0BE;
+    --text-primary: #111827;
+    /* Gray-900 */
+    --text-secondary: #4B5563;
+    /* Gray-600 */
+    --text-tertiary: #9CA3AF;
+    /* Gray-400 */
 
-    --color-brand-primary: #74B9FF;
-    --color-brand-hover: #0984E3;
-    --color-brand-secondary: #FF7675;
+    --color-brand-primary: #2563EB;
+    /* Blue-600 */
+    --color-brand-hover: #1D4ED8;
+    /* Blue-700 */
+    --color-brand-secondary: #DC2626;
+    /* Red-600 */
 
     /* MAPPING for Compatibility */
     --primary-color: var(--text-primary);
@@ -21,37 +28,51 @@
     --white: var(--bg-surface);
     --accent: var(--color-brand-primary);
     --red-brand: var(--color-brand-secondary);
-    --radius: 20px;
-    --shadow: 0 10px 30px rgba(164, 176, 190, 0.15);
+    --radius: 16px;
+    /* Slightly tighter radius like series */
+    --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
-    --green-btn: #00B894;
-    --purple-tag: #FAF5FF;
-    --purple-text: #4C1D95;
-    --gray-tag: #EEF2F7;
-    --green-tag-bg: #E6FFFA;
-    --green-tag-text: #006655;
-    --yellow-star: #FFE082;
+    --green-btn: #059669;
+    /* Green-600 */
+    --purple-tag: #9333EA;
+    /* Purple-600 */
+    --purple-text: #FFFFFF;
+    --gray-tag: #F3F4F6;
+    --green-tag-bg: #10B981;
+    /* Emerald-500 */
+    --green-tag-text: #FFFFFF;
+    --yellow-star: #FACC15;
+    /* Yellow-400 */
 }
 
 [data-theme="dark"] {
-    --bg-body: #1E272E;
-    --bg-surface: #2F3640;
-    --bg-surface-2: #353B48;
+    --bg-body: #111827;
+    /* Gray-900 */
+    --bg-surface: #252E36;
+    /* Special Dark Surface from Series */
+    --bg-surface-2: #374151;
+    /* Gray-700 */
 
-    --text-primary: #F8F9FE;
-    --text-secondary: #CED6E0;
-    --text-tertiary: #A4B0BE;
+    --text-primary: #F9FAFB;
+    /* Gray-50 */
+    --text-secondary: #D1D5DB;
+    /* Gray-300 */
+    --text-tertiary: #9CA3AF;
+    /* Gray-400 */
 
-    --color-brand-primary: #74B9FF;
-    --color-brand-hover: #A29BFE;
-    --color-brand-secondary: #FF7675;
+    --color-brand-primary: #3B82F6;
+    /* Blue-500 */
+    --color-brand-hover: #60A5FA;
+    /* Blue-400 */
+    --color-brand-secondary: #EF4444;
+    /* Red-500 */
 
     /* Remap */
-    --purple-tag: rgba(162, 155, 254, 0.15);
-    --purple-text: #E1BEE7;
-    --green-tag-bg: rgba(85, 239, 196, 0.15);
-    --green-tag-text: #A3F0E3;
-    --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    --purple-tag: #9333EA;
+    --purple-text: #FFFFFF;
+    --green-tag-bg: #10B981;
+    --green-tag-text: #FFFFFF;
+    --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.3);
 }
 
 * {
@@ -244,7 +265,6 @@ button {
     cursor: pointer;
     overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s;
-    border: 2px solid transparent;
 }
 
 .nav-item:hover {

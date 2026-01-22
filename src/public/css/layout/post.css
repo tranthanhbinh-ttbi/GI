@@ -51,7 +51,7 @@
 }
 
 .post-breadcrumbs .current {
-    color: #6c757d;
+    color: #A0AEC0;
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
@@ -60,7 +60,7 @@
 }
 
 .post-breadcrumbs .current-post {
-    color: #6c757d;
+    color: #A0AEC0;
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
@@ -73,12 +73,12 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.9rem;
-    color: #6c757d;
+    color: #A0AEC0;
     margin-bottom: 1rem;
 }
 
 .post-breadcrumbs a {
-    color: #6c757d;
+    color: #A0AEC0;
     text-decoration: none;
 }
 
@@ -506,7 +506,7 @@
 .rating-stars {
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.8rem;
     margin-bottom: 1.5rem;
 }
 
@@ -560,7 +560,7 @@
 
 .stars-rating {
     display: flex;
-    gap: 2px;
+    gap: 5px;
 }
 
 .star {
@@ -605,7 +605,7 @@
 
 .rating-score {
     font-weight: 600;
-    color: #2d3748;
+    color: var(--gen-body-color);
 }
 
 .rating-outof {

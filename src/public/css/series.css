@@ -401,7 +401,7 @@ button.splide__arrow {
 }
 
 .load-more-button:hover {
-    background-color: rgb(243 244 246);
+    transform: translateY(-2px);
 }
 
 .main-layout-grid {
