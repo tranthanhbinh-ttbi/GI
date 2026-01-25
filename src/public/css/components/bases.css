@@ -23,7 +23,7 @@ header,
     top: 0;
     left: 0;
     z-index: 1000;
-    transition: background 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .header__submenu {
@@ -31,7 +31,12 @@ header,
     display: grid;
     align-items: center;
     grid-template-columns: 1fr auto 1fr;
-    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out, height 0.5s ease-in-out, padding 0.5s ease-in-out;
+    max-height: 120px;
+    overflow: hidden;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        visibility 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .header__social-media {
@@ -58,7 +63,7 @@ header,
 
 .header__gi-photos-brands {
     justify-self: center;
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .header__utils {
