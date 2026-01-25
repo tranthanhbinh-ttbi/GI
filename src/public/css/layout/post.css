@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-    padding-top: 5.5rem;
+    padding-top: 4.5rem;
 }
 
 @media (min-width: 1024px) {
