@@ -84,6 +84,10 @@
         window.currentUser = <% - JSON.stringify(locals.user || null) %>;
         window.postSlug = '<%= post.slug %>';
     </script>
+    <script>
+        const preferredTheme = ['light', 'dark'].includes(localStorage.theme) ? localStorage.theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', preferredTheme);
+    </script>
 </head>
 
 <body>

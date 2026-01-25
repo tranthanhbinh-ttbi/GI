@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="/css/components/bases.css" />
     <link rel="stylesheet" href="/css/components/main.css" />
     <link rel="stylesheet" href="/css/kham-pha.css" />
+    <link rel="stylesheet" href="/css/components/radial-menu.css" />
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" as="style"
         onload="this.onload=null;this.rel='stylesheet'" />
     <noscript>
@@ -159,8 +160,8 @@
                                                         d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                                                 </svg>
                                                 <%= heroMain.author || 'Admin' %>
+                                                <span class="divider">/</span>
                                             </span>
-                                            <span class="divider">/</span>
                                             <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                                     <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
@@ -168,21 +169,22 @@
                                                         d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                                 </svg>
                                                 <%= heroMain.views || 0 %> views
+                                                <span class="divider">/</span>
                                             </span>
-                                            <span class="divider">/</span>
-                                            <span class="stars">
-                                                <% const hRating=heroMain.avgRating || 0; %>
+                                            <span class="stats-group" style="display:flex; align-items:center; gap:5px;">
+                                                <span class="stars">
+                                                    <% const hRating=heroMain.avgRating || 0; %>
                                                     <% for(let i=1; i<=5; i++) { %>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                                                             fill="currentColor" class="bi bi-star-fill"
                                                             viewBox="0 0 16 16"
-                                                            style="<%= i <= Math.round(hRating) ? 'color: var(--yellow-star);' : 'color: #ccc;' %>">
-                                                            <path
-                                                                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                                            style="<%= i <= Math.round(hRating) ? 'color: var(--yellow-star);' : 'color: #d1d5db;' %>">
+                                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                         </svg>
-                                                        <% } %>
+                                                    <% } %>
+                                                </span>
+                                                <span>(<%= heroMain.totalRatings || 0 %>)</span>
                                             </span>
-                                            <span>(<%= heroMain.totalRatings || 0 %>)</span>
                                         </div>
 
                                         <h2 class="hero-title">
@@ -208,16 +210,40 @@
                                         <div class="radial-track">
                                             <a href="#" class="share-item share-action" data-platform="facebook"
                                                 data-slug="<%= heroMain.slug %>" data-title="<%= heroMain.title %>"
-                                                title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                                                title="Facebook">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+                                                </svg>
+                                            </a>
                                             <a href="#" class="share-item share-action" data-platform="messenger"
                                                 data-slug="<%= heroMain.slug %>" data-title="<%= heroMain.title %>"
-                                                title="Messenger"><i class="fa-brands fa-facebook-messenger"></i></a>
+                                                title="Messenger">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-messenger" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.64.64 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.64.64 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76m5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
+                                                </svg>
+                                            </a>
                                             <a href="#" class="share-item share-action" data-platform="twitter"
                                                 data-slug="<%= heroMain.slug %>" data-title="<%= heroMain.title %>"
-                                                title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                                                title="Twitter">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-twitter-x" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                                                </svg>
+                                            </a>
                                             <a href="#" class="share-item share-action" data-platform="copy"
                                                 data-slug="<%= heroMain.slug %>" data-title="<%= heroMain.title %>"
-                                                title="Copy"><i class="fa-solid fa-copy"></i></a>
+                                                title="Copy">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd"
+                                                        d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z" />
+                                                </svg>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -229,81 +255,124 @@
                                 </div>
                                 <% } %>
 
-                                    <div class="hero-nav">
-                                        <% if (heroSide.length> 0) { %>
-                                            <% heroSide.forEach(sub=> { %>
-                                                <div class="nav-item"
-                                                    style="background-image: url('<%= sub.thumbnail || '/photos/placeholder-m6a0q.png' %>');">
-                                                    <a href="/kham-pha/<%= sub.slug %>"
-                                                        style="position:absolute; inset:0; z-index:1;"></a>
-                                                    <div class="nav-overlay"></div>
-                                                    <div class="nav-top">
-                                                        <span class="mini-badge">
-                                                            <%= sub.category || 'Mới' %>
-                                                        </span>
-                                                        <span class="mini-date">
-                                                            <%= sub.displayDate || sub.date %>
-                                                        </span>
-                                                    </div>
-                                                    <div class="nav-content">
-                                                        <div class="nav-text-info">
-                                                            <div class="nav-meta-line">
-                                                                <span class="nav-author"><svg
-                                                                        xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                        height="16" fill="currentColor"
-                                                                        class="bi bi-person-fill" viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                                                                    </svg>
-                                                                    <%= sub.author || 'Admin' %>
+                                    <div class="hero-nav splide" id="hero-nav-splide">
+                                        <div class="splide__track">
+                                            <div class="splide__list">
+                                                <% if (heroSide.length> 0) { %>
+                                                    <% heroSide.forEach(sub=> { %>
+                                                        <div class="nav-item splide__slide"
+                                                            style="background-image: url('<%= sub.thumbnail || '/photos/placeholder-m6a0q.png' %>');">
+                                                            <a href="/kham-pha/<%= sub.slug %>"
+                                                                style="position:absolute; inset:0; z-index:1;"></a>
+                                                            <div class="nav-overlay"></div>
+                                                            <div class="nav-top">
+                                                                <span class="mini-badge">
+                                                                    <%= sub.category || 'Mới' %>
+                                                                </span>
+                                                                <span class="mini-date">
+                                                                    <%= sub.displayDate || sub.date %>
                                                                 </span>
                                                             </div>
-                                                            <h4 class="nav-title">
-                                                                <%= sub.title %>
-                                                            </h4>
-                                                        </div>
-                                                        <div class="share-wrapper" style="pointer-events: auto;">
-                                                            <button class="nav-share-btn share-action card-share-button"
-                                                                title="Chia sẻ"
-                                                                style="width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.3); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="14"
-                                                                    height="14" fill="currentColor"
-                                                                    viewBox="0 0 512 512">
-                                                                    <path
-                                                                        d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z" />
-                                                                </svg>
-                                                            </button>
-                                                            <div class="radial-share-menu">
-                                                                <div class="radial-backdrop"></div>
-                                                                <div class="radial-track">
-                                                                    <a href="#" class="share-item share-action"
-                                                                        data-platform="facebook"
-                                                                        data-slug="<%= sub.slug %>"
-                                                                        data-title="<%= sub.title %>"
-                                                                        title="Facebook"><i
-                                                                            class="fa-brands fa-facebook"></i></a>
-                                                                    <a href="#" class="share-item share-action"
-                                                                        data-platform="messenger"
-                                                                        data-slug="<%= sub.slug %>"
-                                                                        data-title="<%= sub.title %>"
-                                                                        title="Messenger"><i
-                                                                            class="fa-brands fa-facebook-messenger"></i></a>
-                                                                    <a href="#" class="share-item share-action"
-                                                                        data-platform="twitter"
-                                                                        data-slug="<%= sub.slug %>"
-                                                                        data-title="<%= sub.title %>" title="Twitter"><i
-                                                                            class="fa-brands fa-x-twitter"></i></a>
-                                                                    <a href="#" class="share-item share-action"
-                                                                        data-platform="copy" data-slug="<%= sub.slug %>"
-                                                                        data-title="<%= sub.title %>" title="Copy"><i
-                                                                            class="fa-solid fa-copy"></i></a>
+                                                            <div class="nav-content">
+                                                                <div class="nav-text-info">
+                                                                    <div class="nav-meta-line">
+                                                                        <span class="nav-author"><svg
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                width="14" height="14"
+                                                                                fill="currentColor"
+                                                                                class="bi bi-person-fill"
+                                                                                viewBox="0 0 16 16">
+                                                                                <path
+                                                                                    d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                                                            </svg>
+                                                                            <%= sub.author || 'Admin' %>
+                                                                        </span>
+                                                                    </div>
+                                                                    <h4 class="nav-title">
+                                                                        <%= sub.title %>
+                                                                    </h4>
+                                                                </div>
+                                                                <div class="share-wrapper hero-side-share"
+                                                                    style="pointer-events: auto;">
+                                                                    <button
+                                                                        class="nav-share-btn share-action card-share-button"
+                                                                        title="Chia sẻ"
+                                                                        style="width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.3); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="14" height="14" fill="currentColor"
+                                                                            viewBox="0 0 512 512">
+                                                                            <path
+                                                                                d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                    <div class="radial-share-menu">
+                                                                        <div class="radial-backdrop"></div>
+                                                                        <div class="radial-track">
+                                                                            <a href="#" class="share-item share-action"
+                                                                                data-platform="facebook"
+                                                                                data-slug="<%= sub.slug %>"
+                                                                                data-title="<%= sub.title %>"
+                                                                                title="Facebook">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-facebook"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+                                                                                </svg>
+                                                                            </a>
+                                                                            <a href="#" class="share-item share-action"
+                                                                                data-platform="messenger"
+                                                                                data-slug="<%= sub.slug %>"
+                                                                                data-title="<%= sub.title %>"
+                                                                                title="Messenger">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-messenger"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.64.64 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.64.64 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76m5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
+                                                                                </svg>
+                                                                            </a>
+                                                                            <a href="#" class="share-item share-action"
+                                                                                data-platform="twitter"
+                                                                                data-slug="<%= sub.slug %>"
+                                                                                data-title="<%= sub.title %>"
+                                                                                title="Twitter">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-twitter-x"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                                                                                </svg>
+                                                                            </a>
+                                                                            <a href="#" class="share-item share-action"
+                                                                                data-platform="copy"
+                                                                                data-slug="<%= sub.slug %>"
+                                                                                data-title="<%= sub.title %>"
+                                                                                title="Copy">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-copy"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path fill-rule="evenodd"
+                                                                                        d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z" />
+                                                                                </svg>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <% }) %>
-                                                    <% } %>
+                                                        <% }) %>
+                                                            <% } %>
+                                            </div>
+                                        </div>
                                     </div>
                     </section>
 
@@ -311,12 +380,12 @@
 
                         <div class="post-list" id="kham-pha-grid-container">
                             <%- include('../partials/card-kham-pha', { posts: mainList }) %>
-                            <div class="load-more-container" style="margin-top: 30px;">
-                        <button id="btn-load-more-kham-pha" class="load-more-btn-styled" data-type="explore"
-                            data-page="2">
-                            Xem Thêm
-                        </button>
-                    </div>
+                                <div class="load-more-container" style="margin-top: 30px;">
+                                    <button id="btn-load-more-kham-pha" class="load-more-btn-styled" data-type="explore"
+                                        data-page="3">
+                                        Xem Thêm
+                                    </button>
+                                </div>
                         </div>
 
                         <aside class="sidebar">
@@ -343,7 +412,7 @@
                                             <% } else { %>
                                                 <p>Chưa có dữ liệu.</p>
                                                 <% } %>
-                                                
+
                             </div>
                         </aside>
                     </div>
@@ -353,12 +422,30 @@
         </main>
         <%- include('../partials/footer') %>
 
+            <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
             <script src="/js/radial-menu.js"></script>
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
+                    // Initialize Splide for Hero Nav
+                    if (document.querySelector('#hero-nav-splide')) {
+                        new Splide('#hero-nav-splide', {
+                            mediaQuery: 'min',
+                            breakpoints: {
+                                769: {
+                                    destroy: true, // Disable on desktop
+                                },
+                            },
+                            type: 'slide',
+                            perPage: 1,
+                            arrows: false,
+                            pagination: true,
+                            gap: '15px',
+                        }).mount();
+                    }
+
                     const gridContainer = document.getElementById('kham-pha-grid-container');
                     const loadMoreBtn = document.getElementById('btn-load-more-kham-pha');
-                    let currentPage = 2; // Since we rendered page 1
+                    let currentPage = 3; // Start at 3 because Page 1 loaded 12 items (equiv to 2 pages of 6)
 
                     async function loadMore() {
                         loadMoreBtn.innerHTML = 'Đang tải...';
@@ -380,6 +467,7 @@
                                 }
 
                                 if (window.initRadialMenus) window.initRadialMenus();
+                                if (window.initShareButtons) window.initShareButtons();
                             }
                         } catch (e) {
                             console.error(e);
@@ -392,6 +480,7 @@
                         loadMoreBtn.addEventListener('click', loadMore);
                     }
                     if (window.initRadialMenus) window.initRadialMenus();
+                    if (window.initShareButtons) window.initShareButtons();
                 });
             </script>
             <style>

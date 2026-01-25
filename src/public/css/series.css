@@ -329,7 +329,11 @@ button.splide__arrow {
 }
 
 .card-title a:hover {
-    color: rgb(37 99 235);
+    color: #3B82F6;
+}
+
+[data-theme="dark"] .card-title a:hover {
+    color: #93C5FD;
 }
 
 .card-description {
@@ -1060,9 +1064,9 @@ button.splide__arrow {
         /* Reset horizontal margin */
     }
 
-    .card-grid.view-list .stat-item {
+    /* .card-grid.view-list .stat-item {
         color: #6b7280;
-    }
+    } */
 
     .card-grid.view-list .share-wrapper {
         margin-left: auto;
@@ -1260,127 +1264,6 @@ button.splide__arrow {
 
 
 
-.radial-share-menu {
-    position: absolute;
-    bottom: 50%;
-    right: 50%;
-    width: 260px;
-    /* User set */
-    height: 260px;
-    /* Matching height */
-    pointer-events: none;
-    opacity: 0;
-    /* Center the menu on the button */
-    transform: translate(50%, 50%) scale(0.8);
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 20;
-    overflow: visible;
-    /* Allow icons to cast shadow or extend slightly if needed, clipping handled by clip-path */
-    clip-path: circle(50% at 50% 50%);
-    /* Circle centered on button */
-}
-
-/* ... (skip .radial-share-menu.active and .radial-track) ... */
-
-.radial-share-menu.active {
-    pointer-events: auto;
-    opacity: 1;
-    transform: translate(50%, 50%) scale(1);
-}
-
-.radial-track {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    transform-origin: center center;
-    /* Rotate around the button/center */
-    touch-action: none;
-    /* Will be rotated by JS */
-}
-
-
-
-.radial-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-
-    /* Radial gradient: Center White (hiding text), Outer Grey (for icons) */
-    /* Container Radius = 130px. Radius of items approx 90px. Inner edge ~68px. */
-    /* Hole radius needs to be smaller than 68px. Let's use 58px. */
-    background: radial-gradient(circle, #ffffff 0px, #ffffff 58px, #f3f4f6 59px, #f3f4f6 100%);
-
-    /* Subtle shadow for the whole menu */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-
-    z-index: -1;
-    pointer-events: none;
-}
-
-/* Specific backdrop for slide share to preserve button appearance */
-.slide-share-wrapper .radial-backdrop {
-    background: radial-gradient(circle, transparent 0px, transparent 58px, #f3f4f6 59px, #f3f4f6 100%);
-    -webkit-mask-image: conic-gradient(from 0deg at 50% 50%, black 0deg, black 90deg, transparent 90deg, transparent 180deg, black 180deg, black 360deg);
-    mask-image: conic-gradient(from 0deg at 50% 50%, black 0deg, black 90deg, transparent 90deg, transparent 180deg, black 180deg, black 360deg);
-}
-
-.share-item {
-    position: absolute;
-    width: 44px;
-    height: 44px;
-    background: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    color: #4B5563;
-    text-decoration: none;
-    transition: transform 0.2s, background-color 0.2s, color 0.2s;
-    /* Centered initially, moved by JS */
-    left: 0;
-    top: 0;
-    /* We hide them initially to avoid visual glitch before JS runs */
-    opacity: 0;
-}
-
-.radial-share-menu.active .share-item {
-    opacity: 1;
-}
-
-.share-item:hover {
-    background-color: #7986CB;
-    color: white;
-    transform: scale(1.15);
-    z-index: 10;
-}
-
-.share-item svg {
-    width: 22px;
-    height: 22px;
-    fill: currentColor;
-}
-
-/* Overlay to close menu when clicking outside */
-.share-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 19;
-    display: none;
-}
-
-.share-overlay.active {
-    display: block;
-}
-
 /* --- Dark Mode Overrides for Cards & Widgets --- */
 [data-theme="dark"] .series-card {
     background-color: #252E36;
@@ -1449,17 +1332,9 @@ button.splide__arrow {
 }
 
 [data-theme="dark"] .load-more-button:hover {
+
     background-color: #334155;
+
     /* Slate-700 */
-}
 
-/* --- Dark Mode Radial Menu --- */
-[data-theme="dark"] .radial-backdrop {
-    background: radial-gradient(circle, #252E36 0px, #252E36 58px, #f3f4f6 59px, #f3f4f6 100%);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* Ensure slide share backdrop keeps transparent inner in dark mode */
-[data-theme="dark"] .slide-share-wrapper .radial-backdrop {
-    background: radial-gradient(circle, transparent 0px, transparent 58px, #334155 59px, #334155 100%);
 }

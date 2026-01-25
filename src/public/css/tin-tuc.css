@@ -641,11 +641,11 @@
 }
 
 .btn-load-more {
-    background: #dc2626;
+    background: #7986cb;
     color: white;
     border: none;
-    padding: 14px 32px;
-    border-radius: 8px;
+    padding: 12px 30px;
+    border-radius: 12px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -653,8 +653,7 @@
 }
 
 .btn-load-more:hover {
-    background: #b91c1c;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 .btn-load-more:disabled {

@@ -10,7 +10,7 @@ window.initRadialMenus = function () {
         const listBtn = wrapper.querySelector('.slide-share-button');
         const btn = cardBtn || listBtn;
 
-        const gridContainer = document.getElementById('series-grid-container');
+        const gridContainer = document.getElementById('series-grid-container') || document.getElementById('kham-pha-grid-container');
 
         const menu = wrapper.querySelector('.radial-share-menu');
         const track = wrapper.querySelector('.radial-track');
@@ -25,14 +25,115 @@ window.initRadialMenus = function () {
         let startDragAngle = 0;
         let startRotation = 0;
 
-        // Configuration
-        const RADIUS = 90;
-        const START_ANGLE_BASE = 275;
-        const ANGLE_STEP = -35;
-        const MENU_SIZE = 260;
-        const ITEM_SIZE = 44;
+        const isResearch = wrapper.closest('.research-layout') !== null;
+
+        const isHeroSide = wrapper.classList.contains('hero-side-share');
+
+        // Dynamic Configuration State
+        let START_ANGLE_BASE = 0;
+        let ANGLE_STEP = 0;
+
+        // Layout Update Function
+        function updateLayout() {
+            const isMobile = window.innerWidth < 768;
+
+            // Dynamic Configuration based on layout
+            let MENU_SIZE = 260; // Default
+            let RADIUS = 90;     // Default
+            const ITEM_SIZE = 40;
+
+            if (isResearch) {
+                MENU_SIZE = 280;
+                RADIUS = 105;
+                if (isMobile) {
+                    START_ANGLE_BASE = 273;
+                    ANGLE_STEP = -60;
+                } else {
+                    START_ANGLE_BASE = 187;
+                    ANGLE_STEP = -35;
+                }
+            } else if (isHeroSide) {
+                // Hero Side (Top Right Cards)
+                MENU_SIZE = 200; // Reduced from 250
+                RADIUS = 60;     // Reduced from 80
+                START_ANGLE_BASE = 277; // Slightly left of top
+                ANGLE_STEP = -50;
+            } else {
+                START_ANGLE_BASE = 275;
+                ANGLE_STEP = -45;
+            }
+
+            // Sync container size with logic
+            menu.style.width = `${MENU_SIZE}px`;
+            menu.style.height = `${MENU_SIZE}px`;
+
+            items.forEach((item, index) => {
+                const angleDeg = START_ANGLE_BASE + (index * ANGLE_STEP);
+                const angleRad = angleDeg * (Math.PI / 180);
+
+                const x = Math.cos(angleRad) * RADIUS;
+                const y = Math.sin(angleRad) * RADIUS;
+
+                const left = (MENU_SIZE / 2) + x - (ITEM_SIZE / 2);
+                const top = (MENU_SIZE / 2) + y - (ITEM_SIZE / 2);
+
+                item.style.left = `${left}px`;
+                item.style.top = `${top}px`;
+            });
+        }
 
         // Helper function to get current config
+        function getCurrentConfig() {
+            if (isHeroSide) {
+                return {
+                    minRot: -5,
+                    visibleEdge: 178
+                };
+            }
+
+            if (isResearch) {
+                const isMobile = window.innerWidth < 768;
+                return isMobile ? {
+                    minRot: -9,
+                    visibleEdge: 95
+                } : {
+                    minRot: -3,
+                    visibleEdge: 85
+                };
+            }
+
+            if (gridContainer && gridContainer.classList.contains('view-list') && cardBtn) {
+                // Responsive adjustment:
+                // Mobile (width < 768px): Cards are very short (~90px), need aggressive scroll (-70).
+                // Desktop (width >= 768px): Cards are taller (~200px), less scroll needed (-30).
+                const isMobile = window.innerWidth < 768;
+
+                return isMobile ? {
+                    minRot: -70,
+                    visibleEdge: 180
+                } : {
+                    minRot: -15,
+                    visibleEdge: 180
+                };
+            }
+
+            // Case 2: Hero Slide (slide-share-button)
+            // Preserving original config which works for the large Hero banner
+            if (listBtn) {
+                return {
+                    minRot: -5,
+                    visibleEdge: 180
+                };
+            }
+
+            // Case 3: Grid items in Card View Mode (Default)
+            return {
+                minRot: -5,
+                visibleEdge: 180
+            };
+        }
+
+        /*
         function getCurrentConfig() {
             // Case 1: Grid items in List View Mode
             // Requires aggressive negative rotation to bring top icons (Facebook at 275deg) 
@@ -67,19 +168,15 @@ window.initRadialMenus = function () {
                 visibleEdge: 180
             };
         }
+        
+        */
 
-        items.forEach((item, index) => {
-            const angleDeg = START_ANGLE_BASE + (index * ANGLE_STEP);
-            const angleRad = angleDeg * (Math.PI / 180);
+        // Initial layout
+        updateLayout();
 
-            const x = Math.cos(angleRad) * RADIUS;
-            const y = Math.sin(angleRad) * RADIUS;
-
-            const left = (MENU_SIZE / 2) + x - (ITEM_SIZE / 2);
-            const top = (MENU_SIZE / 2) + y - (ITEM_SIZE / 2);
-
-            item.style.left = `${left}px`;
-            item.style.top = `${top}px`;
+        // Update on resize
+        window.addEventListener('resize', () => {
+            updateLayout();
         });
 
         // Toggle
@@ -238,6 +335,120 @@ window.initRadialMenus = function () {
     });
 };
 
+window.initShareButtons = function () {
+
+    const shareBtns = document.querySelectorAll('.share-action[data-platform]');
+
+    shareBtns.forEach(btn => {
+
+        if (btn.dataset.bound) return;
+
+        btn.dataset.bound = true;
+
+
+
+        btn.addEventListener('click', (e) => {
+
+            e.preventDefault();
+
+            e.stopPropagation();
+
+            const platform = btn.dataset.platform;
+
+            const slug = btn.dataset.slug;
+
+            const title = btn.dataset.title;
+
+            // Determine the prefix based on current path or data attribute
+
+            let prefix = '/kham-pha/';
+
+            if (window.location.pathname.startsWith('/series')) {
+
+                prefix = '/series/';
+
+            }
+
+            if (btn.dataset.prefix) {
+
+                prefix = btn.dataset.prefix;
+
+            }
+
+
+
+            const url = `${window.location.origin}${prefix}${slug}`;
+
+
+
+            switch (platform) {
+
+                case 'facebook':
+
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
+
+                    break;
+
+                case 'twitter':
+
+                    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank', 'width=600,height=400');
+
+                    break;
+
+                case 'messenger':
+
+                    const fbAppId = '1501202124127451';
+
+                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+                    if (isMobile) {
+
+                        window.location.href = `fb-messenger://share/?link=${encodeURIComponent(url)}`;
+
+                    } else {
+
+                        window.open(`https://www.facebook.com/dialog/send?link=${encodeURIComponent(url)}&app_id=${fbAppId}&redirect_uri=${encodeURIComponent(url)}`, '_blank', 'width=1100,height=600');
+
+                    }
+
+                    break;
+
+                case 'copy':
+
+                    navigator.clipboard.writeText(url).then(() => {
+
+                        if (window.appAddons && typeof window.showToast === 'function') {
+
+                            window.showToast('Đã sao chép liên kết!', 'success');
+
+                        } else {
+
+                            alert('Đã sao chép liên kết: ' + url);
+
+                        }
+
+                    }).catch(() => {
+
+                        console.error('Copy failed');
+
+                    });
+
+                    break;
+
+            }
+
+        });
+
+    });
+
+};
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
+
     if (window.initRadialMenus) window.initRadialMenus();
+
+    if (window.initShareButtons) window.initShareButtons();
+
 });

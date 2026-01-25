@@ -65,7 +65,7 @@ main {
                 border-left: 5px solid var(--gen-mouse);
                 will-change: transform;
                 animation:
-                    typing 10.5s steps(50) infinite,
+                    typing 10.3s steps(50) infinite,
                     blink 0.75s step-end infinite;
             }
 
@@ -777,6 +777,7 @@ main {
         #containers {
             padding-bottom: 2rem;
             grid-template-columns: 1fr;
+            gap: 5rem;
         }
     }
 }

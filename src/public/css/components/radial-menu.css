@@ -1,0 +1,169 @@
+/* Radial Share Menu Component */
+.radial-share-menu {
+    position: absolute;
+    bottom: 50%;
+    right: 50%;
+    width: 260px;
+    height: 260px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(50%, 50%) scale(0.8);
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 20;
+    overflow: visible;
+    clip-path: circle(50% at 50% 50%);
+}
+
+.radial-share-menu.active {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translate(50%, 50%) scale(1);
+}
+
+.radial-track {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: center center;
+    touch-action: none;
+}
+
+.radial-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffffff 0px, #ffffff 58px, #f3f4f6 59px, #f3f4f6 100%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Specific backdrop for slide share to preserve button appearance */
+.slide-share-wrapper .radial-backdrop,
+.hero-section .radial-backdrop {
+    background: radial-gradient(circle, transparent 0px, transparent 58px, #f3f4f6 59px, #f3f4f6 100%);
+    -webkit-mask-image: conic-gradient(from 0deg at 50% 50%, black 0deg, black 90deg, transparent 90deg, transparent 180deg, black 180deg, black 360deg);
+    mask-image: conic-gradient(from 0deg at 50% 50%, black 0deg, black 90deg, transparent 90deg, transparent 180deg, black 180deg, black 360deg);
+}
+
+/* Specific adjustment for Hero Side Share (Smaller menu needs smaller hole) */
+.hero-side-share .radial-backdrop {
+    background: radial-gradient(circle, transparent 0px, transparent 35px, #f3f4f6 36px, #f3f4f6 100%);
+}
+
+.share-item {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: #4B5563;
+    text-decoration: none;
+    transition: transform 0.2s, background-color 0.2s, color 0.2s;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.radial-share-menu.active .share-item {
+    opacity: 1;
+}
+
+.share-item:hover {
+    background-color: #7986CB;
+    color: white;
+    transform: scale(1.15);
+    z-index: 10;
+}
+
+.share-item i {
+    font-size: 20px;
+}
+
+.share-item svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+}
+
+/* Staggered animation for share items */
+.share-item:nth-child(1) {
+    transition-delay: 0.05s;
+}
+
+.share-item:nth-child(2) {
+    transition-delay: 0.1s;
+}
+
+.share-item:nth-child(3) {
+    transition-delay: 0.15s;
+}
+
+.share-item:nth-child(4) {
+    transition-delay: 0.2s;
+}
+
+/* --- Dark Mode Radial Menu --- */
+[data-theme="dark"] .radial-backdrop {
+    background: radial-gradient(circle, #252E36 0px, #252E36 58px, #f3f4f6 59px, #f3f4f6 100%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .share-item {
+    background: #374151;
+    color: #F9FAFB;
+}
+
+[data-theme="dark"] .share-item:hover {
+    background-color: #7986CB;
+    color: white;
+}
+
+[data-theme="dark"] .slide-share-wrapper .radial-backdrop,
+[data-theme="dark"] .hero-section .radial-backdrop {
+    background: radial-gradient(circle, transparent 0px, transparent 58px, #f3f4f6 59px, #f3f4f6 100%);
+}
+
+[data-theme="dark"] .hero-side-share .radial-backdrop {
+    background: radial-gradient(circle, transparent 0px, transparent 35px, #f3f4f6 36px, #f3f4f6 100%);
+}
+
+/* Research Layout (Card Kham Pha) Adjustments */
+.research-layout .radial-share-menu {
+    width: 320px;
+    height: 320px;
+}
+
+.research-layout .radial-backdrop {
+    /* Donut style: Transparent center, White ring */
+    background: radial-gradient(circle, transparent 0px, transparent 100px, #ffffff 100.5px, #ffffff 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    opacity: 1;
+}
+
+.research-layout .share-item {
+    /* High contrast: Dark button on White track */
+    background-color: #374151;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.research-layout .share-item:hover {
+    background-color: #111827;
+    transform: scale(1.15);
+    color: #ffffff;
+}
+
+/* Ensure SVG fills correctly */
+.research-layout .share-item svg {
+    fill: currentColor;
+}
