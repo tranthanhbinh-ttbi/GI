@@ -123,18 +123,37 @@
         <main>
             <div class="container">
 
-                <% let heroMain=null; let heroSide=[]; let mainList=[]; if (typeof posts !=='undefined' && posts.length>
-                    0) {
+                <% let heroMain=null; let heroSide=[]; let mainList=[]; let heroPostsForJs=[]; if (typeof posts
+                    !=='undefined' && posts.length> 0) {
                     // Adjust: Use available posts
                     heroMain = posts[0];
                     heroSide = posts.slice(1, 4);
                     mainList = posts.slice(4);
+
+                    // Prepare data for Client-Side Rotation
+                    const top4 = posts.slice(0, 4);
+                    heroPostsForJs = top4.map(p => ({
+                    id: p._id,
+                    title: p.title,
+                    slug: p.slug,
+                    description: p.description,
+                    thumbnail: p.thumbnail || '/photos/placeholder-m6a0q.png',
+                    category: p.category || 'NỔI BẬT',
+                    date: p.displayDate || p.date,
+                    author: p.author || 'Admin',
+                    views: p.views || 0,
+                    avgRating: p.avgRating || 0,
+                    totalRatings: p.totalRatings || 0
+                    }));
                     }
                     %>
+                    <script id="hero-posts-data" type="application/json">
+    <%- JSON.stringify(heroPostsForJs) %>
+</script>
 
                     <section class="hero-section">
                         <% if (heroMain) { %>
-                            <div class="hero-main">
+                            <div class="hero-main" id="hero-main-card">
                                 <a href="/kham-pha/<%= heroMain.slug %>"
                                     style="display:block; width:100%; height:100%;">
                                     <img src="<%= heroMain.thumbnail || '/photos/placeholder-m6a0q.png' %>"
@@ -160,7 +179,7 @@
                                                         d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                                                 </svg>
                                                 <%= heroMain.author || 'Admin' %>
-                                                <span class="divider">/</span>
+                                                    <span class="divider">/</span>
                                             </span>
                                             <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
@@ -169,19 +188,21 @@
                                                         d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                                 </svg>
                                                 <%= heroMain.views || 0 %> lượt xem
-                                                <span class="divider">/</span>
+                                                    <span class="divider">/</span>
                                             </span>
-                                            <span class="stats-group" style="display:flex; align-items:center; gap:5px;">
+                                            <span class="stats-group"
+                                                style="display:flex; align-items:center; gap:5px;">
                                                 <span class="stars">
                                                     <% const hRating=heroMain.avgRating || 0; %>
-                                                    <% for(let i=1; i<=5; i++) { %>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                                                            fill="currentColor" class="bi bi-star-fill"
-                                                            viewBox="0 0 16 16"
-                                                            style="<%= i <= Math.round(hRating) ? 'color: var(--yellow-star);' : 'color: #d1d5db;' %>">
-                                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                                        </svg>
-                                                    <% } %>
+                                                        <% for(let i=1; i<=5; i++) { %>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="14"
+                                                                height="14" fill="currentColor" class="bi bi-star-fill"
+                                                                viewBox="0 0 16 16"
+                                                                style="<%= i <= Math.round(hRating) ? 'color: var(--yellow-star);' : 'color: #d1d5db;' %>">
+                                                                <path
+                                                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                                            </svg>
+                                                            <% } %>
                                                 </span>
                                                 <span>(<%= heroMain.totalRatings || 0 %>)</span>
                                             </span>
@@ -441,6 +462,180 @@
                             pagination: true,
                             gap: '15px',
                         }).mount();
+                    }
+
+                    // --- Auto Rotate Hero Section ---
+                    const heroDataEl = document.getElementById('hero-posts-data');
+                    if (heroDataEl) {
+                        try {
+                            const heroPostsData = JSON.parse(heroDataEl.textContent);
+
+                            if (heroPostsData && heroPostsData.length > 1) {
+                                let currentHeroIndex = 0;
+                                const ROTATION_INTERVAL = 10000; // 10 seconds
+                                let rotationTimer = null;
+
+                                const rotateHero = () => {
+                                    currentHeroIndex = (currentHeroIndex + 1) % heroPostsData.length;
+                                    const count = heroPostsData.length;
+                                    const mainData = heroPostsData[currentHeroIndex];
+
+                                    // Identify Side Data
+                                    const sideDataList = [];
+                                    const sideSlots = document.querySelectorAll('.hero-nav .nav-item');
+                                    for (let i = 0; i < sideSlots.length; i++) {
+                                        const idx = (currentHeroIndex + 1 + i) % count;
+                                        sideDataList.push(heroPostsData[idx]);
+                                    }
+
+                                    // --- Update Main Card ---
+                                    const hMain = document.getElementById('hero-main-card') || document.querySelector('.hero-main');
+                                    if (hMain) {
+                                        // Update Link
+                                        const link = hMain.querySelector('a');
+                                        if (link) link.href = `/kham-pha/${mainData.slug}`;
+
+                                        // Update Image
+                                        const img = hMain.querySelector('.hero-bg');
+                                        if (img) {
+                                            img.src = mainData.thumbnail;
+                                            img.alt = mainData.title;
+                                        }
+
+                                        // Update Badges
+                                        const badgeCat = hMain.querySelector('.badge-red');
+                                        if (badgeCat) badgeCat.innerText = mainData.category;
+
+                                        const badgeDate = hMain.querySelector('.badge-date');
+                                        if (badgeDate) badgeDate.innerText = mainData.date;
+
+                                        // Update Author (Reconstruct HTML to keep icon)
+                                        const authorSpan = hMain.querySelector('.author-item');
+                                        if (authorSpan) {
+                                            authorSpan.innerHTML = `
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                                </svg>
+                                                ${mainData.author}
+                                                <span class="divider">/</span>
+                                            `;
+                                        }
+
+                                        // Update Views
+                                        const statsContainer = hMain.querySelector('.hero-stats');
+                                        if (statsContainer) {
+                                            // 2nd child is views
+                                            const viewsSpan = statsContainer.children[1];
+                                            if (viewsSpan) {
+                                                viewsSpan.innerHTML = `
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                                    </svg>
+                                                    ${mainData.views} lượt xem
+                                                    <span class="divider">/</span>
+                                                `;
+                                            }
+                                        }
+
+                                        // Update Stars
+                                        const starsContainer = hMain.querySelector('.stars');
+                                        if (starsContainer) {
+                                            let starsHtml = '';
+                                            const rating = mainData.avgRating;
+                                            for (let k = 1; k <= 5; k++) {
+                                                const color = k <= Math.round(rating) ? 'var(--yellow-star)' : '#d1d5db';
+                                                starsHtml += `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16" style="color: ${color};"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" /></svg>`;
+                                            }
+                                            starsContainer.innerHTML = starsHtml;
+                                        }
+
+                                        // Update Total Ratings
+                                        const ratingCount = hMain.querySelector('.stats-group span:last-child');
+                                        if (ratingCount) ratingCount.innerText = `(${mainData.totalRatings})`;
+
+                                        // Update Content
+                                        const hTitle = hMain.querySelector('.hero-title');
+                                        if (hTitle) hTitle.innerText = mainData.title;
+
+                                        const hDesc = hMain.querySelector('.hero-desc');
+                                        if (hDesc) hDesc.innerText = mainData.description;
+
+                                        // Update Share
+                                        const shareItems = hMain.querySelectorAll('.radial-share-menu .share-item');
+                                        shareItems.forEach(item => {
+                                            item.setAttribute('data-slug', mainData.slug);
+                                            item.setAttribute('data-title', mainData.title);
+                                        });
+                                    }
+
+                                    // --- Update Side Cards ---
+                                    sideSlots.forEach((slot, index) => {
+                                        if (index >= sideDataList.length) return;
+                                        const data = sideDataList[index];
+
+                                        // BG
+                                        slot.style.backgroundImage = `url('${data.thumbnail}')`;
+
+                                        // Link
+                                        const link = slot.querySelector('a');
+                                        if (link) link.href = `/kham-pha/${data.slug}`;
+
+                                        // Badge
+                                        const badge = slot.querySelector('.mini-badge');
+                                        if (badge) badge.innerText = data.category;
+
+                                        // Date
+                                        const date = slot.querySelector('.mini-date');
+                                        if (date) date.innerText = data.date;
+
+                                        // Author
+                                        const author = slot.querySelector('.nav-author');
+                                        if (author) {
+                                            author.innerHTML = `
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                                </svg>
+                                                ${data.author}
+                                            `;
+                                        }
+
+                                        // Title
+                                        const title = slot.querySelector('.nav-title');
+                                        if (title) title.innerText = data.title;
+
+                                        // Share
+                                        const shareItems = slot.querySelectorAll('.radial-share-menu .share-item');
+                                        shareItems.forEach(item => {
+                                            item.setAttribute('data-slug', data.slug);
+                                            item.setAttribute('data-title', data.title);
+                                        });
+                                    });
+                                };
+
+                                const startRotation = () => {
+                                    if (rotationTimer) clearInterval(rotationTimer);
+                                    rotationTimer = setInterval(rotateHero, ROTATION_INTERVAL);
+                                };
+
+                                const stopRotation = () => {
+                                    if (rotationTimer) clearInterval(rotationTimer);
+                                    rotationTimer = null;
+                                };
+
+                                // Start
+                                startRotation();
+
+                                // Pause on Hover
+                                const heroSection = document.querySelector('.hero-section');
+                                if (heroSection) {
+                                    heroSection.addEventListener('mouseenter', stopRotation);
+                                    heroSection.addEventListener('mouseleave', startRotation);
+                                }
+                            }
+                        } catch (e) {
+                            console.error('Error init auto-rotate:', e);
+                        }
                     }
 
                     const gridContainer = document.getElementById('kham-pha-grid-container');

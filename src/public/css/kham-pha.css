@@ -501,6 +501,7 @@ button {
 }
 
 .post-title.large {
+    text-align: left;
     font-size: 20px;
     font-weight: 700;
     color: var(--primary-color);
@@ -534,14 +535,11 @@ button {
     color: #6b7280;
     display: flex;
     align-items: center;
+    gap: 8px;
 }
 
 [data-theme="dark"] .meta-item {
     color: #9ca3af;
-}
-
-.meta-item.author {
-    gap: 8px;
 }
 
 .post-meta-row i {
