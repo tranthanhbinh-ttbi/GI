@@ -598,7 +598,11 @@ button {
     margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 1px solid #f0f0f0;
-    color: #444;
+    color: #111827;
+}
+
+[data-theme="dark"] .widget-head {
+    color: #f3f4f6;
 }
 
 .pop-item {
