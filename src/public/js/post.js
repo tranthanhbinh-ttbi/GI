@@ -254,6 +254,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     showToast('Gửi bình luận thành công!', 'success');
                     prependComment(result.comment);
                     updateCommentCount(1);
+                    startStatusPolling();
                 } else {
                     showToast(result.message, 'error');
                 }
@@ -270,9 +271,12 @@ document.addEventListener('DOMContentLoaded', function () {
             if (data.success) {
                 renderComments(data.comments);
                 commentCountText.textContent = `Bình luận (${data.comments.length})`;
+            } else {
+                commentList.innerHTML = `<p class="error-text">Lỗi: ${escapeHtml(data.message || 'Không thể tải bình luận')}</p>`;
             }
         } catch (error) {
-            commentList.innerHTML = '<p class="error-text">Không thể tải bình luận.</p>';
+            console.error('Load comments error:', error);
+            commentList.innerHTML = `<p class="error-text">Không thể tải bình luận. (${escapeHtml(error.message)})</p>`;
         }
     }
 
@@ -293,8 +297,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const div = document.createElement('div');
         div.className = 'comment-item';
         div.id = `comment-${comment.id}`;
+        div.dataset.status = comment.status;
         
-        const dateStr = new Date(comment.createdAt).toLocaleString('vi-VN');
+        const dateStr = new Date(comment.createdAt).toLocaleDateString('vi-VN', { day: 'numeric', month: 'long', year: 'numeric' });
         const avatar = comment.User?.avatarUrl || '/photos/placeholder-m6a0q.png';
         const name = comment.User?.name || 'Người dùng';
         
@@ -303,9 +308,11 @@ document.addEventListener('DOMContentLoaded', function () {
             deleteBtnHtml = `<button class="delete-comment-btn" data-id="${comment.id}" style="background: none; border: none; color: #dc3545; cursor: pointer; padding: 0; font-size: 0.9rem; margin-left: 10px;">Xóa</button>`;
         }
 
-        // OPTIMISTIC UI: Không hiện nhãn "Đang kiểm tra" để tạo cảm giác phản hồi tức thì.
-        // Hệ thống vẫn kiểm tra ngầm, nếu vi phạm sẽ bị ẩn sau.
+        // OPTIMISTIC UI: Pending comments look approved initially.
         let pendingLabel = '';
+        if (comment.status === 'flagged') {
+            pendingLabel = '<span style="font-size: 0.75rem; color: #dc3545; background: #f8d7da; padding: 2px 6px; border-radius: 4px; margin-left: 8px;">Đang chờ phê duyệt</span>';
+        }
         
         div.innerHTML = `
             <div style="display: flex; gap: 1rem;">
@@ -335,6 +342,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             </div>
         `;
+
+        const replyToReplyBtns = div.querySelectorAll('.reply-to-reply-btn');
+        replyToReplyBtns.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const isLoggedIn = await requireLogin();
+                if (!isLoggedIn) return;
+                const parentId = btn.dataset.parentId;
+                const form = document.getElementById(`reply-form-${parentId}`);
+                if (form) {
+                    form.style.display = form.style.display === 'block' ? 'none' : 'block';
+                    if (form.style.display === 'block') {
+                        form.querySelector('textarea')?.focus();
+                    }
+                }
+            });
+        });
 
         const replyBtn = div.querySelector('.comment-reply-btn');
         const replyForm = div.querySelector('.reply-form');
@@ -379,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     replyForm.style.display = 'none';
                     showToast('Đã gửi phản hồi!', 'success');
                     appendReply(comment.id, result.comment);
-                    updateCommentCount(1);
+                    startStatusPolling();
                 } else {
                     showToast(result.message, 'error');
                 }
@@ -408,8 +431,11 @@ document.addEventListener('DOMContentLoaded', function () {
             deleteBtnHtml = `<button class="delete-reply-btn" data-id="${reply.id}" style="background: none; border: none; color: #dc3545; cursor: pointer; padding: 0; font-size: 0.85rem; margin-left: 10px;">Xóa</button>`;
         }
 
-        // OPTIMISTIC UI: Không hiện nhãn Pending
+        // OPTIMISTIC UI: Pending replies look approved initially.
         let pendingLabel = '';
+        if (reply.status === 'flagged') {
+            pendingLabel = '<span style="font-size: 0.75rem; color: #dc3545; background: #f8d7da; padding: 2px 6px; border-radius: 4px; margin-left: 8px;">Đang chờ phê duyệt</span>';
+        }
 
         // Note: report-reply-btn needs listener binding in appendReply or re-render
         // Here we just return HTML string, so listeners must be delegated or bound after insertion.
@@ -418,18 +444,19 @@ document.addEventListener('DOMContentLoaded', function () {
         // FIX: Change logic to bind after HTML injection in createCommentElement or appendReply.
         
         return `
-            <div class="comment-item" id="comment-${reply.id}" style="border: none; padding: 0.5rem 0;">
+            <div class="comment-item" id="comment-${reply.id}" data-status="${reply.status}" style="border: none; padding: 0.5rem 0;">
                 <div style="display: flex; gap: 0.8rem;">
                     <img src="${reply.User?.avatarUrl || '/photos/placeholder-m6a0q.png'}" class="comment-author-avatar" style="width: 32px; height: 32px;">
                     <div style="flex: 1;">
                         <p>
                             <strong>${reply.User?.name || 'Người dùng'}</strong> 
                             ${pendingLabel}
-                            <span style="font-size: 0.75rem; color: #888;">${new Date(reply.createdAt).toLocaleString('vi-VN')}</span>
+                            <span style="font-size: 0.75rem; color: #888;">${new Date(reply.createdAt).toLocaleDateString('vi-VN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                         </p>
                         <p style="margin-top: 0.2rem;">${escapeHtml(reply.content)}</p>
                         <div class="comment-actions">
-                            <button class="report-reply-btn" onclick="handleReport(${reply.id})" style="background: none; border: none; color: #6c757d; cursor: pointer; padding: 0; font-size: 0.85rem;">Báo cáo</button>
+                            <button class="reply-to-reply-btn" data-parent-id="${reply.parentId}" style="background: none; border: none; color: #1a73e8; cursor: pointer; padding: 0; font-size: 0.85rem;">Trả lời</button>
+                            <button class="report-reply-btn" onclick="handleReport(${reply.id})" style="background: none; border: none; color: #6c757d; cursor: pointer; padding: 0; font-size: 0.85rem; margin-left: 10px;">Báo cáo</button>
                             ${deleteBtnHtml}
                         </div>
                     </div>
@@ -472,7 +499,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (result.success) {
                 showToast('Đã xóa bình luận', 'success');
                 element.remove();
-                updateCommentCount(-1);
+                if (!isReply) updateCommentCount(-1);
             } else {
                 showToast(result.message, 'error');
             }
@@ -509,7 +536,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateCommentCount(delta) {
         const current = parseInt(commentCountText.textContent.match(/\d+/)[0]);
-        commentCountText.textContent = `Bình luận (${current + delta})`;
+        commentCountText.textContent = `Bình luận (${Math.max(0, current + delta)})`;
     }
 
     async function requireLogin() {
@@ -674,4 +701,88 @@ document.addEventListener('DOMContentLoaded', function () {
         .star.half:after { content: '★'; position: absolute; left: 0; top: 0; width: 50%; overflow: hidden; color: #f6ad55; }
     `;
     document.head.appendChild(style);
+
+    // --- 4. Polling Status ---
+    let pollingInterval = null;
+    let pollCount = 0;
+    
+    function startStatusPolling() {
+        if (pollingInterval) clearInterval(pollingInterval);
+        pollCount = 0;
+        
+        // Poll every 3 seconds for 10 times (30s total)
+        pollingInterval = setInterval(async () => {
+            pollCount++;
+            await updatePendingComments();
+            
+            if (pollCount >= 10) {
+                clearInterval(pollingInterval);
+                pollingInterval = null;
+            }
+        }, 3000);
+    }
+
+    async function updatePendingComments() {
+        const pendingEls = document.querySelectorAll('.comment-item[data-status="pending"]');
+        if (pendingEls.length === 0) {
+            if (pollingInterval) clearInterval(pollingInterval);
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/posts/${postSlug}/comments`);
+            const data = await response.json();
+            
+            if (data.success) {
+                const commentsMap = new Map();
+                
+                // Flatten comments and replies for easy lookup
+                const traverse = (list) => {
+                    list.forEach(c => {
+                        commentsMap.set(String(c.id), c);
+                        if (c.replies) traverse(c.replies);
+                    });
+                };
+                traverse(data.comments);
+
+                pendingEls.forEach(el => {
+                    const id = el.id.replace('comment-', '');
+                    const commentData = commentsMap.get(id);
+                    
+                    if (commentData && commentData.status !== 'pending') {
+                        // Update status attribute
+                        el.dataset.status = commentData.status;
+                        
+                        // Update UI Label
+                        // Find the label span (it has background color style)
+                        const labelSpan = el.querySelector('span[style*="background"]');
+                        
+                        if (commentData.status === 'approved') {
+                            if (labelSpan) labelSpan.remove();
+                        } else if (commentData.status === 'flagged') {
+                            // Changed from pending to flagged -> Show Warning Toast
+                            showToast('Bình luận của bạn có nội dung nhạy cảm và đang chờ phê duyệt.', 'warning');
+                            
+                            if (labelSpan) {
+                                labelSpan.textContent = 'Đang chờ phê duyệt';
+                                labelSpan.style.color = '#dc3545';
+                                labelSpan.style.background = '#f8d7da';
+                            } else {
+                                // If label was hidden (optimistic), add it now
+                                const authorEl = el.querySelector('.comment-author') || el.querySelector('strong'); // Strong tag for name
+                                if (authorEl) {
+                                    const newLabel = document.createElement('span');
+                                    newLabel.style.cssText = 'font-size: 0.75rem; color: #dc3545; background: #f8d7da; padding: 2px 6px; border-radius: 4px; margin-left: 8px;';
+                                    newLabel.textContent = 'Đang chờ phê duyệt';
+                                    authorEl.insertAdjacentElement('afterend', newLabel);
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        } catch (e) {
+            console.error('Polling error', e);
+        }
+    }
 });

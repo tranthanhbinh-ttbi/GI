@@ -239,13 +239,44 @@ async function deleteRating(request, reply) {
  */
 async function getComments(request, reply) {
     const { slug } = request.params;
+    
+    // Safety check for auth
+    const isAuthenticated = request.isAuthenticated && request.isAuthenticated();
+    const userId = (isAuthenticated && request.user) ? request.user.id : null;
+
     try {
+        const whereClause = {
+            postSlug: slug,
+            parentId: null
+        };
+
+        const replyWhere = {};
+
+        if (userId) {
+            // Logged in: Show approved OR (pending/flagged AND mine)
+            const visibilityCondition = {
+                [Op.or]: [
+                    { status: 'approved' },
+                    {
+                        [Op.and]: [
+                            { status: { [Op.in]: ['pending', 'flagged'] } },
+                            { userId: userId }
+                        ]
+                    }
+                ]
+            };
+
+            // Merge into whereClause (using Object.assign to handle Symbols if needed, though direct assignment is better)
+            Object.assign(whereClause, visibilityCondition);
+            Object.assign(replyWhere, visibilityCondition);
+        } else {
+            // Guest: Show approved only
+            whereClause.status = 'approved';
+            replyWhere.status = 'approved';
+        }
+
         const comments = await Comment.findAll({
-            where: { 
-                postSlug: slug, 
-                parentId: null,
-                status: 'approved' // Chỉ lấy comment đã duyệt
-            },
+            where: whereClause,
             include: [
                 {
                     model: User,
@@ -254,7 +285,7 @@ async function getComments(request, reply) {
                 {
                     model: Comment,
                     as: 'replies',
-                    where: { status: 'approved' }, // Chỉ lấy reply đã duyệt
+                    where: replyWhere,
                     required: false,
                     include: [{ model: User, attributes: ['name', 'avatarUrl'] }]
                 }
@@ -264,8 +295,16 @@ async function getComments(request, reply) {
 
         return { success: true, comments };
     } catch (error) {
-        request.log.error(error);
-        return reply.code(500).send({ success: false, message: 'Internal Server Error' });
+        console.error('getComments Error:', error); // Fallback logging
+        if (request.log) request.log.error(error);
+        
+        // Return detailed error for debugging
+        return reply.code(500).send({ 
+            success: false, 
+            message: 'Internal Server Error', 
+            error: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 }
 

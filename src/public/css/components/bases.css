@@ -32,7 +32,7 @@ header,
     align-items: center;
     grid-template-columns: 1fr auto 1fr;
     max-height: 120px;
-    overflow: hidden;
+    overflow: visible;
     transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
         visibility 0.5s cubic-bezier(0.4, 0, 0.2, 1),
         max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
