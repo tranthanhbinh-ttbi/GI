@@ -1,74 +1,118 @@
 <% if (typeof posts !=='undefined' && posts.length> 0) { %>
     <% posts.forEach(post=> { %>
-        <article class="article-card">
-            <div class="article-category <%= post.categoryClass || 'lifestyle' %>">
-                <%= post.category || 'TIN TỨC' %>
-            </div>
-            <div class="article-date">
-                <%= post.displayDate || post.date %>
-            </div>
-            <div class="article-image-placeholder">
-                <a href="/tin-tuc/<%= post.slug %>" style="display:block; width:100%; height:100%;">
-                    <% if (post.thumbnail) { %>
-                        <img src="<%= post.thumbnail %>" alt="<%= post.title %>"
-                            style="width:100%; height:100%; object-fit:cover;">
-                        <% } else { %>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#ddd"
-                                viewBox="0 0 16 16">
-                                <path
-                                    d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                            </svg>
-                            <% } %>
+        <div class="series-card news-card-styled">
+            <div class="card-image-container">
+                <a href="/tin-tuc/<%= post.slug %>" class="block">
+                    <img class="card-image" src="<%= post.thumbnail || '/photos/placeholder-m6a0q.png' %>"
+                        alt="<%= post.title %>">
                 </a>
-            </div>
-            <h3 class="article-title"><a href="/tin-tuc/<%= post.slug %>" style="text-decoration:none; color:inherit;">
-                    <%= post.title %>
-                </a></h3>
-            <p class="article-description">
-                <%= post.description %>
-            </p>
-            <div class="article-footer">
-                <span class="article-views"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                        <path
-                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                    </svg>
-                    <%= post.views || 0 %>
-                </span>
 
-                <div class="share-wrapper" style="position: relative;">
-                    <button class="article-share share-action card-share-button" title="Chia sẻ">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            viewBox="0 0 512 512">
-                            <path
-                                d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z">
-                            </path>
-                        </svg>
-                    </button>
-                    <!-- Radial Menu -->
-                    <div class="radial-share-menu">
-                        <div class="radial-backdrop"></div>
-                        <div class="radial-track">
-                            <a href="#" class="share-item share-action" data-platform="facebook"
-                                data-slug="<%= post.slug %>" data-title="<%= post.title %>" title="Facebook"><i
-                                    class="fa-brands fa-facebook"></i></a>
-                            <a href="#" class="share-item share-action" data-platform="messenger"
-                                data-slug="<%= post.slug %>" data-title="<%= post.title %>" title="Messenger"><i
-                                    class="fa-brands fa-facebook-messenger"></i></a>
-                            <a href="#" class="share-item share-action" data-platform="twitter"
-                                data-slug="<%= post.slug %>" data-title="<%= post.title %>" title="Twitter"><i
-                                    class="fa-brands fa-x-twitter"></i></a>
-                            <a href="#" class="share-item share-action" data-platform="copy"
-                                data-slug="<%= post.slug %>" data-title="<%= post.title %>" title="Copy"><i
-                                    class="fa-solid fa-copy"></i></a>
+                <% let badgeClass='bg-article' ; let cat=(post.category || '' ).toLowerCase().trim(); %>
+                    <% if (cat==='podcast' ) badgeClass='bg-podcast' ; %>
+                        <% if (cat==='video' ) badgeClass='bg-video' ; %>
+                            <% if (cat==='truyền thông' ) badgeClass='bg-truyen-thong' ; %>
+                                <% if (cat==='đối tác' ) badgeClass='bg-doi-tac' ; %>
+                                    <% if (cat==='gender insights' ) badgeClass='bg-gender-insights' ; %>
+
+                                        <span class="card-category-badge <%= badgeClass %>">
+                                            <%= post.category || 'TIN TỨC' %>
+                                        </span>
+                                        <span class="slide-date-badge">
+                                            <%= post.displayDate || post.date %>
+                                        </span>
+            </div>
+            <div class="card-body">
+                <div class="card-content">
+                    <h3 class="card-title">
+                        <a href="/tin-tuc/<%= post.slug %>">
+                            <%= post.title %>
+                        </a>
+                    </h3>
+                    <p class="card-description">
+                        <%= post.description %>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <div class="card-stats">
+                        <div class="stat-item" title="Lượt xem">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                <path
+                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                            </svg>
+                            <span style="margin-left:4px">
+                                <%= post.views || 0 %> lượt xem
+                            </span>
+                        </div>
+                        <span style="margin: 0 0.5rem; color: #ccc;">/</span>
+                        <div class="stat-item" title="Đánh giá">
+                            <div class="star-rating-container">
+                                <% const rating=post.avgRating || 0; %>
+                                    <% for(let i=1; i<=5; i++) { %>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                            fill="<%= i <= rating ? '#fbbf24' : '#e5e7eb' %>" class="icon-sm"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                        </svg>
+                                        <% } %>
+                            </div>
+                            <span style="margin-left: 4px;">(<%= post.totalRatings || 0 %>)</span>
+                        </div>
+                    </div>
+                    <div class="share-wrapper" style="position: relative;">
+                        <button class="card-share-button" title="Chia sẻ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 512 512">
+                                <path
+                                    d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z" />
+                            </svg>
+                        </button>
+                        <!-- Radial Menu -->
+                        <div class="radial-share-menu">
+                            <div class="radial-backdrop"></div>
+                            <div class="radial-track">
+                                <a href="#" class="share-item share-action" data-platform="facebook"
+                                    data-prefix="/tin-tuc/" data-slug="<%= post.slug %>" data-title="<%= post.title %>"
+                                    title="Facebook">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-facebook" viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+                                    </svg>
+                                </a>
+                                <a href="#" class="share-item share-action" data-platform="messenger"
+                                    data-prefix="/tin-tuc/" data-slug="<%= post.slug %>" data-title="<%= post.title %>"
+                                    title="Messenger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-messenger" viewBox="0 0 16 16">
+                                        <path
+                                            d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.64.64 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.64.64 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76m5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
+                                    </svg>
+                                </a>
+                                <a href="#" class="share-item share-action" data-platform="twitter"
+                                    data-prefix="/tin-tuc/" data-slug="<%= post.slug %>" data-title="<%= post.title %>"
+                                    title="Twitter">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-twitter-x" viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                                    </svg>
+                                </a>
+                                <a href="#" class="share-item share-action" data-platform="copy" data-prefix="/tin-tuc/"
+                                    data-slug="<%= post.slug %>" data-title="<%= post.title %>" title="Copy">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-copy" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z" />
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-        </article>
+        </div>
         <% }) %>
-            <% } else { %>
-                <p>Chưa có tin tức.</p>
-                <% } %>
+            <% } %>

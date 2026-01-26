@@ -84,6 +84,13 @@ window.initRadialMenus = function () {
 
         // Helper function to get current config
         function getCurrentConfig() {
+            if (wrapper.classList.contains('top-card-share')) {
+                return {
+                    minRot: -45,
+                    visibleEdge: 195
+                };
+            }
+
             if (isHeroSide) {
                 return {
                     minRot: -5,

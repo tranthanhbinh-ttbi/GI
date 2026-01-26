@@ -29,104 +29,44 @@ async function Pages(fastify, options) {
 
     for (const route of listRoutes) {
         fastify.get(route.path, async (request, reply) => {
+            let popularPosts = [];
             let posts = [];
-            // Nếu có type, lấy dữ liệu từ SearchService
-            if (route.type) {
-                const result = searchService.search('', 1, 12, { type: route.type });
-                posts = result.data;
-            } else if (route.pageName === 'dien-dan') {
-                // Trang diễn đàn có thể cần logic riêng hoặc query 'all'
-                // Tạm thời lấy bài mới nhất
-                const result = searchService.search('', 1, 12);
-                posts = result.data;
-            }
 
-            // Xử lý riêng cho trang Thông Báo
-            if (route.pageName === 'thong-bao') {
-                // Check authentication
-                if (!request.user) {
-                    return reply.redirect('/?login=true');
+            // Special Logic for 'tin-tuc': Priority Popular Posts (Top Cards) > Recent Posts (Main List)
+            if (route.pageName === 'tin-tuc') {
+                // 1. Fetch Popular Posts First (Ensure Top Cards are filled)
+                const popularData = searchService.search('', 1, 8, { type: 'news', sort: 'popular' });
+                popularPosts = popularData.data;
+
+                // 2. Fetch Recent Posts (Fetch more to account for filtering)
+                const mainPostsData = searchService.search('', 1, 20, { type: 'news' }); // Default sort is date
+                let mainPosts = mainPostsData.data;
+
+                // 3. (Optional) Filter duplicates:
+                // Removing strict deduplication here because with small dataset (e.g. < 10 posts),
+                // hiding Top Cards items from Main List results in an empty list.
+                // Re-enable this if you want strict magazine layout and have 20+ articles.
+                // mainPosts = mainPosts.filter(p => !popularSlugs.has(p.slug));
+
+                // 4. Assign to 'posts' (Limited to 12 for pagination/view)
+                posts = mainPosts.slice(0, 12);
+            } else {
+                // Standard Logic for other pages
+                if (route.type) {
+                    const result = searchService.search('', 1, 12, { type: route.type });
+                    posts = result.data;
+                } else if (route.pageName === 'dien-dan') {
+                    const result = searchService.search('', 1, 12);
+                    posts = result.data;
                 }
 
-                // Fetch notifications from DB
-                try {
-                    const userId = request.user.id;
-                    const limit = 50;
+                // Fetch popular posts for sidebar (standard logic)
+                const popularFilter = { sort: 'popular' };
+                if (route.type) popularFilter.type = route.type;
 
-                    const allNotifications = await Notification.findAll({
-                        order: [['createdAt', 'DESC']],
-                        limit: limit,
-                        include: userId ? [{
-                            model: UserNotification,
-                            required: false,
-                            where: { userId: userId }
-                        }] : []
-                    });
-
-                    let notifications = [];
-                    if (userId) {
-                        notifications = allNotifications.filter(n => {
-                            const userState = n.UserNotifications && n.UserNotifications[0];
-                            return !userState || !userState.isDeleted;
-                        }).map(n => {
-                            const userState = n.UserNotifications && n.UserNotifications[0];
-                            const plain = n.get({ plain: true });
-                            plain.isRead = userState ? userState.isRead : false;
-                            delete plain.UserNotifications;
-                            return plain;
-                        });
-                    } else {
-                        notifications = allNotifications.map(n => n.get({ plain: true }));
-                    }
-
-                    return reply.viewAsync(route.template, {
-                        Current_Page: route.pageName,
-                        notifications: notifications,
-                        popularPosts: [],
-                        user: request.user
-                    });
-                } catch (err) {
-                    console.error('Error fetching notifications:', err);
-                    posts = []; // Fallback
-                }
+                const popularData = searchService.search('', 1, 5, popularFilter);
+                popularPosts = popularData.data;
             }
-
-            // --- Bổ sung stats từ DB (Views, Rating) cho các trang Listing còn lại ---
-            if (posts && posts.length > 0) {
-                try {
-                    const slugs = posts.map(p => p.slug);
-                    const metas = await PostMeta.findAll({
-                        where: { slug: slugs },
-                        raw: true
-                    });
-
-                    // Map meta back to posts
-                    const metaMap = new Map(metas.map(m => [m.slug, m]));
-                    posts = posts.map(p => {
-                        const m = metaMap.get(p.slug);
-                        return {
-                            ...p,
-                            views: m ? m.views : 0,
-                            avgRating: m ? m.avgRating : 0,
-                            totalRatings: m ? m.totalRatings : 0
-                        };
-                    });
-                } catch (e) {
-                    console.error('Failed to fetch post stats:', e);
-                    // Không làm gì cả, giữ nguyên posts gốc để hiển thị
-                }
-            }
-
-            // Lấy 5 bài viết phổ biến cho Sidebar
-            // Context-aware: Chỉ lấy bài phổ biến thuộc cùng Type với trang hiện tại
-            // Nếu type null (ví dụ trang chủ/diễn đàn), có thể để trống để lấy tất cả hoặc logic khác
-            const popularFilter = { sort: 'popular' };
-            if (route.type) {
-                popularFilter.type = route.type;
-            }
-
-            const popularData = searchService.search('', 1, 5, popularFilter);
-            const popularPosts = popularData.data;
 
             return reply.viewAsync(route.template, {
                 Current_Page: route.pageName,

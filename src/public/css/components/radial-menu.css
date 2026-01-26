@@ -51,6 +51,11 @@
     mask-image: conic-gradient(from 0deg at 50% 50%, black 0deg, black 90deg, transparent 90deg, transparent 180deg, black 180deg, black 360deg);
 }
 
+/* Override for Top Cards: Inner circle should be white (not transparent) */
+.top-card-share .radial-backdrop {
+    background: radial-gradient(circle, #ffffff 0px, #ffffff 58px, #f3f4f6 59px, #f3f4f6 100%);
+}
+
 /* Specific adjustment for Hero Side Share (Smaller menu needs smaller hole) */
 .hero-side-share .radial-backdrop {
     background: radial-gradient(circle, transparent 0px, transparent 35px, #f3f4f6 36px, #f3f4f6 100%);
@@ -131,6 +136,10 @@
 [data-theme="dark"] .slide-share-wrapper .radial-backdrop,
 [data-theme="dark"] .hero-section .radial-backdrop {
     background: radial-gradient(circle, transparent 0px, transparent 58px, #f3f4f6 59px, #f3f4f6 100%);
+}
+
+[data-theme="dark"] .top-card-share .radial-backdrop {
+    background: radial-gradient(circle, #252E36 0px, #252E36 58px, #f3f4f6 59px, #f3f4f6 100%);
 }
 
 [data-theme="dark"] .hero-side-share .radial-backdrop {

@@ -2,7 +2,7 @@
 title: "Thực trạng và giải pháp cho vấn đề biến đổi khí hậu"
 date: 2025-12-27T02:29:41.830Z
 author: Gender Insights
-category: Đời sống
+category: Gender Insights
 thumbnail: /photos/placeholder-m6a0q.png
 description: Biến đổi khí hậu đang tác động trực tiếp đến đời sống...
 ---
