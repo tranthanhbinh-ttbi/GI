@@ -1,8 +1,8 @@
 ---
 category: Bài Viết
 topic: Dạy con
-title: "Tập 04: Cuộc Viễn Chinh Của Những Chiến Binh Nhí [Series Trò Chơi Của
-  Hai Bố Con]"
+title: "Tập 4: Cuộc Viễn Chinh Của Những Chiến Binh Nhí [Series Trò Chơi Của Hai
+  Bố Con]"
 description: Trong vương quốc Cơ Thể, mỗi “chiến binh nhí” đều có một nhiệm vụ
   đặc biệt. Nhưng để lên đường làm tròn sứ mệnh, các chiến binh ấy cần một căn
   cứ sạch sẽ, an toàn và khỏe mạnh. Và đó là lúc bố xuất hiện, mang theo “Thử
@@ -52,7 +52,7 @@ Bố gật đầu: “Đúng vậy. Cùng với đó, có thể sẽ có lúc co
 
 Trước khi kết thúc thử thách, bố nói một câu mà con nhớ rất lâu:
 
-*“*Chăm sóc cơ thể là cách một người đàn ông thể hiện sự trách nhiệm với chính mình.** Khi con giữ gìn sạch sẽ, con đang bảo vệ sức khỏe, sự tự tin và tương lai của mình.”
+**“Chăm sóc cơ thể là cách một người đàn ông thể hiện sự trách nhiệm với chính mình.** Khi con giữ gìn sạch sẽ, con đang bảo vệ sức khỏe, sự tự tin và tương lai của mình.”
 
 Cuộc viễn chinh của những “chiến binh nhí” không phải là chuyện xa vời - nó bắt đầu từ những việc rất nhỏ: Tắm rửa đúng cách, thay quần áo sạch, hiểu cơ thể mình đang thay đổi ra sao và tôn trọng chính mình.
 
