@@ -1,0 +1,192 @@
+<%- include('partials/head', { title: 'Admin Moderation Dashboard' }) %>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-white h-screen overflow-hidden flex font-display">
+<%- include('partials/sidebar', { page: 'comments' }) %>
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-background-light dark:bg-background-dark">
+<div class="flex-1 overflow-y-auto p-6 md:p-8">
+<div class="max-w-7xl mx-auto space-y-6">
+<div class="flex items-center justify-end gap-4 mb-8">
+<div class="flex items-center gap-3 shrink-0">
+<div class="relative">
+<button class="flex items-center justify-between w-40 px-3 py-2.5 bg-surface-light dark:bg-[#161b26] border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors shadow-sm">
+<span>All Categories</span>
+<span class="material-symbols-outlined text-gray-500 text-sm">expand_more</span>
+</button>
+</div>
+<button class="p-2.5 bg-surface-light dark:bg-[#161b26] border border-gray-200 dark:border-gray-700 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-600 transition-colors shadow-sm">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-[#161b26] rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col h-[calc(100vh-12rem)]">
+<div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-[#1a202c] flex items-center justify-between shrink-0">
+<div class="flex items-center gap-4">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary focus:ring-primary/50 cursor-pointer" type="checkbox"/>
+<span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 group-hover:text-primary transition-colors">Select All</span>
+</label>
+</div>
+<div class="flex items-center gap-4 text-sm">
+<span class="text-gray-500 dark:text-gray-400 mr-2">Bulk Actions:</span>
+<button class="flex items-center gap-1.5 text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">check</span> Approve
+                            </button>
+<button class="flex items-center gap-1.5 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">close</span> Reject
+                            </button>
+</div>
+</div>
+<div class="overflow-auto flex-1">
+<table class="w-full text-left border-collapse">
+<thead class="bg-gray-5 dark:bg-[#1a202c] sticky top-0 z-10">
+<tr>
+<th class="py-3 px-6 w-12 border-b border-gray-200 dark:border-gray-800"></th>
+<th class="py-3 px-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider border-b border-gray-200 dark:border-gray-800 w-[20%]">Author</th>
+<th class="py-3 px-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider border-b border-gray-200 dark:border-gray-800 w-[55%]">Comment Content</th>
+<th class="py-3 px-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider border-b border-gray-200 dark:border-gray-800 w-[20%] text-right">Status / Tags</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+<tr class="group hover:bg-gray-50 dark:hover:bg-[#1f2530] transition-colors">
+<td class="py-4 px-6 align-top">
+<input class="w-5 h-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary focus:ring-primary/50 cursor-pointer mt-1" type="checkbox"/>
+</td>
+<td class="py-4 px-4 align-top">
+<div class="flex items-start gap-3">
+<div class="h-10 w-10 rounded-full bg-cover bg-center ring-1 ring-gray-200 dark:ring-gray-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAujIb4mDdCMZIvzsIhvQLzyfHrTvnXFMN3WteOUbDnRd8yElU6loWrU_p7nvPTKMfb7x85NydQCNE0hP8vBLXePhSQbxk2-1e_vNlRimz-fOagF4VbFHPGmt3sgdnlOcgmxeAZB2fqgWk_niUlanbGAETdWV_nwgEORtjvlPwuCHxi5oiUCjAYplnsbVWL-p1FCd9EGU1CFPC9tMsca_gN3eB0znKD8DTNR-2hOLlHb5MMFIY-HUqoa0_lyVX5Q5vqm4kftNIHXFM');"></div>
+<div>
+<div class="font-medium text-gray-900 dark:text-white text-sm">Sarah Jenkins</div>
+<div class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">@sarah_j</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 align-top">
+<div class="space-y-1">
+<div class="font-medium text-sm text-gray-900 dark:text-white">Feedback on the new updated UI</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">I really love the new dark mode features, but I think the contrast on the secondary buttons could be improved for better readability.</p>
+<div class="flex items-center gap-2 pt-1">
+<span class="text-xs text-gray-400">in</span>
+<a class="text-xs text-primary hover:underline font-medium" href="#">Product Feedback</a>
+<span class="text-gray-400 text-xs">• 2h ago</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 align-top text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                                            Product Feedback
+                                        </span>
+</td>
+</tr>
+<tr class="group relative bg-red-50/10 dark:bg-red-900/10 hover:bg-red-50/20 dark:hover:bg-red-900/20 transition-colors">
+<td class="absolute left-0 top-0 bottom-0 w-1 bg-red-500"></td>
+<td class="py-4 px-6 align-top">
+<input class="w-5 h-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary focus:ring-primary/50 cursor-pointer mt-1" type="checkbox"/>
+</td>
+<td class="py-4 px-4 align-top">
+<div class="flex items-start gap-3">
+<div class="h-10 w-10 rounded-full bg-cover bg-center ring-1 ring-gray-200 dark:ring-gray-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAFbjZpT-owFjkAmtwf-Db3ZeJ-AIC4M3x1H1CBuchw6bbl1IjZqfSjUfVgnd8m__5fAtaMt7bB5o8bpkVkgNImNhGGuScYM6dRqAQXyFKQZznqKpetQWRttRsR-F94aVnqzXNwEQLODKFd12qiO4Hm94WM53Rp1WNJc5Cl_6EBcg58QqHYmoA7Yo-4D-cHCfmEWjhqxW_lTPLyz0_oyKsP5y4hFPpxAE-qTukGIrieyRSjdxftjQ3_TbJicpFqhPF29DcunO6cDjw');"></div>
+<div>
+<div class="font-medium text-gray-900 dark:text-white text-sm">AnonUser99</div>
+<div class="flex items-center gap-1.5 text-xs text-red-500 font-bold mt-0.5">
+<span class="material-symbols-outlined text-[14px]">flag</span> Flagged
+                                        </div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 align-top">
+<div class="space-y-1">
+<div class="font-medium text-sm text-gray-900 dark:text-white">Crypto Scam Link!!!</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">Click here to claim your free bitcoin immediately before it expires! Guaranteed returns in 24 hours. Don't wait!</p>
+<div class="flex items-center gap-2 pt-1">
+<span class="text-xs text-gray-400">in</span>
+<a class="text-xs text-primary hover:underline font-medium" href="#">General Discussion</a>
+<span class="text-gray-400 text-xs">• 5m ago</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 align-top text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                                            Spam
+                                        </span>
+</td>
+</tr>
+<tr class="group hover:bg-gray-50 dark:hover:bg-[#1f2530] transition-colors">
+<td class="py-4 px-6 align-top">
+<input class="w-5 h-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary focus:ring-primary/50 cursor-pointer mt-1" type="checkbox"/>
+</td>
+<td class="py-4 px-4 align-top">
+<div class="flex items-start gap-3">
+<div class="h-10 w-10 rounded-full bg-cover bg-center ring-1 ring-gray-200 dark:ring-gray-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAFbjZpT-owFjkAmtwf-Db3ZeJ-AIC4M3x1H1CBuchw6bbl1IjZqfSjUfVgnd8m__5fAtaMt7bB5o8bpkVkgNImNhGGuScYM6dRqAQXyFKQZznqKpetQWRttRsR-F94aVnqzXNwEQLODKFd12qiO4Hm94WM53Rp1WNJc5Cl_6EBcg58QqHYmoA7Yo-4D-cHCfmEWjhqxW_lTPLyz0_oyKsP5y4hFPpxAE-qTukGIrieyRSjdxftjQ3_TbJicpFqhPF29DcunO6cDjw');"></div>
+<div>
+<div class="font-medium text-gray-900 dark:text-white text-sm">Mike T.</div>
+<div class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">@miket_dev</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 align-top">
+<div class="space-y-1">
+<div class="font-medium text-sm text-gray-900 dark:text-white">Issue with API Key generation</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">I'm trying to generate a new key but I keep getting a 403 error on the settings page. Has anyone else encountered this?</p>
+<div class="flex items-center gap-2 pt-1">
+<span class="text-xs text-gray-400">in</span>
+<a class="text-xs text-primary hover:underline font-medium" href="#">Technical Support</a>
+<span class="text-gray-400 text-xs">• 1d ago</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 align-top text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 border border-orange-200 dark:border-orange-800">
+                                            Technical Support
+                                        </span>
+</td>
+</tr>
+<tr class="group hover:bg-gray-50 dark:hover:bg-[#1f2530] transition-colors">
+<td class="py-4 px-6 align-top">
+<input class="w-5 h-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary focus:ring-primary/50 cursor-pointer mt-1" type="checkbox"/>
+</td>
+<td class="py-4 px-4 align-top">
+<div class="flex items-start gap-3">
+<div class="h-10 w-10 rounded-full bg-cover bg-center ring-1 ring-gray-200 dark:ring-gray-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBR5dfUmnnc_HgyF-SLIcIk8n6_h8pefU3Bz10-mCTw1ryNWhyteCOXSUPJbgs0zYJaERVVDGqNEWY7v2KPsTjYicKngVJ0LCHcq2s-boZkMwxOMZ40DEcSIlZBskH3TNfXDGlQre4xyexqmp75DKB78-DGja32n7W06JUX9uyy5jd-PqHhStpn4q-WnmYg3UjHzirwS0lqtLHhrzRo-9C1pY7XDr3-18L8wQaYaRveg7H-qZUwlOvmfgHaAalmPU3BwniZ5Acvhm8');"></div>
+<div>
+<div class="font-medium text-gray-900 dark:text-white text-sm">Jessica L.</div>
+<div class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">@jess_design</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 align-top">
+<div class="space-y-1">
+<div class="font-medium text-sm text-gray-900 dark:text-white">Is this against the rules?</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">Posting a link to my personal portfolio. I wasn't sure if self-promotion is allowed in the showcase section.</p>
+<div class="flex items-center gap-2 pt-1">
+<span class="text-xs text-gray-400">in</span>
+<a class="text-xs text-primary hover:underline font-medium" href="#">Questions</a>
+<span class="text-gray-400 text-xs">• 3d ago</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 align-top text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 border border-gray-200 dark:border-gray-600">
+                                            Questions
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#1a202c] flex items-center justify-between shrink-0">
+<div class="text-sm text-gray-500 dark:text-gray-400">
+                        Showing <span class="font-medium text-gray-900 dark:text-white">1</span> to <span class="font-medium text-gray-900 dark:text-white">4</span> of <span class="font-medium text-gray-900 dark:text-white">42</span> entries
+                    </div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-[#282e39] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                            Previous
+                        </button>
+<button class="px-3 py-1.5 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-[#282e39] transition-colors">
+                            Next
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Login Portal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .bg-grid-pattern {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark font-display overflow-x-hidden selection:bg-primary selection:text-white">
+<div class="absolute inset-0 bg-grid-pattern pointer-events-none z-0" data-alt="Subtle geometric grid pattern background"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80 z-0"></div>
+<div class="relative z-10 flex flex-grow flex-col items-center justify-center px-4 py-12">
+<div class="w-full max-w-[440px] flex flex-col rounded-xl bg-[#181d28] border border-[#2a3140] shadow-2xl overflow-hidden">
+<div class="flex flex-col items-center pt-10 pb-6 px-8 text-center">
+<div class="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1e2532] to-[#12161f] border border-[#2a3140] shadow-inner">
+<span class="material-symbols-outlined text-primary text-[32px]">shield_person</span>
+</div>
+<h1 class="text-white text-2xl font-bold tracking-tight mb-2">Admin Portal</h1>
+<p class="text-[#9da6b9] text-sm font-normal leading-normal">
+                    Secure access for forum administrators.<br/>Please sign in using your Google account.
+                </p>
+</div>
+<div class="px-8 pb-10 w-full">
+<form class="flex flex-col gap-5">
+<a href="/admin/auth?provider=github" class="flex w-full items-center justify-center gap-3 rounded-lg bg-white hover:bg-gray-100 active:bg-gray-200 text-[#1f2937] h-12 text-base font-medium transition-all duration-200 focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary shadow-sm">
+<svg class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill="#181717"></path>
+</svg>
+<span>Continue with GitHub</span>
+</a>
+</form>
+</div>
+<div class="h-1 w-full bg-gradient-to-r from-transparent via-[#2a3140] to-transparent"></div>
+</div>
+<div class="mt-8 flex flex-col items-center gap-4">
+<div class="flex items-center gap-6 text-sm text-[#5e687e]">
+<a class="hover:text-[#9da6b9] transition-colors" href="#">Privacy Policy</a>
+<span class="h-1 w-1 rounded-full bg-[#3b4354]"></span>
+<a class="hover:text-[#9da6b9] transition-colors" href="#">Terms of Service</a>
+<span class="h-1 w-1 rounded-full bg-[#3b4354]"></span>
+<a class="hover:text-[#9da6b9] transition-colors" href="#">Help Center</a>
+</div>
+<p class="text-xs text-[#4b5563]">© 2026 GI Forum Management Platform. All rights reserved.</p>
+</div>
+</div>
+
+</body></html>

@@ -1,11 +1,11 @@
 const crypto = require('node:crypto')
 
 async function oauthAdminRoutes(fastify) {
-    fastify.get('/auth', async (request, reply) => {
+    fastify.get('/admin/auth', async (request, reply) => {
         const { provider } = request.query;
         if (provider === 'github') {
             const client_id = process.env.OAUTH_CLIENT_ID;
-            const redirect_uri = `${request.protocol}://${request.hostname}/callback`;
+            const redirect_uri = `${request.protocol}://${request.hostname}/admin/callback`;
             const scope = 'repo,user';
             const state = crypto.randomUUID(); 
             const authorizationUri = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope}&state=${state}`;
@@ -14,11 +14,11 @@ async function oauthAdminRoutes(fastify) {
         return reply.code(400).send('Unsupported provider');
     });
 
-    fastify.get('/callback', async (request, reply) => {
+    fastify.get('/admin/callback', async (request, reply) => {
         const { code } = request.query;
         if (!code) return reply.code(400).send('Missing code');
         try {
-            const redirect_uri = `${request.protocol}://${request.hostname}/callback`;
+            const redirect_uri = `${request.protocol}://${request.hostname}/admin/callback`;
             const response = await fetch('https://github.com/login/oauth/access_token', {
                 method: 'POST',
                 headers: {

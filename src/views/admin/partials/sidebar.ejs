@@ -1,0 +1,52 @@
+<aside class="w-64 bg-surface-light dark:bg-[#111318] border-r border-gray-200 dark:border-gray-800 flex flex-col hidden md:flex h-full shrink-0">
+    <div class="p-6 flex items-center gap-3">
+    <div class="size-8 rounded bg-primary flex items-center justify-center text-white">
+    <span class="material-symbols-outlined text-xl">shield</span>
+    </div>
+    <div>
+    <h1 class="font-bold text-lg leading-tight tracking-tight">ModShield</h1>
+    <p class="text-xs text-gray-500 dark:text-gray-400">Admin Console v2.0</p>
+    </div>
+    </div>
+    <nav class="flex-1 px-4 space-y-1 overflow-y-auto">
+    <div class="pt-2 pb-4">
+    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg <%= (typeof page !== 'undefined' && page === 'dashboard') ? 'bg-gray-100 dark:bg-[#1f2530] text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#1f2530] hover:text-gray-900 dark:hover:text-white' %> transition-colors group" href="/admin/dashboard">
+    <span class="material-symbols-outlined">article</span>
+    <span class="font-medium text-sm">Posts</span>
+    <span class="ml-auto bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">12</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg <%= (typeof page !== 'undefined' && page === 'comments') ? 'bg-gray-100 dark:bg-[#1f2530] text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#1f2530] hover:text-gray-900 dark:hover:text-white' %> transition-colors group" href="/admin/comments">
+    <span class="material-symbols-outlined">chat_bubble</span>
+    <span class="font-medium text-sm">Comments</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg <%= (typeof page !== 'undefined' && page === 'users') ? 'bg-gray-100 dark:bg-[#1f2530] text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#1f2530] hover:text-gray-900 dark:hover:text-white' %> transition-colors group" href="/admin/users">
+    <span class="material-symbols-outlined">group</span>
+    <span class="font-medium text-sm">Users</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg <%= (typeof page !== 'undefined' && page === 'reports') ? 'bg-gray-100 dark:bg-[#1f2530] text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#1f2530] hover:text-gray-900 dark:hover:text-white' %> transition-colors group" href="/admin/reports">
+    <span class="material-symbols-outlined">flag</span>
+    <span class="font-medium text-sm">Reports</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg <%= (typeof page !== 'undefined' && page === 'history') ? 'bg-gray-100 dark:bg-[#1f2530] text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#1f2530] hover:text-gray-900 dark:hover:text-white' %> transition-colors group" href="/admin/history">
+    <span class="material-symbols-outlined">history</span>
+    <span class="font-medium text-sm">History</span>
+    </a>
+    <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#1f2530] hover:text-gray-900 dark:hover:text-white transition-colors group" href="/CMS/index.html">
+    <span class="material-symbols-outlined">edit_note</span>
+    <span class="font-medium text-sm">CMS</span>
+    </a>
+    </div>
+    </nav>
+    <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+    <div class="flex items-center gap-3">
+    <div class="h-10 w-10 rounded-full bg-cover bg-center" data-alt="Portrait of admin user" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAFbjZpT-owFjkAmtwf-Db3ZeJ-AIC4M3x1H1CBuchw6bbl1IjZqfSjUfVgnd8m__5fAtaMt7bB5o8bpkVkgNImNhGGuScYM6dRqAQXyFKQZznqKpetQWRttRsR-F94aVnqzXNwEQLODKFd12qiO4Hm94WM53Rp1WNJc5Cl_6EBcg58QqHYmoA7Yo-4D-cHCfmEWjhqxW_lTPLyz0_oyKsP5y4hFPpxAE-qTukGIrieyRSjdxftjQ3_TbJicpFqhPF29DcunO6cDjw');"></div>
+    <div class="flex flex-col overflow-hidden">
+    <span class="text-sm font-semibold truncate text-gray-900 dark:text-white">Alex Morgan</span>
+    <span class="text-xs text-gray-500 dark:text-gray-400 truncate">Super Admin</span>
+    </div>
+    <a href="/" class="ml-auto text-gray-400 hover:text-white">
+    <span class="material-symbols-outlined text-xl">logout</span>
+    </a>
+    </div>
+    </div>
+    </aside>

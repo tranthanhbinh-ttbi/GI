@@ -1,0 +1,199 @@
+<%- include('partials/head', { title: 'Banned Users Management' }) %>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-white h-screen overflow-hidden flex font-display">
+<%- include('partials/sidebar', { page: 'users' }) %>
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-background-light dark:bg-background-dark">
+<div class="flex-1 overflow-y-auto p-6 md:p-8">
+<div class="max-w-7xl mx-auto space-y-6">
+<div class="flex flex-col md:flex-row md:items-center gap-4 bg-surface-light dark:bg-[#161b26] p-4 rounded-xl border border-gray-200 dark:border-gray-800">
+<div class="flex items-center gap-6 shrink-0">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-gray-300 dark:border-gray-600 bg-transparent text-primary focus:ring-primary/50 cursor-pointer" type="checkbox"/>
+<span class="text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-primary transition-colors">Select All</span>
+</label>
+<div class="h-6 w-px bg-gray-300 dark:bg-gray-700"></div>
+</div>
+<div class="flex flex-1 items-center justify-end flex-wrap gap-3">
+<button class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary hover:bg-gray-100 dark:hover:bg-[#282e39] rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+<span class="hidden sm:inline">Reason for Ban</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+<div class="shrink-0 ml-auto md:ml-0">
+<span class="text-sm text-gray-500 dark:text-gray-400 font-medium">Showing 1-10 of 48 banned users</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="group relative bg-surface-light dark:bg-[#161b26] rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm hover:border-red-400 dark:hover:border-red-900 transition-colors overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-500"></div>
+<div class="p-6 pl-8">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-5">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="h-14 w-14 rounded-full bg-cover bg-center ring-2 ring-red-500/30" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAFbjZpT-owFjkAmtwf-Db3ZeJ-AIC4M3x1H1CBuchw6bbl1IjZqfSjUfVgnd8m__5fAtaMt7bB5o8bpkVkgNImNhGGuScYM6dRqAQXyFKQZznqKpetQWRttRsR-F94aVnqzXNwEQLODKFd12qiO4Hm94WM53Rp1WNJc5Cl_6EBcg58QqHYmoA7Yo-4D-cHCfmEWjhqxW_lTPLyz0_oyKsP5y4hFPpxAE-qTukGIrieyRSjdxftjQ3_TbJicpFqhPF29DcunO6cDjw');"></div>
+<div class="absolute -bottom-1 -right-1 bg-surface-light dark:bg-[#161b26] rounded-full p-0.5">
+<span class="material-symbols-outlined text-red-500 text-lg">block</span>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white leading-tight">SpamBot_X</h3>
+<div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm mt-1 text-gray-500 dark:text-gray-400">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span> Banned: Oct 24, 2023
+                                            </span>
+<span class="w-1 h-1 rounded-full bg-gray-400"></span>
+<span>Posts: <span class="font-medium text-gray-700 dark:text-gray-300">2</span></span>
+<span class="w-1 h-1 rounded-full bg-gray-400"></span>
+<span>Comments: <span class="font-medium text-gray-700 dark:text-gray-300">0</span></span>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-2 pl-16 md:pl-0">
+<span class="px-3 py-1 bg-red-500/10 text-red-600 dark:text-red-400 text-xs font-bold rounded-full border border-red-500/20 flex items-center gap-1.5 shadow-sm uppercase tracking-wide">
+<span class="material-symbols-outlined text-[16px]">warning</span> Spam
+                                    </span>
+</div>
+</div>
+<div class="ml-0 md:ml-[4.5rem] bg-gray-50 dark:bg-[#111318] rounded-lg p-4 mb-5 border border-gray-100 dark:border-gray-800 text-[14px]">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-gray-400 text-[18px] mt-0.5">info</span>
+<div>
+<span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1 block">Moderator Note</span>
+<p class="text-gray-700 dark:text-gray-300">
+                                            Account flagged by automated systems for posting multiple identical cryptocurrency scam links across 5 different threads within 10 minutes.
+                                        </p>
+</div>
+</div>
+</div>
+<div class="ml-0 md:ml-[4.5rem] flex flex-wrap items-center gap-3">
+<button class="bg-surface-light dark:bg-[#1f2530] hover:bg-green-600 hover:text-white text-green-600 dark:text-green-500 border border-gray-200 dark:border-gray-700 hover:border-green-600 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all group shadow-sm">
+<span class="material-symbols-outlined text-[18px]">lock_open</span> Unban Account
+                                </button>
+<button class="bg-surface-light dark:bg-[#1f2530] hover:bg-gray-100 dark:hover:bg-[#282e39] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]">account_circle</span> View Full Profile
+                                </button>
+<button class="bg-surface-light dark:bg-[#1f2530] hover:bg-gray-100 dark:hover:bg-[#282e39] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]">history</span> View Moderation History
+                                </button>
+</div>
+</div>
+</div>
+<div class="group relative bg-surface-light dark:bg-[#161b26] rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm hover:border-red-400 dark:hover:border-red-900 transition-colors overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-500"></div>
+<div class="p-6 pl-8">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-5">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="h-14 w-14 rounded-full bg-cover bg-center ring-2 ring-red-500/30" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBR5dfUmnnc_HgyF-SLIcIk8n6_h8pefU3Bz10-mCTw1ryNWhyteCOXSUPJbgs0zYJaERVVDGqNEWY7v2KPsTjYicKngVJ0LCHcq2s-boZkMwxOMZ40DEcSIlZBskH3TNfXDGlQre4xyexqmp75DKB78-DGja32n7W06JUX9uyy5jd-PqHhStpn4q-WnmYg3UjHzirwS0lqtLHhrzRo-9C1pY7XDr3-18L8wQaYaRveg7H-qZUwlOvmfgHaAalmPU3BwniZ5Acvhm8');"></div>
+<div class="absolute -bottom-1 -right-1 bg-surface-light dark:bg-[#161b26] rounded-full p-0.5">
+<span class="material-symbols-outlined text-red-500 text-lg">block</span>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white leading-tight">TechFan99</h3>
+<div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm mt-1 text-gray-500 dark:text-gray-400">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span> Banned: Oct 22, 2023
+                                            </span>
+<span class="w-1 h-1 rounded-full bg-gray-400"></span>
+<span>Posts: <span class="font-medium text-gray-700 dark:text-gray-300">142</span></span>
+<span class="w-1 h-1 rounded-full bg-gray-400"></span>
+<span>Comments: <span class="font-medium text-gray-700 dark:text-gray-300">890</span></span>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-2 pl-16 md:pl-0">
+<span class="px-3 py-1 bg-orange-500/10 text-orange-600 dark:text-orange-400 text-xs font-bold rounded-full border border-orange-500/20 flex items-center gap-1.5 shadow-sm uppercase tracking-wide">
+<span class="material-symbols-outlined text-[16px]">record_voice_over</span> Harassment
+                                    </span>
+</div>
+</div>
+<div class="ml-0 md:ml-[4.5rem] bg-gray-50 dark:bg-[#111318] rounded-lg p-4 mb-5 border border-gray-100 dark:border-gray-800 text-[14px]">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-gray-400 text-[18px] mt-0.5">info</span>
+<div>
+<span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1 block">Moderator Note</span>
+<p class="text-gray-700 dark:text-gray-300">
+                                            Repeatedly used profanity and targeted insults against other community members in the "Hardware Discussion" forum. Third strike.
+                                        </p>
+</div>
+</div>
+</div>
+<div class="ml-0 md:ml-[4.5rem] flex flex-wrap items-center gap-3">
+<button class="bg-surface-light dark:bg-[#1f2530] hover:bg-green-600 hover:text-white text-green-600 dark:text-green-500 border border-gray-200 dark:border-gray-700 hover:border-green-600 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all group shadow-sm">
+<span class="material-symbols-outlined text-[18px]">lock_open</span> Unban Account
+                                </button>
+<button class="bg-surface-light dark:bg-[#1f2530] hover:bg-gray-100 dark:hover:bg-[#282e39] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]">account_circle</span> View Full Profile
+                                </button>
+<button class="bg-surface-light dark:bg-[#1f2530] hover:bg-gray-100 dark:hover:bg-[#282e39] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]">history</span> View Moderation History
+                                </button>
+</div>
+</div>
+</div>
+<div class="group relative bg-surface-light dark:bg-[#161b26] rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm hover:border-red-400 dark:hover:border-red-900 transition-colors overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-500"></div>
+<div class="p-6 pl-8">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-5">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="h-14 w-14 rounded-full bg-cover bg-center ring-2 ring-red-500/30" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAujIb4mDdCMZIvzsIhvQLzyfHrTvnXFMN3WteOUbDnRd8yElU6loWrU_p7nvPTKMfb7x85NydQCNE0hP8vBLXePhSQbxk2-1e_vNlRimz-fOagF4VbFHPGmt3sgdnlOcgmxeAZB2fqgWk_niUlanbGAETdWV_nwgEORtjvlPwuCHxi5oiUCjAYplnsbVWL-p1FCd9EGU1CFPC9tMsca_gN3eB0znKD8DTNR-2hOLlHb5MMFIY-HUqoa0_lyVX5Q5vqm4kftNIHXFM');"></div>
+<div class="absolute -bottom-1 -right-1 bg-surface-light dark:bg-[#161b26] rounded-full p-0.5">
+<span class="material-symbols-outlined text-red-500 text-lg">block</span>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white leading-tight">SarahJ_Design_Clone</h3>
+<div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm mt-1 text-gray-500 dark:text-gray-400">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span> Banned: Sep 15, 2023
+                                            </span>
+<span class="w-1 h-1 rounded-full bg-gray-400"></span>
+<span>Posts: <span class="font-medium text-gray-700 dark:text-gray-300">0</span></span>
+<span class="w-1 h-1 rounded-full bg-gray-400"></span>
+<span>Comments: <span class="font-medium text-gray-700 dark:text-gray-300">1</span></span>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-2 pl-16 md:pl-0">
+<span class="px-3 py-1 bg-purple-500/10 text-purple-600 dark:text-purple-400 text-xs font-bold rounded-full border border-purple-500/20 flex items-center gap-1.5 shadow-sm uppercase tracking-wide">
+<span class="material-symbols-outlined text-[16px]">badge</span> Impersonation
+                                    </span>
+</div>
+</div>
+<div class="ml-0 md:ml-[4.5rem] bg-gray-50 dark:bg-[#111318] rounded-lg p-4 mb-5 border border-gray-100 dark:border-gray-800 text-[14px]">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-gray-400 text-[18px] mt-0.5">info</span>
+<div>
+<span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1 block">Moderator Note</span>
+<p class="text-gray-700 dark:text-gray-300">
+                                            Created account to impersonate an existing verified user "SarahJ_Design". Profile picture and bio were copied identically.
+                                        </p>
+</div>
+</div>
+</div>
+<div class="ml-0 md:ml-[4.5rem] flex flex-wrap items-center gap-3">
+<button class="bg-surface-light dark:bg-[#1f2530] hover:bg-green-600 hover:text-white text-green-600 dark:text-green-500 border border-gray-200 dark:border-gray-700 hover:border-green-600 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all group shadow-sm">
+<span class="material-symbols-outlined text-[18px]">lock_open</span> Unban Account
+                                </button>
+<button class="bg-surface-light dark:bg-[#1f2530] hover:bg-gray-100 dark:hover:bg-[#282e39] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]">account_circle</span> View Full Profile
+                                </button>
+<button class="bg-surface-light dark:bg-[#1f2530] hover:bg-gray-100 dark:hover:bg-[#282e39] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]">history</span> View Moderation History
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center pt-4">
+<button class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-primary transition-colors flex items-center gap-2">
+<span>Load more banned users</span>
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>
