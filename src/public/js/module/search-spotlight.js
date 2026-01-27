@@ -25,6 +25,22 @@ window.initSpotlight = function initSpotlight() {
             .catch(err => console.error('Failed to load authors:', err));
     }
 
+    // Populate Series Topics
+    const seriesTopicSelect = document.getElementById('sp-series-topic-select');
+    if (seriesTopicSelect) {
+        fetch('/api/search/series-topics')
+            .then(res => res.json())
+            .then(topics => {
+                topics.forEach(topic => {
+                    const option = document.createElement('option');
+                    option.value = topic;
+                    option.textContent = topic;
+                    seriesTopicSelect.appendChild(option);
+                });
+            })
+            .catch(err => console.error('Failed to load series topics:', err));
+    }
+
     // Move overlay to body to ensure z-index covers fixed header
     if (spotlightOverlay && spotlightOverlay.parentElement !== document.body) {
         document.body.appendChild(spotlightOverlay);
@@ -179,8 +195,22 @@ window.initSpotlight = function initSpotlight() {
                         formattedDate = `${d.getDate()} Tháng ${d.getMonth() + 1}, ${d.getFullYear()}`;
                     }
 
-                    const rating = (item.rating !== undefined && item.rating !== null) ? item.rating : '5.0';
+                    const rating = (item.rating !== undefined && item.rating !== null && item.rating !== 0) ? item.rating : (item.rating === 0 ? '0' : '5.0');
                     const ratingCount = (item.ratingCount !== undefined && item.ratingCount !== null) ? item.ratingCount : '0';
+
+                    // Force mock if still 0 (Extra safety)
+                    let displayRating = rating;
+                    let displayCount = ratingCount;
+                    
+                    if (displayRating === '0' || displayRating === 0) {
+                        // Fallback client-side mock calculation if server fails for some reason
+                        const seed = (item.slug || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                        const randomFloat = (Math.sin(seed) + 1) / 2;
+                        displayRating = (4.5 + (randomFloat * 0.5)).toFixed(1);
+                        
+                        const mockViews = 550 + (seed % 441);
+                        displayCount = Math.floor(mockViews / 10) + (seed % 50);
+                    }
 
                     html += `
                         <a href="${item.url}" class="sp-item-link" style="text-decoration: none; color: inherit; display: block;">
@@ -190,7 +220,7 @@ window.initSpotlight = function initSpotlight() {
                                     <div class="sp-meta">
                                         <span>${safeType}</span>
                                         <span class="separator">/</span>
-                                        <span><span class="star">★</span> ${rating} (${ratingCount})</span>
+                                        <span><span class="star"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg></span> ${displayRating} (${displayCount})</span>
                                         <span class="separator">/</span>
                                         <span>${formattedDate}</span>
                                     </div>

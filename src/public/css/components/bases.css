@@ -1354,7 +1354,7 @@ input[type="search"]::-webkit-search-cancel-button {
 .sp-select,
 .sp-input-date,
 .sp-input-text {
-    background: var(--gen-bg-card);
+    background: var(--gen-bg-card, var(--bg-surface));
     border: 1px solid var(--gen-border);
     color: var(--gen-desc-cont);
     padding: 6px 10px;
@@ -1365,17 +1365,16 @@ input[type="search"]::-webkit-search-cancel-button {
     font-family: inherit;
 }
 
-.sp-select:hover,
-.sp-input-date:hover,
-.sp-input-text:hover {
-    border-color: var(--gen-desc-cont);
+[data-theme="dark"] .sp-select,
+[data-theme="dark"] .sp-input-date,
+[data-theme="dark"] .sp-input-text {
+    background-color: var(--bg-surface-2);
+    color: var(--text-primary);
 }
 
-.sp-select:focus,
-.sp-input-date:focus,
-.sp-input-text:focus {
-    border-color: var(--gen-crimson);
-    color: var(--gen-body-color);
+[data-theme="dark"] .sp-select option {
+    background-color: var(--bg-surface-2);
+    color: var(--text-primary);
 }
 
 .sp-input-date::-webkit-calendar-picker-indicator {

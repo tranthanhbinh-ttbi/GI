@@ -20,7 +20,7 @@ class SearchService {
             document: {
                 id: "id",
                 index: ["title", "description", "content"], // Index content để tìm kiếm
-                store: ["title", "description", "slug", "url", "thumbnail", "date", "displayDate", "category", "type", "author", "rating", "ratingCount"] // KHÔNG lưu content vào store để tiết kiệm RAM
+                store: ["title", "description", "slug", "url", "thumbnail", "date", "displayDate", "category", "type", "author", "rating", "ratingCount", "topic"] // KHÔNG lưu content vào store để tiết kiệm RAM
             }
         });
 
@@ -154,6 +154,7 @@ class SearchService {
             category: parsed.attributes.category,
             type: type,
             author: parsed.attributes.author || '',
+            topic: parsed.attributes.topic || '',
             rating: parsed.attributes.rating || 0,
             ratingCount: parsed.attributes.ratingCount || 0
         };
@@ -255,6 +256,7 @@ class SearchService {
             const cat = filters.category.toLowerCase();
             docs = docs.filter(doc => {
                 return (doc.category && doc.category.toLowerCase().includes(cat)) ||
+                    (doc.topic && doc.topic.toLowerCase().includes(cat)) ||
                     (doc.slug && doc.slug.toLowerCase().includes(cat)) ||
                     (doc.title && doc.title.toLowerCase().includes(cat));
             });
@@ -500,6 +502,19 @@ class SearchService {
             }
         });
         return Array.from(authors).sort((a, b) => a.localeCompare(b));
+    }
+
+    /**
+     * Lấy danh sách chủ đề series duy nhất
+     */
+    getUniqueSeriesTopics() {
+        const topics = new Set();
+        this.documents.forEach(doc => {
+            if (doc.type === 'series' && doc.topic) {
+                topics.add(doc.topic.trim());
+            }
+        });
+        return Array.from(topics).sort((a, b) => a.localeCompare(b));
     }
 }
 

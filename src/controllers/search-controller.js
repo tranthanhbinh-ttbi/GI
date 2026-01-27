@@ -4,6 +4,18 @@ const path = require('path');
 
 const { PostMeta } = require('../models');
 
+function calculateMockStats(slug) {
+    const seed = (slug || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const mockViews = 550 + (seed % 441);
+    const randomFloat = (Math.sin(seed) + 1) / 2;
+    let mockRating = 4.5 + (randomFloat * 0.5); 
+    mockRating = Math.round(mockRating * 10) / 10;
+    if (mockRating > 5) mockRating = 5;
+    const mockTotalRatings = Math.floor(mockViews / 10) + (seed % 50);
+
+    return { rating: mockRating, ratingCount: mockTotalRatings };
+}
+
 /**
  * API Lấy danh sách tác giả
  */
@@ -11,6 +23,19 @@ async function getAuthors(request, reply) {
     try {
         const authors = searchService.getUniqueAuthors();
         return reply.send(authors);
+    } catch (error) {
+        request.log.error(error);
+        return reply.code(500).send({ error: 'Internal Server Error' });
+    }
+}
+
+/**
+ * API Lấy danh sách chủ đề Series
+ */
+async function getSeriesTopics(request, reply) {
+    try {
+        const topics = searchService.getUniqueSeriesTopics();
+        return reply.send(topics);
     } catch (error) {
         request.log.error(error);
         return reply.code(500).send({ error: 'Internal Server Error' });
@@ -52,10 +77,11 @@ async function getPosts(request, reply) {
 
         results.data = results.data.map(item => {
             const meta = metaMap.get(item.slug);
+            const mock = calculateMockStats(item.slug);
             return {
                 ...item,
-                rating: meta ? parseFloat(meta.avgRating.toFixed(1)) : (item.rating || 0),
-                ratingCount: meta ? meta.totalRatings : (item.ratingCount || 0)
+                rating: meta ? parseFloat(meta.avgRating.toFixed(1)) : mock.rating,
+                ratingCount: meta ? meta.totalRatings : mock.ratingCount
             };
         });
 
@@ -129,10 +155,11 @@ async function search(request, reply) {
 
         const enrichedData = results.data.map(item => {
             const meta = metaMap.get(item.slug);
+            const mock = calculateMockStats(item.slug);
             return {
                 ...item,
-                rating: meta ? parseFloat(meta.avgRating.toFixed(1)) : (item.rating || 0),
-                ratingCount: meta ? meta.totalRatings : (item.ratingCount || 0)
+                rating: meta ? parseFloat(meta.avgRating.toFixed(1)) : mock.rating,
+                ratingCount: meta ? meta.totalRatings : mock.ratingCount
             };
         });
 
@@ -147,5 +174,6 @@ async function search(request, reply) {
 module.exports = {
     search,
     getPosts,
-    getAuthors
+    getAuthors,
+    getSeriesTopics
 };

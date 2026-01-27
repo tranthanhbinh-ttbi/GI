@@ -1,10 +1,11 @@
-const { search, getPosts, getAuthors } = require('../controllers/search-controller');
+const { search, getPosts, getAuthors, getSeriesTopics } = require('../controllers/search-controller');
 const notificationController = require('../controllers/notification-controller');
 const postInteractionController = require('../controllers/post-interaction-controller');
 
 async function ApiRoutes(fastify, options) {
     fastify.get('/api/search', search);
     fastify.get('/api/search/authors', getAuthors);
+    fastify.get('/api/search/series-topics', getSeriesTopics);
     fastify.get('/api/posts', getPosts);
     
     // Post Interaction Routes
