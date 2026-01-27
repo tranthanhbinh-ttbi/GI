@@ -5,7 +5,7 @@ title: "Tập 1:  Bản Đồ Siêu Anh Hùng [Series Trò Chơi Của Hai Bố 
 description: Bố và con cùng nằm lên một tờ giấy lớn (hoặc vẽ phấn trên sân), vẽ
   lại đường viền cơ thể. Sau đó, con sẽ đóng vai "Kỹ sư" để đặt tên cho các bộ
   phận.
-thumbnail: /uploads/anh-bai-dang-cho-web-12-.png
+thumbnail: /uploads/anh-bai-dang-cho-web-14-.png
 date: 2025-12-27 10:20
 ---
 👨‍👦Huy và bố của cậu ấy, cũng giống như bao mối quan hệ cha con khác, tuy yêu thương nhưng lại ít thể hiện điều đó ra với nhau. Đã thế, dạo này, người bố còn cảm nhận được sự xa cách và nhạy cảm hơn của con trai, khiến hai bố con dễ nảy sinh căng thẳng và mâu thuẫn từ những điều nhỏ nhặt nhất. Và ông - vừa là người bạn đồng hành cùng con, lại từng trải qua và thấu hiểu những đổi thay trong quá trình dậy thì, liền rủ (tên con trai) dành thời gian với mình vào một buổi chiều cuối tuần. 
