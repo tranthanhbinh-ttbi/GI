@@ -23,7 +23,7 @@ async function getAuthors(request, reply) {
  */
 async function getPosts(request, reply) {
     try {
-        const { q, limit, page, type, category, ...otherFilters } = request.query;
+        const { q, limit, page, type, category, exclude, ...otherFilters } = request.query;
 
         // 1. Chuẩn hóa tham số
         const safeLimit = Math.min(parseInt(limit) || 6, 20); // Mặc định 6, tối đa 20
@@ -31,6 +31,7 @@ async function getPosts(request, reply) {
         const filters = {
             type: type || 'all',
             category: category === 'Tất Cả' ? 'all' : category,
+            excludeSlugs: exclude ? exclude.split(',') : [],
             ...otherFilters
         };
 

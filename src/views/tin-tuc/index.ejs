@@ -109,6 +109,15 @@
                                 <div class="splide__track">
                                     <ul class="splide__list">
                                         <% topCards.forEach(card=> { %>
+                                            <%
+                                                const seed = (card.slug || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                                                const mockViews = 550 + (seed % 441);
+                                                const randomFloat = (Math.sin(seed) + 1) / 2;
+                                                let mockRating = 4.5 + (randomFloat * 0.5); 
+                                                mockRating = Math.round(mockRating * 10) / 10;
+                                                if (mockRating > 5) mockRating = 5;
+                                                const mockTotalRatings = Math.floor(mockViews / 10) + (seed % 50);
+                                            %>
                                             <li class="splide__slide">
                                                 <div class="top-card-horizontal">
                                                     <div class="top-card-img-wrapper">
@@ -158,7 +167,7 @@
                                                                         d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                                                 </svg>
                                                                 <span>
-                                                                    <%= card.views || 0 %> lượt xem
+                                                                    <%= mockViews %> lượt xem
                                                                 </span>
                                                             </div>
                                                             <div
@@ -246,6 +255,15 @@
 
                             <!-- FEATURED ARTICLE -->
                             <% if (featuredPost) { %>
+                                <%
+                                    const fSeed = (featuredPost.slug || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                                    const fMockViews = 550 + (fSeed % 441);
+                                    const fRandomFloat = (Math.sin(fSeed) + 1) / 2;
+                                    let fMockRating = 4.5 + (fRandomFloat * 0.5); 
+                                    fMockRating = Math.round(fMockRating * 10) / 10;
+                                    if (fMockRating > 5) fMockRating = 5;
+                                    const fMockTotalRatings = Math.floor(fMockViews / 10) + (fSeed % 50);
+                                %>
                                 <section class="featured-article-section">
                                     <div class="featured-article-container">
                                         <div class="featured-image-container">
@@ -277,23 +295,34 @@
                                                         <path
                                                             d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                                     </svg>
-                                                    <%= featuredPost.views || 0 %> lượt xem
+                                                    <%= fMockViews %> lượt xem
                                                 </span>
                                                 <span class="meta-sep">/</span>
                                                 <div class="featured-rating">
                                                     <div class="star-rating-container">
-                                                        <% const fRating=featuredPost.avgRating || 0; %>
-                                                            <% for(let i=1; i<=5; i++) { %>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="14"
-                                                                    height="14"
-                                                                    fill="<%= i <= fRating ? '#fbbf24' : '#e5e7eb' %>"
-                                                                    class="icon-sm" viewBox="0 0 16 16">
-                                                                    <path
-                                                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                                        <% for(let i=1; i<=5; i++) { %>
+                                                            <% if (i <= Math.floor(fMockRating)) { %>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#fbbf24" class="icon-sm" viewBox="0 0 16 16">
+                                                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                                 </svg>
-                                                                <% } %>
+                                                            <% } else if (i === Math.ceil(fMockRating) && fMockRating % 1 >= 0.3) { %>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" class="icon-sm">
+                                                                    <defs>
+                                                                        <linearGradient id="half-star-featured-<%= featuredPost.slug %>-<%= i %>">
+                                                                            <stop offset="50%" stop-color="#fbbf24"/>
+                                                                            <stop offset="50%" stop-color="#e5e7eb"/>
+                                                                        </linearGradient>
+                                                                    </defs>
+                                                                    <path fill="url(#half-star-featured-<%= featuredPost.slug %>-<%= i %>)" d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                                </svg>
+                                                            <% } else { %>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#e5e7eb" class="icon-sm" viewBox="0 0 16 16">
+                                                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                                </svg>
+                                                            <% } %>
+                                                        <% } %>
                                                     </div>
-                                                    <span class="rating-count">(<%= featuredPost.totalRatings || 0 %>)
+                                                    <span class="rating-count">(<%= fMockTotalRatings %>)
                                                     </span>
                                                 </div>
                                             </div>

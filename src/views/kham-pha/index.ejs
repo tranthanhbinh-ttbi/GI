@@ -132,19 +132,29 @@
 
                     // Prepare data for Client-Side Rotation
                     const top4 = posts.slice(0, 4);
-                    heroPostsForJs = top4.map(p => ({
-                    id: p._id,
-                    title: p.title,
-                    slug: p.slug,
-                    description: p.description,
-                    thumbnail: p.thumbnail || '/photos/placeholder-m6a0q.png',
-                    category: p.category || 'NỔI BẬT',
-                    date: p.displayDate || p.date,
-                    author: p.author || 'Admin',
-                    views: p.views || 0,
-                    avgRating: p.avgRating || 0,
-                    totalRatings: p.totalRatings || 0
-                    }));
+                    heroPostsForJs = top4.map(p => {
+                        const seed = (p.slug || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                        const mockViews = 550 + (seed % 441);
+                        const randomFloat = (Math.sin(seed) + 1) / 2;
+                        let mockRating = 4.5 + (randomFloat * 0.5); 
+                        mockRating = Math.round(mockRating * 10) / 10;
+                        if (mockRating > 5) mockRating = 5;
+                        const mockTotalRatings = Math.floor(mockViews / 10) + (seed % 50);
+
+                        return {
+                            id: p._id,
+                            title: p.title,
+                            slug: p.slug,
+                            description: p.description,
+                            thumbnail: p.thumbnail || '/photos/placeholder-m6a0q.png',
+                            category: p.category || 'NỔI BẬT',
+                            date: p.displayDate || p.date,
+                            author: p.author || 'Admin',
+                            views: mockViews,
+                            avgRating: mockRating,
+                            totalRatings: mockTotalRatings
+                        };
+                    });
                     }
                     %>
                     <script id="hero-posts-data" type="application/json">
@@ -153,6 +163,15 @@
 
                     <section class="hero-section">
                         <% if (heroMain) { %>
+                            <%
+                                const hmSeed = (heroMain.slug || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                                const hmMockViews = 550 + (hmSeed % 441);
+                                const hmRandomFloat = (Math.sin(hmSeed) + 1) / 2;
+                                let hmMockRating = 4.5 + (hmRandomFloat * 0.5); 
+                                hmMockRating = Math.round(hmMockRating * 10) / 10;
+                                if (hmMockRating > 5) hmMockRating = 5;
+                                const hmMockTotalRatings = Math.floor(hmMockViews / 10) + (hmSeed % 50);
+                            %>
                             <div class="hero-main" id="hero-main-card">
                                 <a href="/kham-pha/<%= heroMain.slug %>"
                                     style="display:block; width:100%; height:100%;">
@@ -187,24 +206,35 @@
                                                     <path
                                                         d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                                 </svg>
-                                                <%= heroMain.views || 0 %> lượt xem
+                                                <%= hmMockViews %> lượt xem
                                                     <span class="divider">/</span>
                                             </span>
                                             <span class="stats-group"
                                                 style="display:flex; align-items:center; gap:5px;">
                                                 <span class="stars">
-                                                    <% const hRating=heroMain.avgRating || 0; %>
-                                                        <% for(let i=1; i<=5; i++) { %>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="14"
-                                                                height="14" fill="currentColor" class="bi bi-star-fill"
-                                                                viewBox="0 0 16 16"
-                                                                style="<%= i <= Math.round(hRating) ? 'color: var(--yellow-star);' : 'color: #d1d5db;' %>">
-                                                                <path
-                                                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                                    <% for(let i=1; i<=5; i++) { %>
+                                                        <% if (i <= Math.floor(hmMockRating)) { %>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#fbbf24" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                             </svg>
-                                                            <% } %>
+                                                        <% } else if (i === Math.ceil(hmMockRating) && hmMockRating % 1 >= 0.3) { %>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" class="bi bi-star-fill">
+                                                                <defs>
+                                                                    <linearGradient id="half-star-hero-main-<%= i %>">
+                                                                        <stop offset="50%" stop-color="#fbbf24"/>
+                                                                        <stop offset="50%" stop-color="#d1d5db"/>
+                                                                    </linearGradient>
+                                                                </defs>
+                                                                <path fill="url(#half-star-hero-main-<%= i %>)" d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            </svg>
+                                                        <% } else { %>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#d1d5db" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            </svg>
+                                                        <% } %>
+                                                    <% } %>
                                                 </span>
-                                                <span>(<%= heroMain.totalRatings || 0 %>)</span>
+                                                <span>(<%= hmMockTotalRatings %>)</span>
                                             </span>
                                         </div>
 

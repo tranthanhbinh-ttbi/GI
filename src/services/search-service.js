@@ -343,6 +343,12 @@ class SearchService {
             }
         }
 
+        // 7. Exclude Slugs
+        if (filters.excludeSlugs && Array.isArray(filters.excludeSlugs) && filters.excludeSlugs.length > 0) {
+            const excludeSet = new Set(filters.excludeSlugs);
+            docs = docs.filter(doc => !excludeSet.has(doc.slug));
+        }
+
         // --- Pagination ---
         const total = docs.length;
         const totalPages = Math.ceil(total / limit);

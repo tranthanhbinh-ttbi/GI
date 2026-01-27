@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
                 const data = await response.json();
                 if (data.success && data.views) {
-                    updateViewsUI(data.views);
+                    // updateViewsUI(data.views); // Mock-test: Disable real view update
                 }
             } catch (e) {
                 console.error('Track view failed', e);
@@ -144,8 +144,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const response = await fetch(`/api/posts/${postSlug}/rating`);
             const data = await response.json();
             if (data.success) {
-                updateRatingUI(data.avgScore, data.totalRatings);
-                if (data.views) updateViewsUI(data.views);
+                // updateRatingUI(data.avgScore, data.totalRatings); // Mock-test: Disable real rating UI update
+                // if (data.views) updateViewsUI(data.views);        // Mock-test: Disable real view update
 
                 if (data.userScore > 0) {
                     window.userCurrentScore = data.userScore;
