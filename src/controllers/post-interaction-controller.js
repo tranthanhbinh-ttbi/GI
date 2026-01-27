@@ -392,14 +392,14 @@ async function postComment(request, reply) {
             }
         }
 
-        // 4. Tạo comment (Status: Pending)
-        // Optimistic: Coi như OK, nhưng hệ thống sẽ check ngầm
+        // 4. Tạo comment (Status: Approved)
+        // Hiển thị ngay lập tức, AI check ngầm sau
         const comment = await Comment.create({
             userId: user.id,
             postSlug: slug,
             content: content, 
             parentId: parentId || null,
-            status: 'pending' // Chờ AI check
+            status: 'approved' // Hiển thị luôn
         });
 
         // 5. Gửi sang Worker để check AI (Fire & Forget)
@@ -409,7 +409,7 @@ async function postComment(request, reply) {
             include: [{ model: User, attributes: ['name', 'avatarUrl'] }]
         });
 
-        return { success: true, comment: fullComment, message: 'Bình luận đang được kiểm tra an toàn.' };
+        return { success: true, comment: fullComment, message: 'Bình luận đã được đăng thành công.' };
     } catch (error) {
         request.log.error(error);
         return reply.code(500).send({ success: false, message: 'Không thể gửi bình luận' });
