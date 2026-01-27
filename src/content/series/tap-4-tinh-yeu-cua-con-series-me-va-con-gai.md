@@ -1,11 +1,12 @@
 ---
+category: Bài Viết
+topic: Dạy con
 title: "Tập 4: Người Bạn khác Giới Của Con [Series Mẹ Và Con Gái]"
-date: 2025-12-02 22:27
 description: Hành trình của người mẹ dạy con gái nhận diện ranh giới cơ thể, xây
   dựng vòng tròn tin tưởng và tự bảo vệ bản thân trước những nguy cơ tại nhà,
   trường học và nơi công cộng.
-category: Bài Viết
 thumbnail: /uploads/tap-4.png
+date: 2025-12-02 22:27
 ---
 Buổi chiều hôm ấy, nắng nghiêng qua song cửa, đổ xuống phòng khách một màu vàng mềm như miếng bánh mật ong. Con gái mở cửa bước vào, tóc còn hơi rối vì gió, và theo sau con là một cậu bé cao hơn con nửa cái đầu. Hạ chỉ tay vào cậu bé, cười tủm tỉm:
 

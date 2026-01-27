@@ -1,11 +1,12 @@
 ---
+category: Bài Viết
+topic: Dạy con
 title: "Tập 7: Ba Của Con [Series Mẹ Và Con Gái]"
-date: 2025-12-04 14:04
 description: Hành trình của người mẹ dạy con gái nhận diện ranh giới cơ thể, xây
   dựng vòng tròn tin tưởng và tự bảo vệ bản thân trước những nguy cơ tại nhà,
   trường học và nơi công cộng.
-category: Bài Viết
 thumbnail: /uploads/tap-7.png
+date: 2025-12-04 14:04
 ---
 Chiều cuối tuần, ánh nắng vàng rộm rót qua ô cửa kính, đổ thành một vệt dài lười biếng trên thảm lông trong phòng khách. Đó là một buổi chiều yên ả, cho đến khi tiếng cười sằng sặc của Ba và Đông phá tan sự tĩnh lặng.
 

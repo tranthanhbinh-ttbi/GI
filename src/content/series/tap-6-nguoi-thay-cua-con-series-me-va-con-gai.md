@@ -1,11 +1,12 @@
 ---
+category: Bài Viết
+topic: Dạy con
 title: "Tập 6: Người Thầy Của Con [Series Mẹ Và Con Gái]"
-date: 2025-12-04 08:11
 description: Hành trình của người mẹ dạy con gái nhận diện ranh giới cơ thể, xây
   dựng vòng tròn tin tưởng và tự bảo vệ bản thân trước những nguy cơ tại nhà,
   trường học và nơi công cộng.
-category: Bài Viết
 thumbnail: /uploads/tap-6.png
+date: 2025-12-04 08:11
 ---
 Buổi tối hôm ấy, không khí trong nhà dường như ấm lên vài độ. Mẹ đang ngồi đọc sách bên bàn trà thì cánh cửa bật mở, và Hạ bước vào không phải bằng những bước chân thường ngày mà bằng những bước nhảy chân sáo.
 

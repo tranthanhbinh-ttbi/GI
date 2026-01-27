@@ -1,11 +1,12 @@
 ---
+category: Bài Viết
+topic: Dạy con
 title: "Tập 10: Mẹ Của Con [Series Mẹ Và Con Gái]"
-date: 2025-12-04 23:24
 description: Hành trình của người mẹ dạy con gái nhận diện ranh giới cơ thể, xây
   dựng vòng tròn tin tưởng và tự bảo vệ bản thân trước những nguy cơ tại nhà,
   trường học và nơi công cộng.
-category: Bài Viết
 thumbnail: /uploads/tap-10.png
+date: 2025-12-04 23:24
 ---
 Căn bếp buổi tối luôn là thế giới nhỏ của hai mẹ con. Ánh đèn vàng mềm rơi xuống những món đồ bếp quen thuộc, khiến mọi thứ ánh lên một vẻ ấm cúng, thân tình đến lạ. Hôm nay, thay vì chạy vụt lên phòng như mọi ngày, Hạ kéo ghế lại bàn ăn, ngồi tỉ mỉ nhặt rau cùng mẹ. Trên gương mặt con là sự pha trộn của một chút tự hào len lén và một chút băn khoăn chưa kịp cất lời.
 

@@ -1,11 +1,12 @@
 ---
+category: Bài Viết
+topic: Dạy con
 title: "Tập 3: Bản Đồ Và La Bàn Của Con [Series Mẹ Và Con Gái]"
-date: 2025-12-01 20:00
 description: Hành trình của người mẹ dạy con gái nhận diện ranh giới cơ thể, xây
   dựng vòng tròn tin tưởng và tự bảo vệ bản thân trước những nguy cơ tại nhà,
   trường học và nơi công cộng.
-category: Bài Viết
 thumbnail: /uploads/z7281791210419_4c11a67f5af7bf07f1969d46d15306fc.jpg
+date: 2025-12-01 20:00
 ---
 Buổi sáng cuối tuần mở ra bằng một vầng nắng mỏng nhẹ trải xuống con đường quen dẫn vào khu chợ gần nhà. Hạ nắm tay mẹ, tung tăng trong bước chân nhưng đôi mắt vẫn còn non nớt tò mò trước thế giới rộng lớn phía trước. Khu chợ như một dòng sông đang chuyển mình với tiếng người gọi í ới, tiếng rao hàng đan lẫn tiếng xe lăn chầm chậm, mùi bánh nướng hòa cùng mùi trái cây chín. Một vẻ đẹp đông đúc, rực rỡ nhưng cũng là nơi ẩn chứa những điều bất ngờ.
 

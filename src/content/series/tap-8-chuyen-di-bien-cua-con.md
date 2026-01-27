@@ -1,11 +1,12 @@
 ---
+category: Bài Viết
+topic: Dạy con
 title: "Tập 8: Chuyến Đi Biển Của Con [Series Mẹ Và Con Gái]"
-date: 2025-12-04 14:37
 description: Hành trình của người mẹ dạy con gái nhận diện ranh giới cơ thể, xây
   dựng vòng tròn tin tưởng và tự bảo vệ bản thân trước những nguy cơ tại nhà,
   trường học và nơi công cộng.
-category: Bài Viết
 thumbnail: /uploads/tap-8.png
+date: 2025-12-04 14:37
 ---
 Buổi tối hôm ấy, trong căn phòng quen thuộc của Hạ, có một thứ không khí rất khác. Không phải ánh đèn sáng hơn, mà là chính sự háo hức của con đã khiến căn phòng như bừng lên. Mỗi khi Hạ chuẩn bị cho một điều gì mới mẻ, cả căn phòng đều như được “kéo vào cuộc”. Những chiếc móc áo rung nhẹ, cây bút rơi trên bàn gõ một tiếng vui tai, còn chiếc ba lô màu xanh navy thì mở toang như đang nôn nóng chờ được lên đường.
 

@@ -1,11 +1,12 @@
 ---
+category: Bài Viết
+topic: Dạy con
 title: "Tập 2: Ngọn Hải Đăng Của Con [Series Mẹ Và Con Gái]"
-date: 2025-11-30 18:29
 description: Hành trình của người mẹ dạy con gái nhận diện ranh giới cơ thể, xây
   dựng vòng tròn tin tưởng và tự bảo vệ bản thân trước những nguy cơ tại nhà,
   trường học và nơi công cộng.
-category: Bài Viết
 thumbnail: /uploads/z7281791210367_a62eff0242d915e99ead43b65447f6cc.jpg
+date: 2025-11-30 18:29
 ---
 Buổi chiều hôm ấy, bầu trời như một chiếc khăn lụa xám phủ lên mái phố. Hạ bước vào nhà, đôi giày nhỏ dính bụi sân trường, đôi vai thì trĩu xuống không phải vì cặp sách, mà vì một đám mây ngột ngạt mang tên Sự Lúng Túng.
 

@@ -1,11 +1,12 @@
 ---
+category: Bài Viết
+topic: Dạy con
 title: "Tập 9: Gói Bạc Của Con [Series Mẹ Và Con Gái]"
-date: 2025-12-04 15:01
 description: Hành trình của người mẹ dạy con gái nhận diện ranh giới cơ thể, xây
   dựng vòng tròn tin tưởng và tự bảo vệ bản thân trước những nguy cơ tại nhà,
   trường học và nơi công cộng.
-category: Bài Viết
 thumbnail: /uploads/tap-9.png
+date: 2025-12-04 15:01
 ---
 Buổi chiều hôm đó, Hạ trở về nhà không giống mọi ngày. Lẽ ra con phải lao vào bếp tìm mẹ và thao thao kể chuyện ở trường, nhưng hôm nay Hạ lầm lũi đi thẳng vào phòng, đóng cửa rất nhẹ nhàng, một dấu hiệu bất thường.
 

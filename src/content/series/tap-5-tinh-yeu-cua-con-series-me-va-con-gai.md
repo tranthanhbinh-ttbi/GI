@@ -1,11 +1,12 @@
 ---
+category: Bài Viết
+topic: Dạy con
 title: "Tập 5: Tình Yêu Của Con [Series Mẹ Và Con Gái]"
-date: 2025-12-04 09:10
 description: Hành trình của người mẹ dạy con gái nhận diện ranh giới cơ thể, xây
   dựng vòng tròn tin tưởng và tự bảo vệ bản thân trước những nguy cơ tại nhà,
   trường học và nơi công cộng.
-category: Bài Viết
 thumbnail: /uploads/tap-5.png
+date: 2025-12-04 09:10
 ---
 Buổi chiều mùa hè trải một lớp nắng mỏng lên ban công. Những chậu hoa mười giờ mở cánh trễ, đỏ hồng như đôi gò má của con khi đứng lấp ló ở bên cửa. Mẹ đang tưới nước cho những luống hoa còn Hạ thì đứng đó, do dự như muốn nói điều gì rồi lại thôi. Mẹ biết, vì đôi mắt của con không bao giờ giấu được mẹ.
 
