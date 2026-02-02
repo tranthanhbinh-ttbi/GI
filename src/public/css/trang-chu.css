@@ -526,6 +526,7 @@ main {
                 }
 
                 .lo-mems {
+                    object-fit: cover;
                     border: 4px solid #ffffff;
                     border-radius: 50%;
                     margin-bottom: 16px;
