@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@fastify/caching": "^9.0.3",
-    "@fastify/compress": "^8.1.0",
+    "@fastify/compress": "^8.3.1",
     "@fastify/cookie": "^11.0.2",
     "@fastify/csrf-protection": "^7.1.0",
     "@fastify/formbody": "^8.0.2",
