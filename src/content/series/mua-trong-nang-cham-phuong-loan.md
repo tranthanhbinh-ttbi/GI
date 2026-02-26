@@ -7,7 +7,7 @@ description: Tác phẩm đạt Giải Ba Cuộc thi Viết "Mưa trong Nắng" 
 thumbnail: /uploads/anh-bai-dang-cho-web-18-.png
 date: 2026-02-25 08:00
 ---
-***Nguồn cảm hứng của tác giả:**  Từ hình ảnh màu chàm, biểu tượng quen thuộc của văn hóa đồng bào vùng núi phía Bắc, tác giả mong muốn mở ra một lớp nghĩa khác, dùng sắc chàm để soi chiếu những góc khuất trong đời sống của người con gái vùng núi phía Bắc Việt Nam, nơi vẫn còn nhen nhóm tục cướp dâu và những hệ lụy kéo dài theo thời gian. Các nhân vật và địa danh xuất hiện trong tác phẩm đều là hư cấu.*
+**Nguồn cảm hứng của tác giả:**  Từ hình ảnh màu chàm, biểu tượng quen thuộc của văn hóa đồng bào vùng núi phía Bắc, tác giả mong muốn mở ra một lớp nghĩa khác, dùng sắc chàm để soi chiếu những góc khuất trong đời sống của người con gái vùng núi phía Bắc Việt Nam, nơi vẫn còn nhen nhóm tục cướp dâu và những hệ lụy kéo dài theo thời gian. Các nhân vật và địa danh xuất hiện trong tác phẩm đều là hư cấu.
 
 **————————————————————————**“Anh ấy là mối tình cuối cùng của em.”
 
