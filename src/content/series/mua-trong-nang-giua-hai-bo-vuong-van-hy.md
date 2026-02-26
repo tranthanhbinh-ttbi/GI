@@ -2,8 +2,8 @@
 category: Bài Viết
 topic: Mưa Trong Nắng
 title: "[Mưa Trong Nắng] Giữa Hai Bờ - Vương Vân Hy"
-description: Một tác phẩm dự thi Cuộc thi Viết "Mưa trong Nắng" tháng 2 năm 2026
-  được tổ chức bởi Gender Insights.
+description: Một tác phẩm hấp dẫn dự thi Cuộc thi Viết "Mưa trong Nắng" tháng 2
+  năm 2026 được tổ chức bởi Gender Insights.
 thumbnail: /uploads/anh-bai-dang-cho-web-18-.png
 date: 2026-02-25 08:00
 ---
