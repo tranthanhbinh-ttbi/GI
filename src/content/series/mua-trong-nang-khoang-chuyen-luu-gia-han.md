@@ -2,7 +2,7 @@
 category: Bài Viết
 topic: Mưa Trong Nắng
 title: "[Mưa Trong Nắng] Khoảng Chuyển - Lưu Gia Hân"
-description: Bài viết đạt giải yêu thích tại Cuộc thi Viết "Mưa trong Nắng"
+description: Bài viết đạt Giải Yêu Thích tại Cuộc thi Viết "Mưa trong Nắng"
   tháng 2 năm 2026 được tổ chức bởi Gender Insights
 thumbnail: /uploads/anh-bai-dang-cho-web-18-.png
 date: 2026-02-25 08:00
@@ -20,6 +20,8 @@ Nhưng tôi không nhận ra rằng, cảm xúc nếu không đi cùng hiểu bi
 Khi chưa có chuyện gì xảy ra, tôi và nhiều người khác đều tin rằng những hệ quả nghiêm trọng là điều của người khác. Mang thai sớm, trách nhiệm, áp lực – tất cả nghe rất xa, rất “người lớn”. Tôi từng nghĩ rằng chỉ cần cẩn thận một chút, yêu thương đủ chân thành, thì mọi thứ sẽ ổn.
 
 Cho đến khi mưa thật sự rơi.
+
+![Khoảng Chuyển - Lưu Gia Hân](/uploads/khoang-chuyen.jpg)
 
 Mang thai sớm ở tuổi vị thành niên không đến như một cú sốc ồn ào. Nó đến rất chậm. Khi người trong cuộc còn đang loay hoay với cảm xúc của mình, thì cuộc sống đã buộc họ phải đối diện với những lựa chọn quá lớn. Tôi nhớ giọng nói ngập ngừng khi nhắc đến tương lai – không phải vì không có ước mơ, mà vì không biết mình còn quyền mơ như trước hay không.
 
