@@ -7,7 +7,7 @@ description: Một tác phẩm hấp dẫn dự thi Cuộc thi Viết "Mưa Tron
 thumbnail: /uploads/anh-bai-dang-cho-web-18-.png
 date: 2026-02-25 08:00
 ---
-***Nguồn cảm hứng của tác giả :** khi mình vô tình đọc phải một bài viết ẩn danh trên Facebook, minh đã bị ám ảnh bởi những dòng chia sẻ đầy xúc động một cô bé 16 tuổi mang thai khi vẫn đang học cấp 3.Khi nói với gia đình,bạn không nhận được sự lắng nghe mà thay vào đó là những lời lẽ nặng nề và sự ép buộc phá thai. Câu chuyện ấy khiến mình tự hỏi: nếu bạn được chia sẻ và nói về vấn đề tình dục ấy rõ ràng thì có lẽ mọi việc sẽ khác đi không ? Đó cũng là nguồn cảm hứng của bài viết.*
+**\*Nguồn cảm hứng của tác giả :** khi mình vô tình đọc phải một bài viết ẩn danh trên Facebook, minh đã bị ám ảnh bởi những dòng chia sẻ đầy xúc động một cô bé 16 tuổi mang thai khi vẫn đang học cấp 3.Khi nói với gia đình,bạn không nhận được sự lắng nghe mà thay vào đó là những lời lẽ nặng nề và sự ép buộc phá thai. Câu chuyện ấy khiến mình tự hỏi: nếu bạn được chia sẻ và nói về vấn đề tình dục ấy rõ ràng thì có lẽ mọi việc sẽ khác đi không ? Đó cũng là nguồn cảm hứng của bài viết.*
 
 ——————————————————————————————————
 
@@ -45,8 +45,6 @@ Nếu nắng là ước mơ,thì kiến thức chính là chiếc ô để bảo
 
 Và không ai đáng bị ướt lạnh chỉ vì họ chưa kịp học cách che mưa.
 
-
-
 Có những cơn mưa không bắt đầu rơi từ bầu trời.
 
 Nó rơi từ những ánh mắt ngơ ngác,
@@ -82,4 +80,4 @@ Thanh xuân cần cả **kiến thức**, **sự đồng hành** và **một nơ
 “Mưa trong nắng” không phải để phán xét những sai lầm non nớt
 Mà là lời nhắc để chúng ta cúi xuống, lắng nghe, và đưa tay ra – trước khi những cơn mưa ấy làm ướt lạnh cả một đời người.
 
-![Cơn Mưa Của Tuổi Trẻ - Hagie](/uploads/hagie.jpg)
+![](/uploads/hagie.jpg)
