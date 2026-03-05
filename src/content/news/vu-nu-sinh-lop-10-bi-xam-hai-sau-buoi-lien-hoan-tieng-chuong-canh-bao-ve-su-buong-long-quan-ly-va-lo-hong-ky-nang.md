@@ -1,13 +1,13 @@
 ---
-title: "VỤ NỮ SINH LỚP 10 BỊ XÂM HẠI SAU BUỔI LIÊN HOAN: TIẾNG CHUÔNG CẢNH BÁO
-  VỀ SỰ BUÔNG LỎNG QUẢN LÝ VÀ LỖ HỔNG KỸ NĂNG"
-date: 2021-03-20T01:35:00.000+07:00
-author: Gender Insights
 category: Truyền Thông
-thumbnail: /uploads/anh-bai-dang-cho-web-11-.png
+title: "Vụ Nữ Sinh Lớp 10 Bị Xâm Hại Sau Buổi Liên Hoan: Tiếng Chuông Cảnh Báo
+  Về Sự Buông Lỏng Quản Lý Và Lỗ Hổng Kỹ Năng"
 description: Vụ nữ sinh lớp 10 tại Thanh Hóa bị xâm hại sau buổi liên hoan cùng
   nhóm "bạn phượt" là lời cảnh tỉnh đau xót về sự buông lỏng quản lý và lỗ hổng
   kỹ năng sống.
+thumbnail: /uploads/anh-bai-dang-cho-web-11-.png
+date: 18/12/2025
+author: Gender Insights
 ---
 
 Vừa qua, dư luận xã Nga Tiến (huyện Nga Sơn, Thanh Hóa) không khỏi bàng hoàng trước vụ việc nữ sinh M.T.T (16 tuổi, học sinh lớp 10) bị xâm hại tình dục sau một buổi liên hoan. Nghi phạm được xác định là H.V.Th (20 tuổi, ngụ huyện Hậu Lộc), người vốn có mối quan hệ quen biết với nạn nhân từ trước.
