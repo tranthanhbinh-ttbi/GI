@@ -3,7 +3,7 @@ category: Bài Viết
 topic: Từ Điển Thuật Ngữ
 title: "Từ Điển Thuật Ngữ 5: Nhóm Bệnh STIs Do Virus"
 description: "By: Phước Trung"
-thumbnail: /uploads/anh-bai-dang-cho-web-22-.png
+thumbnail: /uploads/anh-bai-dang-cho-web-24-.png
 date: 2026-01-14 10:50
 ---
 **1. Bản chất của virus: "Kẻ trú ngụ" kiên trì** 👾
